@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import StyledWrapper, { StyledLink } from './styles';
 
 interface Props {
   route: {
@@ -12,9 +13,11 @@ class RouteTile extends React.Component<Props> {
   public render(): React.ReactNode {
     const { id, name } = this.props.route;
     return (
-      <div>
-        <Link to={`/routes/${id}`}>{name}</Link>
-      </div>
+      <StyledWrapper>
+        <StyledLink as={Link} to={`/routes/${id}`}>
+          {name}
+        </StyledLink>
+      </StyledWrapper>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
-import RouteTile from '../components/RouteTile';
+import RouteTile from '../components/RouteTile/RouteTile';
 import tempResponse from '../tempResponse.json';
+import Content from '../components/Content/Content';
 
 interface State {
   availableRoutes: Array<any>;
@@ -24,13 +25,13 @@ class AvailableRoutesPage extends React.Component<{}, State> {
     }
 
     return (
-      <>
+      <Content>
         {this.state.availableRoutes.length > 0 ? (
           availableRoutesTiles
         ) : (
           <div>AvailableRoutesPage</div>
         )}
-      </>
+      </Content>
     );
   }
 
