@@ -1,10 +1,10 @@
 import React from 'react';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import './App.css';
-import HomePage from './pages/HomePage';
-import AvailableRoutesPage from './pages/AvailableRoutesPage';
-import NotFoundPage from './pages/NotFoundPage';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Header from './components/Header';
+import AvailableRoutesPage from './pages/AvailableRoutesPage';
+import HomePage from './pages/HomePage';
+import NotFoundPage from './pages/NotFoundPage';
+import './App.css';
 
 class App extends React.Component {
   render(): React.ReactNode {
