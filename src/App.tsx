@@ -5,6 +5,7 @@ import AvailableRoutesPage from './pages/AvailableRoutesPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 import './App.css';
+import RoutePage from './pages/RoutePage';
 
 class App extends React.Component {
   render(): React.ReactNode {
@@ -12,15 +13,10 @@ class App extends React.Component {
       <BrowserRouter>
         <Header />
         <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path="/available-routes">
-            <AvailableRoutesPage />
-          </Route>
-          <Route path="*">
-            <NotFoundPage />
-          </Route>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/routes" component={AvailableRoutesPage} />
+          <Route exact path="/routes/:id" component={RoutePage} />
+          <Route path="*" component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
     );

@@ -11,7 +11,7 @@ class Header extends React.Component {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/available-routes">Available Routes</Link>
+              <Link to="/routes">Available Routes</Link>
             </li>
           </ul>
         </nav>
