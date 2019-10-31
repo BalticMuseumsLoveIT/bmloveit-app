@@ -1,7 +1,11 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import RouteTile from '../components/RouteTile/RouteTile';
-import tempResponse from '../tempResponse.json';
+import tempUserData from '../tempUserData.json';
 import Content from '../components/Content/Content';
+import Api from '../utils/api';
+
+interface Props {}
 
 interface State {
   availableRoutes: Array<any>;
@@ -25,20 +29,27 @@ class AvailableRoutesPage extends React.Component<{}, State> {
     }
 
     return (
-      <Content>
-        {this.state.availableRoutes.length > 0 ? (
-          availableRoutesTiles
-        ) : (
-          <div>AvailableRoutesPage</div>
-        )}
-      </Content>
+      <>
+        <Helmet>
+          <title>Available Routes</title>
+        </Helmet>
+        <Content>
+          {availableRoutesTiles ? (
+            availableRoutesTiles
+          ) : (
+            <div>AvailableRoutesPage Spinner</div>
+          )}
+        </Content>
+      </>
     );
   }
 
-  componentDidMount(): void {
-    this.setState({
-      availableRoutes: tempResponse,
-    });
+  async componentDidMount(): Promise<void> {
+    try {
+      const availableRoutes = await Api.getAvailableRoutes(tempUserData.token);
+
+      this.setState({ availableRoutes });
+    } catch (error) {}
   }
 }
 

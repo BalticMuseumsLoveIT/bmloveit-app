@@ -5,17 +5,17 @@ import StyledWrapper, { StyledLink } from './styles';
 interface Props {
   route: {
     id: number;
-    name: string;
+    name_full: string;
   };
 }
 
 class RouteTile extends React.Component<Props> {
   public render(): React.ReactNode {
-    const { id, name } = this.props.route;
+    const { id, name_full } = this.props.route;
     return (
       <StyledWrapper>
         <StyledLink as={Link} to={`/routes/${id}`}>
-          {name}
+          {name_full}
         </StyledLink>
       </StyledWrapper>
     );
