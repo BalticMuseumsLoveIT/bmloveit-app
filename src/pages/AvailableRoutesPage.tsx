@@ -1,8 +1,8 @@
+import Api from 'utils/api';
+import RouteTile from 'components/RouteTile/RouteTile';
+import Content from 'components/Content/Content';
 import React from 'react';
 import Helmet from 'react-helmet';
-import RouteTile from '../components/RouteTile/RouteTile';
-import Content from '../components/Content/Content';
-import Api from '../utils/api';
 
 interface Props {}
 

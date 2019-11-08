@@ -1,7 +1,8 @@
+import theme from 'utils/theme';
+import Header from 'components/Header/Header';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import StyledWrapper, { GlobalStyle } from './styles';
-import theme from '../../utils/theme';
+import StyledWrapper, { GlobalStyle } from './Layout.style';
 
 export interface Props {
   children?: React.ReactNode;
@@ -13,7 +14,10 @@ export default class Layout extends React.Component<Props> {
       <ThemeProvider theme={theme}>
         <>
           <GlobalStyle />
-          <StyledWrapper>{this.props.children}</StyledWrapper>
+          <StyledWrapper>
+            <Header />
+            {this.props.children}
+          </StyledWrapper>
         </>
       </ThemeProvider>
     );

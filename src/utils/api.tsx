@@ -1,4 +1,4 @@
-import tempUserData from '../tempUserData.json';
+import tempUserData from 'utils/tempUserData.json';
 
 abstract class Api {
   static async getAvailableRoutes(): Promise<any> {

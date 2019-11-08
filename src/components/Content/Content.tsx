@@ -1,5 +1,5 @@
 import React from 'react';
-import StyledWrapper from './styles';
+import StyledWrapper from './Content.style';
 
 interface Props {
   children: React.ReactNode;

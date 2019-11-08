@@ -1,7 +1,7 @@
+import Api from 'utils/api';
+import Content from 'components/Content/Content';
 import React from 'react';
 import Helmet from 'react-helmet';
-import Api from '../utils/api';
-import Content from '../components/Content/Content';
 
 interface Props {
   match: Record<string, any>;

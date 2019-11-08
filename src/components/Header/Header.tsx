@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import StyledWrapper from './styles';
+import StyledWrapper from './Header.style';
 
 class Header extends React.Component {
   public render(): React.ReactNode {

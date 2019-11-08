@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import StyledWrapper, { StyledLink } from './styles';
+import StyledWrapper, { StyledLink } from './RouteTile.style';
 
 interface Props {
   route: {

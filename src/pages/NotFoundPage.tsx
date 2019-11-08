@@ -1,6 +1,6 @@
+import Content from 'components/Content/Content';
 import React from 'react';
 import Helmet from 'react-helmet';
-import Content from '../components/Content/Content';
 
 class NotFoundPage extends React.Component {
   render(): React.ReactNode {
