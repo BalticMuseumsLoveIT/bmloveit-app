@@ -1,7 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Api from '../utils/api';
-import tempUserData from '../tempUserData.json';
 import Content from '../components/Content/Content';
 
 interface Props {
@@ -56,7 +55,7 @@ class RoutePage extends React.Component<Props, State> {
     } = this.props.match;
 
     try {
-      const route = await Api.getAvailableRoute(id, tempUserData.token);
+      const route = await Api.getAvailableRoute(id);
 
       this.setState({ route });
     } catch (error) {

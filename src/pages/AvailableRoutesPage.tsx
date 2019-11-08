@@ -1,7 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import RouteTile from '../components/RouteTile/RouteTile';
-import tempUserData from '../tempUserData.json';
 import Content from '../components/Content/Content';
 import Api from '../utils/api';
 
@@ -46,7 +45,7 @@ class AvailableRoutesPage extends React.Component<{}, State> {
 
   async componentDidMount(): Promise<void> {
     try {
-      const availableRoutes = await Api.getAvailableRoutes(tempUserData.token);
+      const availableRoutes = await Api.getAvailableRoutes();
 
       this.setState({ availableRoutes });
     } catch (error) {}
