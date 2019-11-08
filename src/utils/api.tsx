@@ -1,4 +1,4 @@
-import tempUserData from 'utils/tempUserData.json';
+import userStore from 'utils/stores/userStore';
 
 abstract class Api {
   static async getAvailableRoutes(): Promise<any> {
@@ -21,11 +21,14 @@ abstract class Api {
     method: string,
     url: string,
     body: Array<any> = [],
-    headers: Record<string, any> = {
-      Authorization: `Bearer ${tempUserData.token}`,
-    },
+    headers: Record<string, any> = {},
   ): Promise<any> {
     const endpoint = `${process.env.REACT_APP_API_URL}/${url}`;
+
+    const userToken = userStore.getToken();
+    if (userToken.length > 0) {
+      headers['Authorization'] = `Bearer ${userToken}`;
+    }
 
     try {
       const response = await fetch(endpoint, {
