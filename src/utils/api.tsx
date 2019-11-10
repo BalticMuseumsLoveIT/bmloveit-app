@@ -1,4 +1,4 @@
-import userStore from 'utils/stores/userStore';
+import userStore from 'utils/store/userStore';
 
 abstract class Api {
   static async getAvailableRoutes(): Promise<any> {

@@ -1,6 +1,6 @@
 import Layout from 'components/Layout/Layout';
 import Routes from 'utils/Routes';
-import stores from 'utils/stores/stores';
+import stores from 'utils/store/stores';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'mobx-react';
