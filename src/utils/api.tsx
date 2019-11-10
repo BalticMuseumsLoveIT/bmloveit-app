@@ -1,7 +1,7 @@
 import userStore from 'utils/store/userStore';
 
 abstract class Api {
-  static async getAvailableRoutes(): Promise<any> {
+  public static async getRoutes(): Promise<any> {
     try {
       return await this.requestData('GET', 'route');
     } catch (error) {
@@ -9,9 +9,31 @@ abstract class Api {
     }
   }
 
-  static async getAvailableRoute(id: number): Promise<any> {
+  public static async getRoute(id: number): Promise<any> {
     try {
       return await this.requestData('GET', `route/${id}`);
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  public static async getLocationsForRoute(id: number): Promise<any> {
+    try {
+      return await this.requestData(
+        'GET',
+        `locations/?location_routes__route__id=${id}`,
+      );
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
+
+  public static async getLocation(id: number): Promise<any> {
+    try {
+      const response = await this.requestData('GET', `locations/?id=${id}`);
+
+      // api returns array with one element
+      return response[0];
     } catch (error) {
       return Promise.reject(error);
     }
@@ -20,7 +42,7 @@ abstract class Api {
   private static async requestData(
     method: string,
     url: string,
-    body: Array<any> = [],
+    body: Record<string, any> = {},
     headers: Record<string, any> = {},
   ): Promise<any> {
     const endpoint = `${process.env.REACT_APP_API_URL}/${url}`;
@@ -34,7 +56,8 @@ abstract class Api {
       const response = await fetch(endpoint, {
         method: method,
         headers: headers,
-        body: body.length > 0 ? JSON.stringify(body) : undefined,
+        body:
+          Object.entries(body).length > 0 ? JSON.stringify(body) : undefined,
       });
 
       return await response.json();

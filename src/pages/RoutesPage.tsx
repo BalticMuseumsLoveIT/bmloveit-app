@@ -7,22 +7,22 @@ import Helmet from 'react-helmet';
 interface Props {}
 
 interface State {
-  availableRoutes: Array<any>;
+  routes: Array<any>;
 }
 
-class AvailableRoutesPage extends React.Component<{}, State> {
+class RoutesPage extends React.Component<{}, State> {
   constructor(props: {}) {
     super(props);
 
     this.state = {
-      availableRoutes: [],
+      routes: [],
     };
   }
 
   render(): React.ReactNode {
-    let availableRoutesTiles;
-    if (this.state.availableRoutes.length > 0) {
-      availableRoutesTiles = this.state.availableRoutes.map(item => {
+    let routeTiles;
+    if (this.state.routes.length > 0) {
+      routeTiles = this.state.routes.map(item => {
         return <RouteTile key={item.id} route={item} />;
       });
     }
@@ -33,11 +33,7 @@ class AvailableRoutesPage extends React.Component<{}, State> {
           <title>Available Routes</title>
         </Helmet>
         <Content>
-          {availableRoutesTiles ? (
-            availableRoutesTiles
-          ) : (
-            <div>AvailableRoutesPage Spinner</div>
-          )}
+          {routeTiles ? routeTiles : <div>RoutesPage Spinner</div>}
         </Content>
       </>
     );
@@ -45,11 +41,10 @@ class AvailableRoutesPage extends React.Component<{}, State> {
 
   async componentDidMount(): Promise<void> {
     try {
-      const availableRoutes = await Api.getAvailableRoutes();
-
-      this.setState({ availableRoutes });
+      const routes = await Api.getRoutes();
+      this.setState({ routes });
     } catch (error) {}
   }
 }
 
-export default AvailableRoutesPage;
+export default RoutesPage;

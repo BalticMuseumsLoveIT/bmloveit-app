@@ -1,5 +1,7 @@
 import Api from 'utils/api';
 import Content from 'components/Content/Content';
+import LocationTile from 'components/LocationTile/LocationTile';
+import { RouteInterface, LocationInterface } from 'utils/@types/interfaces';
 import React from 'react';
 import Helmet from 'react-helmet';
 
@@ -8,19 +10,8 @@ interface Props {
 }
 
 interface State {
-  route: {
-    id: number;
-    name: string;
-    name_full: string;
-    description: string;
-    type: number;
-    active: boolean;
-    areas: Array<number>;
-    locations: Array<number>;
-    name_translation: Array<string>;
-    name_full_translation: Array<string>;
-    description_translation: Array<string>;
-  } | null;
+  route: RouteInterface | null;
+  locations: Array<LocationInterface>;
   message: string;
 }
 
@@ -30,12 +21,24 @@ class RoutePage extends React.Component<Props, State> {
 
     this.state = {
       route: null,
+      locations: [],
       message: 'RoutePage Spinner',
     };
   }
 
   render(): React.ReactNode {
-    const { route } = this.state;
+    const { route, locations } = this.state;
+
+    let locationTiles: React.ReactNode;
+    if (locations.length > 0) {
+      locationTiles = locations.map(item => {
+        return (
+          <LocationTile key={item.id} location={item}>
+            {item.name_full}
+          </LocationTile>
+        );
+      });
+    }
 
     return (
       <>
@@ -43,7 +46,11 @@ class RoutePage extends React.Component<Props, State> {
           <title>{route ? route.name_full : 'Route'}</title>
         </Helmet>
         <Content>
-          {route ? route.name_full : <div>{this.state.message}</div>}
+          {route && route.locations.length > 0 ? (
+            locationTiles
+          ) : (
+            <div>{this.state.message}</div>
+          )}
         </Content>
       </>
     );
@@ -55,9 +62,9 @@ class RoutePage extends React.Component<Props, State> {
     } = this.props.match;
 
     try {
-      const route = await Api.getAvailableRoute(id);
-
-      this.setState({ route });
+      const route = await Api.getRoute(id);
+      const locations = await Api.getLocationsForRoute(route.id);
+      this.setState({ route, locations });
     } catch (error) {
       this.setState({ message: 'error' });
     }

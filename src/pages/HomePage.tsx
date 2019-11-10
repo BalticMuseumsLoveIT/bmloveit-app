@@ -5,8 +5,8 @@ import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 
 interface Props {
-  history: any;
-  location: any;
+  history: History;
+  location: Location;
   translationStore: TranslationStore;
 }
 
