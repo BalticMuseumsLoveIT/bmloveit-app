@@ -3,7 +3,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 
 class NotFoundPage extends React.Component {
-  render(): React.ReactNode {
+  render() {
     return (
       <>
         <Helmet>

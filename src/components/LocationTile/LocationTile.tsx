@@ -5,14 +5,19 @@ import StyledWrapper, { StyledLink } from './LocationTile.style';
 
 interface Props {
   location: LocationInterface;
+  routeId: number;
 }
 
 class LocationTile extends React.Component<Props> {
-  public render(): React.ReactNode {
+  public render() {
     const { id, name_full } = this.props.location;
+
     return (
       <StyledWrapper>
-        <StyledLink as={Link} to={`/locations/${id}`}>
+        <StyledLink
+          as={Link}
+          to={`/routes/${this.props.routeId}/locations/${id}`}
+        >
           {name_full}
         </StyledLink>
       </StyledWrapper>

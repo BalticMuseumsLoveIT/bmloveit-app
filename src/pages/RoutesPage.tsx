@@ -1,28 +1,22 @@
 import Api from 'utils/api';
 import RouteTile from 'components/RouteTile/RouteTile';
 import Content from 'components/Content/Content';
+import { RoutesStore } from 'utils/store/routesStore';
 import React from 'react';
 import Helmet from 'react-helmet';
+import { inject, observer } from 'mobx-react';
 
-interface Props {}
-
-interface State {
-  routes: Array<any>;
+interface Props {
+  routesStore: RoutesStore;
 }
 
-class RoutesPage extends React.Component<{}, State> {
-  constructor(props: {}) {
-    super(props);
-
-    this.state = {
-      routes: [],
-    };
-  }
-
-  render(): React.ReactNode {
+@inject('routesStore')
+@observer
+class RoutesPage extends React.Component<Props> {
+  render() {
     let routeTiles;
-    if (this.state.routes.length > 0) {
-      routeTiles = this.state.routes.map(item => {
+    if (this.props.routesStore.getRoutes().length > 0) {
+      routeTiles = this.props.routesStore.getRoutes().map(item => {
         return <RouteTile key={item.id} route={item} />;
       });
     }
@@ -40,10 +34,12 @@ class RoutesPage extends React.Component<{}, State> {
   }
 
   async componentDidMount(): Promise<void> {
-    try {
-      const routes = await Api.getRoutes();
-      this.setState({ routes });
-    } catch (error) {}
+    if (this.props.routesStore.getRoutes().length === 0) {
+      try {
+        const routes = await Api.getRoutes();
+        this.props.routesStore.setRoutes(routes);
+      } catch (error) {}
+    }
   }
 }
 

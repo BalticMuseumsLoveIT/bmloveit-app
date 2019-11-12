@@ -13,7 +13,7 @@ interface Props {
 @inject('uiStore')
 @observer
 class HomePage extends React.Component<Props> {
-  render(): React.ReactNode {
+  render() {
     return (
       <>
         <Helmet>

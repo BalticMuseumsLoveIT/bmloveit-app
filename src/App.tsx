@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 
 class App extends React.Component {
-  render(): React.ReactNode {
+  render() {
     return (
       <Provider {...stores}>
         <BrowserRouter>

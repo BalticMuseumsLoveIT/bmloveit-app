@@ -1,6 +1,7 @@
 import Api from 'utils/api';
 import Content from 'components/Content/Content';
 import { LocationInterface } from 'utils/@types/interfaces';
+import LocationFooter from 'components/LocationFooter/LocationFooter';
 import React from 'react';
 import Helmet from 'react-helmet';
 
@@ -23,7 +24,7 @@ class LocationPage extends React.Component<Props, State> {
     };
   }
 
-  render(): React.ReactNode {
+  render() {
     const { location, message } = this.state;
 
     return (
@@ -32,6 +33,7 @@ class LocationPage extends React.Component<Props, State> {
           <title>{location ? location.name_full : 'Location'}</title>
         </Helmet>
         <Content>{location ? location.name_full : message}</Content>
+        <LocationFooter />
       </>
     );
   }
