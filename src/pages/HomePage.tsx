@@ -1,5 +1,5 @@
 import Content from 'components/Content/Content';
-import { TranslationStore } from 'utils/store/translationStore';
+import { UiStore } from 'utils/store/uiStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -7,10 +7,10 @@ import { inject, observer } from 'mobx-react';
 interface Props {
   history: History;
   location: Location;
-  translationStore: TranslationStore;
+  uiStore: UiStore;
 }
 
-@inject('translationStore')
+@inject('uiStore')
 @observer
 class HomePage extends React.Component<Props> {
   render(): React.ReactNode {
@@ -19,17 +19,13 @@ class HomePage extends React.Component<Props> {
         <Helmet>
           <title>Home</title>
         </Helmet>
-        <Content>{this.props.translationStore.getProperText('hello')}</Content>
+        <Content>{this.props.uiStore.getProperText('hello')}</Content>
         <Content>
           HomePage
-          <button
-            onClick={(): void => this.props.translationStore.setLang('pl')}
-          >
+          <button onClick={(): void => this.props.uiStore.setLang('pl')}>
             PL
           </button>
-          <button
-            onClick={(): void => this.props.translationStore.setLang('en')}
-          >
+          <button onClick={(): void => this.props.uiStore.setLang('en')}>
             EN
           </button>
         </Content>

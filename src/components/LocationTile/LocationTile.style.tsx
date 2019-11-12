@@ -13,7 +13,7 @@ const StyledWrapper = styled.div`
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
-  color: ${({ theme }): any => theme.colors.dark};
+  color: ${({ theme }) => theme.color.dark};
 `;
 
 export default StyledWrapper;

@@ -1,9 +1,9 @@
 import userStore from './userStore';
-import translationStore from './translationStore';
+import uiStore from './uiStore';
 
 const stores = {
   userStore,
-  translationStore,
+  uiStore,
 };
 
 export default stores;

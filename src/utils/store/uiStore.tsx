@@ -2,11 +2,13 @@ import translations from 'utils/translation/translations';
 import { observable } from 'mobx';
 import detectBrowserLanguage from 'detect-browser-language';
 
-export class TranslationStore {
+export class UiStore {
   @observable private lang: string;
+  @observable private isMenuOpened: boolean;
 
   constructor(defaultLang: string) {
     this.lang = defaultLang;
+    this.isMenuOpened = false;
   }
 
   public setLang(lang: string): void {
@@ -20,11 +22,19 @@ export class TranslationStore {
   public getProperText(key: string): string {
     return translations[this.getLang()][key];
   }
+
+  public toggleIsMenuOpened(): void {
+    this.isMenuOpened = !this.getIsMenuOpened();
+  }
+
+  public getIsMenuOpened(): boolean {
+    return this.isMenuOpened;
+  }
 }
 
 const browserLang = detectBrowserLanguage();
 const defaultLang = browserLang in translations ? browserLang : 'en';
 
-const translationStore = new TranslationStore(defaultLang);
+const uiStore = new UiStore(defaultLang);
 
-export default translationStore;
+export default uiStore;
