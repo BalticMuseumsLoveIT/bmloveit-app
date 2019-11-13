@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "target": "es6",
+    "target": "es2019",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "keyofStringsOnly": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,

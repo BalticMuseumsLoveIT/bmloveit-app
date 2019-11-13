@@ -5,7 +5,6 @@ interface StyledWrapperProps {
 }
 
 const StyledWrapper = styled.nav<StyledWrapperProps>`
-  /* display: ${({ isOpened }) => (isOpened ? 'block' : 'none')}; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +16,8 @@ const StyledWrapper = styled.nav<StyledWrapperProps>`
   height: 100vh;
   background-color: ${({ theme }) => theme.color.primary};
   transform: translateX(${({ isOpened }) => (isOpened ? '0' : '-100%')});
-  transition: transform .25s ease;
+  transition: transform 0.25s ease;
+  z-index: 1;
 `;
 
 export default StyledWrapper;

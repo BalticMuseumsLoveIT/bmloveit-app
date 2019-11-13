@@ -13,7 +13,7 @@ class Hamburger extends React.Component<Props> {
   public render() {
     return (
       <StyledWrapper onClick={() => this.props.uiStore!.toggleIsMenuOpened()}>
-        <InnerHamburger />
+        <InnerHamburger isOpened={this.props.uiStore!.getIsMenuOpened()} />
       </StyledWrapper>
     );
   }

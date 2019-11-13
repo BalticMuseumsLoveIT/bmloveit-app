@@ -2,8 +2,8 @@ import { RouteInterface, LocationInterface } from 'utils/@types/interfaces';
 import { observable } from 'mobx';
 
 export class RoutesStore {
-  @observable public routes: Array<RouteInterface> = [];
-  @observable public locations: Array<LocationInterface> = [];
+  @observable private routes: Array<RouteInterface> = [];
+  @observable private locations: Array<LocationInterface> = [];
 
   public setRoutes(routes: Array<RouteInterface>): void {
     this.routes = routes;
@@ -25,9 +25,14 @@ export class RoutesStore {
     return this.locations;
   }
 
+  public getLocation(id: number): LocationInterface | undefined {
+    return this.getLocations().find(item => item.id === id);
+  }
+
   public getLocationsForRoute(id: number): Array<LocationInterface> {
     return this.getLocations().filter(item => {
       const route = this.getRoute(id);
+
       if (route === undefined) {
         return false;
       }

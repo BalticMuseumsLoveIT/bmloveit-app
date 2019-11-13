@@ -1,9 +1,30 @@
 import React from 'react';
-import StyledWrapper from './LocationFooter.style';
+import { Link } from 'react-router-dom';
+import StyledWrapper, { PrevButton, NextButton } from './LocationFooter.style';
 
-class LocationsFooter extends React.Component {
+interface Props {
+  prev?: string;
+  next?: string;
+}
+
+class LocationsFooter extends React.Component<Props> {
   public render() {
-    return <StyledWrapper>asd</StyledWrapper>;
+    const { prev, next } = this.props;
+
+    return (
+      <StyledWrapper>
+        {prev && (
+          <PrevButton as={Link} to={prev}>
+            Prev
+          </PrevButton>
+        )}
+        {next && (
+          <NextButton as={Link} to={next}>
+            Next
+          </NextButton>
+        )}
+      </StyledWrapper>
+    );
   }
 }
 

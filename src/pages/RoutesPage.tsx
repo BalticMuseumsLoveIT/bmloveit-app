@@ -33,7 +33,7 @@ class RoutesPage extends React.Component<Props> {
     );
   }
 
-  async componentDidMount(): Promise<void> {
+  async componentDidMount() {
     if (this.props.routesStore.getRoutes().length === 0) {
       try {
         const routes = await Api.getRoutes();

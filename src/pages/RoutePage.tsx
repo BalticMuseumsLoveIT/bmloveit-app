@@ -60,7 +60,7 @@ class RoutePage extends React.Component<Props, State> {
     );
   }
 
-  async componentDidMount(): Promise<void> {
+  async componentDidMount() {
     const {
       params: { id },
     } = this.props.match;
