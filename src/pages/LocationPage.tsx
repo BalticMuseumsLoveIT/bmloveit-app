@@ -64,7 +64,6 @@ class LocationPage extends React.Component<Props, State> {
         this.props.routesStore.setRoutes(routes);
 
         const locations = await Api.getLocationsForRoute(routeId);
-
         this.props.routesStore.setLocations(locations);
       } catch (error) {}
     }
