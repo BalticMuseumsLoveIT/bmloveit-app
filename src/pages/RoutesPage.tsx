@@ -2,6 +2,9 @@ import Api from 'utils/api';
 import RouteTile from 'components/RouteTile/RouteTile';
 import Content from 'components/Content/Content';
 import { RoutesStore } from 'utils/store/routesStore';
+import { groupObjectsByKey } from 'utils/helpers';
+import { RouteInterface } from 'utils/@types/interfaces';
+import RoutesTile from 'components/RoutesTile/RoutesTile';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -14,10 +17,21 @@ interface Props {
 @observer
 class RoutesPage extends React.Component<Props> {
   render() {
-    let routeTiles;
-    if (this.props.routesStore.getRoutes().length > 0) {
-      routeTiles = this.props.routesStore.getRoutes().map(item => {
-        return <RouteTile key={item.id} route={item} />;
+    const routes = this.props.routesStore.getRoutes();
+    let routesTiles;
+    if (routes.length > 0) {
+      const groupedRoutes = groupObjectsByKey(routes, 'type');
+
+      routesTiles = groupedRoutes.map(groupedRoute => {
+        const [categoryName, routesArray] = groupedRoute;
+
+        return (
+          <RoutesTile key={categoryName} title={categoryName}>
+            {routesArray.map((item: RouteInterface) => (
+              <RouteTile key={item.id} route={item} />
+            ))}
+          </RoutesTile>
+        );
       });
     }
 
@@ -27,7 +41,7 @@ class RoutesPage extends React.Component<Props> {
           <title>Available Routes</title>
         </Helmet>
         <Content>
-          {routeTiles ? routeTiles : <div>RoutesPage Spinner</div>}
+          {routesTiles ? routesTiles : <div>RoutesPage Spinner</div>}
         </Content>
       </>
     );

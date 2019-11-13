@@ -23,3 +23,14 @@ export function getNextArrayElement(
 
   return array[index + 1];
 }
+
+export function groupObjectsByKey(array: Array<any>, key: string): Array<any> {
+  const groupedArray = array.reduce((resultObject, arrayElement) => {
+    resultObject[arrayElement[key]] = resultObject[arrayElement[key]] || [];
+    resultObject[arrayElement[key]].push(arrayElement);
+
+    return resultObject;
+  }, {});
+
+  return Object.entries(groupedArray);
+}
