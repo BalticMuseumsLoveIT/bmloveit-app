@@ -1,23 +1,14 @@
+import Hamburger from 'components/Hamburger/Hamburger';
+import MobileMenu from 'components/MobileMenu/MobileMenu';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import StyledWrapper from './Header.style';
 
 class Header extends React.Component {
-  public render(): React.ReactNode {
+  public render() {
     return (
       <StyledWrapper>
-        <header>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/routes">Available Routes</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
+        <Hamburger />
+        <MobileMenu />
       </StyledWrapper>
     );
   }

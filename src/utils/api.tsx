@@ -1,40 +1,49 @@
-import tempUserData from 'utils/tempUserData.json';
+import userStore from 'utils/store/userStore';
+import axios from 'axios';
+
+const axiosInstance = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  headers: {
+    Authorization: `Bearer ${userStore.getToken()}`,
+  },
+});
 
 abstract class Api {
-  static async getAvailableRoutes(): Promise<any> {
+  public static async getRoutes(): Promise<any> {
     try {
-      return await this.requestData('GET', 'route');
+      const response = await axiosInstance.get('route/');
+      return response.data;
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  static async getAvailableRoute(id: number): Promise<any> {
+  public static async getRoute(id: number): Promise<any> {
     try {
-      return await this.requestData('GET', `route/${id}`);
+      const response = await axiosInstance.get(`route/${id}`);
+      return response.data;
     } catch (error) {
       return Promise.reject(error);
     }
   }
 
-  private static async requestData(
-    method: string,
-    url: string,
-    body: Array<any> = [],
-    headers: Record<string, any> = {
-      Authorization: `Bearer ${tempUserData.token}`,
-    },
-  ): Promise<any> {
-    const endpoint = `${process.env.REACT_APP_API_URL}/${url}`;
-
+  public static async getLocationsForRoute(id: number): Promise<any> {
     try {
-      const response = await fetch(endpoint, {
-        method: method,
-        headers: headers,
-        body: body.length > 0 ? JSON.stringify(body) : undefined,
-      });
+      const response = await axiosInstance.get(
+        `locations/?location_routes__route__id=${id}`,
+      );
+      return response.data;
+    } catch (error) {
+      return Promise.reject(error);
+    }
+  }
 
-      return await response.json();
+  public static async getLocation(id: number): Promise<any> {
+    try {
+      const response = await axiosInstance.get(`locations/?id=${id}`);
+
+      // api returns array with one element
+      return response.data[0];
     } catch (error) {
       return Promise.reject(error);
     }

@@ -6,7 +6,7 @@ interface Props {
 }
 
 class Content extends React.Component<Props> {
-  public render(): React.ReactNode {
+  public render() {
     return <StyledWrapper>{this.props.children}</StyledWrapper>;
   }
 }

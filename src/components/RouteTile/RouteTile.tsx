@@ -10,7 +10,7 @@ interface Props {
 }
 
 class RouteTile extends React.Component<Props> {
-  public render(): React.ReactNode {
+  public render() {
     const { id, name_full } = this.props.route;
     return (
       <StyledWrapper>

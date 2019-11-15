@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 const StyledWrapper = styled.div`
-  align-self: stretch;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,11 +8,7 @@ const StyledWrapper = styled.div`
   border: 1px solid gray;
   margin: 15px 0;
   padding: 15px;
-`;
-
-export const StyledLink = styled(Link)`
-  text-decoration: none;
-  color: ${({ theme }) => theme.color.dark};
+  background-color: ${({ theme }) => theme.color.primary};
 `;
 
 export default StyledWrapper;

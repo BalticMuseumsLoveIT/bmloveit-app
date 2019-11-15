@@ -1,6 +1,8 @@
 {
   "globals": {
-    "process": true
+    "process": true,
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
   },
   "env": {
     "browser": true,
@@ -17,10 +19,6 @@
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended" // Make sure this is always the last configuration in the "extends" array.
   ],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
-  },
   "settings": {
     "react": {
       "version": "detect"
@@ -56,6 +54,8 @@
     ],
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/camelcase": "off",
-    "@typescript-eslint/no-empty-interface": "off"
+    "@typescript-eslint/no-empty-interface": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-non-null-assertion": "off"
   }
 }

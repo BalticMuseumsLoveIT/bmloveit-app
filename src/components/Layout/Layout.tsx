@@ -9,7 +9,7 @@ export interface Props {
 }
 
 export default class Layout extends React.Component<Props> {
-  public render(): React.ReactNode {
+  public render() {
     return (
       <ThemeProvider theme={theme}>
         <>

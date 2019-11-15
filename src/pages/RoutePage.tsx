@@ -1,41 +1,48 @@
 import Api from 'utils/api';
 import Content from 'components/Content/Content';
+import LocationTile from 'components/LocationTile/LocationTile';
+import { RoutesStore } from 'utils/store/routesStore';
 import React from 'react';
 import Helmet from 'react-helmet';
+import { observer, inject } from 'mobx-react';
 
 interface Props {
+  routesStore: RoutesStore;
   match: Record<string, any>;
 }
 
 interface State {
-  route: {
-    id: number;
-    name: string;
-    name_full: string;
-    description: string;
-    type: number;
-    active: boolean;
-    areas: Array<number>;
-    locations: Array<number>;
-    name_translation: Array<string>;
-    name_full_translation: Array<string>;
-    description_translation: Array<string>;
-  } | null;
   message: string;
 }
 
+@inject('routesStore')
+@observer
 class RoutePage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      route: null,
       message: 'RoutePage Spinner',
     };
   }
 
-  render(): React.ReactNode {
-    const { route } = this.state;
+  render() {
+    const {
+      params: { id },
+    } = this.props.match;
+    const route = this.props.routesStore.getRoute(id);
+    const locations = this.props.routesStore.getLocationsForRoute(parseInt(id));
+
+    let locationTiles: React.ReactNode;
+    if (locations.length > 0) {
+      locationTiles = locations.map(item => {
+        return (
+          <LocationTile key={item.id} location={item} routeId={id}>
+            {item.name_full}
+          </LocationTile>
+        );
+      });
+    }
 
     return (
       <>
@@ -43,21 +50,24 @@ class RoutePage extends React.Component<Props, State> {
           <title>{route ? route.name_full : 'Route'}</title>
         </Helmet>
         <Content>
-          {route ? route.name_full : <div>{this.state.message}</div>}
+          {locations.length > 0 ? (
+            locationTiles
+          ) : (
+            <div>{this.state.message}</div>
+          )}
         </Content>
       </>
     );
   }
 
-  async componentDidMount(): Promise<void> {
+  async componentDidMount() {
     const {
       params: { id },
     } = this.props.match;
 
     try {
-      const route = await Api.getAvailableRoute(id);
-
-      this.setState({ route });
+      const locations = await Api.getLocationsForRoute(id);
+      this.props.routesStore.setLocations(locations);
     } catch (error) {
       this.setState({ message: 'error' });
     }
