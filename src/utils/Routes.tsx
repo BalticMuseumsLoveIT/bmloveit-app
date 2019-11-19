@@ -5,6 +5,7 @@ import RoutePage from 'pages/RoutePage';
 import LocationPage from 'pages/LocationPage';
 import { Route, Switch } from 'react-router-dom';
 import React from 'react';
+import QuizPage from '../pages/QuizPage';
 
 class Routes extends React.Component {
   public render() {
@@ -12,6 +13,7 @@ class Routes extends React.Component {
       <>
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/quiz" component={QuizPage} />
           <Route exact path="/routes" component={RoutesPage} />
           <Route exact path="/routes/:id" component={RoutePage} />
           <Route
