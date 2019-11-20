@@ -61,3 +61,7 @@ export interface QuizInterface {
   name_full_translation: TranslationItemInterface[];
   description_translation: TranslationItemInterface[];
 }
+
+export interface QuizDetailsInterface extends QuizInterface {
+  questions_data: QuizQuestionInterface[];
+}
