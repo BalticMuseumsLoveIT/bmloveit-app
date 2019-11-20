@@ -32,3 +32,14 @@ export interface LocationInterface {
   resources_data: Array<any>;
   routes: Array<number>;
 }
+
+export interface QuizInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  language: number;
+  name_translation: TranslationItemInterface[];
+  name_full_translation: TranslationItemInterface[];
+  description_translation: TranslationItemInterface[];
+}
