@@ -1,3 +1,8 @@
+export interface TranslationItemInterface {
+  language: number;
+  text: string;
+}
+
 export interface RouteInterface {
   id: number;
   name: string;
