@@ -65,3 +65,7 @@ export interface QuizInterface {
 export interface QuizDetailsInterface extends QuizInterface {
   questions_data: QuizQuestionInterface[];
 }
+
+export interface QuizDetailsNotFound {
+  detail: string;
+}
