@@ -33,6 +33,14 @@ export interface LocationInterface {
   routes: Array<number>;
 }
 
+export interface QuizOptionInterface {
+  id: number;
+  no: number;
+  description: string;
+  file_url: string;
+  description_translation: TranslationItemInterface[];
+}
+
 export interface QuizInterface {
   id: number;
   name: string;
