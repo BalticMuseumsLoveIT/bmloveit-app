@@ -41,6 +41,16 @@ export interface QuizOptionInterface {
   description_translation: TranslationItemInterface[];
 }
 
+export interface QuizQuestionInterface {
+  id: number;
+  no: number;
+  type: string;
+  description: string;
+  file_url: string;
+  description_translation: TranslationItemInterface[];
+  options_data: QuizOptionInterface[];
+}
+
 export interface QuizInterface {
   id: number;
   name: string;
