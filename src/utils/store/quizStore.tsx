@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 import { QuizDetailsInterface, QuizInterface } from '../@types/interfaces';
 
-class QuizStore {
+export class QuizStore {
   @observable quizList: QuizInterface[] = [];
   @observable quizDetails: QuizDetailsInterface | null = null;
 }
