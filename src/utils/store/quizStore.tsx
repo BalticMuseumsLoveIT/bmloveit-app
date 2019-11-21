@@ -6,6 +6,6 @@ export class QuizStore {
   @observable quizDetails: QuizDetailsInterface | null = null;
 }
 
-const store = new QuizStore();
+const quizStore = new QuizStore();
 
-export default store;
+export default quizStore;
