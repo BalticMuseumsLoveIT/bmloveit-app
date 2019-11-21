@@ -41,10 +41,16 @@ export interface QuizOptionInterface {
   description_translation: TranslationItemInterface[];
 }
 
+enum QuizQuestionType {
+  Open = 'O',
+  Select = 'S',
+  Multiselect = 'M',
+}
+
 export interface QuizQuestionInterface {
   id: number;
   no: number;
-  type: string;
+  type: QuizQuestionType;
   description: string;
   file_url: string;
   description_translation: TranslationItemInterface[];
