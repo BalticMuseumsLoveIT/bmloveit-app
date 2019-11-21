@@ -1,16 +1,10 @@
 import Content from 'components/Content/Content';
-import { UiStore } from 'utils/store/uiStore';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 
-interface Props {
-  history: History;
-  location: Location;
-  uiStore: UiStore;
-}
+interface Props {}
 
-@inject('uiStore')
 @observer
 class QuizPage extends React.Component<Props> {
   render() {
