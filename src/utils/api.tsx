@@ -3,9 +3,13 @@ import axios from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  headers: {
-    Authorization: `Bearer ${userStore.getToken()}`,
-  },
+  headers: {},
+  transformRequest: [
+    function(data, headers) {
+      headers['Authorization'] = `Bearer ${userStore.getToken()}`;
+      return JSON.stringify(data);
+    },
+  ],
 });
 
 abstract class Api {

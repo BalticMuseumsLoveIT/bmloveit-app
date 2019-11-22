@@ -1,4 +1,4 @@
-import { RouteInterface, LocationInterface } from 'utils/@types/interfaces';
+import { RouteInterface, LocationInterface } from 'utils/interfaces';
 import { observable } from 'mobx';
 
 export class RoutesStore {
