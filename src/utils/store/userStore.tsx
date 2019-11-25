@@ -1,4 +1,3 @@
-import tempUserData from 'utils/tempUserData.json';
 import { observable } from 'mobx';
 
 export class UserStore {
@@ -15,6 +14,6 @@ export class UserStore {
 
 const userStore = new UserStore();
 
-userStore.setToken(tempUserData.token);
+userStore.setToken(process.env.REACT_APP_API_TOKEN || '');
 
 export default userStore;
