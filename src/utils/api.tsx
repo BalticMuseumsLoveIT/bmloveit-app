@@ -78,7 +78,8 @@ abstract class Api {
   public static async getQuiz(
     id: number,
   ): Promise<QuizDetailsInterface | QuizDetailsNotFound> {
-    const response = await axiosInstance.get(`quiz/?id=${id}`);
+    const response = await axiosInstance.get(`quiz/${id}`);
+    console.log(response);
     return response.data;
   }
 }
