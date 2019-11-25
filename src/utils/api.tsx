@@ -4,7 +4,7 @@ import {
   QuizDetailsInterface,
   QuizDetailsNotFound,
   QuizInterface,
-} from './@types/interfaces';
+} from './interfaces';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,

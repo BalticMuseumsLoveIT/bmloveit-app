@@ -1,4 +1,4 @@
-import { LocationInterface } from 'utils/@types/interfaces';
+import { LocationInterface } from 'utils/interfaces';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import StyledWrapper, { StyledLink } from './LocationTile.style';

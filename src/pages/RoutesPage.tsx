@@ -3,7 +3,7 @@ import RouteTile from 'components/RouteTile/RouteTile';
 import Content from 'components/Content/Content';
 import { RoutesStore } from 'utils/store/routesStore';
 import { groupObjectsByKey } from 'utils/helpers';
-import { RouteInterface } from 'utils/@types/interfaces';
+import { RouteInterface } from 'utils/interfaces';
 import RoutesTile from 'components/RoutesTile/RoutesTile';
 import React from 'react';
 import Helmet from 'react-helmet';

@@ -1,5 +1,5 @@
 import { observable } from 'mobx';
-import { QuizDetailsInterface, QuizInterface } from '../@types/interfaces';
+import { QuizDetailsInterface, QuizInterface } from '../interfaces';
 
 export class QuizStore {
   @observable quizList: QuizInterface[] = [];
