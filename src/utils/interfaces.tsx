@@ -75,3 +75,9 @@ export interface QuizDetailsInterface extends QuizInterface {
 export interface QuizDetailsNotFound {
   detail: string;
 }
+
+export function isQuizDetailsNotFound(
+  quizDetailsNotFound: QuizDetailsNotFound,
+): quizDetailsNotFound is QuizDetailsNotFound {
+  return (quizDetailsNotFound as QuizDetailsNotFound).detail !== undefined;
+}

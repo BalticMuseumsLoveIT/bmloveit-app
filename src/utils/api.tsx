@@ -2,7 +2,6 @@ import userStore from 'utils/store/userStore';
 import axios from 'axios';
 import {
   QuizDetailsInterface,
-  QuizDetailsNotFound,
   QuizInterface,
 } from './interfaces';
 
@@ -70,16 +69,14 @@ abstract class Api {
    * Response will include quiz base data and questions list.
    *
    * If quiz is not active, has been deleted or was not created yet,
-   * {QuizDetailsNotFound} object will be returned.
+   * Axios Error will be thrown with status 404 and
+   * response.data equal to {QuizDetailsNotFound}
    *
    * @param {number} id - Quiz ID
    * @throws Axios error
    */
-  public static async getQuiz(
-    id: number,
-  ): Promise<QuizDetailsInterface | QuizDetailsNotFound> {
+  public static async getQuiz(id: number): Promise<QuizDetailsInterface> {
     const response = await axiosInstance.get(`quiz/${id}`);
-    console.log(response);
     return response.data;
   }
 }
