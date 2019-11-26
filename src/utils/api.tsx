@@ -97,6 +97,28 @@ abstract class Api {
     const response = await axiosInstance.post('quiz-fulfillment/', formData);
     return response.data;
   }
+
+  /**
+   * Check quiz answer
+   *
+   * @param {number} fulfillment - Fulfillment ID
+   * @param {number} question - Question ID
+   * @param {number} option - Option ID
+   * @throws Axios error
+   */
+  public static async getQuizAnswer(
+    fulfillment: number,
+    question: number,
+    option: number,
+  ): Promise<QuizAnswerResponse> {
+    const formData = new FormData();
+    formData.append('fulfillment', fulfillment.toString());
+    formData.append('question', question.toString());
+    formData.append('options_data', option.toString());
+
+    const response = await axiosInstance.post('quiz-answer/', formData);
+    return response.data;
+  }
 }
 
 export default Api;
