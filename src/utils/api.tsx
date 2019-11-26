@@ -1,7 +1,9 @@
 import userStore from 'utils/store/userStore';
 import axios from 'axios';
 import {
+  QuizAnswerResponse,
   QuizDetailsInterface,
+  QuizFulfillmentResponse,
   QuizInterface,
 } from './interfaces';
 
@@ -77,6 +79,22 @@ abstract class Api {
    */
   public static async getQuiz(id: number): Promise<QuizDetailsInterface> {
     const response = await axiosInstance.get(`quiz/${id}`);
+    return response.data;
+  }
+
+  /**
+   * Get a fulfillment for a quiz with a given id
+   *
+   * @param {number} id - Quiz ID
+   * @throws Axios error
+   */
+  public static async getQuizFulfillment(
+    id: number,
+  ): Promise<QuizFulfillmentResponse> {
+    const formData = new FormData();
+    formData.append('quiz', id.toString());
+
+    const response = await axiosInstance.post('quiz-fulfillment/', formData);
     return response.data;
   }
 }
