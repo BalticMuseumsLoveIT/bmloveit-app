@@ -81,3 +81,10 @@ export function isQuizDetailsNotFound(
 ): quizDetailsNotFound is QuizDetailsNotFound {
   return (quizDetailsNotFound as QuizDetailsNotFound).detail !== undefined;
 }
+
+export interface QuizFulfillmentResponse {
+  id: number;
+  quiz: number;
+  user: number;
+  date_add: string;
+}
