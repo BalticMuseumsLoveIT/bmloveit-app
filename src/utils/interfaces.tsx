@@ -88,3 +88,11 @@ export interface QuizFulfillmentResponse {
   user: number;
   date_add: string;
 }
+
+export interface QuizAnswerResponse {
+  id: number;
+  fulfillment: number;
+  question: number;
+  value: string;
+  correct: boolean;
+}
