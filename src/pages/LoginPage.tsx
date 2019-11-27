@@ -35,6 +35,9 @@ class LoginPage extends React.Component<Props> {
           LoginPage
           <FacebookButton onSuccess={this.login} />
           <GoogleButton onSuccess={this.login} />
+          <button onClick={() => this.props.userStore.setToken('')}>
+            Logout
+          </button>
         </Content>
       </>
     );
