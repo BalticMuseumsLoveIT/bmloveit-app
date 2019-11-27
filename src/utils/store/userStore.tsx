@@ -1,10 +1,11 @@
+import { getItemFromStorage, setItemToStorage } from 'utils/helpers';
 import { observable } from 'mobx';
 
 export class UserStore {
-  @observable private token = '';
+  @observable private token = getItemFromStorage('token');
 
   public setToken(token: string): void {
-    this.token = token;
+    this.token = setItemToStorage('token', token);
   }
 
   public getToken(): string {
