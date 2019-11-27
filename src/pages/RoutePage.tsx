@@ -13,6 +13,7 @@ interface Props {
 
 interface State {
   message: string;
+  isProcessing: boolean;
 }
 
 @inject('routesStore')
@@ -23,10 +24,12 @@ class RoutePage extends React.Component<Props, State> {
 
     this.state = {
       message: 'RoutePage Spinner',
+      isProcessing: true,
     };
   }
 
   render() {
+    const { isProcessing } = this.state;
     const {
       params: { id },
     } = this.props.match;
@@ -49,7 +52,7 @@ class RoutePage extends React.Component<Props, State> {
         <Helmet>
           <title>{route ? route.name_full : 'Route'}</title>
         </Helmet>
-        <Content>
+        <Content isProcessing={isProcessing}>
           {locations.length > 0 ? (
             locationTiles
           ) : (
@@ -71,6 +74,8 @@ class RoutePage extends React.Component<Props, State> {
     } catch (error) {
       this.setState({ message: 'error' });
     }
+
+    this.setState({ isProcessing: false });
   }
 }
 

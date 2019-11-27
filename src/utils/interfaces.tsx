@@ -27,3 +27,12 @@ export interface LocationInterface {
   resources_data: Array<any>;
   routes: Array<number>;
 }
+
+export interface LoginButtonPropsInterface {
+  onSuccess: (argument: OAuthLoginArgumentInterface) => Promise<void>;
+}
+
+export interface OAuthLoginArgumentInterface {
+  provider: string;
+  response: any;
+}

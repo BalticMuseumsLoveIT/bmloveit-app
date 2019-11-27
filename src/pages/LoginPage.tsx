@@ -3,7 +3,8 @@ import { UiStore } from 'utils/store/uiStore';
 import GoogleButton from 'components/LoginButtons/GoogleButton/GoogleButton';
 import FacebookButton from 'components/LoginButtons/FacebookButton/FacebookButton';
 import { UserStore } from 'utils/store/userStore';
-import tempUserData from 'utils/tempUserData.json';
+import Api from 'utils/api';
+import { OAuthLoginArgumentInterface } from 'utils/interfaces';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -17,7 +18,14 @@ interface Props extends RouteComponentProps {
 @inject('uiStore', 'userStore')
 @observer
 class LoginPage extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props);
+    this.login = this.login.bind(this);
+  }
+
   render() {
+    console.log('LoginPage_token: ', this.props.userStore.getToken());
+
     return (
       <>
         <Helmet>
@@ -25,29 +33,26 @@ class LoginPage extends React.Component<Props> {
         </Helmet>
         <Content>
           LoginPage
-          <FacebookButton callback={this.responseOauth} />
-          <GoogleButton callback={this.responseOauth} />
-          <button onClick={this.responseOauth}>Login</button>
-          <button
-            onClick={(): void => console.log(this.props.userStore.getToken())}
-          >
-            ShowToken
-          </button>
+          <FacebookButton onSuccess={this.login} />
+          <GoogleButton onSuccess={this.login} />
         </Content>
       </>
     );
   }
 
-  // This callback should return void
-  responseOauth = ({ provider, response }: any): any => {
-    console.log(response);
-    this.props.userStore.setToken(tempUserData.token);
+  async login({
+    provider,
+    response,
+  }: OAuthLoginArgumentInterface): Promise<void> {
+    console.log('login: ', provider, response);
+
+    const data = await Api.signIn(provider, response.accessToken);
+    this.props.userStore.setToken(data.access_token);
 
     const { location } = this.props;
     const redirectTo = (location.state && location.state.from.pathname) || '/';
-
     this.props.history.push(redirectTo);
-  };
+  }
 }
 
 export default LoginPage;

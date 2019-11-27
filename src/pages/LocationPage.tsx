@@ -15,6 +15,7 @@ interface Props {
 interface State {
   message: string;
   isMounted: boolean;
+  isProcessing: boolean;
 }
 
 @inject('routesStore')
@@ -28,11 +29,12 @@ class LocationPage extends React.Component<Props, State> {
     this.state = {
       message: 'LocationPage Spinner',
       isMounted: false,
+      isProcessing: true,
     };
   }
 
   render() {
-    const { message, isMounted } = this.state;
+    const { message, isMounted, isProcessing } = this.state;
 
     if (isMounted === false) {
       return null;
@@ -47,7 +49,9 @@ class LocationPage extends React.Component<Props, State> {
         <Helmet>
           <title>{location ? location.name_full : 'Location'}</title>
         </Helmet>
-        <Content>{location ? location.name_full : message}</Content>
+        <Content isProcessing={isProcessing}>
+          {location ? location.name_full : message}
+        </Content>
         {location && <LocationFooter {...this.getPrevAndNextLocationUrl()} />}
       </>
     );
@@ -68,7 +72,7 @@ class LocationPage extends React.Component<Props, State> {
       } catch (error) {}
     }
 
-    this.setState({ isMounted: true });
+    this.setState({ isMounted: true, isProcessing: false });
   }
 
   componentWillUnmount() {
