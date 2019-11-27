@@ -1,8 +1,8 @@
 export function getPrevArrayElement(
   array: Array<any>,
-  element: any,
+  currentElement: any,
 ): any | undefined {
-  const index = array.indexOf(element);
+  const index = array.indexOf(currentElement);
 
   if (index <= 0 || index >= array.length) {
     return undefined;
@@ -13,9 +13,9 @@ export function getPrevArrayElement(
 
 export function getNextArrayElement(
   array: Array<any>,
-  element: any,
+  currentElement: any,
 ): any | undefined {
-  const index = array.indexOf(element);
+  const index = array.indexOf(currentElement);
 
   if (index < 0 || index >= array.length - 1) {
     return undefined;
