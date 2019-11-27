@@ -4,7 +4,7 @@ import Api from 'utils/api';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import QuizForm from '../components/QuizForm/QuizForm';
+import QuizFormik from '../components/QuizFormik/QuizFormik';
 
 interface Props {
   quizStore: QuizStore;
@@ -36,7 +36,7 @@ class QuizPage extends React.Component<Props> {
         case QuizState.LOADING:
           return <p>Wczytywanie...</p>;
         case QuizState.LOADED:
-          return <QuizForm quizStore={this.props.quizStore} />;
+          return <QuizFormik quizStore={this.props.quizStore} />;
         case QuizState.NOT_FOUND:
           return <p>Quiz o podanym identyfikatorze nie istnieje</p>;
         case QuizState.ERROR:
