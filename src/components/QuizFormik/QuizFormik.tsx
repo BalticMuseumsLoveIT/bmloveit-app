@@ -42,12 +42,20 @@ const RadioButtonGroup = ({
 
 class QuizFormik extends React.Component<Props> {
   render() {
+    if (this.props.quizStore.quizDetails === null) return null;
+
+    // As for now assume that we have 1 valid question
+    const question = this.props.quizStore.quizDetails.questions_data[0];
+
+    // Radio group html name
+    const radioGroupName = `question_${question.id}`;
+
     return (
       <Formik
-        initialValues={{ radioGroup: '' }}
+        initialValues={{ [radioGroupName]: '' }}
         validationSchema={Yup.object({
-          radioGroup: Yup.string().required(
-            'At least one option should be selected',
+          [radioGroupName]: Yup.string().required(
+            'At least one option must be selected',
           ),
         })}
         onSubmit={(values, { setSubmitting }) => {
@@ -58,15 +66,19 @@ class QuizFormik extends React.Component<Props> {
         {props => (
           <Form>
             <RadioButtonGroup
-              legend="Treść pytania"
-              value={props.values.radioGroup}
-              error={props.errors.radioGroup}
-              touched={props.touched.radioGroup}
+              legend={question.description}
+              value={props.values[radioGroupName]}
+              error={props.errors[radioGroupName]}
+              touched={props.touched[radioGroupName]}
             >
-              <RadioButton name="radioGroup" id="RG1" label="1500" />
-              <RadioButton name="radioGroup" id="RG2" label="1600" />
-              <RadioButton name="radioGroup" id="RG3" label="1700" />
-              <RadioButton name="radioGroup" id="RG4" label="1800" />
+              {question.options_data.map(option => (
+                <RadioButton
+                  key={option.id}
+                  id={`option_${option.no}`}
+                  name={radioGroupName}
+                  label={option.description}
+                />
+              ))}
             </RadioButtonGroup>
             <br />
             <button type="submit">Submit</button>
