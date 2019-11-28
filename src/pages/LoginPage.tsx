@@ -51,7 +51,7 @@ class LoginPage extends React.Component<Props> {
 
     const data = await Api.signIn(provider, response.accessToken);
     this.props.userStore.setToken(data.access_token);
-
+    console.log('Data: ', data);
     const { location } = this.props;
     const redirectTo = (location.state && location.state.from.pathname) || '/';
     this.props.history.push(redirectTo);
