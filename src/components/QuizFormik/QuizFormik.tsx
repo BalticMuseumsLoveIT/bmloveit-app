@@ -1,5 +1,12 @@
 import React from 'react';
-import { Formik, Form, useField, FieldAttributes } from 'formik';
+import {
+  Formik,
+  Form,
+  useField,
+  FieldAttributes,
+  FormikValues,
+  FormikHelpers,
+} from 'formik';
 import * as Yup from 'yup';
 import { QuizStore } from '../../utils/store/quizStore';
 import Api from '../../utils/api';
@@ -51,34 +58,39 @@ class QuizFormik extends React.Component<Props> {
     // Radio group html name
     const radioGroupName = `question_${question.id}`;
 
+    const formik = {
+      initialValues: { [radioGroupName]: '' },
+      validationSchema: Yup.object({
+        [radioGroupName]: Yup.string().required(
+          'At least one option must be selected',
+        ),
+      }),
+      onSubmit: async (
+        values: FormikValues,
+        { setSubmitting }: FormikHelpers<FormikValues>,
+      ) => {
+        // console.log(JSON.stringify(values, null, 2));
+
+        const fulfillment = await Api.getQuizFulfillment(
+          this.props.quizStore.quizDetails!.id,
+        );
+
+        // console.log(fulfillment);
+
+        const answer = await Api.getQuizAnswer(
+          fulfillment.id,
+          question.id,
+          parseInt(values[radioGroupName].split('_')[1]),
+        );
+
+        console.log(answer);
+
+        setSubmitting(false);
+      },
+    };
+
     return (
-      <Formik
-        initialValues={{ [radioGroupName]: '' }}
-        validationSchema={Yup.object({
-          [radioGroupName]: Yup.string().required(
-            'At least one option must be selected',
-          ),
-        })}
-        onSubmit={async (values, { setSubmitting }) => {
-          // console.log(JSON.stringify(values, null, 2));
-
-          const fulfillment = await Api.getQuizFulfillment(
-            this.props.quizStore.quizDetails!.id,
-          );
-
-          // console.log(fulfillment);
-
-          const answer = await Api.getQuizAnswer(
-            fulfillment.id,
-            question.id,
-            parseInt(values[radioGroupName].split('_')[1]),
-          );
-
-          console.log(answer);
-
-          setSubmitting(false);
-        }}
-      >
+      <Formik {...formik}>
         {({ values, errors, touched, isSubmitting }) => (
           <Form>
             <RadioButtonGroup
