@@ -7,14 +7,20 @@ import QrReader from 'react-qr-reader';
 
 interface Props extends RouteComponentProps {}
 
+interface State {
+  qrCodeData: string;
+}
+
 @inject('uiStore')
 @observer
-class QrCodePage extends React.Component<Props> {
-  private qrCodeData: string | null = null;
-
+class QrCodePage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.handleScan = this.handleScan.bind(this);
+
+    this.state = {
+      qrCodeData: '',
+    };
   }
 
   render() {
@@ -31,14 +37,15 @@ class QrCodePage extends React.Component<Props> {
             onScan={this.handleScan}
             style={{ width: '100%' }}
           />
+          {this.state.qrCodeData}
         </Content>
       </>
     );
   }
 
   handleScan(data: string | null): void {
-    if (data !== null && this.qrCodeData === null) {
-      this.qrCodeData = data;
+    if (data !== null && data !== this.state.qrCodeData) {
+      this.setState({ qrCodeData: data });
     }
   }
 }
