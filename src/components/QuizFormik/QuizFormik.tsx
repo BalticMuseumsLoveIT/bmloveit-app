@@ -79,13 +79,13 @@ class QuizFormik extends React.Component<Props> {
           setSubmitting(false);
         }}
       >
-        {props => (
+        {({ values, errors, touched, isSubmitting }) => (
           <Form>
             <RadioButtonGroup
               legend={question.description}
-              value={props.values[radioGroupName]}
-              error={props.errors[radioGroupName]}
-              touched={props.touched[radioGroupName]}
+              value={values[radioGroupName]}
+              error={errors[radioGroupName]}
+              touched={touched[radioGroupName]}
             >
               {question.options_data.map(option => (
                 <RadioButton
@@ -97,7 +97,7 @@ class QuizFormik extends React.Component<Props> {
               ))}
             </RadioButtonGroup>
             <br />
-            <button type="submit" disabled={props.isSubmitting}>
+            <button type="submit" disabled={isSubmitting}>
               Submit
             </button>
           </Form>
