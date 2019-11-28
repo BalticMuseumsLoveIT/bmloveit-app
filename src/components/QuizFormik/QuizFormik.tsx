@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form, useField, FieldAttributes } from 'formik';
 import * as Yup from 'yup';
 import { QuizStore } from '../../utils/store/quizStore';
+import Api from '../../utils/api';
 
 interface Props {
   quizStore: QuizStore;
@@ -58,11 +59,24 @@ class QuizFormik extends React.Component<Props> {
             'At least one option must be selected',
           ),
         })}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            console.log(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 2000);
+        onSubmit={async (values, { setSubmitting }) => {
+          // console.log(JSON.stringify(values, null, 2));
+
+          const fulfillment = await Api.getQuizFulfillment(
+            this.props.quizStore.quizDetails!.id,
+          );
+
+          // console.log(fulfillment);
+
+          const answer = await Api.getQuizAnswer(
+            fulfillment.id,
+            question.id,
+            parseInt(values[radioGroupName].split('_')[1]),
+          );
+
+          console.log(answer);
+
+          setSubmitting(false);
         }}
       >
         {props => (
