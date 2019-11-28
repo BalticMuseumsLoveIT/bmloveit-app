@@ -24,7 +24,7 @@ class LoginPage extends React.Component<Props> {
   }
 
   render() {
-    console.log('LoginPage_token: ', this.props.userStore.getToken());
+    console.log('LoginPage | token: ', this.props.userStore.getToken());
 
     return (
       <>
@@ -47,11 +47,11 @@ class LoginPage extends React.Component<Props> {
     provider,
     response,
   }: OAuthLoginArgumentInterface): Promise<void> {
-    console.log('login: ', provider, response);
+    console.log('LoginPage | login: ', provider, response);
 
     const data = await Api.signIn(provider, response.accessToken);
     this.props.userStore.setToken(data.access_token);
-    console.log('Data: ', data);
+    console.log('LoginPage | data: ', data);
     const { location } = this.props;
     const redirectTo = (location.state && location.state.from.pathname) || '/';
     this.props.history.push(redirectTo);
