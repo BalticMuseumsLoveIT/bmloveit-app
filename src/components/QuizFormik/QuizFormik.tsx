@@ -59,8 +59,10 @@ class QuizFormik extends React.Component<Props> {
           ),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          console.log(JSON.stringify(values, null, 2));
-          setSubmitting(false);
+          setTimeout(() => {
+            console.log(JSON.stringify(values, null, 2));
+            setSubmitting(false);
+          }, 2000);
         }}
       >
         {props => (
@@ -81,7 +83,9 @@ class QuizFormik extends React.Component<Props> {
               ))}
             </RadioButtonGroup>
             <br />
-            <button type="submit">Submit</button>
+            <button type="submit" disabled={props.isSubmitting}>
+              Submit
+            </button>
           </Form>
         )}
       </Formik>
