@@ -76,7 +76,7 @@ class QuizFormik extends React.Component<Props> {
               {question.options_data.map(option => (
                 <RadioButton
                   key={option.id}
-                  id={`option_${option.no}`}
+                  id={`option_${option.id}`}
                   name={radioGroupName}
                   label={option.description}
                 />
