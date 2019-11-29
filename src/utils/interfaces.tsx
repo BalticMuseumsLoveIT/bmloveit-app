@@ -95,4 +95,20 @@ export interface QuizAnswerResponse {
   question: number;
   value: string;
   correct: boolean;
+  options_selected_data: QuizOptionInterface[];
+  question_data: {
+    id: number;
+    no: number;
+    type: string;
+    description: string;
+    value_type: string;
+    file_url: string;
+    options_data: {
+      id: number;
+      no: number;
+      description: string;
+      file_url: string;
+      correct: boolean;
+    }[];
+  };
 }
