@@ -38,7 +38,8 @@ export interface QuizOptionInterface {
   no: number;
   description: string;
   file_url: string;
-  description_translation: TranslationItemInterface[];
+  description_translation?: TranslationItemInterface[];
+  correct?: boolean;
 }
 
 enum QuizQuestionType {
@@ -52,8 +53,9 @@ export interface QuizQuestionInterface {
   no: number;
   type: QuizQuestionType;
   description: string;
+  value_type: string;
   file_url: string;
-  description_translation: TranslationItemInterface[];
+  description_translation?: TranslationItemInterface[];
   options_data: QuizOptionInterface[];
 }
 
@@ -96,19 +98,5 @@ export interface QuizAnswerResponse {
   value: string;
   correct: boolean;
   options_selected_data: QuizOptionInterface[];
-  question_data: {
-    id: number;
-    no: number;
-    type: string;
-    description: string;
-    value_type: string;
-    file_url: string;
-    options_data: {
-      id: number;
-      no: number;
-      description: string;
-      file_url: string;
-      correct: boolean;
-    }[];
-  };
+  question_data: QuizQuestionInterface;
 }
