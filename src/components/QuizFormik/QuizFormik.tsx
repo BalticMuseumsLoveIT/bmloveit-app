@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Formik,
-  Form,
-  useField,
-  FieldAttributes,
-  FormikValues,
-  FormikHelpers,
-} from 'formik';
+import { Formik, Form, useField, FieldAttributes, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { QuizStore } from '../../utils/store/quizStore';
 import Api from '../../utils/api';
@@ -65,10 +58,7 @@ class QuizFormik extends React.Component<Props> {
           'At least one option must be selected',
         ),
       }),
-      onSubmit: async (
-        values: FormikValues,
-        { setSubmitting }: FormikHelpers<FormikValues>,
-      ) => {
+      onSubmit: async (values: FormikValues) => {
         // console.log(JSON.stringify(values, null, 2));
 
         const fulfillment = await Api.getQuizFulfillment(
@@ -84,8 +74,6 @@ class QuizFormik extends React.Component<Props> {
         );
 
         console.log(answer);
-
-        setSubmitting(false);
       },
     };
 
