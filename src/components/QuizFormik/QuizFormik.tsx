@@ -1,24 +1,34 @@
 import React from 'react';
 import { Formik, Form, useField, FieldAttributes, FormikValues } from 'formik';
 import * as Yup from 'yup';
+import { observer } from 'mobx-react';
+import classNames from 'classnames';
 import { QuizStore } from '../../utils/store/quizStore';
 import Api from '../../utils/api';
+import './QuizFormik.css';
 
 interface Props {
   quizStore: QuizStore;
 }
 
-const RadioButton = ({ label, id, ...props }: FieldAttributes<any>) => {
+const RadioButton = ({
+  id,
+  label,
+  correct,
+  ...props
+}: FieldAttributes<any>) => {
   const [field] = useField(props);
+  const checked = id === field.value;
+
   return (
-    <div>
-      <input
-        type="radio"
-        {...field}
-        {...props}
-        value={id}
-        checked={id === field.value}
-      />
+    <div
+      className={classNames({
+        'radio-button': true,
+        'radio-button_correct': correct === true,
+        'radio-button_incorrect': checked && correct === false,
+      })}
+    >
+      <input type="radio" {...field} {...props} value={id} checked={checked} />
       <label htmlFor={props.id || props.name}>{label}</label>
     </div>
   );
@@ -29,9 +39,10 @@ const RadioButtonGroup = ({
   children,
   touched,
   error,
+  disabled,
 }: FieldAttributes<any>) => {
   return (
-    <fieldset>
+    <fieldset disabled={disabled}>
       <legend>{legend}</legend>
       {children}
       {touched && error ? (
@@ -41,12 +52,12 @@ const RadioButtonGroup = ({
   );
 };
 
+@observer
 class QuizFormik extends React.Component<Props> {
   render() {
-    if (this.props.quizStore.quizDetails === null) return null;
+    const question = this.props.quizStore.questionData;
 
-    // As for now assume that we have 1 valid question
-    const question = this.props.quizStore.quizDetails.questions_data[0];
+    if (question === null) return null;
 
     // Radio group html name
     const radioGroupName = `question_${question.id}`;
@@ -61,48 +72,75 @@ class QuizFormik extends React.Component<Props> {
       onSubmit: async (values: FormikValues) => {
         // console.log(JSON.stringify(values, null, 2));
 
-        const fulfillment = await Api.getQuizFulfillment(
-          this.props.quizStore.quizDetails!.id,
-        );
+        try {
+          const fulfillment = await Api.getQuizFulfillment(
+            this.props.quizStore.quizDetails!.id,
+          );
 
-        // console.log(fulfillment);
+          // console.log(fulfillment);
 
-        const answer = await Api.getQuizAnswer(
-          fulfillment.id,
-          question.id,
-          parseInt(values[radioGroupName].split('_')[1]),
-        );
+          const answer = await Api.getQuizAnswer(
+            fulfillment.id,
+            question.id,
+            parseInt(values[radioGroupName].split('_')[1]),
+          );
 
-        console.log(answer);
+          // console.log(answer);
+
+          this.props.quizStore.submitQuizAnswer(answer);
+        } catch (error) {
+          this.props.quizStore.handleQuizDetailsError(error);
+        }
       },
     };
 
+    const summary = this.props.quizStore.isSubmitted ? (
+      <div>
+        <p>
+          {this.props.quizStore.quizAnswer!.correct
+            ? 'Congratulations! This is a correct answer'
+            : 'Sorry but selected answer is incorrect'}
+        </p>
+        <p>
+          <a href="/quiz">Go to the list of active quizzes</a>
+        </p>
+      </div>
+    ) : null;
+
     return (
-      <Formik {...formik}>
-        {({ values, errors, touched, isSubmitting }) => (
-          <Form>
-            <RadioButtonGroup
-              legend={question.description}
-              value={values[radioGroupName]}
-              error={errors[radioGroupName]}
-              touched={touched[radioGroupName]}
-            >
-              {question.options_data.map(option => (
-                <RadioButton
-                  key={option.id}
-                  id={`option_${option.id}`}
-                  name={radioGroupName}
-                  label={option.description}
-                />
-              ))}
-            </RadioButtonGroup>
-            <br />
-            <button type="submit" disabled={isSubmitting}>
-              Submit
-            </button>
-          </Form>
-        )}
-      </Formik>
+      <>
+        <Formik {...formik}>
+          {({ values, errors, touched, isSubmitting }) => (
+            <Form>
+              <RadioButtonGroup
+                legend={question.description}
+                value={values[radioGroupName]}
+                error={errors[radioGroupName]}
+                touched={touched[radioGroupName]}
+                disabled={this.props.quizStore.isSubmitted}
+              >
+                {question.options_data.map(option => (
+                  <RadioButton
+                    key={option.id}
+                    id={`option_${option.id}`}
+                    name={radioGroupName}
+                    label={option.description}
+                    correct={option.correct}
+                  />
+                ))}
+              </RadioButtonGroup>
+              <br />
+              <button
+                type="submit"
+                disabled={isSubmitting || this.props.quizStore.isSubmitted}
+              >
+                Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
+        {summary}
+      </>
     );
   }
 }

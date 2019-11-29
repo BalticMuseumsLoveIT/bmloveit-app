@@ -36,6 +36,7 @@ class QuizPage extends React.Component<Props> {
         case QuizState.LOADING:
           return <p>Wczytywanie...</p>;
         case QuizState.LOADED:
+        case QuizState.SUBMITTED:
           return <QuizFormik quizStore={this.props.quizStore} />;
         case QuizState.NOT_FOUND:
           return <p>Quiz o podanym identyfikatorze nie istnieje</p>;
