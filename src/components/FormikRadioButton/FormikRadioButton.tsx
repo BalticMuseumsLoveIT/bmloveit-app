@@ -14,10 +14,10 @@ const FormikRadioButton = ({
     <StyledFormikRadioButton checked={checked} correct={correct}>
       <input
         type="radio"
-        value={props.id}
-        checked={checked}
         {...field}
         {...props}
+        value={props.id}
+        checked={checked}
       />
       <label htmlFor={props.id || props.name}>{label}</label>
     </StyledFormikRadioButton>
