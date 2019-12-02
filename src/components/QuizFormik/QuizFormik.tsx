@@ -1,32 +1,15 @@
 import React from 'react';
-import { Formik, Form, useField, FieldAttributes, FormikValues } from 'formik';
+import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { observer } from 'mobx-react';
 import { QuizStore } from '../../utils/store/quizStore';
 import Api from '../../utils/api';
 import FormikRadioButton from '../FormikRadioButton/FormikRadioButton';
+import FormikRadioButtonGroup from '../FormikRadioButtonGroup/FormikRadioButtonGroup';
 
 interface Props {
   quizStore: QuizStore;
 }
-
-const RadioButtonGroup = ({
-  legend,
-  children,
-  touched,
-  error,
-  disabled,
-}: FieldAttributes<any>) => {
-  return (
-    <fieldset disabled={disabled}>
-      <legend>{legend}</legend>
-      {children}
-      {touched && error ? (
-        <div style={{ color: 'red', padding: '.5em' }}>&#9888; {error}</div>
-      ) : null}
-    </fieldset>
-  );
-};
 
 @observer
 class QuizFormik extends React.Component<Props> {
@@ -86,14 +69,13 @@ class QuizFormik extends React.Component<Props> {
     return (
       <>
         <Formik {...formik}>
-          {({ values, errors, touched, isSubmitting }) => (
+          {({ errors, touched, isSubmitting }) => (
             <Form>
-              <RadioButtonGroup
+              <FormikRadioButtonGroup
                 legend={question.description}
-                value={values[radioGroupName]}
+                disabled={this.props.quizStore.isSubmitted}
                 error={errors[radioGroupName]}
                 touched={touched[radioGroupName]}
-                disabled={this.props.quizStore.isSubmitted}
               >
                 {question.options_data.map(option => (
                   <FormikRadioButton
@@ -104,7 +86,7 @@ class QuizFormik extends React.Component<Props> {
                     correct={option.correct}
                   />
                 ))}
-              </RadioButtonGroup>
+              </FormikRadioButtonGroup>
               <br />
               <button
                 type="submit"
