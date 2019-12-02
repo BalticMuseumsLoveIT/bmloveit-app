@@ -4,48 +4,11 @@ import * as Yup from 'yup';
 import { observer } from 'mobx-react';
 import { QuizStore } from '../../utils/store/quizStore';
 import Api from '../../utils/api';
-import styled, { css } from 'styled-components';
+import FormikRadioButton from '../FormikRadioButton/FormikRadioButton';
 
 interface Props {
   quizStore: QuizStore;
 }
-
-interface StyledRadioButtonProps {
-  checked: boolean;
-  correct: boolean;
-}
-
-const StyledRadioButton = styled.div<StyledRadioButtonProps>`
-  padding: 0.2em 0;
-  ${props =>
-    props.correct === true &&
-    css`
-      background: rgba(0, 255, 0, 0.2);
-    `}
-  ${props =>
-    props.checked === true &&
-    props.correct === false &&
-    css`
-      background: rgba(255, 0, 0, 0.2);
-    `}
-`;
-
-const RadioButton = ({
-  id,
-  label,
-  correct,
-  ...props
-}: FieldAttributes<any>) => {
-  const [field] = useField(props);
-  const checked = id === field.value;
-
-  return (
-    <StyledRadioButton checked={checked} correct={correct}>
-      <input type="radio" {...field} {...props} value={id} checked={checked} />
-      <label htmlFor={props.id || props.name}>{label}</label>
-    </StyledRadioButton>
-  );
-};
 
 const RadioButtonGroup = ({
   legend,
@@ -133,7 +96,7 @@ class QuizFormik extends React.Component<Props> {
                 disabled={this.props.quizStore.isSubmitted}
               >
                 {question.options_data.map(option => (
-                  <RadioButton
+                  <FormikRadioButton
                     key={option.id}
                     id={`option_${option.id}`}
                     name={radioGroupName}
