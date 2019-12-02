@@ -2,10 +2,8 @@ import React from 'react';
 import { Formik, Form, useField, FieldAttributes, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { observer } from 'mobx-react';
-import classNames from 'classnames';
 import { QuizStore } from '../../utils/store/quizStore';
 import Api from '../../utils/api';
-import './QuizFormik.css';
 
 interface Props {
   quizStore: QuizStore;
@@ -21,13 +19,7 @@ const RadioButton = ({
   const checked = id === field.value;
 
   return (
-    <div
-      className={classNames({
-        'radio-button': true,
-        'radio-button_correct': correct === true,
-        'radio-button_incorrect': checked && correct === false,
-      })}
-    >
+    <div>
       <input type="radio" {...field} {...props} value={id} checked={checked} />
       <label htmlFor={props.id || props.name}>{label}</label>
     </div>
