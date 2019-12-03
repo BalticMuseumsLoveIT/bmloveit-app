@@ -38,7 +38,7 @@ export interface QuizOptionInterface {
   no: number;
   description: string;
   file_url: string;
-  description_translation?: TranslationItemInterface[];
+  description_translation?: Array<TranslationItemInterface>;
   correct?: boolean;
 }
 
@@ -55,8 +55,8 @@ export interface QuizQuestionInterface {
   description: string;
   value_type: string;
   file_url: string;
-  description_translation?: TranslationItemInterface[];
-  options_data: QuizOptionInterface[];
+  description_translation?: Array<TranslationItemInterface>;
+  options_data: Array<QuizOptionInterface>;
 }
 
 export interface QuizInterface {
@@ -65,13 +65,13 @@ export interface QuizInterface {
   name_full: string;
   description: string;
   language: number;
-  name_translation: TranslationItemInterface[];
-  name_full_translation: TranslationItemInterface[];
-  description_translation: TranslationItemInterface[];
+  name_translation: Array<TranslationItemInterface>;
+  name_full_translation: Array<TranslationItemInterface>;
+  description_translation: Array<TranslationItemInterface>;
 }
 
 export interface QuizDetailsInterface extends QuizInterface {
-  questions_data: QuizQuestionInterface[];
+  questions_data: Array<QuizQuestionInterface>;
 }
 
 export interface QuizDetailsNotFound {
@@ -97,6 +97,6 @@ export interface QuizAnswerResponse {
   question: number;
   value: string;
   correct: boolean;
-  options_selected_data: QuizOptionInterface[];
+  options_selected_data: Array<QuizOptionInterface>;
   question_data: QuizQuestionInterface;
 }
