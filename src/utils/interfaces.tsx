@@ -100,3 +100,18 @@ export interface QuizAnswerResponse {
   options_selected_data: QuizOptionInterface[];
   question_data: QuizQuestionInterface;
 }
+
+// Survey ----------------------------------------------------------------------
+
+export interface SurveyInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  location: number | null;
+  item: number | null;
+  language: number;
+  name_translation: TranslationItemInterface[];
+  name_full_translation: TranslationItemInterface[];
+  description_translation: TranslationItemInterface[];
+}
