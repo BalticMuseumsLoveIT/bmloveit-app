@@ -3,9 +3,9 @@ import StyledError from './FormikRadioButtonGroup.style';
 
 type Props = {
   legend: string;
-  disabled: boolean | undefined;
-  touched: boolean | undefined;
-  error: string | undefined;
+  disabled?: boolean;
+  touched?: boolean;
+  error?: string;
   children: React.ReactNode;
 };
 
