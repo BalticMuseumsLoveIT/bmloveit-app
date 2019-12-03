@@ -14,20 +14,19 @@ interface Props {
 @inject('quizStore')
 @observer
 class QuizPage extends React.Component<Props> {
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     const {
       params: { id },
     } = this.props.match;
 
     this.props.quizStore.loadingQuizDetails();
 
-    Api.getQuiz(id)
-      .then(response => {
-        this.props.quizStore.loadQuizDetails(response);
-      })
-      .catch(error => {
-        this.props.quizStore.handleQuizDetailsError(error);
-      });
+    try {
+      const response = await Api.getQuiz(id);
+      this.props.quizStore.loadQuizDetails(response);
+    } catch (error) {
+      this.props.quizStore.handleQuizDetailsError(error);
+    }
   }
 
   render() {
