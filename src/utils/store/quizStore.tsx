@@ -30,13 +30,11 @@ export class QuizStore {
 
   @action loadQuizDetails = (quizDetails: QuizDetailsInterface) => {
     this.quizState = QuizState.LOADED;
-    // console.log('QD', quizDetails);
     this.quizDetails = quizDetails;
   };
 
   @action submitQuizAnswer = (answer: QuizAnswerResponse) => {
     this.quizState = QuizState.SUBMITTED;
-    // console.log('QA', answer);
     this.quizAnswer = answer;
   };
 

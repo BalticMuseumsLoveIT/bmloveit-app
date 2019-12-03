@@ -30,22 +30,17 @@ class QuizFormik extends React.Component<Props> {
         ),
       }),
       onSubmit: async (values: FormikValues) => {
-        // console.log(JSON.stringify(values, null, 2));
 
         try {
           const fulfillment = await Api.getQuizFulfillment(
             this.props.quizStore.quizDetails!.id,
           );
 
-          // console.log(fulfillment);
-
           const answer = await Api.getQuizAnswer(
             fulfillment.id,
             question.id,
             parseInt(values[radioGroupName].split('_')[1]),
           );
-
-          // console.log(answer);
 
           this.props.quizStore.submitQuizAnswer(answer);
         } catch (error) {
