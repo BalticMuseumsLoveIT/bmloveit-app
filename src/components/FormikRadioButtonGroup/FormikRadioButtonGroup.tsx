@@ -20,7 +20,7 @@ const FormikRadioButtonGroup: React.FC<Props> = ({
     <fieldset disabled={disabled}>
       <legend>{legend}</legend>
       {children}
-      {touched && error ? <StyledError>{error}</StyledError> : null}
+      {touched && error && <StyledError>{error}</StyledError>}
     </fieldset>
   );
 };
