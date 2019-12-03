@@ -5,6 +5,8 @@ const theme = {
     dark: '#0F1C21',
     headerBackground: '#009688',
     light: '#FFFFFF',
+    errorBackground: 'rgba(255, 0, 0, .2)',
+    successBackground: 'rgba(0, 255, 0, .2)',
   },
   media: {
     tablet: '@media (min-width: 568px)',
