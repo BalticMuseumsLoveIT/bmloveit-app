@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 import { QuizStore } from '../../utils/store/quizStore';
 import Api from '../../utils/api';
 import FormikRadioButton from '../FormikRadioButton/FormikRadioButton';
@@ -61,7 +62,7 @@ class QuizFormik extends React.Component<Props> {
             : 'Sorry but selected answer is incorrect'}
         </p>
         <p>
-          <a href="/quiz">Go to the list of active quizzes</a>
+          <Link to="/quiz">Go to the list of active quizzes</Link>
         </p>
       </div>
     ) : null;
