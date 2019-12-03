@@ -5,6 +5,7 @@ const theme = {
     dark: '#0F1C21',
     headerBackground: '#009688',
     light: '#FFFFFF',
+    error: '#FF0000',
     errorBackground: 'rgba(255, 0, 0, .2)',
     successBackground: 'rgba(0, 255, 0, .2)',
   },

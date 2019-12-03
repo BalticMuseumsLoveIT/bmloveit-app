@@ -1,4 +1,5 @@
 import React from 'react';
+import StyledError from './FormikRadioButtonGroup.style';
 
 type Props = {
   legend: string;
@@ -19,9 +20,7 @@ const FormikRadioButtonGroup: React.FC<Props> = ({
     <fieldset disabled={disabled}>
       <legend>{legend}</legend>
       {children}
-      {touched && error ? (
-        <div style={{ color: 'red', padding: '.5em' }}>&#9888; {error}</div>
-      ) : null}
+      {touched && error ? <StyledError>{error}</StyledError> : null}
     </fieldset>
   );
 };
