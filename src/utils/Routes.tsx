@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import React from 'react';
 import QuizPage from '../pages/QuizPage';
 import QuizDetailsPage from '../pages/QuizDetailsPage';
+import SurveyListPage from '../pages/SurveyListPage';
 
 class Routes extends React.Component {
   public render() {
@@ -16,6 +17,7 @@ class Routes extends React.Component {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/quiz" component={QuizPage} />
           <Route exact path="/quiz/:id" component={QuizDetailsPage} />
+          <Route exact path="/survey" component={SurveyListPage} />
           <Route exact path="/routes" component={RoutesPage} />
           <Route exact path="/routes/:id" component={RoutePage} />
           <Route
