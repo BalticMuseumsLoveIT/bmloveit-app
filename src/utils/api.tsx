@@ -5,6 +5,7 @@ import {
   QuizDetailsInterface,
   QuizFulfillmentResponse,
   QuizInterface,
+  SurveyInterface,
 } from './interfaces';
 
 const axiosInstance = axios.create({
@@ -117,6 +118,16 @@ abstract class Api {
     formData.append('options_data', option.toString());
 
     const response = await axiosInstance.post('quiz-answer/', formData);
+    return response.data;
+  }
+
+  /**
+   * Get list of all active surveys.
+   *
+   * @throws Axios error
+   */
+  public static async getSurveyList(): Promise<SurveyInterface[]> {
+    const response = await axiosInstance.get('survey');
     return response.data;
   }
 }
