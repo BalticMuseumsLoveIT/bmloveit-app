@@ -12,11 +12,9 @@ interface Props {
 @inject('quizStore')
 @observer
 class QuizPage extends React.Component<Props> {
-  componentDidMount(): void {
-    Api.getQuizList().then(response => {
-      this.props.quizStore.quizList = response;
-      // TODO: Handle errors
-    });
+  async componentDidMount(): Promise<void> {
+    this.props.quizStore.quizList = await Api.getQuizList();
+    // TODO: Handle errors
   }
 
   render() {
