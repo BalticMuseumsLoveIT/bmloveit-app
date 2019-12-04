@@ -1,9 +1,9 @@
+import Content from 'components/Content/Content';
+import store, { SurveyListState } from 'utils/store/surveyListStore';
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import Content from '../components/Content/Content';
-import store, { SurveyListState } from '../utils/store/surveyListStore';
 
 @observer
 class SurveyListPage extends Component {

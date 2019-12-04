@@ -1,6 +1,6 @@
+import { SurveyInterface } from 'utils/interfaces';
+import Api from 'utils/api';
 import { action, computed, observable } from 'mobx';
-import { SurveyInterface } from '../interfaces';
-import Api from '../api';
 
 export enum SurveyListState {
   NOT_LOADED,
