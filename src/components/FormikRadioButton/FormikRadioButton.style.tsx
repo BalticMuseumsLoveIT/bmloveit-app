@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 interface StyledFormikRadioButtonProps {
-  checked: boolean | undefined;
-  correct: boolean | undefined;
+  checked?: boolean;
+  correct?: boolean;
 }
 
 const StyledFormikRadioButton = styled.div<StyledFormikRadioButtonProps>`
