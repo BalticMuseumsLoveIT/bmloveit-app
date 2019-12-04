@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 @observer
 class SurveyListPage extends Component {
-  async componentDidMount(): Promise<void> {
+  async componentDidMount() {
     await store.loadList();
   }
 
