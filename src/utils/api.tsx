@@ -92,7 +92,7 @@ abstract class Api {
     id: number,
   ): Promise<QuizFulfillmentResponse> {
     const formData = new FormData();
-    formData.append('api/quiz', id.toString());
+    formData.append('quiz', id.toString());
 
     const response = await axiosInstance.post(
       'api/quiz-fulfillment/',
