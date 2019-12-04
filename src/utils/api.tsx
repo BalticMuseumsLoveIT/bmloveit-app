@@ -1,11 +1,11 @@
 import userStore from 'utils/store/userStore';
-import axios from 'axios';
 import {
   QuizAnswerResponse,
   QuizDetailsInterface,
   QuizFulfillmentResponse,
   QuizInterface,
-} from './interfaces';
+} from 'utils/interfaces';
+import axios from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
