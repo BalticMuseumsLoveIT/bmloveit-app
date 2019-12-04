@@ -1,5 +1,5 @@
 import Content from 'components/Content/Content';
-import store, { SurveyDetailsState } from 'utils/store/surveyDetailsStore';
+import store from 'utils/store/surveyDetailsStore';
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
@@ -17,7 +17,7 @@ class SurveyDetailsPage extends Component {
           <title>Survey list</title>
         </Helmet>
         <Content>
-          <h1>List of active surveys</h1>
+          <h1>Survey details</h1>
           <p>Content</p>
         </Content>
       </>
