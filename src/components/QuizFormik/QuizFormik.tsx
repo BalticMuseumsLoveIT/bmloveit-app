@@ -67,7 +67,7 @@ class QuizFormik extends React.Component<Props> {
           {({ errors, touched, isSubmitting }) => (
             <Form>
               {question.file_url && question.file_url.length && (
-                <img src={question.file_url} alt="Quiz question image" />
+                <img src={question.file_url} alt="Quiz question illustration" />
               )}
               <FormikRadioButtonGroup
                 legend={question.description}
