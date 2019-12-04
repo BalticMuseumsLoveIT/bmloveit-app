@@ -4,6 +4,7 @@ import {
   QuizDetailsInterface,
   QuizFulfillmentResponse,
   QuizInterface,
+  SurveyInterface,
 } from 'utils/interfaces';
 import axios from 'axios';
 
