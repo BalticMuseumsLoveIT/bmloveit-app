@@ -115,3 +115,39 @@ export interface SurveyInterface {
   name_full_translation: Array<TranslationItemInterface>;
   description_translation: Array<TranslationItemInterface>;
 }
+
+export interface SurveyDetailsInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  language: number;
+  name_translation: Array<TranslationItemInterface>;
+  name_full_translation: Array<TranslationItemInterface>;
+  description_translation: Array<TranslationItemInterface>;
+  questions_data: Array<SurveyQuestionInterface>;
+}
+
+export enum SurveyQuestionType {
+  OPEN = 'O',
+  SELECT = 'S',
+  MULTISELECT = 'M',
+}
+
+export interface SurveyQuestionInterface {
+  id: number;
+  no: number;
+  type: SurveyQuestionType;
+  description: string;
+  file_url: string;
+  description_translation: Array<TranslationItemInterface>;
+  options_data: Array<SurveyOptionInterface>;
+}
+
+export interface SurveyOptionInterface {
+  id: number;
+  no: number;
+  description: string;
+  file_url: string;
+  description_translation: Array<TranslationItemInterface>;
+}
