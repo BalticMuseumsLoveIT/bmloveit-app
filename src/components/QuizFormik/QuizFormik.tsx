@@ -30,7 +30,6 @@ class QuizFormik extends React.Component<Props> {
         ),
       }),
       onSubmit: async (values: FormikValues) => {
-
         try {
           const fulfillment = await Api.getQuizFulfillment(
             this.props.quizStore.quizDetails!.id,
@@ -79,7 +78,7 @@ class QuizFormik extends React.Component<Props> {
                     id={`option_${option.id}`}
                     name={radioGroupName}
                     label={option.description}
-                    correct={option.correct}
+                    isCorrect={option.correct}
                   />
                 ))}
               </FormikRadioButtonGroup>

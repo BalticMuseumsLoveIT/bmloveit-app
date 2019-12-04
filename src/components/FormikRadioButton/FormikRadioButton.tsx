@@ -4,20 +4,20 @@ import StyledFormikRadioButton from './FormikRadioButton.style';
 
 const FormikRadioButton = ({
   label,
-  correct,
+  isCorrect,
   ...props
 }: FieldAttributes<any>) => {
   const [field] = useField(props);
-  const checked = props.id === field.value;
+  const isChecked = props.id === field.value;
 
   return (
-    <StyledFormikRadioButton checked={checked} correct={correct}>
+    <StyledFormikRadioButton isChecked={isChecked} isCorrect={isCorrect}>
       <input
         type="radio"
         {...field}
         {...props}
         value={props.id}
-        checked={checked}
+        checked={isChecked}
       />
       <label htmlFor={props.id || props.name}>{label}</label>
     </StyledFormikRadioButton>
