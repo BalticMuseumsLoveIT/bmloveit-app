@@ -1,14 +1,14 @@
 import { QuizState, QuizStore } from 'utils/store/quizStore';
 import Content from 'components/Content/Content';
+import QuizFormik from 'components/QuizFormik/QuizFormik';
 import Api from 'utils/api';
 import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import QuizFormik from 'components/QuizFormik/QuizFormik';
 
-interface Props {
+interface Props extends RouteComponentProps<any> {
   quizStore: QuizStore;
-  match: Record<string, any>;
 }
 
 @inject('quizStore')
