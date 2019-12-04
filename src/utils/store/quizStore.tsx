@@ -6,7 +6,7 @@ import {
   isQuizDetailsNotFound,
   QuizAnswerResponse,
   QuizQuestionInterface,
-} from '../interfaces';
+} from 'utils/interfaces';
 
 export enum QuizState {
   NOT_LOADED,
@@ -24,29 +24,27 @@ export class QuizStore {
   @observable quizDetails: QuizDetailsInterface | null = null;
   @observable quizAnswer: QuizAnswerResponse | null = null;
 
-  @action loadingQuizDetails = () => {
+  @action loadingQuizDetails() {
     this.unsetQuizDetails(QuizState.LOADING);
-  };
+  }
 
-  @action loadQuizDetails = (quizDetails: QuizDetailsInterface) => {
+  @action loadQuizDetails(quizDetails: QuizDetailsInterface) {
     this.quizState = QuizState.LOADED;
-    // console.log('QD', quizDetails);
     this.quizDetails = quizDetails;
-  };
+  }
 
-  @action submitQuizAnswer = (answer: QuizAnswerResponse) => {
+  @action submitQuizAnswer(answer: QuizAnswerResponse) {
     this.quizState = QuizState.SUBMITTED;
-    // console.log('QA', answer);
     this.quizAnswer = answer;
-  };
+  }
 
-  @action unsetQuizDetails = (status: QuizState = QuizState.NOT_LOADED) => {
+  @action unsetQuizDetails(status: QuizState = QuizState.NOT_LOADED) {
     this.quizState = status;
     this.quizDetails = null;
     this.quizAnswer = null;
-  };
+  }
 
-  @action handleQuizDetailsError = (error: AxiosError) => {
+  @action handleQuizDetailsError(error: AxiosError) {
     if (
       error.response &&
       error.response.status === 404 &&
@@ -57,7 +55,7 @@ export class QuizStore {
       this.unsetQuizDetails(QuizState.ERROR);
       // TODO: Handle unexpected error
     }
-  };
+  }
 
   @computed get questionData(): QuizQuestionInterface | null {
     switch (this.quizState) {

@@ -63,7 +63,7 @@ abstract class Api {
    * @throws Axios error
    */
   public static async getQuizList(): Promise<QuizInterface[]> {
-    const response = await axiosInstance.get('quiz');
+    const response = await axiosInstance.get('api/quiz');
     return response.data;
   }
 
@@ -79,7 +79,7 @@ abstract class Api {
    * @throws Axios error
    */
   public static async getQuiz(id: number): Promise<QuizDetailsInterface> {
-    const response = await axiosInstance.get(`quiz/${id}`);
+    const response = await axiosInstance.get(`api/quiz/${id}`);
     return response.data;
   }
 
@@ -95,7 +95,10 @@ abstract class Api {
     const formData = new FormData();
     formData.append('quiz', id.toString());
 
-    const response = await axiosInstance.post('quiz-fulfillment/', formData);
+    const response = await axiosInstance.post(
+      'api/quiz-fulfillment/',
+      formData,
+    );
     return response.data;
   }
 
@@ -117,7 +120,7 @@ abstract class Api {
     formData.append('question', question.toString());
     formData.append('options_data', option.toString());
 
-    const response = await axiosInstance.post('quiz-answer/', formData);
+    const response = await axiosInstance.post('api/quiz-answer/', formData);
     return response.data;
   }
 

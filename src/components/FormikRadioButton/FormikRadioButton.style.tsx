@@ -1,25 +1,18 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 interface StyledFormikRadioButtonProps {
-  checked: boolean | undefined;
-  correct: boolean | undefined;
+  isChecked?: boolean;
+  isCorrect?: boolean;
 }
 
 const StyledFormikRadioButton = styled.div<StyledFormikRadioButtonProps>`
   padding: 0.2em 0;
-
-  ${props =>
-    props.correct === true &&
-    css`
-      background: rgba(0, 255, 0, 0.2);
-    `}
-
-  ${props =>
-    props.checked === true &&
-    props.correct === false &&
-    css`
-      background: rgba(255, 0, 0, 0.2);
-    `}
+  background: ${({ isChecked, isCorrect, theme }) =>
+    isCorrect === true
+      ? theme.color.successBackground
+      : isChecked === true && isCorrect === false
+      ? theme.color.errorBackground
+      : 'inherit'};
 `;
 
 export default StyledFormikRadioButton;

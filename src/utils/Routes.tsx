@@ -3,11 +3,11 @@ import HomePage from 'pages/HomePage';
 import NotFoundPage from 'pages/NotFoundPage';
 import RoutePage from 'pages/RoutePage';
 import LocationPage from 'pages/LocationPage';
+import QuizPage from 'pages/QuizPage';
+import QuizDetailsPage from 'pages/QuizDetailsPage';
+import SurveyListPage from 'pages/SurveyListPage';
 import { Route, Switch } from 'react-router-dom';
 import React from 'react';
-import QuizPage from '../pages/QuizPage';
-import QuizDetailsPage from '../pages/QuizDetailsPage';
-import SurveyListPage from '../pages/SurveyListPage';
 
 class Routes extends React.Component {
   public render() {

@@ -1,33 +1,32 @@
 import { QuizState, QuizStore } from 'utils/store/quizStore';
 import Content from 'components/Content/Content';
+import QuizFormik from 'components/QuizFormik/QuizFormik';
 import Api from 'utils/api';
 import React from 'react';
+import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import QuizFormik from '../components/QuizFormik/QuizFormik';
 
-interface Props {
+interface Props extends RouteComponentProps<any> {
   quizStore: QuizStore;
-  match: Record<string, any>;
 }
 
 @inject('quizStore')
 @observer
 class QuizPage extends React.Component<Props> {
-  componentDidMount(): void {
+  async componentDidMount() {
     const {
       params: { id },
     } = this.props.match;
 
     this.props.quizStore.loadingQuizDetails();
 
-    Api.getQuiz(id)
-      .then(response => {
-        this.props.quizStore.loadQuizDetails(response);
-      })
-      .catch(error => {
-        this.props.quizStore.handleQuizDetailsError(error);
-      });
+    try {
+      const response = await Api.getQuiz(id);
+      this.props.quizStore.loadQuizDetails(response);
+    } catch (error) {
+      this.props.quizStore.handleQuizDetailsError(error);
+    }
   }
 
   render() {

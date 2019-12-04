@@ -1,11 +1,12 @@
+import { QuizStore } from 'utils/store/quizStore';
+import Api from 'utils/api';
+import FormikRadioButton from 'components/FormikRadioButton/FormikRadioButton';
+import FormikRadioButtonGroup from 'components/FormikRadioButtonGroup/FormikRadioButtonGroup';
 import React from 'react';
 import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { observer } from 'mobx-react';
-import { QuizStore } from '../../utils/store/quizStore';
-import Api from '../../utils/api';
-import FormikRadioButton from '../FormikRadioButton/FormikRadioButton';
-import FormikRadioButtonGroup from '../FormikRadioButtonGroup/FormikRadioButtonGroup';
+import { Link } from 'react-router-dom';
 
 interface Props {
   quizStore: QuizStore;
@@ -29,22 +30,16 @@ class QuizFormik extends React.Component<Props> {
         ),
       }),
       onSubmit: async (values: FormikValues) => {
-        // console.log(JSON.stringify(values, null, 2));
-
         try {
           const fulfillment = await Api.getQuizFulfillment(
             this.props.quizStore.quizDetails!.id,
           );
-
-          // console.log(fulfillment);
 
           const answer = await Api.getQuizAnswer(
             fulfillment.id,
             question.id,
             parseInt(values[radioGroupName].split('_')[1]),
           );
-
-          // console.log(answer);
 
           this.props.quizStore.submitQuizAnswer(answer);
         } catch (error) {
@@ -61,7 +56,7 @@ class QuizFormik extends React.Component<Props> {
             : 'Sorry but selected answer is incorrect'}
         </p>
         <p>
-          <a href="/quiz">Go to the list of active quizzes</a>
+          <Link to="/quiz">Go to the list of active quizzes</Link>
         </p>
       </div>
     ) : null;
@@ -83,7 +78,7 @@ class QuizFormik extends React.Component<Props> {
                     id={`option_${option.id}`}
                     name={radioGroupName}
                     label={option.description}
-                    correct={option.correct}
+                    isCorrect={option.correct}
                   />
                 ))}
               </FormikRadioButtonGroup>
