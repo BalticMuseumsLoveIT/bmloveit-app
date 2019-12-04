@@ -151,3 +151,13 @@ export interface SurveyOptionInterface {
   file_url: string;
   description_translation: Array<TranslationItemInterface>;
 }
+
+// Generic ---------------------------------------------------------------------
+
+export interface APIErrorInterface {
+  detail: string;
+}
+
+export function isAPIError(APIResponse: any): APIResponse is APIErrorInterface {
+  return (APIResponse as APIErrorInterface).detail !== undefined;
+}
