@@ -6,6 +6,7 @@ import LocationPage from 'pages/LocationPage';
 import QuizPage from 'pages/QuizPage';
 import QuizDetailsPage from 'pages/QuizDetailsPage';
 import SurveyListPage from 'pages/SurveyListPage';
+import SurveyDetailsPage from 'pages/SurveyDetailsPage';
 import { Route, Switch } from 'react-router-dom';
 import React from 'react';
 
@@ -18,6 +19,7 @@ class Routes extends React.Component {
           <Route exact path="/quiz" component={QuizPage} />
           <Route exact path="/quiz/:id" component={QuizDetailsPage} />
           <Route exact path="/survey" component={SurveyListPage} />
+          <Route exact path="/survey/:id" component={SurveyDetailsPage} />
           <Route exact path="/routes" component={RoutesPage} />
           <Route exact path="/routes/:id" component={RoutePage} />
           <Route
