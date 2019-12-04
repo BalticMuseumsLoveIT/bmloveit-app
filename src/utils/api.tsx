@@ -1,12 +1,11 @@
 import userStore from 'utils/store/userStore';
-import axios from 'axios';
 import {
   QuizAnswerResponse,
   QuizDetailsInterface,
   QuizFulfillmentResponse,
   QuizInterface,
-  SurveyInterface,
-} from './interfaces';
+} from 'utils/interfaces';
+import axios from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -54,6 +53,16 @@ abstract class Api {
     } catch (error) {
       return Promise.reject(error);
     }
+  }
+
+  public static async getPrivateMedia(path: string): Promise<string> {
+    const response = await axiosInstance.get(path, {
+      responseType: 'arraybuffer',
+    });
+
+    const data = Buffer.from(response.data, 'binary').toString('base64');
+
+    return `data:${response.headers['content-type']};base64,${data}`;
   }
 
   /**
