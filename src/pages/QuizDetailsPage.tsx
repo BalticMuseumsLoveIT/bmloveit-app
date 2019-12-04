@@ -14,7 +14,7 @@ interface Props extends RouteComponentProps<any> {
 @inject('quizStore')
 @observer
 class QuizPage extends React.Component<Props> {
-  async componentDidMount(): Promise<void> {
+  async componentDidMount() {
     const {
       params: { id },
     } = this.props.match;
