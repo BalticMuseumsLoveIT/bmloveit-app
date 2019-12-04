@@ -111,7 +111,7 @@ export interface SurveyInterface {
   location: number | null;
   item: number | null;
   language: number;
-  name_translation: TranslationItemInterface[];
-  name_full_translation: TranslationItemInterface[];
-  description_translation: TranslationItemInterface[];
+  name_translation: Array<TranslationItemInterface>;
+  name_full_translation: Array<TranslationItemInterface>;
+  description_translation: Array<TranslationItemInterface>;
 }
