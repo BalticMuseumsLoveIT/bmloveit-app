@@ -1,12 +1,12 @@
+import { QuizStore } from 'utils/store/quizStore';
+import Api from 'utils/api';
+import FormikRadioButton from 'components/FormikRadioButton/FormikRadioButton';
+import FormikRadioButtonGroup from 'components/FormikRadioButtonGroup/FormikRadioButtonGroup';
 import React from 'react';
 import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { QuizStore } from '../../utils/store/quizStore';
-import Api from '../../utils/api';
-import FormikRadioButton from '../FormikRadioButton/FormikRadioButton';
-import FormikRadioButtonGroup from '../FormikRadioButtonGroup/FormikRadioButtonGroup';
 
 interface Props {
   quizStore: QuizStore;

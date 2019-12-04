@@ -1,12 +1,12 @@
-import { action, computed, observable } from 'mobx';
-import { AxiosError } from 'axios';
 import {
   QuizDetailsInterface,
   QuizInterface,
   isQuizDetailsNotFound,
   QuizAnswerResponse,
   QuizQuestionInterface,
-} from '../interfaces';
+} from 'utils/interfaces';
+import { action, computed, observable } from 'mobx';
+import { AxiosError } from 'axios';
 
 export enum QuizState {
   NOT_LOADED,

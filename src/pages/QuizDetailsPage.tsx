@@ -4,7 +4,7 @@ import Api from 'utils/api';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import QuizFormik from '../components/QuizFormik/QuizFormik';
+import QuizFormik from 'components/QuizFormik/QuizFormik';
 
 interface Props {
   quizStore: QuizStore;
