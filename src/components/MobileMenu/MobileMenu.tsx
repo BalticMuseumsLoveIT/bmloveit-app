@@ -18,6 +18,10 @@ const links = [
     title: 'Quiz',
   },
   {
+    to: '/survey',
+    title: 'Survey',
+  },
+  {
     to: '/routes',
     title: 'Available Routes',
   },
