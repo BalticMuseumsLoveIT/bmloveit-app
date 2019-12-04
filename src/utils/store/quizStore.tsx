@@ -1,5 +1,3 @@
-import { action, computed, observable } from 'mobx';
-import { AxiosError } from 'axios';
 import {
   QuizDetailsInterface,
   QuizInterface,
@@ -7,6 +5,8 @@ import {
   QuizAnswerResponse,
   QuizQuestionInterface,
 } from 'utils/interfaces';
+import { action, computed, observable } from 'mobx';
+import { AxiosError } from 'axios';
 
 export enum QuizState {
   NOT_LOADED,
@@ -18,7 +18,7 @@ export enum QuizState {
 }
 
 export class QuizStore {
-  @observable quizList: QuizInterface[] = [];
+  @observable quizList: Array<QuizInterface> = [];
 
   @observable quizState: QuizState = QuizState.NOT_LOADED;
   @observable quizDetails: QuizDetailsInterface | null = null;
