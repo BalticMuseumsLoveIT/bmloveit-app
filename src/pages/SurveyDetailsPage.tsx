@@ -1,4 +1,6 @@
 import Content from 'components/Content/Content';
+import FormikRadioButton from 'components/FormikRadioButton/FormikRadioButton';
+import FormikRadioButtonGroup from 'components/FormikRadioButtonGroup/FormikRadioButtonGroup';
 import store, { SurveyDetailsState } from 'utils/store/surveyDetailsStore';
 import {
   SurveyDetailsInterface,
@@ -9,7 +11,7 @@ import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
-import { Form, Formik, FormikValues } from 'formik';
+import { Form, Field, ErrorMessage, Formik, FormikValues } from 'formik';
 
 const Survey = function(props: {
   state: SurveyDetailsState;
@@ -39,7 +41,7 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
 
   const extractInitialValues = (array: Array<SurveyQuestionInterface>) =>
     array.reduce((obj: StringMap, item: SurveyQuestionInterface) => {
-      obj[`question-${item.id}`] = '';
+      obj[`question_${item.id}`] = '';
       return obj;
     }, {});
 
@@ -49,27 +51,82 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
     console.log('onSubmit', values);
   };
 
-  const questions = survey.questions_data.map(question => {
-    switch (question.type) {
-      case SurveyQuestionType.SELECT:
-        return <p key={question.id}>Radio</p>;
-      case SurveyQuestionType.MULTISELECT:
-        return <p key={question.id}>Checkbox</p>;
-      case SurveyQuestionType.OPEN:
-        return <p key={question.id}>Input</p>;
-      default:
-        return null;
-    }
-  });
+  // const Fieldset = ({ name, label, ...rest }: any) => {
+  //   console.log(rest);
+  //   return (
+  //     <React.Fragment>
+  //       <label htmlFor={name}>{label}</label>
+  //       <Field id={name} name={name} {...rest} />
+  //       <ErrorMessage name={name} />
+  //     </React.Fragment>
+  //   );
+  // };
 
   return (
     <>
       <h2>{survey.name}</h2>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({ isSubmitting }) => (
+        {formik => (
           <Form>
-            {questions}
-            <button type="submit" disabled={isSubmitting}>
+            {survey.questions_data.map(question => {
+              switch (question.type) {
+                case SurveyQuestionType.SELECT:
+                  const n = `question_${question.id}`;
+                  return (
+                    <FormikRadioButtonGroup
+                      key={question.id}
+                      legend={question.description}
+                      error={formik.errors[n]}
+                      touched={formik.touched[n]}
+                    >
+                      {question.options_data.map(option => (
+                        <FormikRadioButton
+                          key={option.id}
+                          id={`option_${option.id}`}
+                          name={n}
+                          label={option.description}
+                        />
+                      ))}
+                    </FormikRadioButtonGroup>
+                  );
+                case SurveyQuestionType.MULTISELECT:
+                  const questionName = `question_${question.id}`;
+                  return (
+                    <fieldset key={questionName}>
+                      <legend>{question.description}</legend>
+                      {question.options_data.map(option => {
+                        const optionName = `option_${option.id}`;
+                        return (
+                          <div key={optionName}>
+                            <Field
+                              type="checkbox"
+                              id={optionName}
+                              name={questionName}
+                              value={option.id}
+                            />
+                            <label htmlFor={optionName}>
+                              {option.description}
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </fieldset>
+                  );
+                case SurveyQuestionType.OPEN:
+                  return (
+                    <p key={question.id}>
+                      <label htmlFor="lastName">Last Name</label>
+                      <input
+                        id="lastName"
+                        {...formik.getFieldProps(`question_${question.id}`)}
+                      />
+                    </p>
+                  );
+                default:
+                  return null;
+              }
+            })}
+            <button type="submit" disabled={formik.isSubmitting}>
               Submit
             </button>
           </Form>
