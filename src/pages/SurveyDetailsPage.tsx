@@ -11,7 +11,7 @@ import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
-import { Form, Field, ErrorMessage, Formik, FormikValues } from 'formik';
+import { FieldArray, Form, Formik, FormikValues } from 'formik';
 
 const Survey = function(props: {
   state: SurveyDetailsState;
@@ -36,12 +36,13 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
   const { survey } = props;
 
   interface StringMap {
-    [key: string]: string;
+    [key: string]: string | Array<string>;
   }
 
   const extractInitialValues = (array: Array<SurveyQuestionInterface>) =>
     array.reduce((obj: StringMap, item: SurveyQuestionInterface) => {
-      obj[`question_${item.id}`] = '';
+      obj[`question_${item.id}`] =
+        item.type === SurveyQuestionType.MULTISELECT ? [] : '';
       return obj;
     }, {});
 
@@ -69,47 +70,66 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
         {formik => (
           <Form>
             {survey.questions_data.map(question => {
+              const questionName = `question_${question.id}`;
               switch (question.type) {
                 case SurveyQuestionType.SELECT:
-                  const n = `question_${question.id}`;
                   return (
                     <FormikRadioButtonGroup
                       key={question.id}
                       legend={question.description}
-                      error={formik.errors[n]}
-                      touched={formik.touched[n]}
+                      error={formik.errors[questionName]}
+                      touched={formik.touched[questionName]}
                     >
                       {question.options_data.map(option => (
                         <FormikRadioButton
                           key={option.id}
                           id={`option_${option.id}`}
-                          name={n}
+                          name={questionName}
                           label={option.description}
                         />
                       ))}
                     </FormikRadioButtonGroup>
                   );
                 case SurveyQuestionType.MULTISELECT:
-                  const questionName = `question_${question.id}`;
                   return (
                     <fieldset key={questionName}>
                       <legend>{question.description}</legend>
-                      {question.options_data.map(option => {
-                        const optionName = `option_${option.id}`;
-                        return (
-                          <div key={optionName}>
-                            <Field
-                              type="checkbox"
-                              id={optionName}
-                              name={questionName}
-                              value={option.id}
-                            />
-                            <label htmlFor={optionName}>
-                              {option.description}
-                            </label>
+                      <FieldArray
+                        name={questionName}
+                        render={arrayHelpers => (
+                          <div>
+                            {question.options_data.map(option => {
+                              const optionName = `option_${option.id}`;
+                              return (
+                                <div key={optionName}>
+                                  <input
+                                    type="checkbox"
+                                    name={questionName}
+                                    id={optionName}
+                                    value={optionName}
+                                    checked={formik.values[
+                                      questionName
+                                    ].includes(optionName)}
+                                    onChange={e => {
+                                      if (e.target.checked)
+                                        arrayHelpers.push(optionName);
+                                      else {
+                                        const idx = formik.values[
+                                          questionName
+                                        ].indexOf(optionName);
+                                        arrayHelpers.remove(idx);
+                                      }
+                                    }}
+                                  />
+                                  <label htmlFor={optionName}>
+                                    {option.description}
+                                  </label>
+                                </div>
+                              );
+                            })}
                           </div>
-                        );
-                      })}
+                        )}
+                      />
                     </fieldset>
                   );
                 case SurveyQuestionType.OPEN:
@@ -118,7 +138,7 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
                       <label htmlFor="lastName">Last Name</label>
                       <input
                         id="lastName"
-                        {...formik.getFieldProps(`question_${question.id}`)}
+                        {...formik.getFieldProps(questionName)}
                       />
                     </p>
                   );
