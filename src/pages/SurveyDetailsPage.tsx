@@ -13,6 +13,7 @@ import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
 import {
   ArrayHelpers,
+  Field,
   FieldArray,
   Form,
   Formik,
@@ -59,6 +60,14 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
     console.log('onSubmit', values);
   };
 
+  const QuestionImage = ({ url }: { url?: string }) =>
+    (url && url.length && (
+      <div>
+        <img src={url} alt="Question illustration" />
+      </div>
+    )) ||
+    null;
+
   interface CheckboxGroupInterface {
     name: string;
     question: SurveyQuestionInterface;
@@ -98,6 +107,7 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
     return (
       <fieldset>
         <legend>{question.description}</legend>
+        <QuestionImage url={question.file_url} />
         <FieldArray name={name} render={render} />
       </fieldset>
     );
@@ -140,13 +150,11 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
                   );
                 case SurveyQuestionType.OPEN:
                   return (
-                    <p key={question.id}>
-                      <label htmlFor="lastName">Last Name</label>
-                      <input
-                        id="lastName"
-                        {...formik.getFieldProps(questionName)}
-                      />
-                    </p>
+                    <fieldset key={questionName}>
+                      <legend>{question.description}</legend>
+                      <QuestionImage url={question.file_url} />
+                      <Field name={questionName} component="textarea" />
+                    </fieldset>
                   );
                 default:
                   return null;
