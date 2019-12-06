@@ -26,10 +26,13 @@ export class SurveyDetailsStore {
     return this._survey;
   }
 
+  @observable private _surveyId: number | null = null;
+
   @action async loadSurvey(id: number) {
     this._state = SurveyDetailsState.LOADING;
     try {
       this._survey = await Api.getSurveyDetails(id);
+      this._surveyId = id;
       this._state = SurveyDetailsState.LOADED;
     } catch (error) {
       if (
