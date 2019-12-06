@@ -13,10 +13,8 @@ import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
 import * as Yup from 'yup';
 import {
-  ArrayHelpers,
   ErrorMessage,
   Field,
-  FieldArray,
   FieldProps,
   Form,
   Formik,
@@ -103,34 +101,23 @@ const SurveyForm = function({ survey }: SurveyFormProps) {
 
   const CheckboxGroup = ({ field, options }: CheckboxGroupProps) => {
     return (
-      <FieldArray name={field.name}>
-        {(arrayHelpers: ArrayHelpers): React.ReactNode => (
-          <>
-            {options.map(option => {
-              const optionName = `option_${option.id}`;
-              return (
-                <div key={optionName}>
-                  <input
-                    type="checkbox"
-                    name={field.name}
-                    id={optionName}
-                    value={optionName}
-                    checked={field.value.includes(optionName)}
-                    onChange={e => {
-                      if (e.target.checked) arrayHelpers.push(optionName);
-                      else {
-                        const idx = field.value.indexOf(optionName);
-                        arrayHelpers.remove(idx);
-                      }
-                    }}
-                  />
-                  <label htmlFor={optionName}>{option.description}</label>
-                </div>
-              );
-            })}
-          </>
-        )}
-      </FieldArray>
+      <>
+        {options.map(option => {
+          const optionName = `option_${option.id}`;
+          return (
+            <div key={optionName}>
+              <Field
+                type="checkbox"
+                name={field.name}
+                id={optionName}
+                value={optionName}
+                multiple
+              />
+              <label htmlFor={optionName}>{option.description}</label>
+            </div>
+          );
+        })}
+      </>
     );
   };
 
