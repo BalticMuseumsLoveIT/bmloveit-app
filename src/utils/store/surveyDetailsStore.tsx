@@ -7,6 +7,7 @@ export enum SurveyDetailsState {
   NOT_LOADED,
   LOADING,
   LOADED,
+  SUBMITTED,
   NOT_FOUND,
   ERROR,
 }
@@ -44,7 +45,8 @@ export class SurveyDetailsStore {
     }
   }
 
-  @action async handleSubmit(values: FormikValues) {
+  @action.bound async handleSubmit(values: FormikValues) {
+    this._state = SurveyDetailsState.SUBMITTED;
     console.log(values);
   }
 }

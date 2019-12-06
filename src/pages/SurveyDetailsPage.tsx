@@ -8,7 +8,7 @@ import {
   SurveyQuestionType,
 } from 'utils/interfaces';
 import React, { Component } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
 import * as Yup from 'yup';
@@ -32,7 +32,18 @@ const Survey = function({ state, survey, onSubmit }: SurveyProps) {
     case SurveyDetailsState.LOADING:
       return <p>Wczytywanie...</p>;
     case SurveyDetailsState.LOADED:
-      return (survey && <SurveyForm survey={survey} onSubmit={onSubmit} />) || null;
+      return (
+        (survey && <SurveyForm survey={survey} onSubmit={onSubmit} />) || null
+      );
+    case SurveyDetailsState.SUBMITTED:
+      return (
+        <div>
+          <p>You have finished a survey - thank you</p>
+          <p>
+            <Link to="/survey">Go to the list of active surveys</Link>
+          </p>
+        </div>
+      );
     case SurveyDetailsState.NOT_FOUND:
       return <p>Ankieta o podanym identyfikatorze nie została odnaleziona</p>;
     case SurveyDetailsState.ERROR:
