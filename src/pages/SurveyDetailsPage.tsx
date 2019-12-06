@@ -1,9 +1,9 @@
 import Content from 'components/Content/Content';
 import FormikRadioButton from 'components/FormikRadioButton/FormikRadioButton';
-import FormikRadioButtonGroup from 'components/FormikRadioButtonGroup/FormikRadioButtonGroup';
 import store, { SurveyDetailsState } from 'utils/store/surveyDetailsStore';
 import {
   SurveyDetailsInterface,
+  SurveyOptionInterface,
   SurveyQuestionInterface,
   SurveyQuestionType,
 } from 'utils/interfaces';
@@ -15,17 +15,18 @@ import {
   ArrayHelpers,
   Field,
   FieldArray,
+  FieldProps,
   Form,
   Formik,
   FormikValues,
-  useField,
 } from 'formik';
 
-const Survey = function(props: {
+interface SurveyProps {
   state: SurveyDetailsState;
   survey: SurveyDetailsInterface | null;
-}) {
-  const { state, survey } = props;
+}
+
+const Survey = function({ state, survey }: SurveyProps) {
   switch (state) {
     case SurveyDetailsState.LOADING:
       return <p>Wczytywanie...</p>;
@@ -40,19 +41,22 @@ const Survey = function(props: {
   }
 };
 
-const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
-  const { survey } = props;
+interface SurveyFormProps {
+  survey: SurveyDetailsInterface;
+}
 
+const SurveyForm = function({ survey }: SurveyFormProps) {
   interface StringMap {
     [key: string]: string | Array<string>;
   }
 
-  const extractInitialValues = (array: Array<SurveyQuestionInterface>) =>
-    array.reduce((obj: StringMap, item: SurveyQuestionInterface) => {
+  const extractInitialValues = (array: Array<SurveyQuestionInterface>) => {
+    return array.reduce((obj: StringMap, item: SurveyQuestionInterface) => {
       obj[`question_${item.id}`] =
         item.type === SurveyQuestionType.MULTISELECT ? [] : '';
       return obj;
     }, {});
+  };
 
   const initialValues = extractInitialValues(survey.questions_data);
 
@@ -60,55 +64,106 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
     console.log('onSubmit', values);
   };
 
-  const QuestionImage = ({ url }: { url?: string }) =>
-    (url && url.length && (
-      <div>
-        <img src={url} alt="Question illustration" />
-      </div>
-    )) ||
-    null;
+  const QuestionImage = ({ url }: { url?: string }) => {
+    return (
+      (url && url.length && (
+        <div>
+          <img src={url} alt="Question illustration" />
+        </div>
+      )) ||
+      null
+    );
+  };
 
-  interface CheckboxGroupInterface {
-    name: string;
+  interface CheckboxGroupProps extends FieldProps {
+    options: Array<SurveyOptionInterface>;
+  }
+
+  const CheckboxGroup = ({ field, options }: CheckboxGroupProps) => {
+    return (
+      <FieldArray name={field.name}>
+        {(arrayHelpers: ArrayHelpers): React.ReactNode => (
+          <>
+            {options.map(option => {
+              const optionName = `option_${option.id}`;
+              return (
+                <div key={optionName}>
+                  <input
+                    type="checkbox"
+                    name={field.name}
+                    id={optionName}
+                    value={optionName}
+                    checked={field.value.includes(optionName)}
+                    onChange={e => {
+                      if (e.target.checked) arrayHelpers.push(optionName);
+                      else {
+                        const idx = field.value.indexOf(optionName);
+                        arrayHelpers.remove(idx);
+                      }
+                    }}
+                  />
+                  <label htmlFor={optionName}>{option.description}</label>
+                </div>
+              );
+            })}
+          </>
+        )}
+      </FieldArray>
+    );
+  };
+
+  interface RadioGroupProps extends FieldProps {
+    options: Array<SurveyOptionInterface>;
+  }
+
+  const RadioGroup = ({ field, options }: RadioGroupProps) => {
+    return (
+      <>
+        {options.map(option => (
+          <FormikRadioButton
+            key={option.id}
+            id={`option_${option.id}`}
+            name={field.name}
+            label={option.description}
+          />
+        ))}
+      </>
+    );
+  };
+
+  interface SurveyQuestionProps extends FieldProps {
     question: SurveyQuestionInterface;
   }
 
-  const CheckboxGroup = ({ name, question }: CheckboxGroupInterface) => {
-    const [field] = useField(name);
-
-    const render = (arrayHelpers: ArrayHelpers): React.ReactNode => (
-      <>
-        {/* eslint-disable-next-line react/prop-types */}
-        {question.options_data.map(option => {
-          const optionName = `option_${option.id}`;
-          return (
-            <div key={optionName}>
-              <input
-                type="checkbox"
-                name={name}
-                id={optionName}
-                value={optionName}
-                checked={field.value.includes(optionName)}
-                onChange={e => {
-                  if (e.target.checked) arrayHelpers.push(optionName);
-                  else {
-                    const idx = field.value.indexOf(optionName);
-                    arrayHelpers.remove(idx);
-                  }
-                }}
-              />
-              <label htmlFor={optionName}>{option.description}</label>
-            </div>
-          );
-        })}
-      </>
-    );
-
+  const SurveyQuestion = ({ field, question }: SurveyQuestionProps) => {
     return (
       <fieldset>
         <legend>{question.description}</legend>
         <QuestionImage url={question.file_url} />
-        <FieldArray name={name} render={render} />
+        {(() => {
+          switch (question.type) {
+            case SurveyQuestionType.SELECT:
+              return (
+                <Field
+                  name={field.name}
+                  component={RadioGroup}
+                  options={question.options_data}
+                />
+              );
+            case SurveyQuestionType.MULTISELECT:
+              return (
+                <Field
+                  name={field.name}
+                  component={CheckboxGroup}
+                  options={question.options_data}
+                />
+              );
+            case SurveyQuestionType.OPEN:
+              return <Field name={field.name} component="textarea" />;
+            default:
+              return null;
+          }
+        })()}
       </fieldset>
     );
   };
@@ -119,47 +174,14 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {formik => (
           <Form>
-            {survey.questions_data.map(question => {
-              const questionName = `question_${question.id}`;
-              switch (question.type) {
-                case SurveyQuestionType.SELECT:
-                  return (
-                    <FormikRadioButtonGroup
-                      key={question.id}
-                      legend={question.description}
-                      error={formik.errors[questionName]}
-                      touched={formik.touched[questionName]}
-                    >
-                      {question.options_data.map(option => (
-                        <FormikRadioButton
-                          key={option.id}
-                          id={`option_${option.id}`}
-                          name={questionName}
-                          label={option.description}
-                        />
-                      ))}
-                    </FormikRadioButtonGroup>
-                  );
-                case SurveyQuestionType.MULTISELECT:
-                  return (
-                    <CheckboxGroup
-                      key={questionName}
-                      name={questionName}
-                      question={question}
-                    />
-                  );
-                case SurveyQuestionType.OPEN:
-                  return (
-                    <fieldset key={questionName}>
-                      <legend>{question.description}</legend>
-                      <QuestionImage url={question.file_url} />
-                      <Field name={questionName} component="textarea" />
-                    </fieldset>
-                  );
-                default:
-                  return null;
-              }
-            })}
+            {survey.questions_data.map(question => (
+              <Field
+                key={question.id}
+                name={`question_${question.id}`}
+                question={question}
+                component={SurveyQuestion}
+              />
+            ))}
             <button type="submit" disabled={formik.isSubmitting}>
               Submit
             </button>
@@ -170,10 +192,10 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
   );
 };
 
-interface Props extends RouteComponentProps<any> {}
+interface SurveyDetailsProps extends RouteComponentProps<any> {}
 
 @observer
-class SurveyDetailsPage extends Component<Props> {
+class SurveyDetailsPage extends Component<SurveyDetailsProps> {
   async componentDidMount() {
     const {
       params: { id },
