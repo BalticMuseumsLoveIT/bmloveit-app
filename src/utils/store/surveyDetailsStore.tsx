@@ -49,8 +49,19 @@ export class SurveyDetailsStore {
   }
 
   @action.bound async handleSubmit(values: FormikValues) {
-    this._state = SurveyDetailsState.SUBMITTED;
-    console.log(values);
+    if (this._surveyId === null) {
+      this._state = SurveyDetailsState.ERROR;
+      return;
+    }
+
+    try {
+      const fulfillment = await Api.getSurveyFulfillment(this._surveyId);
+      // TODO: Send values
+      this._state = SurveyDetailsState.SUBMITTED;
+    } catch (error) {
+      this._state = SurveyDetailsState.ERROR;
+      // TODO: Handle unexpected error
+    }
   }
 }
 
