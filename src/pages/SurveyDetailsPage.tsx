@@ -11,8 +11,10 @@ import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
+import * as Yup from 'yup';
 import {
   ArrayHelpers,
+  ErrorMessage,
   Field,
   FieldArray,
   FieldProps,
@@ -59,6 +61,26 @@ const SurveyForm = function({ survey }: SurveyFormProps) {
   };
 
   const initialValues = extractInitialValues(survey.questions_data);
+
+  const extractValidationSchema = (array: Array<SurveyQuestionInterface>) => {
+    return array.reduce(
+      (obj: Yup.ObjectSchema, item: SurveyQuestionInterface) => {
+        const schema = {
+          [`question_${item.id}`]:
+            item.type === SurveyQuestionType.MULTISELECT
+              ? Yup.array()
+                  .of(Yup.string())
+                  .required('This field is required')
+              : Yup.string().required('This field is required'),
+        };
+
+        return obj.shape(schema);
+      },
+      Yup.object(),
+    );
+  };
+
+  const validationSchema = extractValidationSchema(survey.questions_data);
 
   const handleSubmit = async (values: FormikValues) => {
     console.log('onSubmit', values);
@@ -164,6 +186,7 @@ const SurveyForm = function({ survey }: SurveyFormProps) {
               return null;
           }
         })()}
+        <ErrorMessage component="div" name={field.name} />
       </fieldset>
     );
   };
@@ -171,7 +194,11 @@ const SurveyForm = function({ survey }: SurveyFormProps) {
   return (
     <>
       <h2>{survey.name}</h2>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
         {formik => (
           <Form>
             {survey.questions_data.map(question => (
