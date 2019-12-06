@@ -24,14 +24,15 @@ import {
 interface SurveyProps {
   state: SurveyDetailsState;
   survey: SurveyDetailsInterface | null;
+  onSubmit: (values: FormikValues) => Promise<void>;
 }
 
-const Survey = function({ state, survey }: SurveyProps) {
+const Survey = function({ state, survey, onSubmit }: SurveyProps) {
   switch (state) {
     case SurveyDetailsState.LOADING:
       return <p>Wczytywanie...</p>;
     case SurveyDetailsState.LOADED:
-      return (survey && <SurveyForm survey={survey} />) || null;
+      return (survey && <SurveyForm survey={survey} onSubmit={onSubmit} />) || null;
     case SurveyDetailsState.NOT_FOUND:
       return <p>Ankieta o podanym identyfikatorze nie została odnaleziona</p>;
     case SurveyDetailsState.ERROR:
@@ -43,9 +44,10 @@ const Survey = function({ state, survey }: SurveyProps) {
 
 interface SurveyFormProps {
   survey: SurveyDetailsInterface;
+  onSubmit: (values: FormikValues) => Promise<void>;
 }
 
-const SurveyForm = function({ survey }: SurveyFormProps) {
+const SurveyForm = function({ survey, onSubmit }: SurveyFormProps) {
   interface StringMap {
     [key: string]: string | Array<string>;
   }
@@ -79,10 +81,6 @@ const SurveyForm = function({ survey }: SurveyFormProps) {
   };
 
   const validationSchema = extractValidationSchema(survey.questions_data);
-
-  const handleSubmit = async (values: FormikValues) => {
-    console.log('onSubmit', values);
-  };
 
   const QuestionImage = ({ url }: { url?: string }) => {
     return (
@@ -184,7 +182,7 @@ const SurveyForm = function({ survey }: SurveyFormProps) {
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
       >
         {formik => (
           <Form>
@@ -226,7 +224,11 @@ class SurveyDetailsPage extends Component<SurveyDetailsProps> {
         </Helmet>
         <Content>
           <h1>Survey details</h1>
-          <Survey state={store.state} survey={store.survey} />
+          <Survey
+            state={store.state}
+            survey={store.survey}
+            onSubmit={store.handleSubmit}
+          />
         </Content>
       </>
     );

@@ -1,6 +1,7 @@
 import { isAPIError, SurveyDetailsInterface } from 'utils/interfaces';
 import Api from 'utils/api';
 import { action, computed, observable } from 'mobx';
+import { FormikValues } from 'formik';
 
 export enum SurveyDetailsState {
   NOT_LOADED,
@@ -41,6 +42,10 @@ export class SurveyDetailsStore {
         // TODO: Handle unexpected error
       }
     }
+  }
+
+  @action async handleSubmit(values: FormikValues) {
+    console.log(values);
   }
 }
 
