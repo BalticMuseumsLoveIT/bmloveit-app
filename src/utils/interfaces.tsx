@@ -152,6 +152,13 @@ export interface SurveyOptionInterface {
   description_translation: Array<TranslationItemInterface>;
 }
 
+export interface SurveyFulfillmentResponse {
+  id: number;
+  survey: number;
+  user: number;
+  date_add: string;
+}
+
 // Generic ---------------------------------------------------------------------
 
 export interface APIErrorInterface {

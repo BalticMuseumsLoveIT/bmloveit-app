@@ -6,6 +6,7 @@ import {
   QuizInterface,
   SurveyInterface,
   SurveyDetailsInterface,
+  SurveyFulfillmentResponse,
 } from 'utils/interfaces';
 import axios from 'axios';
 
@@ -155,6 +156,26 @@ abstract class Api {
     id: number,
   ): Promise<SurveyDetailsInterface> {
     const response = await axiosInstance.get(`api/survey/${id}`);
+    return response.data;
+  }
+
+  /**
+   * Get a fulfillment for a survey with a given id
+   *
+   * @param {number} id - Survey ID
+   * @throws Axios error
+   */
+  public static async getSurveyFulfillment(
+    id: number,
+  ): Promise<SurveyFulfillmentResponse> {
+    const formData = new FormData();
+    formData.append('survey', id.toString());
+
+    const response = await axiosInstance.post(
+      'api/survey-fulfillment/',
+      formData,
+    );
+
     return response.data;
   }
 }
