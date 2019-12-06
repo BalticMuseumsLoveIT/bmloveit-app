@@ -11,7 +11,14 @@ import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
-import { FieldArray, Form, Formik, FormikValues } from 'formik';
+import {
+  ArrayHelpers,
+  FieldArray,
+  Form,
+  Formik,
+  FormikValues,
+  useField,
+} from 'formik';
 
 const Survey = function(props: {
   state: SurveyDetailsState;
@@ -52,16 +59,49 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
     console.log('onSubmit', values);
   };
 
-  // const Fieldset = ({ name, label, ...rest }: any) => {
-  //   console.log(rest);
-  //   return (
-  //     <React.Fragment>
-  //       <label htmlFor={name}>{label}</label>
-  //       <Field id={name} name={name} {...rest} />
-  //       <ErrorMessage name={name} />
-  //     </React.Fragment>
-  //   );
-  // };
+  interface CheckboxGroupInterface {
+    name: string;
+    question: SurveyQuestionInterface;
+  }
+
+  const CheckboxGroup = ({ name, question }: CheckboxGroupInterface) => {
+    const [field] = useField(name);
+
+    const render = (arrayHelpers: ArrayHelpers): React.ReactNode => (
+      <>
+        {/* eslint-disable-next-line react/prop-types */}
+        {question.options_data.map(option => {
+          const optionName = `option_${option.id}`;
+          return (
+            <div key={optionName}>
+              <input
+                type="checkbox"
+                name={name}
+                id={optionName}
+                value={optionName}
+                checked={field.value.includes(optionName)}
+                onChange={e => {
+                  if (e.target.checked) arrayHelpers.push(optionName);
+                  else {
+                    const idx = field.value.indexOf(optionName);
+                    arrayHelpers.remove(idx);
+                  }
+                }}
+              />
+              <label htmlFor={optionName}>{option.description}</label>
+            </div>
+          );
+        })}
+      </>
+    );
+
+    return (
+      <fieldset>
+        <legend>{question.description}</legend>
+        <FieldArray name={name} render={render} />
+      </fieldset>
+    );
+  };
 
   return (
     <>
@@ -92,45 +132,11 @@ const SurveyForm = function(props: { survey: SurveyDetailsInterface }) {
                   );
                 case SurveyQuestionType.MULTISELECT:
                   return (
-                    <fieldset key={questionName}>
-                      <legend>{question.description}</legend>
-                      <FieldArray
-                        name={questionName}
-                        render={arrayHelpers => (
-                          <div>
-                            {question.options_data.map(option => {
-                              const optionName = `option_${option.id}`;
-                              return (
-                                <div key={optionName}>
-                                  <input
-                                    type="checkbox"
-                                    name={questionName}
-                                    id={optionName}
-                                    value={optionName}
-                                    checked={formik.values[
-                                      questionName
-                                    ].includes(optionName)}
-                                    onChange={e => {
-                                      if (e.target.checked)
-                                        arrayHelpers.push(optionName);
-                                      else {
-                                        const idx = formik.values[
-                                          questionName
-                                        ].indexOf(optionName);
-                                        arrayHelpers.remove(idx);
-                                      }
-                                    }}
-                                  />
-                                  <label htmlFor={optionName}>
-                                    {option.description}
-                                  </label>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
-                      />
-                    </fieldset>
+                    <CheckboxGroup
+                      key={questionName}
+                      name={questionName}
+                      question={question}
+                    />
                   );
                 case SurveyQuestionType.OPEN:
                   return (
