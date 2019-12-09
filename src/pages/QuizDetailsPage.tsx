@@ -1,4 +1,7 @@
-import { QuizState, QuizStore } from 'utils/store/quizStore';
+import {
+  QuizDetailsState,
+  QuizDetailsStore,
+} from 'utils/store/quizDetailsStore';
 import Content from 'components/Content/Content';
 import QuizFormik from 'components/QuizFormik/QuizFormik';
 import Api from 'utils/api';
@@ -8,7 +11,7 @@ import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 
 interface Props extends RouteComponentProps<any> {
-  quizStore: QuizStore;
+  quizStore: QuizDetailsStore;
 }
 
 @inject('quizStore')
@@ -30,16 +33,16 @@ class QuizPage extends React.Component<Props> {
   }
 
   render() {
-    const quiz = (state: QuizState) => {
+    const quiz = (state: QuizDetailsState) => {
       switch (state) {
-        case QuizState.LOADING:
+        case QuizDetailsState.LOADING:
           return <p>Wczytywanie...</p>;
-        case QuizState.LOADED:
-        case QuizState.SUBMITTED:
+        case QuizDetailsState.LOADED:
+        case QuizDetailsState.SUBMITTED:
           return <QuizFormik quizStore={this.props.quizStore} />;
-        case QuizState.NOT_FOUND:
+        case QuizDetailsState.NOT_FOUND:
           return <p>Quiz o podanym identyfikatorze nie istnieje</p>;
-        case QuizState.ERROR:
+        case QuizDetailsState.ERROR:
           return <p>Wystąpił problem podczas ładowania quizu</p>;
         default:
           return null;

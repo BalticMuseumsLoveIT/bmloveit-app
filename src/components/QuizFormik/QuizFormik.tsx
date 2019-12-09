@@ -1,4 +1,4 @@
-import { QuizStore } from 'utils/store/quizStore';
+import { QuizDetailsStore } from 'utils/store/quizDetailsStore';
 import Api from 'utils/api';
 import FormikRadioButton from 'components/FormikRadioButton/FormikRadioButton';
 import FormikRadioButtonGroup from 'components/FormikRadioButtonGroup/FormikRadioButtonGroup';
@@ -9,7 +9,7 @@ import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
 interface Props {
-  quizStore: QuizStore;
+  quizStore: QuizDetailsStore;
 }
 
 @observer

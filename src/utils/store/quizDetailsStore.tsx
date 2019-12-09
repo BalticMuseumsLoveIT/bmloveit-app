@@ -8,7 +8,7 @@ import {
 import { action, computed, observable } from 'mobx';
 import { AxiosError } from 'axios';
 
-export enum QuizState {
+export enum QuizDetailsState {
   NOT_LOADED,
   LOADING,
   LOADED,
@@ -17,28 +17,30 @@ export enum QuizState {
   ERROR,
 }
 
-export class QuizStore {
+export class QuizDetailsStore {
   @observable quizList: Array<QuizInterface> = [];
 
-  @observable quizState: QuizState = QuizState.NOT_LOADED;
+  @observable quizState: QuizDetailsState = QuizDetailsState.NOT_LOADED;
   @observable quizDetails: QuizDetailsInterface | null = null;
   @observable quizAnswer: QuizAnswerResponse | null = null;
 
   @action loadingQuizDetails() {
-    this.unsetQuizDetails(QuizState.LOADING);
+    this.unsetQuizDetails(QuizDetailsState.LOADING);
   }
 
   @action loadQuizDetails(quizDetails: QuizDetailsInterface) {
-    this.quizState = QuizState.LOADED;
+    this.quizState = QuizDetailsState.LOADED;
     this.quizDetails = quizDetails;
   }
 
   @action submitQuizAnswer(answer: QuizAnswerResponse) {
-    this.quizState = QuizState.SUBMITTED;
+    this.quizState = QuizDetailsState.SUBMITTED;
     this.quizAnswer = answer;
   }
 
-  @action unsetQuizDetails(status: QuizState = QuizState.NOT_LOADED) {
+  @action unsetQuizDetails(
+    status: QuizDetailsState = QuizDetailsState.NOT_LOADED,
+  ) {
     this.quizState = status;
     this.quizDetails = null;
     this.quizAnswer = null;
@@ -50,18 +52,18 @@ export class QuizStore {
       error.response.status === 404 &&
       isQuizDetailsNotFound(error.response.data)
     ) {
-      this.unsetQuizDetails(QuizState.NOT_FOUND);
+      this.unsetQuizDetails(QuizDetailsState.NOT_FOUND);
     } else {
-      this.unsetQuizDetails(QuizState.ERROR);
+      this.unsetQuizDetails(QuizDetailsState.ERROR);
       // TODO: Handle unexpected error
     }
   }
 
   @computed get questionData(): QuizQuestionInterface | null {
     switch (this.quizState) {
-      case QuizState.LOADED:
+      case QuizDetailsState.LOADED:
         return this.quizDetails!.questions_data[0];
-      case QuizState.SUBMITTED:
+      case QuizDetailsState.SUBMITTED:
         return this.quizAnswer!.question_data;
       default:
         return null;
@@ -69,14 +71,14 @@ export class QuizStore {
   }
 
   @computed get isLoaded(): boolean {
-    return this.quizState === QuizState.LOADED;
+    return this.quizState === QuizDetailsState.LOADED;
   }
 
   @computed get isSubmitted(): boolean {
-    return this.quizState === QuizState.SUBMITTED;
+    return this.quizState === QuizDetailsState.SUBMITTED;
   }
 }
 
-const quizStore = new QuizStore();
+const quizDetailsStore = new QuizDetailsStore();
 
-export default quizStore;
+export default quizDetailsStore;
