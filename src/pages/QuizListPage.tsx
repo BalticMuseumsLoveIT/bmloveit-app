@@ -41,7 +41,7 @@ const List = function({ list }: ListProps) {
 };
 
 @observer
-class QuizPage extends React.Component {
+class QuizListPage extends React.Component {
   async componentDidMount() {
     await store.loadList();
   }
@@ -61,4 +61,4 @@ class QuizPage extends React.Component {
   }
 }
 
-export default QuizPage;
+export default QuizListPage;
