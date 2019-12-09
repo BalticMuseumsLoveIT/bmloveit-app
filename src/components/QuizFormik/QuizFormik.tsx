@@ -1,21 +1,59 @@
 import { QuizDetailsStore } from 'utils/store/quizDetailsStore';
-import Api from 'utils/api';
 import FormikRadioButton from 'components/FormikRadioButton/FormikRadioButton';
 import FormikRadioButtonGroup from 'components/FormikRadioButtonGroup/FormikRadioButtonGroup';
+import { QuizAnswerResponse } from 'utils/interfaces';
 import React from 'react';
 import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
-interface Props {
-  quizStore: QuizDetailsStore;
+interface SummaryProps {
+  answer: QuizAnswerResponse | null;
+}
+
+const Summary = function({ answer }: SummaryProps) {
+  return (
+    answer && (
+      <div>
+        <p>
+          {answer.correct
+            ? 'Congratulations! This is a correct answer'
+            : 'Sorry but selected answer is incorrect'}
+        </p>
+        <p>
+          <Link to="/quiz">Go to the list of active quizzes</Link>
+        </p>
+      </div>
+    )
+  );
+};
+
+interface QuestionImageProps {
+  url?: string;
+}
+
+export const QuestionImage: React.FC<QuestionImageProps> = ({ url }) => {
+  return (
+    (url && url.length && (
+      <div>
+        <img src={url} alt="Question illustration" />
+      </div>
+    )) ||
+    null
+  );
+};
+
+interface QuizFormikProps {
+  store: QuizDetailsStore;
 }
 
 @observer
-class QuizFormik extends React.Component<Props> {
+class QuizFormik extends React.Component<QuizFormikProps> {
   render() {
-    const question = this.props.quizStore.questionData;
+    const { store } = this.props;
+
+    const question = store.question;
 
     if (question === null) return null;
 
@@ -30,48 +68,22 @@ class QuizFormik extends React.Component<Props> {
         ),
       }),
       onSubmit: async (values: FormikValues) => {
-        try {
-          const fulfillment = await Api.getQuizFulfillment(
-            this.props.quizStore.quizDetails!.id,
-          );
-
-          const answer = await Api.getQuizAnswer(
-            fulfillment.id,
-            question.id,
-            parseInt(values[radioGroupName].split('_')[1]),
-          );
-
-          this.props.quizStore.submitQuizAnswer(answer);
-        } catch (error) {
-          this.props.quizStore.handleQuizDetailsError(error);
-        }
+        await store.handleSubmit(
+          question.id,
+          parseInt(values[radioGroupName].split('_')[1]),
+        );
       },
     };
-
-    const summary = this.props.quizStore.isSubmitted ? (
-      <div>
-        <p>
-          {this.props.quizStore.quizAnswer!.correct
-            ? 'Congratulations! This is a correct answer'
-            : 'Sorry but selected answer is incorrect'}
-        </p>
-        <p>
-          <Link to="/quiz">Go to the list of active quizzes</Link>
-        </p>
-      </div>
-    ) : null;
 
     return (
       <>
         <Formik {...formik}>
           {({ errors, touched, isSubmitting }) => (
             <Form>
-              {question.file_url && question.file_url.length && (
-                <img src={question.file_url} alt="Quiz question illustration" />
-              )}
+              <QuestionImage url={question.file_url} />
               <FormikRadioButtonGroup
                 legend={question.description}
-                disabled={this.props.quizStore.isSubmitted}
+                disabled={store.isSubmitted}
                 error={errors[radioGroupName]}
                 touched={touched[radioGroupName]}
               >
@@ -88,14 +100,14 @@ class QuizFormik extends React.Component<Props> {
               <br />
               <button
                 type="submit"
-                disabled={isSubmitting || this.props.quizStore.isSubmitted}
+                disabled={isSubmitting || store.isSubmitted}
               >
                 Submit
               </button>
             </Form>
           )}
         </Formik>
-        {summary}
+        <Summary answer={store.answer} />
       </>
     );
   }

@@ -1,12 +1,11 @@
 import {
-  QuizDetailsInterface,
-  QuizInterface,
   isQuizDetailsNotFound,
   QuizAnswerResponse,
+  QuizDetailsInterface,
   QuizQuestionInterface,
 } from 'utils/interfaces';
+import Api from 'utils/api';
 import { action, computed, observable } from 'mobx';
-import { AxiosError } from 'axios';
 
 export enum QuizDetailsState {
   NOT_LOADED,
@@ -18,64 +17,76 @@ export enum QuizDetailsState {
 }
 
 export class QuizDetailsStore {
-  @observable quizList: Array<QuizInterface> = [];
+  @observable private _state: QuizDetailsState = QuizDetailsState.NOT_LOADED;
 
-  @observable quizState: QuizDetailsState = QuizDetailsState.NOT_LOADED;
-  @observable quizDetails: QuizDetailsInterface | null = null;
-  @observable quizAnswer: QuizAnswerResponse | null = null;
-
-  @action loadingQuizDetails() {
-    this.unsetQuizDetails(QuizDetailsState.LOADING);
+  @computed get state() {
+    return this._state;
   }
 
-  @action loadQuizDetails(quizDetails: QuizDetailsInterface) {
-    this.quizState = QuizDetailsState.LOADED;
-    this.quizDetails = quizDetails;
+  @observable private _quiz: QuizDetailsInterface | null = null;
+
+  @computed get quiz() {
+    return this._quiz;
   }
 
-  @action submitQuizAnswer(answer: QuizAnswerResponse) {
-    this.quizState = QuizDetailsState.SUBMITTED;
-    this.quizAnswer = answer;
+  @observable private _answer: QuizAnswerResponse | null = null;
+
+  @computed get answer() {
+    return this._answer;
   }
 
-  @action unsetQuizDetails(
-    status: QuizDetailsState = QuizDetailsState.NOT_LOADED,
-  ) {
-    this.quizState = status;
-    this.quizDetails = null;
-    this.quizAnswer = null;
-  }
-
-  @action handleQuizDetailsError(error: AxiosError) {
-    if (
-      error.response &&
-      error.response.status === 404 &&
-      isQuizDetailsNotFound(error.response.data)
-    ) {
-      this.unsetQuizDetails(QuizDetailsState.NOT_FOUND);
-    } else {
-      this.unsetQuizDetails(QuizDetailsState.ERROR);
-      // TODO: Handle unexpected error
-    }
-  }
-
-  @computed get questionData(): QuizQuestionInterface | null {
-    switch (this.quizState) {
+  @computed get question(): QuizQuestionInterface | null {
+    switch (this._state) {
       case QuizDetailsState.LOADED:
-        return this.quizDetails!.questions_data[0];
+        return this._quiz!.questions_data[0];
       case QuizDetailsState.SUBMITTED:
-        return this.quizAnswer!.question_data;
+        return this._answer!.question_data;
       default:
         return null;
     }
   }
 
   @computed get isLoaded(): boolean {
-    return this.quizState === QuizDetailsState.LOADED;
+    return this._state === QuizDetailsState.LOADED;
   }
 
   @computed get isSubmitted(): boolean {
-    return this.quizState === QuizDetailsState.SUBMITTED;
+    return this._state === QuizDetailsState.SUBMITTED;
+  }
+
+  @action
+  async loadQuiz(id: number) {
+    this._state = QuizDetailsState.LOADING;
+    try {
+      this._quiz = await Api.getQuiz(id);
+      this._state = QuizDetailsState.LOADED;
+    } catch (e) {
+      if (
+        e.response &&
+        e.response.status === 404 &&
+        isQuizDetailsNotFound(e.response.data)
+      ) {
+        this._state = QuizDetailsState.NOT_FOUND;
+      } else {
+        this._state = QuizDetailsState.ERROR;
+      }
+    }
+  }
+
+  @action.bound
+  async handleSubmit(question: number, option: number) {
+    if (this._quiz === null) {
+      this._state = QuizDetailsState.ERROR;
+      return;
+    }
+
+    try {
+      const fulfillment = await Api.getQuizFulfillment(this._quiz.id);
+      this._answer = await Api.getQuizAnswer(fulfillment.id, question, option);
+      this._state = QuizDetailsState.SUBMITTED;
+    } catch (e) {
+      this._state = QuizDetailsState.ERROR;
+    }
   }
 }
 
