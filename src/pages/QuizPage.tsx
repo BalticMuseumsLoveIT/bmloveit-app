@@ -1,29 +1,52 @@
-import { QuizStore } from 'utils/store/quizStore';
+import store, { QuizListState } from 'utils/store/quizListStore';
 import Content from 'components/Content/Content';
-import Api from 'utils/api';
+import { QuizInterface } from 'utils/interfaces';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
+import { Link } from 'react-router-dom';
 
-interface Props {
-  quizStore: QuizStore;
+interface QuizListProps {
+  state: QuizListState;
+  list: Array<QuizInterface>;
 }
 
-@inject('quizStore')
+const QuizList = function({ state, list }: QuizListProps) {
+  switch (state) {
+    case QuizListState.LOADING:
+      return <p>Loading...</p>;
+    case QuizListState.LOADED:
+      return <List list={list} />;
+    case QuizListState.ERROR:
+      return <p>Error</p>;
+    default:
+      return null;
+  }
+};
+
+interface ListProps {
+  list: Array<QuizInterface>;
+}
+
+const List = function({ list }: ListProps) {
+  return (
+    <>
+      {list.map(quiz => (
+        <p key={quiz.id}>
+          <Link to={`/quiz/${quiz.id}`}>{quiz.name}</Link>
+        </p>
+      ))}
+    </>
+  );
+};
+
 @observer
-class QuizPage extends React.Component<Props> {
-  async componentDidMount(): Promise<void> {
-    this.props.quizStore.quizList = await Api.getQuizList();
-    // TODO: Handle errors
+class QuizPage extends React.Component {
+  async componentDidMount() {
+    await store.loadList();
   }
 
   render() {
-    const list = this.props.quizStore.quizList.map(quiz => (
-      <p key={quiz.id}>
-        <a href={`/quiz/${quiz.id}`}>{quiz.name}</a>
-      </p>
-    ));
-
     return (
       <>
         <Helmet>
@@ -31,7 +54,7 @@ class QuizPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>List of active quizzes</h1>
-          {list}
+          <QuizList state={store.state} list={store.list} />
         </Content>
       </>
     );
