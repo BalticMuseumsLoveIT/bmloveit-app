@@ -1,18 +1,24 @@
 import { QuizDetailsStore } from 'utils/store/quizDetailsStore';
-import FormikRadioButton from 'components/FormikRadioButton/FormikRadioButton';
-import FormikRadioButtonGroup from 'components/FormikRadioButtonGroup/FormikRadioButtonGroup';
-import { QuizAnswerResponse } from 'utils/interfaces';
+import { QuizAnswerResponse, QuizQuestionInterface } from 'utils/interfaces';
 import React from 'react';
-import { Formik, Form, FormikValues } from 'formik';
+import {
+  Formik,
+  Form,
+  FormikValues,
+  ErrorMessage,
+  Field,
+  useField,
+} from 'formik';
 import * as Yup from 'yup';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
+import StyledFormikRadioButton from '../FormikRadioButton/FormikRadioButton.style';
 
-interface SummaryProps {
+interface QuizSummaryProps {
   answer: QuizAnswerResponse | null;
 }
 
-const Summary = function({ answer }: SummaryProps) {
+const QuizSummary = function({ answer }: QuizSummaryProps) {
   return (
     answer && (
       <div>
@@ -33,7 +39,7 @@ interface QuestionImageProps {
   url?: string;
 }
 
-export const QuestionImage: React.FC<QuestionImageProps> = ({ url }) => {
+const QuestionImage = function({ url }: QuestionImageProps) {
   return (
     (url && url.length && (
       <div>
@@ -47,6 +53,56 @@ export const QuestionImage: React.FC<QuestionImageProps> = ({ url }) => {
 interface QuizFormikProps {
   store: QuizDetailsStore;
 }
+
+interface QuizQuestion {
+  name: string;
+  question: QuizQuestionInterface;
+  isDisabled?: boolean;
+}
+
+const QuizQuestion = function({ name, isDisabled, question }: QuizQuestion) {
+  const [field] = useField(name);
+
+  return (
+    <fieldset disabled={isDisabled}>
+      <legend>{question.description}</legend>
+      <QuestionImage url={question.file_url} />
+      {question.options_data.map(option => {
+        const optionName = `option_${option.id}`;
+        const isChecked = field.value === optionName;
+        return (
+          <StyledFormikRadioButton
+            key={option.id}
+            isChecked={isChecked}
+            isCorrect={option.correct}
+          >
+            <Field
+              type="radio"
+              name={name}
+              id={optionName}
+              value={optionName}
+              checked={isChecked}
+            />
+            <label htmlFor={name}>{option.description}</label>
+          </StyledFormikRadioButton>
+        );
+      })}
+      <ErrorMessage component="div" name={name} />
+    </fieldset>
+  );
+};
+
+interface SubmitButton {
+  isDisabled?: boolean;
+}
+
+const SubmitButton = function({ isDisabled }: SubmitButton) {
+  return (
+    <button type="submit" disabled={isDisabled}>
+      Submit
+    </button>
+  );
+};
 
 @observer
 class QuizFormik extends React.Component<QuizFormikProps> {
@@ -78,36 +134,21 @@ class QuizFormik extends React.Component<QuizFormikProps> {
     return (
       <>
         <Formik {...formik}>
-          {({ errors, touched, isSubmitting }) => (
-            <Form>
-              <QuestionImage url={question.file_url} />
-              <FormikRadioButtonGroup
-                legend={question.description}
-                disabled={store.isSubmitted}
-                error={errors[radioGroupName]}
-                touched={touched[radioGroupName]}
-              >
-                {question.options_data.map(option => (
-                  <FormikRadioButton
-                    key={option.id}
-                    id={`option_${option.id}`}
-                    name={radioGroupName}
-                    label={option.description}
-                    isCorrect={option.correct}
-                  />
-                ))}
-              </FormikRadioButtonGroup>
-              <br />
-              <button
-                type="submit"
-                disabled={isSubmitting || store.isSubmitted}
-              >
-                Submit
-              </button>
-            </Form>
-          )}
+          {({ isSubmitting }) => {
+            const isDisabled = isSubmitting || store.isSubmitted;
+            return (
+              <Form>
+                <QuizQuestion
+                  name={radioGroupName}
+                  question={question}
+                  isDisabled={isDisabled}
+                />
+                <SubmitButton isDisabled={isDisabled} />
+              </Form>
+            );
+          }}
         </Formik>
-        <Summary answer={store.answer} />
+        <QuizSummary answer={store.answer} />
       </>
     );
   }
