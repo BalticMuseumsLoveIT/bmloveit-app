@@ -1,4 +1,8 @@
-import { isAPIError, SurveyDetailsInterface } from 'utils/interfaces';
+import {
+  isAPIError,
+  SurveyDetailsInterface,
+  SurveyQuestionType,
+} from 'utils/interfaces';
 import Api from 'utils/api';
 import { action, computed, observable } from 'mobx';
 import { FormikValues } from 'formik';
@@ -49,14 +53,68 @@ export class SurveyDetailsStore {
   }
 
   @action.bound async handleSubmit(values: FormikValues) {
-    if (this._surveyId === null) {
+    if (this._surveyId === null || this._survey === null) {
       this._state = SurveyDetailsState.ERROR;
       return;
     }
 
     try {
       const fulfillment = await Api.getSurveyFulfillment(this._surveyId);
-      // TODO: Send values
+
+      const answers = [];
+
+      for (const [question, answer] of Object.entries(values)) {
+        const questionId = parseInt(question.split('_').pop() || '');
+
+        if (isNaN(questionId)) {
+          continue;
+        }
+
+        const questionData = this._survey.questions_data.find(
+          question => question.id === questionId,
+        );
+
+        if (typeof questionData === 'undefined') {
+          continue;
+        }
+
+        const answerRequestData = {
+          fulfillment: fulfillment.id,
+          question: questionId,
+          value: '' as string,
+          options_data: [] as Array<number>,
+        };
+
+        // TODO: Handle potential value errors
+        switch (questionData.type) {
+          case SurveyQuestionType.OPEN:
+            answerRequestData.value = answer;
+            break;
+          case SurveyQuestionType.SELECT:
+            const option = parseInt(answer.split('_').pop() || '');
+            answerRequestData.options_data.push(option);
+            break;
+          case SurveyQuestionType.MULTISELECT:
+            const options = answer.map((item: string) => {
+              return parseInt(item.split('_').pop() || '');
+            });
+            answerRequestData.options_data = options;
+            break;
+        }
+
+        answers.push(answerRequestData);
+      }
+
+      // TODO: Call API in parallel
+      for (const requestParams of answers) {
+        await Api.getSurveyAnswer(
+          requestParams.fulfillment,
+          requestParams.question,
+          requestParams.value,
+          requestParams.options_data,
+        );
+      }
+
       this._state = SurveyDetailsState.SUBMITTED;
     } catch (error) {
       this._state = SurveyDetailsState.ERROR;
