@@ -25,7 +25,7 @@ abstract class Api {
       'auth/convert-token',
       JSON.stringify(body),
     );
-    console.log('data: ', response.data);
+
     return response.data;
   }
 
