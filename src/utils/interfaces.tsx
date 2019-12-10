@@ -159,6 +159,13 @@ export interface SurveyFulfillmentResponse {
   date_add: string;
 }
 
+export interface SurveyAnswerResponse {
+  id: number;
+  fulfillment: number;
+  question: number;
+  value: string;
+}
+
 // Generic ---------------------------------------------------------------------
 
 export interface APIErrorInterface {
