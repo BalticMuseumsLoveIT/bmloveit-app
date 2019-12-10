@@ -178,6 +178,33 @@ abstract class Api {
 
     return response.data;
   }
+
+  /**
+   * Check survey answer
+   *
+   * @param {number} fulfillment - Fulfillment ID
+   * @param {number} question - Question ID
+   * @param {string} value - Open answer
+   * @param {Array<number>} options_data - Select and Multiselect
+   * @throws Axios error
+   */
+  public static async getSurveyAnswer(
+    fulfillment: number,
+    question: number,
+    value: string,
+    options_data: Array<number>,
+  ): Promise<void> {
+    const formData = {
+      fulfillment: fulfillment,
+      question: question,
+      value: value,
+      options_data: options_data,
+    };
+
+    const response = await axiosInstance.post('api/survey-answer/', formData);
+
+    return response.data;
+  }
 }
 
 export default Api;
