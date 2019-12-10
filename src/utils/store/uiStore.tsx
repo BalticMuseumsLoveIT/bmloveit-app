@@ -33,7 +33,7 @@ export class UiStore {
 }
 
 const browserLang = detectBrowserLanguage();
-console.log('TEST_browserLang: ', browserLang);
+
 const defaultLang = browserLang in translations ? browserLang : 'en';
 
 const uiStore = new UiStore(defaultLang);

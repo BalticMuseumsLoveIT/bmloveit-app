@@ -1,31 +1,56 @@
+export interface AreaInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  type_data: TypeDataInterface;
+  country: number | null;
+  address: string;
+  active: boolean;
+  name_translation: Array<any>;
+  name_full_translation: Array<any>;
+  description_translation: Array<any>;
+}
+
 export interface RouteInterface {
   id: number;
   name: string;
   name_full: string;
   description: string;
   type: number;
-  active: boolean;
+  type_data: TypeDataInterface;
   areas: Array<number>;
-  locations: Array<number>;
-  name_translation: Array<string>;
-  name_full_translation: Array<string>;
-  description_translation: Array<string>;
+  areas_data: Array<AreaInterface>;
+  locations_data: Array<LocationInterface>;
+  items_data: Array<any>;
+  name_translation: Array<any>;
+  name_full_translation: Array<any>;
+  description_translation: Array<any>;
+  languages: Array<number>;
 }
 
 export interface LocationInterface {
-  areas: Array<number>;
-  active: boolean;
-  description: string;
-  description_translation: Array<any>;
   id: number;
-  latitude: number | null;
-  longitude: number | null;
   name: string;
   name_full: string;
-  name_full_translation: Array<any>;
-  qr_code: string;
+  description: string;
+  type_data: TypeDataInterface;
+  areas: Array<number>;
+  routes: Array<any>;
   resources_data: Array<any>;
-  routes: Array<number>;
+  quizzes_data: Array<any>;
+  qr_code: string;
+  latitude: number | null;
+  longitude: number | null;
+  name_translation: Array<any>;
+  name_full_translation: Array<any>;
+  description_translation: Array<any>;
+}
+
+export interface TypeDataInterface {
+  id: number;
+  name: string;
+  description: string;
 }
 
 export interface LoginButtonPropsInterface {

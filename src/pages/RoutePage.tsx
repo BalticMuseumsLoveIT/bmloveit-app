@@ -1,19 +1,17 @@
-import Api from 'utils/api';
 import Content from 'components/Content/Content';
 import LocationTile from 'components/LocationTile/LocationTile';
 import { RoutesStore } from 'utils/store/routesStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { observer, inject } from 'mobx-react';
+import { RouteComponentProps } from 'react-router-dom';
 
-interface Props {
+interface Props extends RouteComponentProps<any> {
   routesStore: RoutesStore;
-  match: Record<string, any>;
 }
 
 interface State {
   message: string;
-  isProcessing: boolean;
 }
 
 @inject('routesStore')
@@ -23,24 +21,20 @@ class RoutePage extends React.Component<Props, State> {
     super(props);
 
     this.state = {
-      message: 'RoutePage Spinner',
-      isProcessing: true,
+      message: 'Lack of locations',
     };
   }
 
   render() {
-    const { isProcessing } = this.state;
-    const {
-      params: { id },
-    } = this.props.match;
+    const id = parseInt(this.props.match.params.id);
     const route = this.props.routesStore.getRoute(id);
-    const locations = this.props.routesStore.getLocationsForRoute(parseInt(id));
+    const locations = route ? route.locations_data : [];
 
     let locationTiles: React.ReactNode;
     if (locations.length > 0) {
       locationTiles = locations.map(item => {
         return (
-          <LocationTile key={item.id} location={item} routeId={id}>
+          <LocationTile key={item.id} location={item}>
             {item.name_full}
           </LocationTile>
         );
@@ -52,7 +46,7 @@ class RoutePage extends React.Component<Props, State> {
         <Helmet>
           <title>{route ? route.name_full : 'Route'}</title>
         </Helmet>
-        <Content isProcessing={isProcessing}>
+        <Content>
           {locations.length > 0 ? (
             locationTiles
           ) : (
@@ -61,21 +55,6 @@ class RoutePage extends React.Component<Props, State> {
         </Content>
       </>
     );
-  }
-
-  async componentDidMount() {
-    const {
-      params: { id },
-    } = this.props.match;
-
-    try {
-      const locations = await Api.getLocationsForRoute(id);
-      this.props.routesStore.setLocations(locations);
-    } catch (error) {
-      this.setState({ message: 'error' });
-    }
-
-    this.setState({ isProcessing: false });
   }
 }
 

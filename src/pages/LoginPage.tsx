@@ -24,8 +24,6 @@ class LoginPage extends React.Component<Props> {
   }
 
   render() {
-    console.log('LoginPage_token: ', this.props.userStore.getToken());
-
     return (
       <>
         <Helmet>
@@ -47,8 +45,6 @@ class LoginPage extends React.Component<Props> {
     provider,
     response,
   }: OAuthLoginArgumentInterface): Promise<void> {
-    console.log('login: ', provider, response);
-
     const data = await Api.signIn(provider, response.accessToken);
     this.props.userStore.setToken(data.access_token);
 
