@@ -33,7 +33,7 @@ class QrCodePage extends React.Component<Props, State> {
           QrCodePage
           <QrReader
             delay={300}
-            onError={(error: any) => console.log('QrCodePage | error: ', error)}
+            onError={() => undefined}
             onScan={this.handleScan}
             style={{ width: '100%' }}
           />
