@@ -40,14 +40,11 @@ interface QuestionImageProps {
 }
 
 const QuestionImage = function({ url }: QuestionImageProps) {
-  return (
-    (url && url.length && (
-      <div>
-        <img src={url} alt="Question illustration" />
-      </div>
-    )) ||
-    null
-  );
+  return url && url.length ? (
+    <div>
+      <img src={url} alt="Question illustration" />
+    </div>
+  ) : null;
 };
 
 interface QuizFormikProps {
