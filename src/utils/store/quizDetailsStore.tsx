@@ -19,17 +19,17 @@ export enum QuizDetailsState {
 export class QuizDetailsStore {
   @observable private _state: QuizDetailsState = QuizDetailsState.NOT_LOADED;
 
+  @observable private _quiz: QuizDetailsInterface | null = null;
+
+  @observable private _answer: QuizAnswerResponse | null = null;
+
   @computed get state() {
     return this._state;
   }
 
-  @observable private _quiz: QuizDetailsInterface | null = null;
-
   @computed get quiz() {
     return this._quiz;
   }
-
-  @observable private _answer: QuizAnswerResponse | null = null;
 
   @computed get answer() {
     return this._answer;
