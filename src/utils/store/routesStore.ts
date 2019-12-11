@@ -1,20 +1,17 @@
 import { RouteInterface } from 'utils/interfaces';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 
 export class RoutesStore {
-  @observable private routes: Array<RouteInterface> = [];
+  @observable routes: Array<RouteInterface> = [];
 
-  public setRoutes(routes: Array<RouteInterface>): void {
+  @action
+  setRoutes = (routes: Array<RouteInterface>): void => {
     this.routes = routes;
-  }
+  };
 
-  public getRoutes(): Array<RouteInterface> {
-    return this.routes;
-  }
-
-  public getRoute(id: number): RouteInterface | undefined {
-    return this.getRoutes().find(item => item.id === id);
-  }
+  getRoute = (id: number): RouteInterface | undefined => {
+    return this.routes.find(item => item.id === id);
+  };
 }
 
 const routesStore = new RoutesStore();

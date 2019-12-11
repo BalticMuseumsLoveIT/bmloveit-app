@@ -1,35 +1,29 @@
 import translations from 'utils/translation/translations';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import detectBrowserLanguage from 'detect-browser-language';
 
 export class UiStore {
-  @observable private lang: string;
-  @observable private isMenuOpened: boolean;
+  @observable lang: string;
+  @observable isMenuOpened: boolean;
 
   constructor(defaultLang: string) {
     this.lang = defaultLang;
     this.isMenuOpened = false;
   }
 
-  public setLang(lang: string): void {
+  @action
+  setLang = (lang: string): void => {
     this.lang = lang;
-  }
+  };
 
-  public getLang(): string {
-    return this.lang;
-  }
+  @action
+  toggleIsMenuOpened = (): void => {
+    this.isMenuOpened = !this.isMenuOpened;
+  };
 
-  public getProperText(key: string): string {
-    return translations[this.getLang()][key];
-  }
-
-  public toggleIsMenuOpened(): void {
-    this.isMenuOpened = !this.getIsMenuOpened();
-  }
-
-  public getIsMenuOpened(): boolean {
-    return this.isMenuOpened;
-  }
+  getProperText = (key: string): string => {
+    return translations[this.lang][key];
+  };
 }
 
 const browserLang = detectBrowserLanguage();

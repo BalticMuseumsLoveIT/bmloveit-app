@@ -10,10 +10,10 @@ const axiosInstance = axios.create({
 });
 
 abstract class Api {
-  public static async signIn(
+  public static signIn = async (
     provider: string,
     accessToken: string,
-  ): Promise<SignInResponseInterface> {
+  ): Promise<SignInResponseInterface> => {
     const body = {
       grant_type: 'convert_token',
       client_id: process.env.REACT_APP_CLIENT_ID,
@@ -27,27 +27,27 @@ abstract class Api {
     );
 
     return response.data;
-  }
+  };
 
-  public static async getRoutes(): Promise<Array<RouteInterface>> {
+  public static getRoutes = async (): Promise<Array<RouteInterface>> => {
     const response = await axiosInstance.get('api/route/', {
       headers: {
-        Authorization: `Bearer ${userStore.getToken()}`,
+        Authorization: `Bearer ${userStore.token}`,
       },
     });
 
     return response.data;
-  }
+  };
 
-  public static async getRoute(id: number): Promise<RouteInterface> {
+  public static getRoute = async (id: number): Promise<RouteInterface> => {
     const response = await axiosInstance.get(`api/route/${id}`, {
       headers: {
-        Authorization: `Bearer ${userStore.getToken()}`,
+        Authorization: `Bearer ${userStore.token}`,
       },
     });
 
     return response.data;
-  }
+  };
 }
 
 export default Api;

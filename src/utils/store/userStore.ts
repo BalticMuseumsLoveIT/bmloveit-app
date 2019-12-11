@@ -1,16 +1,19 @@
 import { getItemFromStorage, setItemToStorage } from 'utils/helpers';
-import { observable } from 'mobx';
+import Api from 'utils/api';
+import { observable, action } from 'mobx';
 
 export class UserStore {
-  @observable private token = getItemFromStorage('token');
+  @observable token = getItemFromStorage('token');
 
-  public setToken(token: string): void {
+  @action
+  setToken = (token: string): void => {
     this.token = setItemToStorage('token', token);
-  }
+  };
 
-  public getToken(): string {
-    return this.token;
-  }
+  signIn = async (provider: string, accessToken: string): Promise<void> => {
+    const data = await Api.signIn(provider, accessToken);
+    this.setToken(data.access_token);
+  };
 }
 
 const userStore = new UserStore();

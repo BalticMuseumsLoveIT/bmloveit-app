@@ -19,12 +19,12 @@ class FacebookButton extends React.Component<LoginButtonPropsInterface> {
     );
   }
 
-  handleSuccessResponse(response: any) {
+  handleSuccessResponse = (response: any) => {
     return this.props.onSuccess({
       provider: 'facebook',
       response,
     });
-  }
+  };
 }
 
 export default FacebookButton;

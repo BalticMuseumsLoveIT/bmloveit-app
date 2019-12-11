@@ -36,7 +36,7 @@ class MobileMenu extends React.Component<Props> {
     });
 
     return (
-      <StyledWrapper isOpened={this.props.uiStore!.getIsMenuOpened()}>
+      <StyledWrapper isOpened={this.props.uiStore!.isMenuOpened}>
         {menuItems}
       </StyledWrapper>
     );

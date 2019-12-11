@@ -30,9 +30,9 @@ class Content extends React.Component<Props, State> {
     return <StyledWrapper>{contentToRender}</StyledWrapper>;
   }
 
-  static getDerivedStateFromError() {
+  static getDerivedStateFromError = () => {
     return { hasError: true };
-  }
+  };
 }
 
 export default Content;

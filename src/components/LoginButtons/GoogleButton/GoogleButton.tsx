@@ -19,12 +19,12 @@ class GoogleButton extends React.Component<LoginButtonPropsInterface> {
     );
   }
 
-  handleSuccessResponse(response: any) {
+  handleSuccessResponse = (response: any) => {
     return this.props.onSuccess({
       provider: 'google-oauth2',
       response,
     });
-  }
+  };
 }
 
 export default GoogleButton;

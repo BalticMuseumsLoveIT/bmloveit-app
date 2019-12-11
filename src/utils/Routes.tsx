@@ -2,7 +2,6 @@ import RoutesPage from 'pages/RoutesPage';
 import HomePage from 'pages/HomePage';
 import NotFoundPage from 'pages/NotFoundPage';
 import RoutePage from 'pages/RoutePage';
-// import LocationPage from 'pages/LocationPage';
 import LoginPage from 'pages/LoginPage';
 import userStore from 'utils/store/userStore';
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -17,11 +16,6 @@ class Routes extends React.Component {
           <Route exact path="/login" component={LoginPage} />
           <AuthRoute exact path="/routes" component={RoutesPage} />
           <AuthRoute exact path="/routes/:id" component={RoutePage} />
-          {/* <AuthRoute
-            exact
-            path="/routes/:routeId/locations/:id"
-            component={LocationPage}
-          /> */}
           <Route path="*" component={NotFoundPage} />
         </Switch>
       </>
@@ -36,7 +30,7 @@ const AuthRoute = ({ component: Page, ...rest }: any) => {
     <Route
       {...rest}
       render={props =>
-        userStore.getToken() !== '' ? (
+        userStore.token !== '' ? (
           <Page {...props} />
         ) : (
           <Redirect

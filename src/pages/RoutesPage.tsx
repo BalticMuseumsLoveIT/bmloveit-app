@@ -17,7 +17,7 @@ interface Props {
 @observer
 class RoutesPage extends React.Component<Props> {
   render() {
-    const routes = this.props.routesStore.getRoutes();
+    const routes = this.props.routesStore.routes;
     let routesTiles;
     if (routes.length > 0) {
       const groupedRoutes = groupObjectsByKey(routes, 'type');
@@ -47,14 +47,12 @@ class RoutesPage extends React.Component<Props> {
     );
   }
 
-  async componentDidMount() {
-    if (this.props.routesStore.getRoutes().length === 0) {
-      try {
-        const routes = await Api.getRoutes();
-        this.props.routesStore.setRoutes(routes);
-      } catch (error) {}
-    }
-  }
+  componentDidMount = async () => {
+    try {
+      const routes = await Api.getRoutes();
+      this.props.routesStore.setRoutes(routes);
+    } catch (error) {}
+  };
 }
 
 export default RoutesPage;

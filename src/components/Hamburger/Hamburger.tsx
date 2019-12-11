@@ -12,8 +12,8 @@ interface Props {
 class Hamburger extends React.Component<Props> {
   render() {
     return (
-      <StyledWrapper onClick={() => this.props.uiStore!.toggleIsMenuOpened()}>
-        <InnerHamburger isOpened={this.props.uiStore!.getIsMenuOpened()} />
+      <StyledWrapper onClick={this.props.uiStore!.toggleIsMenuOpened}>
+        <InnerHamburger isOpened={this.props.uiStore!.isMenuOpened} />
       </StyledWrapper>
     );
   }
