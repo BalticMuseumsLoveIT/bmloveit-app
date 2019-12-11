@@ -1,38 +1,61 @@
 import React from 'react';
 import StyledWrapper from './Content.style';
 
+export enum ContentState {
+  LOADED,
+  PROCESSING,
+  ERROR,
+}
+
 interface Props {
   children: React.ReactNode;
-  isProcessing?: boolean;
+  initialState?: ContentState;
 }
 
 interface State {
-  hasError: boolean;
+  state: ContentState;
 }
 
 class Content extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
+
     this.state = {
-      hasError: false,
+      state: this.props.initialState || ContentState.LOADED,
     };
   }
 
-  public render() {
-    let contentToRender = this.props.children;
+  render() {
+    let contentToRender: React.ReactNode;
 
-    if (this.state.hasError === true) {
-      contentToRender = <h1>ERROR</h1>;
-    } else if (this.props.isProcessing === true) {
-      contentToRender = <h1>PROCESSING</h1>;
+    switch (this.state.state) {
+      case ContentState.LOADED:
+        contentToRender = this.props.children;
+        break;
+      case ContentState.PROCESSING:
+        contentToRender = <h1>PROCESSING</h1>;
+        break;
+      default:
+        contentToRender = <h1>ERROR</h1>;
     }
 
     return <StyledWrapper>{contentToRender}</StyledWrapper>;
   }
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
-  }
+  static getDerivedStateFromProps = (props: Props, state: State) => {
+    if (
+      props.initialState !== undefined &&
+      state.state !== props.initialState
+    ) {
+      return { state: props.initialState };
+    }
+
+    return null;
+  };
+
+  static getDerivedStateFromError = () => {
+    return { state: ContentState.ERROR };
+  };
 }
 
 export default Content;

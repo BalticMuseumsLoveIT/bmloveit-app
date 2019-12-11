@@ -6,7 +6,7 @@ interface Props {
 }
 
 class RoutesTile extends React.Component<Props> {
-  public render() {
+  render() {
     return (
       <StyledWrapper>
         <p>{this.props.title}</p>

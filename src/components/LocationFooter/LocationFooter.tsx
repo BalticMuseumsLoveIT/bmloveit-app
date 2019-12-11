@@ -8,7 +8,7 @@ interface Props {
 }
 
 class LocationsFooter extends React.Component<Props> {
-  public render() {
+  render() {
     const { prev, next } = this.props;
 
     return (

@@ -3,11 +3,6 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 
 class GoogleButton extends React.Component<LoginButtonPropsInterface> {
-  constructor(props: LoginButtonPropsInterface) {
-    super(props);
-    this.handleSuccessResponse = this.handleSuccessResponse.bind(this);
-  }
-
   render() {
     return (
       <GoogleLogin
@@ -19,12 +14,12 @@ class GoogleButton extends React.Component<LoginButtonPropsInterface> {
     );
   }
 
-  handleSuccessResponse(response: any) {
+  handleSuccessResponse = (response: any) => {
     return this.props.onSuccess({
       provider: 'google-oauth2',
       response,
     });
-  }
+  };
 }
 
 export default GoogleButton;

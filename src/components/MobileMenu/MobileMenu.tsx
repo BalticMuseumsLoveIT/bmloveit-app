@@ -22,7 +22,7 @@ const links = [
 @inject('uiStore')
 @observer
 class MobileMenu extends React.Component<Props> {
-  public render() {
+  render() {
     const menuItems = links.map((item, index) => {
       return (
         <MenuItem
@@ -36,7 +36,7 @@ class MobileMenu extends React.Component<Props> {
     });
 
     return (
-      <StyledWrapper isOpened={this.props.uiStore!.getIsMenuOpened()}>
+      <StyledWrapper isOpened={this.props.uiStore!.isMenuOpened}>
         {menuItems}
       </StyledWrapper>
     );

@@ -3,11 +3,6 @@ import React from 'react';
 import FacebookLogin from 'react-facebook-login';
 
 class FacebookButton extends React.Component<LoginButtonPropsInterface> {
-  constructor(props: LoginButtonPropsInterface) {
-    super(props);
-    this.handleSuccessResponse = this.handleSuccessResponse.bind(this);
-  }
-
   render() {
     return (
       <FacebookLogin
@@ -19,12 +14,12 @@ class FacebookButton extends React.Component<LoginButtonPropsInterface> {
     );
   }
 
-  handleSuccessResponse(response: any) {
+  handleSuccessResponse = (response: any) => {
     return this.props.onSuccess({
       provider: 'facebook',
       response,
     });
-  }
+  };
 }
 
 export default FacebookButton;
