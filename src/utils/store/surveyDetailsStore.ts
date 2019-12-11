@@ -105,15 +105,16 @@ export class SurveyDetailsStore {
         answers.push(answerRequestData);
       }
 
-      // TODO: Call API in parallel
-      for (const requestParams of answers) {
-        await Api.getSurveyAnswer(
-          requestParams.fulfillment,
-          requestParams.question,
-          requestParams.value,
-          requestParams.options_data,
-        );
-      }
+      await Promise.all(
+        answers.map(request => {
+          return Api.getSurveyAnswer(
+            request.fulfillment,
+            request.question,
+            request.value,
+            request.options_data,
+          );
+        }),
+      );
 
       this._state = SurveyDetailsState.SUBMITTED;
     } catch (error) {
