@@ -47,10 +47,6 @@ const QuestionImage = function({ url }: QuestionImageProps) {
   ) : null;
 };
 
-interface QuizFormikProps {
-  store: QuizDetailsStore;
-}
-
 interface QuizQuestion {
   name: string;
   question: QuizQuestionInterface;
@@ -100,6 +96,10 @@ const SubmitButton = function({ isDisabled }: SubmitButton) {
     </button>
   );
 };
+
+interface QuizFormikProps {
+  store: QuizDetailsStore;
+}
 
 @observer
 class QuizFormik extends React.Component<QuizFormikProps> {
