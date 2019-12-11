@@ -12,7 +12,7 @@ import {
 import * as Yup from 'yup';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import StyledFormikRadioButton from '../FormikRadioButton/FormikRadioButton.style';
+import StyledFormikRadioButton from './QuizFormik.style';
 
 interface QuizSummaryProps {
   answer: QuizAnswerResponse | null;
