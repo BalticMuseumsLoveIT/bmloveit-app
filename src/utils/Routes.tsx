@@ -3,7 +3,7 @@ import HomePage from 'pages/HomePage';
 import NotFoundPage from 'pages/NotFoundPage';
 import RoutePage from 'pages/RoutePage';
 import LocationPage from 'pages/LocationPage';
-import QuizPage from 'pages/QuizPage';
+import QuizListPage from 'pages/QuizListPage';
 import QuizDetailsPage from 'pages/QuizDetailsPage';
 import SurveyListPage from 'pages/SurveyListPage';
 import SurveyDetailsPage from 'pages/SurveyDetailsPage';
@@ -16,7 +16,7 @@ class Routes extends React.Component {
       <>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/quiz" component={QuizPage} />
+          <Route exact path="/quiz" component={QuizListPage} />
           <Route exact path="/quiz/:id" component={QuizDetailsPage} />
           <Route exact path="/survey" component={SurveyListPage} />
           <Route exact path="/survey/:id" component={SurveyDetailsPage} />
