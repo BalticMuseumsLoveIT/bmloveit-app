@@ -1,9 +1,9 @@
-import store, { QuizListState } from 'utils/store/quizListStore';
+import { QuizListState, QuizListStore } from 'utils/store/quizListStore';
 import Content from 'components/Content/Content';
 import { QuizInterface } from 'utils/interfaces';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
 interface QuizListProps {
@@ -40,10 +40,15 @@ const List = function({ list }: ListProps) {
   );
 };
 
+interface Props {
+  quizListStore: QuizListStore;
+}
+
+@inject('quizListStore')
 @observer
-class QuizListPage extends React.Component {
+class QuizListPage extends React.Component<Props> {
   async componentDidMount() {
-    await store.loadList();
+    await this.props.quizListStore.loadList();
   }
 
   render() {
@@ -54,7 +59,10 @@ class QuizListPage extends React.Component {
         </Helmet>
         <Content>
           <h1>List of active quizzes</h1>
-          <QuizList state={store.state} list={store.list} />
+          <QuizList
+            state={this.props.quizListStore.state}
+            list={this.props.quizListStore.list}
+          />
         </Content>
       </>
     );

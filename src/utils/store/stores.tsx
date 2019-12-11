@@ -1,13 +1,15 @@
 import userStore from './userStore';
 import uiStore from './uiStore';
 import routesStore from './routesStore';
-import quizStore from './quizDetailsStore';
+import quizDetailsStore from './quizDetailsStore';
+import quizListStore from './quizListStore';
 
 const stores = {
   userStore,
   uiStore,
   routesStore,
-  quizStore,
+  quizListStore,
+  quizDetailsStore,
 };
 
 export default stores;
