@@ -71,7 +71,7 @@ abstract class Api {
    *
    * @throws Axios error
    */
-  public static async getQuizList(): Promise<QuizInterface[]> {
+  public static async getQuizList(): Promise<Array<QuizInterface>> {
     const response = await axiosInstance.get('api/quiz');
     return response.data;
   }
