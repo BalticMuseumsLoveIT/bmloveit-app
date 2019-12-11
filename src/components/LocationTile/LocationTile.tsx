@@ -7,7 +7,7 @@ interface Props {
 }
 
 class LocationTile extends React.Component<Props> {
-  public render() {
+  render() {
     const { name_full } = this.props.location;
 
     return <StyledWrapper>{name_full}</StyledWrapper>;

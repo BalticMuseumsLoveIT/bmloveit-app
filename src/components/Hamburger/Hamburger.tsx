@@ -10,7 +10,7 @@ interface Props {
 @inject('uiStore')
 @observer
 class Hamburger extends React.Component<Props> {
-  public render() {
+  render() {
     return (
       <StyledWrapper onClick={() => this.props.uiStore!.toggleIsMenuOpened()}>
         <InnerHamburger isOpened={this.props.uiStore!.getIsMenuOpened()} />

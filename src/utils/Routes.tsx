@@ -9,7 +9,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import React from 'react';
 
 class Routes extends React.Component {
-  public render() {
+  render() {
     return (
       <>
         <Switch>

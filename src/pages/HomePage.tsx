@@ -6,27 +6,28 @@ import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 
 interface Props extends RouteComponentProps {
-  uiStore: UiStore;
+  // uiStore: UiStore;
 }
 
-@inject('uiStore')
+// @inject('uiStore')
 @observer
 class HomePage extends React.Component<Props> {
   render() {
+    console.log('Props: ', this.props);
     return (
       <>
         <Helmet>
           <title>Home</title>
         </Helmet>
-        <Content>{this.props.uiStore.getProperText('hello')}</Content>
+        {/* <Content>{this.props.uiStore.getProperText('hello')}</Content> */}
         <Content>
           HomePage
-          <button onClick={(): void => this.props.uiStore.setLang('pl')}>
+          {/* <button onClick={(): void => this.props.uiStore.setLang('pl')}>
             PL
           </button>
           <button onClick={(): void => this.props.uiStore.setLang('en')}>
             EN
-          </button>
+          </button> */}
         </Content>
       </>
     );

@@ -18,7 +18,7 @@ class Content extends React.Component<Props, State> {
     };
   }
 
-  public render() {
+  render() {
     let contentToRender = this.props.children;
 
     if (this.state.hasError === true) {
