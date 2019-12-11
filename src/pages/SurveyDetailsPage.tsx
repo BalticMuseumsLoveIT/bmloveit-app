@@ -1,5 +1,4 @@
 import Content from 'components/Content/Content';
-import FormikRadioButton from 'components/FormikRadioButton/FormikRadioButton';
 import store, { SurveyDetailsState } from 'utils/store/surveyDetailsStore';
 import {
   SurveyDetailsInterface,
@@ -137,14 +136,22 @@ const SurveyForm = function({ survey, onSubmit }: SurveyFormProps) {
   const RadioGroup = ({ field, options }: RadioGroupProps) => {
     return (
       <>
-        {options.map(option => (
-          <FormikRadioButton
-            key={option.id}
-            id={`option_${option.id}`}
-            name={field.name}
-            label={option.description}
-          />
-        ))}
+        {options.map(option => {
+          const optionName = `option_${option.id}`;
+          const isChecked = field.value === optionName;
+          return (
+            <div key={option.id}>
+              <Field
+                type="radio"
+                name={field.name}
+                id={optionName}
+                value={optionName}
+                checked={isChecked}
+              />
+              <label htmlFor={field.name}>{option.description}</label>
+            </div>
+          );
+        })}
       </>
     );
   };
