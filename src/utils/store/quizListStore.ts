@@ -12,11 +12,11 @@ export enum QuizListState {
 export class QuizListStore {
   @observable private _state: QuizListState = QuizListState.NOT_LOADED;
 
+  @observable private _list: Array<QuizInterface> = [];
+
   @computed get state() {
     return this._state;
   }
-
-  @observable private _list: Array<QuizInterface> = [];
 
   @computed get list() {
     return this._list;
