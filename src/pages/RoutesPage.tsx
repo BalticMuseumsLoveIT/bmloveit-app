@@ -1,6 +1,5 @@
-import Api from 'utils/api';
 import RouteTile from 'components/RouteTile/RouteTile';
-import Content from 'components/Content/Content';
+import Content, { ContentState } from 'components/Content/Content';
 import { RoutesStore } from 'utils/store/routesStore';
 import { groupObjectsByKey } from 'utils/helpers';
 import { RouteInterface } from 'utils/interfaces';
@@ -14,7 +13,7 @@ interface Props {
 }
 
 interface State {
-  isProcessing: boolean;
+  contentState: ContentState;
 }
 
 @inject('routesStore')
@@ -22,29 +21,17 @@ interface State {
 class RoutesPage extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-
     this.state = {
-      isProcessing: true,
+      contentState: ContentState.LOADED,
     };
   }
 
   render() {
     const routes = this.props.routesStore.routes;
-    let routesTiles;
+
+    let routesTiles: React.ReactNode;
     if (routes.length > 0) {
-      const groupedRoutes = groupObjectsByKey(routes, 'type');
-
-      routesTiles = groupedRoutes.map(groupedRoute => {
-        const [categoryName, routesArray] = groupedRoute;
-
-        return (
-          <RoutesTile key={categoryName} title={categoryName}>
-            {routesArray.map((item: RouteInterface) => (
-              <RouteTile key={item.id} route={item} />
-            ))}
-          </RoutesTile>
-        );
-      });
+      routesTiles = this.generateCategorizedRoutesTilesList(routes);
     }
 
     return (
@@ -52,22 +39,42 @@ class RoutesPage extends React.Component<Props, State> {
         <Helmet>
           <title>Available Routes</title>
         </Helmet>
-        <Content isProcessing={this.state.isProcessing}>
+        <Content initialState={this.state.contentState}>
           {routesTiles ? routesTiles : <div>RoutesPage Spinner</div>}
         </Content>
       </>
     );
   }
 
+  generateCategorizedRoutesTilesList = (
+    routes: Array<RouteInterface>,
+  ): React.ReactNode => {
+    const groupedRoutes = groupObjectsByKey(routes, 'type');
+
+    return groupedRoutes.map(groupedRoute => {
+      const [categoryName, routesArray] = groupedRoute;
+
+      return (
+        <RoutesTile key={categoryName} title={categoryName}>
+          {routesArray.map((item: RouteInterface) => (
+            <RouteTile key={item.id} route={item} />
+          ))}
+        </RoutesTile>
+      );
+    });
+  };
+
   componentDidMount = async () => {
-    try {
-      const routes = await Api.getRoutes();
-      this.props.routesStore.setRoutes(routes);
-    } catch (error) {
-    } finally {
-      this.setState({
-        isProcessing: false,
-      });
+    const { routesStore } = this.props;
+
+    if (routesStore.isRoutesEmpty === true) {
+      try {
+        this.setState({ contentState: ContentState.PROCESSING });
+        await routesStore.loadRoutes();
+      } catch (error) {
+      } finally {
+        this.setState({ contentState: ContentState.LOADED });
+      }
     }
   };
 }
