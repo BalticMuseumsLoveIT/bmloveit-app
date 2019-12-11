@@ -15,7 +15,7 @@ export class SurveyListStore {
     return this._state;
   }
 
-  @observable private _list: SurveyInterface[] = [];
+  @observable private _list: Array<SurveyInterface> = [];
 
   @computed get list() {
     return this._list;
