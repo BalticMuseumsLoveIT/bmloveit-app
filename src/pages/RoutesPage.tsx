@@ -13,9 +13,21 @@ interface Props {
   routesStore: RoutesStore;
 }
 
+interface State {
+  isProcessing: boolean;
+}
+
 @inject('routesStore')
 @observer
-class RoutesPage extends React.Component<Props> {
+class RoutesPage extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      isProcessing: true,
+    };
+  }
+
   render() {
     const routes = this.props.routesStore.routes;
     let routesTiles;
@@ -40,7 +52,7 @@ class RoutesPage extends React.Component<Props> {
         <Helmet>
           <title>Available Routes</title>
         </Helmet>
-        <Content>
+        <Content isProcessing={this.state.isProcessing}>
           {routesTiles ? routesTiles : <div>RoutesPage Spinner</div>}
         </Content>
       </>
@@ -51,7 +63,12 @@ class RoutesPage extends React.Component<Props> {
     try {
       const routes = await Api.getRoutes();
       this.props.routesStore.setRoutes(routes);
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+      this.setState({
+        isProcessing: false,
+      });
+    }
   };
 }
 
