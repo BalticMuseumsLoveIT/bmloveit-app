@@ -15,4 +15,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # temporary
-/src/tempUserData.json
+/src/utils/tempUserData.json

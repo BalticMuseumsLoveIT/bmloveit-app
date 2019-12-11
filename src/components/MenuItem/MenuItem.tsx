@@ -8,7 +8,7 @@ interface Props {
 }
 
 class MenuItem extends React.Component<Props> {
-  public render() {
+  render() {
     return (
       <StyledWrapper as={Link} {...this.props}>
         {this.props.children}

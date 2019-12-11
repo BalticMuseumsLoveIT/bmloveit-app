@@ -4,7 +4,7 @@ import React from 'react';
 import StyledWrapper from './Header.style';
 
 class Header extends React.Component {
-  public render() {
+  render() {
     return (
       <StyledWrapper>
         <Hamburger />

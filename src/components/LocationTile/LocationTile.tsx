@@ -1,27 +1,16 @@
 import { LocationInterface } from 'utils/interfaces';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import StyledWrapper, { StyledLink } from './LocationTile.style';
+import StyledWrapper from './LocationTile.style';
 
 interface Props {
   location: LocationInterface;
-  routeId: number;
 }
 
 class LocationTile extends React.Component<Props> {
-  public render() {
-    const { id, name_full } = this.props.location;
+  render() {
+    const { name_full } = this.props.location;
 
-    return (
-      <StyledWrapper>
-        <StyledLink
-          as={Link}
-          to={`/routes/${this.props.routeId}/locations/${id}`}
-        >
-          {name_full}
-        </StyledLink>
-      </StyledWrapper>
-    );
+    return <StyledWrapper>{name_full}</StyledWrapper>;
   }
 }
 

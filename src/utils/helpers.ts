@@ -1,30 +1,33 @@
-export function getPrevArrayElement(
+export const getPrevArrayElement = (
   array: Array<any>,
-  element: any,
-): any | undefined {
-  const index = array.indexOf(element);
+  currentElement: any,
+): any | undefined => {
+  const index = array.indexOf(currentElement);
 
   if (index <= 0 || index >= array.length) {
     return undefined;
   }
 
   return array[index - 1];
-}
+};
 
-export function getNextArrayElement(
+export const getNextArrayElement = (
   array: Array<any>,
-  element: any,
-): any | undefined {
-  const index = array.indexOf(element);
+  currentElement: any,
+): any | undefined => {
+  const index = array.indexOf(currentElement);
 
   if (index < 0 || index >= array.length - 1) {
     return undefined;
   }
 
   return array[index + 1];
-}
+};
 
-export function groupObjectsByKey(array: Array<any>, key: string): Array<any> {
+export const groupObjectsByKey = (
+  array: Array<any>,
+  key: string,
+): Array<any> => {
   const groupedArray = array.reduce((resultObject, arrayElement) => {
     resultObject[arrayElement[key]] = resultObject[arrayElement[key]] || [];
     resultObject[arrayElement[key]].push(arrayElement);
@@ -33,4 +36,13 @@ export function groupObjectsByKey(array: Array<any>, key: string): Array<any> {
   }, {});
 
   return Object.entries(groupedArray);
-}
+};
+
+export const getItemFromStorage = (key: string): string => {
+  return window.localStorage.getItem(key) || '';
+};
+
+export const setItemToStorage = (key: string, item: any): string => {
+  window.localStorage.setItem(key, item);
+  return getItemFromStorage(key);
+};
