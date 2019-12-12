@@ -1,5 +1,5 @@
 import Content from 'components/Content/Content';
-import store, { SurveyListState } from 'utils/store/surveyListStore';
+import SurveyListStore, { SurveyListState } from 'utils/store/surveyListStore';
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
@@ -7,17 +7,19 @@ import { Link } from 'react-router-dom';
 
 @observer
 class SurveyListPage extends Component {
+  store = new SurveyListStore();
+
   async componentDidMount() {
-    await store.loadList();
+    await this.store.loadList();
   }
 
   render() {
-    const list = function() {
-      switch (store.state) {
+    const list = () => {
+      switch (this.store.state) {
         case SurveyListState.LOADING:
           return <p>Wczytywanie...</p>;
         case SurveyListState.LOADED:
-          return store.list.map(survey => (
+          return this.store.list.map(survey => (
             <p key={survey.id}>
               <Link to={`/survey/${survey.id}`}>{survey.name}</Link>
             </p>

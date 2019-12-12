@@ -8,7 +8,8 @@ export enum SurveyListState {
   LOADED,
   ERROR,
 }
-export class SurveyListStore {
+
+export default class SurveyListStore {
   @observable state: SurveyListState = SurveyListState.NOT_LOADED;
   @observable list: Array<SurveyInterface> = [];
 
@@ -31,7 +32,3 @@ export class SurveyListStore {
     }
   }
 }
-
-const surveyListStore = new SurveyListStore();
-
-export default surveyListStore;

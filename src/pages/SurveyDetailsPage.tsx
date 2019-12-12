@@ -1,5 +1,7 @@
 import Content from 'components/Content/Content';
-import store, { SurveyDetailsState } from 'utils/store/surveyDetailsStore';
+import SurveyDetailsStore, {
+  SurveyDetailsState,
+} from 'utils/store/surveyDetailsStore';
 import {
   SurveyDetailsInterface,
   SurveyOptionInterface,
@@ -221,12 +223,14 @@ interface SurveyDetailsProps extends RouteComponentProps<any> {}
 
 @observer
 class SurveyDetailsPage extends Component<SurveyDetailsProps> {
+  store = new SurveyDetailsStore();
+
   async componentDidMount() {
     const {
       params: { id },
     } = this.props.match;
 
-    await store.loadSurvey(id);
+    await this.store.loadSurvey(id);
   }
 
   render() {
@@ -238,9 +242,9 @@ class SurveyDetailsPage extends Component<SurveyDetailsProps> {
         <Content>
           <h1>Survey details</h1>
           <Survey
-            state={store.state}
-            survey={store.survey}
-            onSubmit={store.handleSubmit}
+            state={this.store.state}
+            survey={this.store.survey}
+            onSubmit={this.store.handleSubmit}
           />
         </Content>
       </>
