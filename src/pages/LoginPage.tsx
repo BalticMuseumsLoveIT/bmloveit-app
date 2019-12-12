@@ -30,14 +30,17 @@ class LoginPage extends React.Component<Props> {
               <GoogleButton onSuccess={this.login} />
             </>
           ) : (
-            <button onClick={() => this.props.userStore.setToken('')}>
-              Logout
-            </button>
+            <button onClick={this.logout}>Logout</button>
           )}
         </Content>
       </>
     );
   }
+
+  logout = () => {
+    const { userStore } = this.props;
+    userStore.signOut();
+  };
 
   login = async ({
     provider,
