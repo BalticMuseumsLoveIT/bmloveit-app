@@ -16,7 +16,7 @@ export enum QuizDetailsState {
   ERROR,
 }
 
-export class QuizDetailsStore {
+export default class QuizDetailsStore {
   @observable state: QuizDetailsState = QuizDetailsState.NOT_LOADED;
 
   @observable quiz: QuizDetailsInterface | null = null;
@@ -89,7 +89,3 @@ export class QuizDetailsStore {
     }
   }
 }
-
-const quizDetailsStore = new QuizDetailsStore();
-
-export default quizDetailsStore;
