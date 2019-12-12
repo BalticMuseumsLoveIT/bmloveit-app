@@ -4,23 +4,24 @@ import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import QrReader from 'react-qr-reader';
+import { action, observable } from 'mobx';
 
 interface Props extends RouteComponentProps {}
 
-interface State {
-  qrCodeData: string;
-}
-
 @observer
-class QrCodePage extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.handleScan = this.handleScan.bind(this);
+class QrCodePage extends React.Component<Props> {
+  @observable qrCodeData = '';
 
-    this.state = {
-      qrCodeData: '',
-    };
+  @action setQrCodeData(qrCodeData: string) {
+    this.qrCodeData = qrCodeData;
   }
+
+  @action
+  handleScan = (data: string | null): void => {
+    if (data !== null && data !== this.qrCodeData) {
+      this.setQrCodeData(data);
+    }
+  };
 
   render() {
     return (
@@ -36,16 +37,10 @@ class QrCodePage extends React.Component<Props, State> {
             onScan={this.handleScan}
             style={{ width: '100%' }}
           />
-          {this.state.qrCodeData}
+          {this.qrCodeData}
         </Content>
       </>
     );
-  }
-
-  handleScan(data: string | null): void {
-    if (data !== null && data !== this.state.qrCodeData) {
-      this.setState({ qrCodeData: data });
-    }
   }
 }
 
