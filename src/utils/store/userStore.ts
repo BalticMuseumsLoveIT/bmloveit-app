@@ -35,6 +35,9 @@ export class UserStore {
     const data = await Api.signIn(provider, accessToken);
     this.setToken(data.access_token);
   };
+
+  @action
+  signOut = (): void => this.setToken('');
 }
 
 const userStore = new UserStore();
