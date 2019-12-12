@@ -142,3 +142,78 @@ export interface QuizAnswerResponse {
   options_selected_data: Array<QuizOptionInterface>;
   question_data: QuizQuestionInterface;
 }
+
+// Survey ----------------------------------------------------------------------
+
+export interface SurveyInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  location: number | null;
+  item: number | null;
+  language: number;
+  name_translation: Array<TranslationItemInterface>;
+  name_full_translation: Array<TranslationItemInterface>;
+  description_translation: Array<TranslationItemInterface>;
+}
+
+export interface SurveyDetailsInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  language: number;
+  name_translation: Array<TranslationItemInterface>;
+  name_full_translation: Array<TranslationItemInterface>;
+  description_translation: Array<TranslationItemInterface>;
+  questions_data: Array<SurveyQuestionInterface>;
+}
+
+export enum SurveyQuestionType {
+  OPEN = 'O',
+  SELECT = 'S',
+  MULTISELECT = 'M',
+}
+
+export interface SurveyQuestionInterface {
+  id: number;
+  no: number;
+  type: SurveyQuestionType;
+  description: string;
+  file_url: string;
+  description_translation: Array<TranslationItemInterface>;
+  options_data: Array<SurveyOptionInterface>;
+}
+
+export interface SurveyOptionInterface {
+  id: number;
+  no: number;
+  description: string;
+  file_url: string;
+  description_translation: Array<TranslationItemInterface>;
+}
+
+export interface SurveyFulfillmentResponse {
+  id: number;
+  survey: number;
+  user: number;
+  date_add: string;
+}
+
+export interface SurveyAnswerResponse {
+  id: number;
+  fulfillment: number;
+  question: number;
+  value: string;
+}
+
+// Generic ---------------------------------------------------------------------
+
+export interface APIErrorInterface {
+  detail: string;
+}
+
+export function isAPIError(APIResponse: any): APIResponse is APIErrorInterface {
+  return (APIResponse as APIErrorInterface).detail !== undefined;
+}

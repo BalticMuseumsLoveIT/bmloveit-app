@@ -4,6 +4,8 @@ import NotFoundPage from 'pages/NotFoundPage';
 import RoutePage from 'pages/RoutePage';
 import QuizListPage from 'pages/QuizListPage';
 import QuizDetailsPage from 'pages/QuizDetailsPage';
+import SurveyListPage from 'pages/SurveyListPage';
+import SurveyDetailsPage from 'pages/SurveyDetailsPage';
 import LoginPage from 'pages/LoginPage';
 import userStore from 'utils/store/userStore';
 import QrCodePage from 'pages/QrCodePage';
@@ -19,6 +21,8 @@ class Routes extends React.Component {
           <Route exact path="/login" component={LoginPage} />
           <AuthRoute exact path="/quiz" component={QuizListPage} />
           <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />
+          <AuthRoute exact path="/survey" component={SurveyListPage} />
+          <AuthRoute exact path="/survey/:id" component={SurveyDetailsPage} />
           <AuthRoute exact path="/routes" component={RoutesPage} />
           <AuthRoute exact path="/routes/:id" component={RoutePage} />
           <AuthRoute exact path="/qrcode" component={QrCodePage} />

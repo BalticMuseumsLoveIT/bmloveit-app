@@ -4,6 +4,9 @@ import {
   QuizDetailsInterface,
   QuizFulfillmentResponse,
   QuizInterface,
+  SurveyInterface,
+  SurveyDetailsInterface,
+  SurveyFulfillmentResponse,
   RouteInterface,
   SignInResponseInterface,
 } from 'utils/interfaces';
@@ -118,6 +121,79 @@ abstract class Api {
       'api/quiz-answer/',
       formData,
     );
+    return response.data;
+  }
+
+  /**
+   * Get list of all active surveys.
+   *
+   * @throws Axios error
+   */
+  public static async getSurveyList(): Promise<Array<SurveyInterface>> {
+    const response = await userStore.axiosInstance.get('api/survey');
+    return response.data;
+  }
+
+  /**
+   * Get survey details
+   *
+   * @param {number} id - Quiz ID
+   * @throws Axios error
+   */
+  public static async getSurveyDetails(
+    id: number,
+  ): Promise<SurveyDetailsInterface> {
+    const response = await userStore.axiosInstance.get(`api/survey/${id}`);
+    return response.data;
+  }
+
+  /**
+   * Get a fulfillment for a survey with a given id
+   *
+   * @param {number} id - Survey ID
+   * @throws Axios error
+   */
+  public static async getSurveyFulfillment(
+    id: number,
+  ): Promise<SurveyFulfillmentResponse> {
+    const formData = new FormData();
+    formData.append('survey', id.toString());
+
+    const response = await userStore.axiosInstance.post(
+      'api/survey-fulfillment/',
+      formData,
+    );
+
+    return response.data;
+  }
+
+  /**
+   * Check survey answer
+   *
+   * @param {number} fulfillment - Fulfillment ID
+   * @param {number} question - Question ID
+   * @param {string} value - Open answer
+   * @param {Array<number>} options_data - Select and Multiselect
+   * @throws Axios error
+   */
+  public static async getSurveyAnswer(
+    fulfillment: number,
+    question: number,
+    value: string,
+    options_data: Array<number>,
+  ): Promise<void> {
+    const formData = {
+      fulfillment: fulfillment,
+      question: question,
+      value: value,
+      options_data: options_data,
+    };
+
+    const response = await userStore.axiosInstance.post(
+      'api/survey-answer/',
+      formData,
+    );
+
     return response.data;
   }
 }
