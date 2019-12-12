@@ -1,7 +1,7 @@
 import Content from 'components/Content/Content';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import QrReader from 'react-qr-reader';
 
@@ -11,7 +11,6 @@ interface State {
   qrCodeData: string;
 }
 
-@inject('uiStore')
 @observer
 class QrCodePage extends React.Component<Props, State> {
   constructor(props: Props) {
