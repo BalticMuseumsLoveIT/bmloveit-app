@@ -14,8 +14,16 @@ const links = [
     title: 'Home',
   },
   {
+    to: '/quiz',
+    title: 'Quiz',
+  },
+  {
     to: '/routes',
     title: 'Available Routes',
+  },
+  {
+    to: '/login',
+    title: 'Login',
   },
 ];
 

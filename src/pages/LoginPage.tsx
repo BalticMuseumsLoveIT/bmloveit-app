@@ -22,12 +22,18 @@ class LoginPage extends React.Component<Props> {
           <title>Login</title>
         </Helmet>
         <Content>
-          LoginPage
-          <FacebookButton onSuccess={this.login} />
-          <GoogleButton onSuccess={this.login} />
-          <button onClick={() => this.props.userStore.setToken('')}>
-            Logout
-          </button>
+          <h2>Login</h2>
+          {!this.props.userStore.loggedIn ? (
+            <>
+              <FacebookButton onSuccess={this.login} />
+              <br />
+              <GoogleButton onSuccess={this.login} />
+            </>
+          ) : (
+            <button onClick={() => this.props.userStore.setToken('')}>
+              Logout
+            </button>
+          )}
         </Content>
       </>
     );

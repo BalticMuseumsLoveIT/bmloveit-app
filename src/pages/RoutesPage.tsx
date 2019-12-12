@@ -71,9 +71,9 @@ class RoutesPage extends React.Component<Props, State> {
       try {
         this.setState({ contentState: ContentState.PROCESSING });
         await routesStore.loadRoutes();
-      } catch (error) {
-      } finally {
         this.setState({ contentState: ContentState.LOADED });
+      } catch (error) {
+        this.setState({ contentState: ContentState.ERROR });
       }
     }
   };

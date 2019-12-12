@@ -69,3 +69,76 @@ export interface OAuthLoginArgumentInterface {
   provider: string;
   response: any;
 }
+
+export interface TranslationItemInterface {
+  language: number;
+  text: string;
+}
+
+export interface QuizOptionInterface {
+  id: number;
+  no: number;
+  description: string;
+  file_url: string;
+  description_translation?: Array<TranslationItemInterface>;
+  correct?: boolean;
+}
+
+enum QuizQuestionType {
+  Open = 'O',
+  Select = 'S',
+  Multiselect = 'M',
+}
+
+export interface QuizQuestionInterface {
+  id: number;
+  no: number;
+  type: QuizQuestionType;
+  description: string;
+  value_type: string;
+  file_url: string;
+  description_translation?: Array<TranslationItemInterface>;
+  options_data: Array<QuizOptionInterface>;
+}
+
+export interface QuizInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  language: number;
+  name_translation: Array<TranslationItemInterface>;
+  name_full_translation: Array<TranslationItemInterface>;
+  description_translation: Array<TranslationItemInterface>;
+}
+
+export interface QuizDetailsInterface extends QuizInterface {
+  questions_data: Array<QuizQuestionInterface>;
+}
+
+export interface QuizDetailsNotFound {
+  detail: string;
+}
+
+export function isQuizDetailsNotFound(
+  quizDetailsNotFound: QuizDetailsNotFound,
+): quizDetailsNotFound is QuizDetailsNotFound {
+  return (quizDetailsNotFound as QuizDetailsNotFound).detail !== undefined;
+}
+
+export interface QuizFulfillmentResponse {
+  id: number;
+  quiz: number;
+  user: number;
+  date_add: string;
+}
+
+export interface QuizAnswerResponse {
+  id: number;
+  fulfillment: number;
+  question: number;
+  value: string;
+  correct: boolean;
+  options_selected_data: Array<QuizOptionInterface>;
+  question_data: QuizQuestionInterface;
+}
