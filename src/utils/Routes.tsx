@@ -6,6 +6,7 @@ import QuizListPage from 'pages/QuizListPage';
 import QuizDetailsPage from 'pages/QuizDetailsPage';
 import LoginPage from 'pages/LoginPage';
 import userStore from 'utils/store/userStore';
+import QrCodePage from 'pages/QrCodePage';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import React from 'react';
 
@@ -20,6 +21,7 @@ class Routes extends React.Component {
           <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />
           <AuthRoute exact path="/routes" component={RoutesPage} />
           <AuthRoute exact path="/routes/:id" component={RoutePage} />
+          <AuthRoute exact path="/qrcode" component={QrCodePage} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
       </>

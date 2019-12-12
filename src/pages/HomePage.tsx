@@ -3,7 +3,7 @@ import { UiStore } from 'utils/store/uiStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, Link } from 'react-router-dom';
 
 interface Props extends RouteComponentProps {
   uiStore: UiStore;
@@ -27,6 +27,7 @@ class HomePage extends React.Component<Props> {
           <button onClick={(): void => this.props.uiStore.setLang('en')}>
             EN
           </button>
+          <Link to="/qrcode">QR code</Link>
         </Content>
       </>
     );
