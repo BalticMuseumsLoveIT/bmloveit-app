@@ -9,7 +9,7 @@ export enum QuizListState {
   ERROR,
 }
 
-export class QuizListStore {
+export default class QuizListStore {
   @observable state: QuizListState = QuizListState.NOT_LOADED;
 
   @observable list: Array<QuizInterface> = [];
@@ -34,7 +34,3 @@ export class QuizListStore {
     }
   };
 }
-
-const quizListStore = new QuizListStore();
-
-export default quizListStore;
