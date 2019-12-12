@@ -1,9 +1,8 @@
-import Api from 'utils/api';
 import RouteTile from 'components/RouteTile/RouteTile';
-import Content from 'components/Content/Content';
+import Content, { ContentState } from 'components/Content/Content';
 import { RoutesStore } from 'utils/store/routesStore';
 import { groupObjectsByKey } from 'utils/helpers';
-import { RouteInterface } from 'utils/@types/interfaces';
+import { RouteInterface } from 'utils/interfaces';
 import RoutesTile from 'components/RoutesTile/RoutesTile';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -13,26 +12,26 @@ interface Props {
   routesStore: RoutesStore;
 }
 
+interface State {
+  contentState: ContentState;
+}
+
 @inject('routesStore')
 @observer
-class RoutesPage extends React.Component<Props> {
+class RoutesPage extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      contentState: ContentState.LOADED,
+    };
+  }
+
   render() {
-    const routes = this.props.routesStore.getRoutes();
-    let routesTiles;
+    const routes = this.props.routesStore.routes;
+
+    let routesTiles: React.ReactNode;
     if (routes.length > 0) {
-      const groupedRoutes = groupObjectsByKey(routes, 'type');
-
-      routesTiles = groupedRoutes.map(groupedRoute => {
-        const [categoryName, routesArray] = groupedRoute;
-
-        return (
-          <RoutesTile key={categoryName} title={categoryName}>
-            {routesArray.map((item: RouteInterface) => (
-              <RouteTile key={item.id} route={item} />
-            ))}
-          </RoutesTile>
-        );
-      });
+      routesTiles = this.generateCategorizedRoutesTilesList(routes);
     }
 
     return (
@@ -40,21 +39,44 @@ class RoutesPage extends React.Component<Props> {
         <Helmet>
           <title>Available Routes</title>
         </Helmet>
-        <Content>
+        <Content initialState={this.state.contentState}>
           {routesTiles ? routesTiles : <div>RoutesPage Spinner</div>}
         </Content>
       </>
     );
   }
 
-  async componentDidMount() {
-    if (this.props.routesStore.getRoutes().length === 0) {
+  generateCategorizedRoutesTilesList = (
+    routes: Array<RouteInterface>,
+  ): React.ReactNode => {
+    const groupedRoutes = groupObjectsByKey(routes, 'type');
+
+    return groupedRoutes.map(groupedRoute => {
+      const [categoryName, routesArray] = groupedRoute;
+
+      return (
+        <RoutesTile key={categoryName} title={categoryName}>
+          {routesArray.map((item: RouteInterface) => (
+            <RouteTile key={item.id} route={item} />
+          ))}
+        </RoutesTile>
+      );
+    });
+  };
+
+  componentDidMount = async () => {
+    const { routesStore } = this.props;
+
+    if (routesStore.isRoutesEmpty === true) {
       try {
-        const routes = await Api.getRoutes();
-        this.props.routesStore.setRoutes(routes);
-      } catch (error) {}
+        this.setState({ contentState: ContentState.PROCESSING });
+        await routesStore.loadRoutes();
+      } catch (error) {
+      } finally {
+        this.setState({ contentState: ContentState.LOADED });
+      }
     }
-  }
+  };
 }
 
 export default RoutesPage;
