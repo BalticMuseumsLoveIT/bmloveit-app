@@ -26,7 +26,6 @@ export default class QuizListStore {
     this.setState(QuizListState.LOADING);
     try {
       const list = await Api.getQuizList();
-      console.log(list);
       this.setList(list);
       this.setState(QuizListState.LOADED);
     } catch (e) {
