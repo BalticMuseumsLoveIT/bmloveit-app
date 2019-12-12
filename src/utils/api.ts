@@ -7,22 +7,6 @@ import {
   RouteInterface,
   SignInResponseInterface,
 } from 'utils/interfaces';
-import axios from 'axios';
-
-const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-    Authorization: `Bearer ${userStore.token}`,
-  },
-});
-
-const axiosAuthInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
 
 abstract class Api {
   public static signIn = async (
@@ -36,7 +20,7 @@ abstract class Api {
       token: accessToken,
     };
 
-    const response = await axiosAuthInstance.post(
+    const response = await userStore.axiosInstance.post(
       'auth/convert-token',
       JSON.stringify(body),
     );
@@ -45,19 +29,19 @@ abstract class Api {
   };
 
   public static getRoutes = async (): Promise<Array<RouteInterface>> => {
-    const response = await axiosInstance.get('api/route/');
+    const response = await userStore.axiosInstance.get('api/route/');
 
     return response.data;
   };
 
   public static getRoute = async (id: number): Promise<RouteInterface> => {
-    const response = await axiosInstance.get(`api/route/${id}`);
+    const response = await userStore.axiosInstance.get(`api/route/${id}`);
 
     return response.data;
   };
 
   public static async getPrivateMedia(path: string): Promise<string> {
-    const response = await axiosInstance.get(path, {
+    const response = await userStore.axiosInstance.get(path, {
       responseType: 'arraybuffer',
     });
 
@@ -73,7 +57,7 @@ abstract class Api {
    * @throws Axios error
    */
   public static async getQuizList(): Promise<Array<QuizInterface>> {
-    const response = await axiosInstance.get('api/quiz');
+    const response = await userStore.axiosInstance.get('api/quiz');
     return response.data;
   }
 
@@ -89,7 +73,7 @@ abstract class Api {
    * @throws Axios error
    */
   public static async getQuiz(id: number): Promise<QuizDetailsInterface> {
-    const response = await axiosInstance.get(`api/quiz/${id}`);
+    const response = await userStore.axiosInstance.get(`api/quiz/${id}`);
     return response.data;
   }
 
@@ -105,7 +89,7 @@ abstract class Api {
     const formData = new FormData();
     formData.append('quiz', id.toString());
 
-    const response = await axiosInstance.post(
+    const response = await userStore.axiosInstance.post(
       'api/quiz-fulfillment/',
       formData,
     );
@@ -130,7 +114,10 @@ abstract class Api {
     formData.append('question', question.toString());
     formData.append('options_data', option.toString());
 
-    const response = await axiosInstance.post('api/quiz-answer/', formData);
+    const response = await userStore.axiosInstance.post(
+      'api/quiz-answer/',
+      formData,
+    );
     return response.data;
   }
 }
