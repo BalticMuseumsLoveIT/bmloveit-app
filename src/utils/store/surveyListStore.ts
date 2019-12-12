@@ -1,6 +1,6 @@
 import { SurveyInterface } from 'utils/interfaces';
 import Api from 'utils/api';
-import { action, computed, observable } from 'mobx';
+import { action, observable } from 'mobx';
 
 export enum SurveyListState {
   NOT_LOADED,
@@ -9,25 +9,24 @@ export enum SurveyListState {
   ERROR,
 }
 export class SurveyListStore {
-  @observable private _state: SurveyListState = SurveyListState.NOT_LOADED;
+  @observable state: SurveyListState = SurveyListState.NOT_LOADED;
+  @observable list: Array<SurveyInterface> = [];
 
-  @computed get state() {
-    return this._state;
+  @action setState(state: SurveyListState) {
+    this.state = state;
   }
 
-  @observable private _list: Array<SurveyInterface> = [];
-
-  @computed get list() {
-    return this._list;
+  @action setList(list: Array<SurveyInterface>) {
+    this.list = list;
   }
 
   @action async loadList() {
-    this._state = SurveyListState.LOADING;
+    this.setState(SurveyListState.LOADING);
     try {
-      this._list = await Api.getSurveyList();
-      this._state = SurveyListState.LOADED;
+      this.setList(await Api.getSurveyList());
+      this.setState(SurveyListState.LOADED);
     } catch (e) {
-      this._state = SurveyListState.ERROR;
+      this.setState(SurveyListState.ERROR);
       // TODO: Handle error
     }
   }

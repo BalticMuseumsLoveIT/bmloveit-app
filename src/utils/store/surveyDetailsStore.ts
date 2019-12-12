@@ -4,7 +4,7 @@ import {
   SurveyQuestionType,
 } from 'utils/interfaces';
 import Api from 'utils/api';
-import { action, computed, observable } from 'mobx';
+import { action, observable } from 'mobx';
 import { FormikValues } from 'formik';
 
 export enum SurveyDetailsState {
@@ -17,49 +17,52 @@ export enum SurveyDetailsState {
 }
 
 export class SurveyDetailsStore {
-  @observable private _state: SurveyDetailsState =
-    SurveyDetailsState.NOT_LOADED;
+  @observable state: SurveyDetailsState = SurveyDetailsState.NOT_LOADED;
 
-  @computed get state(): SurveyDetailsState {
-    return this._state;
+  @observable survey: SurveyDetailsInterface | null = null;
+
+  @observable surveyId: number | null = null;
+
+  @action setState(state: SurveyDetailsState) {
+    this.state = state;
   }
 
-  @observable private _survey: SurveyDetailsInterface | null = null;
-
-  @computed get survey() {
-    return this._survey;
+  @action setSurvey(survey: SurveyDetailsInterface) {
+    this.survey = survey;
   }
 
-  @observable private _surveyId: number | null = null;
+  @action setSurveyId(surveyId: number) {
+    this.surveyId = surveyId;
+  }
 
-  @action async loadSurvey(id: number) {
-    this._state = SurveyDetailsState.LOADING;
+  @action loadSurvey = async (id: number) => {
+    this.setState(SurveyDetailsState.LOADING);
     try {
-      this._survey = await Api.getSurveyDetails(id);
-      this._surveyId = id;
-      this._state = SurveyDetailsState.LOADED;
+      this.setSurvey(await Api.getSurveyDetails(id));
+      this.setSurveyId(id);
+      this.setState(SurveyDetailsState.LOADED);
     } catch (error) {
       if (
         error.response &&
         error.response.status === 404 &&
         isAPIError(error.response.data)
       ) {
-        this._state = SurveyDetailsState.NOT_FOUND;
+        this.setState(SurveyDetailsState.NOT_FOUND);
       } else {
-        this._state = SurveyDetailsState.ERROR;
+        this.setState(SurveyDetailsState.ERROR);
         // TODO: Handle unexpected error
       }
     }
-  }
+  };
 
-  @action.bound async handleSubmit(values: FormikValues) {
-    if (this._surveyId === null || this._survey === null) {
-      this._state = SurveyDetailsState.ERROR;
+  @action handleSubmit = async (values: FormikValues) => {
+    if (this.surveyId === null || this.survey === null) {
+      this.setState(SurveyDetailsState.ERROR);
       return;
     }
 
     try {
-      const fulfillment = await Api.getSurveyFulfillment(this._surveyId);
+      const fulfillment = await Api.getSurveyFulfillment(this.surveyId);
 
       const answers = [];
 
@@ -70,7 +73,7 @@ export class SurveyDetailsStore {
           continue;
         }
 
-        const questionData = this._survey.questions_data.find(
+        const questionData = this.survey.questions_data.find(
           question => question.id === questionId,
         );
 
@@ -116,12 +119,12 @@ export class SurveyDetailsStore {
         }),
       );
 
-      this._state = SurveyDetailsState.SUBMITTED;
+      this.setState(SurveyDetailsState.SUBMITTED);
     } catch (error) {
-      this._state = SurveyDetailsState.ERROR;
+      this.setState(SurveyDetailsState.ERROR);
       // TODO: Handle unexpected error
     }
-  }
+  };
 }
 
 const surveyDetailsStore = new SurveyDetailsStore();
