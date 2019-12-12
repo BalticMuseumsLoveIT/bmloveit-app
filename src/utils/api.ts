@@ -130,7 +130,7 @@ abstract class Api {
    * @throws Axios error
    */
   public static async getSurveyList(): Promise<SurveyInterface[]> {
-    const response = await axiosInstance.get('api/survey');
+    const response = await userStore.axiosInstance.get('api/survey');
     return response.data;
   }
 
@@ -143,7 +143,7 @@ abstract class Api {
   public static async getSurveyDetails(
     id: number,
   ): Promise<SurveyDetailsInterface> {
-    const response = await axiosInstance.get(`api/survey/${id}`);
+    const response = await userStore.axiosInstance.get(`api/survey/${id}`);
     return response.data;
   }
 
@@ -159,7 +159,7 @@ abstract class Api {
     const formData = new FormData();
     formData.append('survey', id.toString());
 
-    const response = await axiosInstance.post(
+    const response = await userStore.axiosInstance.post(
       'api/survey-fulfillment/',
       formData,
     );
@@ -189,7 +189,10 @@ abstract class Api {
       options_data: options_data,
     };
 
-    const response = await axiosInstance.post('api/survey-answer/', formData);
+    const response = await userStore.axiosInstance.post(
+      'api/survey-answer/',
+      formData,
+    );
 
     return response.data;
   }
