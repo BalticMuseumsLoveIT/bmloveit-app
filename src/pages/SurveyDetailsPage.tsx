@@ -91,14 +91,11 @@ const SurveyForm = function({ survey, onSubmit }: SurveyFormProps) {
   const validationSchema = extractValidationSchema(survey.questions_data);
 
   const QuestionImage = ({ url }: { url?: string }) => {
-    return (
-      (url && url.length && (
-        <div>
-          <img src={url} alt="Question illustration" />
-        </div>
-      )) ||
-      null
-    );
+    return url && url.length ? (
+      <div>
+        <img src={url} alt="Question illustration" />
+      </div>
+    ) : null;
   };
 
   interface CheckboxGroupProps extends FieldProps {
