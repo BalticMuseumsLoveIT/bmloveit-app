@@ -31,9 +31,7 @@ const Survey = function({ state, survey, onSubmit }: SurveyProps) {
     case SurveyDetailsState.LOADING:
       return <p>Wczytywanie...</p>;
     case SurveyDetailsState.LOADED:
-      return (
-        (survey && <SurveyForm survey={survey} onSubmit={onSubmit} />) || null
-      );
+      return survey ? <SurveyForm survey={survey} onSubmit={onSubmit} /> : null;
     case SurveyDetailsState.SUBMITTED:
       return (
         <div>
