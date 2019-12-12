@@ -23,7 +23,7 @@ class LoginPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h2>Login</h2>
-          {!this.props.userStore.loggedIn ? (
+          {!this.props.userStore.isLoggedIn ? (
             <>
               <FacebookButton onSuccess={this.login} />
               <br />

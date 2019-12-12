@@ -6,7 +6,7 @@ import axios from 'axios';
 export class UserStore {
   @observable token = getItemFromStorage('token');
 
-  @computed get loggedIn(): boolean {
+  @computed get isLoggedIn(): boolean {
     return this.token !== '';
   }
 
@@ -15,7 +15,7 @@ export class UserStore {
       'Content-Type': 'application/json',
     };
 
-    if (this.loggedIn) {
+    if (this.isLoggedIn) {
       headers['Authorization'] = `Bearer ${this.token}`;
     }
 
