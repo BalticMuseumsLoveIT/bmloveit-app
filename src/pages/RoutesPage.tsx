@@ -7,74 +7,65 @@ import RoutesTile from 'components/RoutesTile/RoutesTile';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
+import { action, observable } from 'mobx';
+
+interface CategorizedRoutesTilesListProps {
+  routes: Array<RouteInterface>;
+}
+
+const CategorizedRoutesTilesList = ({
+  routes,
+}: CategorizedRoutesTilesListProps) => {
+  const groupedRoutes = groupObjectsByKey(routes, 'type');
+
+  const tiles = groupedRoutes.map(groupedRoute => {
+    const [categoryName, routesArray] = groupedRoute;
+
+    return (
+      <RoutesTile key={categoryName} title={categoryName}>
+        {routesArray.map((item: RouteInterface) => (
+          <RouteTile key={item.id} route={item} />
+        ))}
+      </RoutesTile>
+    );
+  });
+
+  return <>{tiles}</>;
+};
 
 interface Props {
   routesStore: RoutesStore;
 }
 
-interface State {
-  contentState: ContentState;
-}
-
 @inject('routesStore')
 @observer
-class RoutesPage extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      contentState: ContentState.LOADED,
-    };
+class RoutesPage extends React.Component<Props> {
+  @observable contentState: ContentState = ContentState.NOT_LOADED;
+
+  @action setContentState(contentState: ContentState) {
+    this.contentState = contentState;
   }
 
   render() {
-    const routes = this.props.routesStore.routes;
-
-    let routesTiles: React.ReactNode;
-    if (routes.length > 0) {
-      routesTiles = this.generateCategorizedRoutesTilesList(routes);
-    }
-
     return (
       <>
         <Helmet>
           <title>Available Routes</title>
         </Helmet>
-        <Content initialState={this.state.contentState}>
-          {routesTiles ? routesTiles : <div>RoutesPage Spinner</div>}
+        <Content state={this.contentState}>
+          <CategorizedRoutesTilesList routes={this.props.routesStore.routes} />
         </Content>
       </>
     );
   }
 
-  generateCategorizedRoutesTilesList = (
-    routes: Array<RouteInterface>,
-  ): React.ReactNode => {
-    const groupedRoutes = groupObjectsByKey(routes, 'type');
-
-    return groupedRoutes.map(groupedRoute => {
-      const [categoryName, routesArray] = groupedRoute;
-
-      return (
-        <RoutesTile key={categoryName} title={categoryName}>
-          {routesArray.map((item: RouteInterface) => (
-            <RouteTile key={item.id} route={item} />
-          ))}
-        </RoutesTile>
-      );
-    });
-  };
-
   componentDidMount = async () => {
-    const { routesStore } = this.props;
-
-    if (routesStore.isRoutesEmpty === true) {
-      try {
-        this.setState({ contentState: ContentState.PROCESSING });
-        await routesStore.loadRoutes();
-        this.setState({ contentState: ContentState.LOADED });
-      } catch (error) {
-        this.setState({ contentState: ContentState.ERROR });
-      }
+    try {
+      this.setContentState(ContentState.LOADING);
+      await this.props.routesStore.loadRoutes();
+      this.setContentState(ContentState.LOADED);
+    } catch (error) {
+      this.setContentState(ContentState.ERROR);
     }
   };
 }
