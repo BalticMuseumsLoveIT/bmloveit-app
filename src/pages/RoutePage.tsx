@@ -10,21 +10,9 @@ interface Props extends RouteComponentProps<any> {
   routesStore: RoutesStore;
 }
 
-interface State {
-  message: string;
-}
-
 @inject('routesStore')
 @observer
-class RoutePage extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      message: 'Lack of locations',
-    };
-  }
-
+class RoutePage extends React.Component<Props> {
   render() {
     const id = parseInt(this.props.match.params.id);
     const route = this.props.routesStore.getRoute(id);
@@ -47,11 +35,7 @@ class RoutePage extends React.Component<Props, State> {
           <title>{route ? route.name_full : 'Route'}</title>
         </Helmet>
         <Content>
-          {locations.length > 0 ? (
-            locationTiles
-          ) : (
-            <div>{this.state.message}</div>
-          )}
+          {locations.length > 0 ? locationTiles : <div>Lack of locations</div>}
         </Content>
       </>
     );
