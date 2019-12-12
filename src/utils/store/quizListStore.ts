@@ -1,6 +1,6 @@
 import { QuizInterface } from 'utils/interfaces';
 import Api from 'utils/api';
-import { action, computed, observable } from 'mobx';
+import { action, observable } from 'mobx';
 
 export enum QuizListState {
   NOT_LOADED,
@@ -10,27 +10,29 @@ export enum QuizListState {
 }
 
 export class QuizListStore {
-  @observable private _state: QuizListState = QuizListState.NOT_LOADED;
+  @observable state: QuizListState = QuizListState.NOT_LOADED;
 
-  @observable private _list: Array<QuizInterface> = [];
+  @observable list: Array<QuizInterface> = [];
 
-  @computed get state() {
-    return this._state;
-  }
+  @action setState = (state: QuizListState) => {
+    this.state = state;
+  };
 
-  @computed get list() {
-    return this._list;
-  }
+  @action setList = (list: Array<QuizInterface>) => {
+    this.list = list;
+  };
 
-  @action async loadList() {
-    this._state = QuizListState.LOADING;
+  @action loadList = async () => {
+    this.setState(QuizListState.LOADING);
     try {
-      this._list = await Api.getQuizList();
-      this._state = QuizListState.LOADED;
+      const list = await Api.getQuizList();
+      console.log(list);
+      this.setList(list);
+      this.setState(QuizListState.LOADED);
     } catch (e) {
-      this._state = QuizListState.ERROR;
+      this.setState(QuizListState.ERROR);
     }
-  }
+  };
 }
 
 const quizListStore = new QuizListStore();

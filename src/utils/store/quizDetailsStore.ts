@@ -17,75 +17,75 @@ export enum QuizDetailsState {
 }
 
 export class QuizDetailsStore {
-  @observable private _state: QuizDetailsState = QuizDetailsState.NOT_LOADED;
+  @observable state: QuizDetailsState = QuizDetailsState.NOT_LOADED;
 
-  @observable private _quiz: QuizDetailsInterface | null = null;
+  @observable quiz: QuizDetailsInterface | null = null;
 
-  @observable private _answer: QuizAnswerResponse | null = null;
-
-  @computed get state() {
-    return this._state;
-  }
-
-  @computed get quiz() {
-    return this._quiz;
-  }
-
-  @computed get answer() {
-    return this._answer;
-  }
+  @observable answer: QuizAnswerResponse | null = null;
 
   @computed get question(): QuizQuestionInterface | null {
-    switch (this._state) {
+    switch (this.state) {
       case QuizDetailsState.LOADED:
-        return this._quiz!.questions_data[0];
+        return this.quiz!.questions_data[0];
       case QuizDetailsState.SUBMITTED:
-        return this._answer!.question_data;
+        return this.answer!.question_data;
       default:
         return null;
     }
   }
 
   @computed get isLoaded(): boolean {
-    return this._state === QuizDetailsState.LOADED;
+    return this.state === QuizDetailsState.LOADED;
   }
 
   @computed get isSubmitted(): boolean {
-    return this._state === QuizDetailsState.SUBMITTED;
+    return this.state === QuizDetailsState.SUBMITTED;
+  }
+
+  @action setState(state: QuizDetailsState) {
+    this.state = state;
+  }
+
+  @action setQuiz(quiz: QuizDetailsInterface) {
+    this.quiz = quiz;
+  }
+
+  @action setAnswer(answer: QuizAnswerResponse) {
+    this.answer = answer;
   }
 
   @action
   async loadQuiz(id: number) {
-    this._state = QuizDetailsState.LOADING;
+    this.setState(QuizDetailsState.LOADING);
     try {
-      this._quiz = await Api.getQuiz(id);
-      this._state = QuizDetailsState.LOADED;
+      this.setQuiz(await Api.getQuiz(id));
+      this.setState(QuizDetailsState.LOADED);
     } catch (e) {
       if (
         e.response &&
         e.response.status === 404 &&
         isQuizDetailsNotFound(e.response.data)
       ) {
-        this._state = QuizDetailsState.NOT_FOUND;
+        this.setState(QuizDetailsState.NOT_FOUND);
       } else {
-        this._state = QuizDetailsState.ERROR;
+        this.setState(QuizDetailsState.ERROR);
       }
     }
   }
 
   @action.bound
   async handleSubmit(question: number, option: number) {
-    if (this._quiz === null) {
-      this._state = QuizDetailsState.ERROR;
+    if (this.quiz === null) {
+      this.setState(QuizDetailsState.ERROR);
       return;
     }
 
     try {
-      const fulfillment = await Api.getQuizFulfillment(this._quiz.id);
-      this._answer = await Api.getQuizAnswer(fulfillment.id, question, option);
-      this._state = QuizDetailsState.SUBMITTED;
+      const fulfillment = await Api.getQuizFulfillment(this.quiz.id);
+      this.setAnswer(await Api.getQuizAnswer(fulfillment.id, question, option));
+      this.setState(QuizDetailsState.SUBMITTED);
     } catch (e) {
-      this._state = QuizDetailsState.ERROR;
+      this.setState(QuizDetailsState.ERROR);
     }
   }
 }

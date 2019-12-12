@@ -8,7 +8,7 @@ const StyledWrapper = styled.button`
   border: none;
   background: none;
   padding: 20px 15px;
-  z-index: 2;
+  z-index: 3;
 `;
 
 export const InnerHamburger = styled.div<InnerHamburgerProps>`

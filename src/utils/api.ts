@@ -7,59 +7,44 @@ import {
   SurveyInterface,
   SurveyDetailsInterface,
   SurveyFulfillmentResponse,
+  RouteInterface,
+  SignInResponseInterface,
 } from 'utils/interfaces';
-import axios from 'axios';
-
-const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
-  headers: {
-    Authorization: `Bearer ${userStore.getToken()}`,
-  },
-});
 
 abstract class Api {
-  public static async getRoutes(): Promise<any> {
-    try {
-      const response = await axiosInstance.get('route/');
-      return response.data;
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
+  public static signIn = async (
+    provider: string,
+    accessToken: string,
+  ): Promise<SignInResponseInterface> => {
+    const body = {
+      grant_type: 'convert_token',
+      client_id: process.env.REACT_APP_CLIENT_ID,
+      backend: provider,
+      token: accessToken,
+    };
 
-  public static async getRoute(id: number): Promise<any> {
-    try {
-      const response = await axiosInstance.get(`route/${id}`);
-      return response.data;
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
+    const response = await userStore.axiosInstance.post(
+      'auth/convert-token',
+      JSON.stringify(body),
+    );
 
-  public static async getLocationsForRoute(id: number): Promise<any> {
-    try {
-      const response = await axiosInstance.get(
-        `locations/?location_routes__route__id=${id}`,
-      );
-      return response.data;
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
+    return response.data;
+  };
 
-  public static async getLocation(id: number): Promise<any> {
-    try {
-      const response = await axiosInstance.get(`locations/?id=${id}`);
+  public static getRoutes = async (): Promise<Array<RouteInterface>> => {
+    const response = await userStore.axiosInstance.get('api/route/');
 
-      // api returns array with one element
-      return response.data[0];
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
+    return response.data;
+  };
+
+  public static getRoute = async (id: number): Promise<RouteInterface> => {
+    const response = await userStore.axiosInstance.get(`api/route/${id}`);
+
+    return response.data;
+  };
 
   public static async getPrivateMedia(path: string): Promise<string> {
-    const response = await axiosInstance.get(path, {
+    const response = await userStore.axiosInstance.get(path, {
       responseType: 'arraybuffer',
     });
 
@@ -75,7 +60,7 @@ abstract class Api {
    * @throws Axios error
    */
   public static async getQuizList(): Promise<Array<QuizInterface>> {
-    const response = await axiosInstance.get('api/quiz');
+    const response = await userStore.axiosInstance.get('api/quiz');
     return response.data;
   }
 
@@ -91,7 +76,7 @@ abstract class Api {
    * @throws Axios error
    */
   public static async getQuiz(id: number): Promise<QuizDetailsInterface> {
-    const response = await axiosInstance.get(`api/quiz/${id}`);
+    const response = await userStore.axiosInstance.get(`api/quiz/${id}`);
     return response.data;
   }
 
@@ -107,7 +92,7 @@ abstract class Api {
     const formData = new FormData();
     formData.append('quiz', id.toString());
 
-    const response = await axiosInstance.post(
+    const response = await userStore.axiosInstance.post(
       'api/quiz-fulfillment/',
       formData,
     );
@@ -132,7 +117,10 @@ abstract class Api {
     formData.append('question', question.toString());
     formData.append('options_data', option.toString());
 
-    const response = await axiosInstance.post('api/quiz-answer/', formData);
+    const response = await userStore.axiosInstance.post(
+      'api/quiz-answer/',
+      formData,
+    );
     return response.data;
   }
 
