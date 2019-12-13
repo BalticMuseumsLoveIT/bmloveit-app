@@ -1,7 +1,7 @@
+import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import React from 'react';
 import { observer } from 'mobx-react';
 import StyledWrapper from './Content.style';
-import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
 export enum ContentState {
   UNAVAILABLE,
