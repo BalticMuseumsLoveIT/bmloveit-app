@@ -3,9 +3,9 @@ import { observer } from 'mobx-react';
 import StyledWrapper from './Content.style';
 
 export enum ContentState {
-  NOT_LOADED,
+  UNAVAILABLE,
   LOADING,
-  LOADED,
+  AVAILABLE,
   ERROR,
 }
 
@@ -28,15 +28,14 @@ class Content extends React.Component<Props> {
         case ContentState.ERROR:
           contentToRender = <h1>Error</h1>;
           break;
-        case ContentState.NOT_LOADED:
+        case ContentState.UNAVAILABLE:
           contentToRender = null;
           break;
         case ContentState.LOADING:
           contentToRender = <h1>LOADING</h1>;
           break;
-        case ContentState.LOADED:
+        case ContentState.AVAILABLE:
         default:
-          // If content state is loaded or undefined
           contentToRender = this.props.children;
           break;
       }

@@ -2,7 +2,7 @@ import { configure } from 'mobx';
 import userStore from './userStore';
 import uiStore from './uiStore';
 import routesStore from './routesStore';
-import contentStore from './contentStore';
+import pageStore from './pageStore';
 
 configure({ enforceActions: 'always' });
 
@@ -10,7 +10,7 @@ const stores = {
   userStore,
   uiStore,
   routesStore,
-  contentStore,
+  pageStore,
 };
 
 export default stores;

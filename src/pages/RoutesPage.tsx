@@ -1,52 +1,25 @@
-import RouteTile from 'components/RouteTile/RouteTile';
-import Content from 'components/Content/Content';
+import Content, { ContentState } from 'components/Content/Content';
 import { RoutesStore } from 'utils/store/routesStore';
-import { groupObjectsByKey } from 'utils/helpers';
-import { RouteInterface } from 'utils/interfaces';
-import RoutesTile from 'components/RoutesTile/RoutesTile';
-import { ContentState, ContentStore } from 'utils/store/contentStore';
+import { PageStore } from 'utils/store/pageStore';
+import { CategorizedRoutesTilesList } from 'components/CategorizedRoutesTilesList/CategorizedRoutesTilesList';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 
-interface CategorizedRoutesTilesListProps {
-  routes: Array<RouteInterface>;
-}
-
-const CategorizedRoutesTilesList = ({
-  routes,
-}: CategorizedRoutesTilesListProps) => {
-  const groupedRoutes = groupObjectsByKey(routes, 'type');
-
-  const tiles = groupedRoutes.map(groupedRoute => {
-    const [categoryName, routesArray] = groupedRoute;
-
-    return (
-      <RoutesTile key={categoryName} title={categoryName}>
-        {routesArray.map((item: RouteInterface) => (
-          <RouteTile key={item.id} route={item} />
-        ))}
-      </RoutesTile>
-    );
-  });
-
-  return <>{tiles}</>;
-};
-
 interface Props {
   routesStore: RoutesStore;
-  contentStore: ContentStore;
+  pageStore: PageStore;
 }
 
-@inject('routesStore', 'contentStore')
+@inject('pageStore', 'routesStore')
 @observer
 class RoutesPage extends React.Component<Props> {
-  contentStore = this.props.contentStore;
+  pageStore = this.props.pageStore;
   routesStore = this.props.routesStore;
 
   constructor(props: Props) {
     super(props);
-    this.contentStore.setContentState(ContentState.NOT_LOADED);
+    this.pageStore.setContentState(ContentState.UNAVAILABLE);
   }
 
   render() {
@@ -55,7 +28,7 @@ class RoutesPage extends React.Component<Props> {
         <Helmet>
           <title>Available Routes</title>
         </Helmet>
-        <Content state={this.contentStore.contentState}>
+        <Content state={this.pageStore.contentState}>
           <CategorizedRoutesTilesList routes={this.routesStore.routes} />
         </Content>
       </>
@@ -64,11 +37,11 @@ class RoutesPage extends React.Component<Props> {
 
   componentDidMount = async () => {
     try {
-      this.contentStore.setContentState(ContentState.LOADING);
+      this.pageStore.setContentState(ContentState.LOADING);
       await this.routesStore.loadRoutes();
-      this.contentStore.setContentState(ContentState.LOADED);
+      this.pageStore.setContentState(ContentState.AVAILABLE);
     } catch (error) {
-      this.contentStore.setContentState(ContentState.ERROR);
+      this.pageStore.setContentState(ContentState.ERROR);
     }
   };
 }
