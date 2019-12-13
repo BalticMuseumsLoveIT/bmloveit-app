@@ -1,28 +1,11 @@
-import QuizListStore, { QuizListState } from 'utils/store/quizListStore';
-import Content from 'components/Content/Content';
+import QuizListStore from 'utils/store/quizListStore';
+import Content, { ContentState } from 'components/Content/Content';
 import { QuizInterface } from 'utils/interfaces';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-
-interface QuizListProps {
-  state: QuizListState;
-  list: Array<QuizInterface>;
-}
-
-const QuizList = function({ state, list }: QuizListProps) {
-  switch (state) {
-    case QuizListState.LOADING:
-      return <p>Loading...</p>;
-    case QuizListState.LOADED:
-      return <List list={list} />;
-    case QuizListState.ERROR:
-      return <p>Error</p>;
-    default:
-      return null;
-  }
-};
+import { PageStore } from '../utils/store/pageStore';
 
 interface ListProps {
   list: Array<QuizInterface>;
@@ -40,14 +23,29 @@ const List = function({ list }: ListProps) {
   );
 };
 
-interface Props {}
+interface Props {
+  pageStore: PageStore;
+}
 
+@inject('pageStore')
 @observer
 class QuizListPage extends React.Component<Props> {
   quizListStore = new QuizListStore();
+  pageStore = this.props.pageStore;
+
+  constructor(props: Props) {
+    super(props);
+    this.pageStore.setContentState(ContentState.UNAVAILABLE);
+  }
 
   async componentDidMount() {
-    await this.quizListStore.loadList();
+    try {
+      this.pageStore.setContentState(ContentState.LOADING);
+      await this.quizListStore.loadList();
+      this.pageStore.setContentState(ContentState.AVAILABLE);
+    } catch (e) {
+      this.pageStore.setContentState(ContentState.ERROR);
+    }
   }
 
   render() {
@@ -58,10 +56,9 @@ class QuizListPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>List of active quizzes</h1>
-          <QuizList
-            state={this.quizListStore.state}
-            list={this.quizListStore.list}
-          />
+          <Content state={this.pageStore.contentState}>
+            <List list={this.quizListStore.list} />
+          </Content>
         </Content>
       </>
     );
