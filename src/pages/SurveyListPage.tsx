@@ -7,19 +7,19 @@ import { Link } from 'react-router-dom';
 
 @observer
 class SurveyListPage extends Component {
-  store = new SurveyListStore();
+  surveyListStore = new SurveyListStore();
 
   async componentDidMount() {
-    await this.store.loadList();
+    await this.surveyListStore.loadList();
   }
 
   render() {
     const list = () => {
-      switch (this.store.state) {
+      switch (this.surveyListStore.state) {
         case SurveyListState.LOADING:
           return <p>Wczytywanie...</p>;
         case SurveyListState.LOADED:
-          return this.store.list.map(survey => (
+          return this.surveyListStore.list.map(survey => (
             <p key={survey.id}>
               <Link to={`/survey/${survey.id}`}>{survey.name}</Link>
             </p>

@@ -1,13 +1,13 @@
 import RouteTile from 'components/RouteTile/RouteTile';
-import Content, { ContentState } from 'components/Content/Content';
+import Content from 'components/Content/Content';
 import { RoutesStore } from 'utils/store/routesStore';
 import { groupObjectsByKey } from 'utils/helpers';
 import { RouteInterface } from 'utils/interfaces';
 import RoutesTile from 'components/RoutesTile/RoutesTile';
+import { ContentState, ContentStore } from 'utils/store/contentStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { action, observable } from 'mobx';
 
 interface CategorizedRoutesTilesListProps {
   routes: Array<RouteInterface>;
@@ -35,15 +35,18 @@ const CategorizedRoutesTilesList = ({
 
 interface Props {
   routesStore: RoutesStore;
+  contentStore: ContentStore;
 }
 
-@inject('routesStore')
+@inject('routesStore', 'contentStore')
 @observer
 class RoutesPage extends React.Component<Props> {
-  @observable contentState: ContentState = ContentState.NOT_LOADED;
+  contentStore = this.props.contentStore;
+  routesStore = this.props.routesStore;
 
-  @action setContentState(contentState: ContentState) {
-    this.contentState = contentState;
+  constructor(props: Props) {
+    super(props);
+    this.contentStore.setContentState(ContentState.NOT_LOADED);
   }
 
   render() {
@@ -52,8 +55,8 @@ class RoutesPage extends React.Component<Props> {
         <Helmet>
           <title>Available Routes</title>
         </Helmet>
-        <Content state={this.contentState}>
-          <CategorizedRoutesTilesList routes={this.props.routesStore.routes} />
+        <Content state={this.contentStore.contentState}>
+          <CategorizedRoutesTilesList routes={this.routesStore.routes} />
         </Content>
       </>
     );
@@ -61,11 +64,11 @@ class RoutesPage extends React.Component<Props> {
 
   componentDidMount = async () => {
     try {
-      this.setContentState(ContentState.LOADING);
-      await this.props.routesStore.loadRoutes();
-      this.setContentState(ContentState.LOADED);
+      this.contentStore.setContentState(ContentState.LOADING);
+      await this.routesStore.loadRoutes();
+      this.contentStore.setContentState(ContentState.LOADED);
     } catch (error) {
-      this.setContentState(ContentState.ERROR);
+      this.contentStore.setContentState(ContentState.ERROR);
     }
   };
 }

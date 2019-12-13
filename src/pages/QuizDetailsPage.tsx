@@ -33,14 +33,14 @@ interface Props extends RouteComponentProps<any> {}
 
 @observer
 class QuizPage extends React.Component<Props> {
-  store = new QuizDetailsStore();
+  quizDetailsStore = new QuizDetailsStore();
 
   async componentDidMount() {
     const {
       params: { id },
     } = this.props.match;
 
-    await this.store.loadQuiz(id);
+    await this.quizDetailsStore.loadQuiz(id);
   }
 
   render() {
@@ -51,7 +51,10 @@ class QuizPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>Quiz details</h1>
-          <QuizDetails state={this.store.state} store={this.store} />
+          <QuizDetails
+            state={this.quizDetailsStore.state}
+            store={this.quizDetailsStore}
+          />
         </Content>
       </>
     );

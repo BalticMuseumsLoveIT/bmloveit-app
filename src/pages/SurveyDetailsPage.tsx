@@ -223,14 +223,14 @@ interface SurveyDetailsProps extends RouteComponentProps<any> {}
 
 @observer
 class SurveyDetailsPage extends Component<SurveyDetailsProps> {
-  store = new SurveyDetailsStore();
+  surveyDetailsStore = new SurveyDetailsStore();
 
   async componentDidMount() {
     const {
       params: { id },
     } = this.props.match;
 
-    await this.store.loadSurvey(id);
+    await this.surveyDetailsStore.loadSurvey(id);
   }
 
   render() {
@@ -242,9 +242,9 @@ class SurveyDetailsPage extends Component<SurveyDetailsProps> {
         <Content>
           <h1>Survey details</h1>
           <Survey
-            state={this.store.state}
-            survey={this.store.survey}
-            onSubmit={this.store.handleSubmit}
+            state={this.surveyDetailsStore.state}
+            survey={this.surveyDetailsStore.survey}
+            onSubmit={this.surveyDetailsStore.handleSubmit}
           />
         </Content>
       </>

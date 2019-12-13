@@ -44,10 +44,10 @@ interface Props {}
 
 @observer
 class QuizListPage extends React.Component<Props> {
-  store = new QuizListStore();
+  quizListStore = new QuizListStore();
 
   async componentDidMount() {
-    await this.store.loadList();
+    await this.quizListStore.loadList();
   }
 
   render() {
@@ -58,7 +58,10 @@ class QuizListPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>List of active quizzes</h1>
-          <QuizList state={this.store.state} list={this.store.list} />
+          <QuizList
+            state={this.quizListStore.state}
+            list={this.quizListStore.list}
+          />
         </Content>
       </>
     );
