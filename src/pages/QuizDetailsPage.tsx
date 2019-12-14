@@ -1,33 +1,10 @@
-import QuizDetailsStore, {
-  QuizDetailsState,
-} from 'utils/store/quizDetailsStore';
+import QuizDetailsStore from 'utils/store/quizDetailsStore';
 import Content from 'components/Content/Content';
-import QuizFormik from 'components/QuizFormik/QuizFormik';
+import { QuizDetails } from 'components/QuizDetails/QuizDetails';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
-
-interface QuizDetailsProps {
-  state: QuizDetailsState;
-  store: QuizDetailsStore;
-}
-
-const QuizDetails = function({ state, store }: QuizDetailsProps) {
-  switch (state) {
-    case QuizDetailsState.LOADING:
-      return <p>Wczytywanie...</p>;
-    case QuizDetailsState.LOADED:
-    case QuizDetailsState.SUBMITTED:
-      return <QuizFormik store={store} />;
-    case QuizDetailsState.NOT_FOUND:
-      return <p>Quiz o podanym identyfikatorze nie istnieje</p>;
-    case QuizDetailsState.ERROR:
-      return <p>Wystąpił problem podczas ładowania quizu</p>;
-    default:
-      return null;
-  }
-};
 
 interface Props extends RouteComponentProps<any> {}
 
