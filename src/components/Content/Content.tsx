@@ -1,13 +1,10 @@
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import React from 'react';
-import { observer } from 'mobx-react';
 import StyledWrapper from './Content.style';
 
 export enum ContentState {
-  UNAVAILABLE,
-  LOADING,
+  PROCESSING,
   AVAILABLE,
-  ERROR,
 }
 
 interface Props {
@@ -15,30 +12,23 @@ interface Props {
   state?: ContentState;
 }
 
-@observer
 class Content extends React.Component<Props> {
-  render() {
-    let contentToRender: React.ReactNode;
+  node: React.ReactNode = null;
 
+  render() {
     switch (this.props.state) {
-      case ContentState.ERROR:
-        contentToRender = <h1>Error</h1>;
-        break;
-      case ContentState.UNAVAILABLE:
-        contentToRender = null;
-        break;
-      case ContentState.LOADING:
-        contentToRender = <h1>LOADING</h1>;
+      case ContentState.PROCESSING:
+        this.node = <h1>Processing</h1>;
         break;
       case ContentState.AVAILABLE:
       default:
-        contentToRender = this.props.children;
+        this.node = this.props.children;
         break;
     }
 
     return (
       <ErrorBoundary>
-        <StyledWrapper>{contentToRender}</StyledWrapper>
+        <StyledWrapper>{this.node}</StyledWrapper>
       </ErrorBoundary>
     );
   }
