@@ -24,7 +24,7 @@ const List = function({ list }: ListProps) {
 
 @observer
 class QuizListPage extends React.Component {
-  quizListStore = new QuizListStore();
+  quizListStore = new QuizListStore(true);
 
   async componentDidMount() {
     await this.quizListStore.loadList();
