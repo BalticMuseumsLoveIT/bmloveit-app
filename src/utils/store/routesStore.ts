@@ -15,12 +15,10 @@ export class RoutesStore {
     return this.routes.length === 0;
   }
 
-  @computed
   getRoute = (id: number): RouteInterface | undefined => {
     return this.routes.find(item => item.id === id);
   };
 
-  @action
   loadRoutes = async () => {
     const routes = await Api.getRoutes();
     this.setRoutes(routes);
