@@ -12,7 +12,7 @@ import {
 import * as Yup from 'yup';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import StyledFormikRadioButton from './QuizFormik.style';
+import StyledFormikRadioButton from './QuizForm.style';
 
 interface QuizSummaryProps {
   answer: QuizAnswerResponse | null;
@@ -97,12 +97,12 @@ const SubmitButton = function({ isDisabled }: SubmitButton) {
   );
 };
 
-interface QuizFormikProps {
+interface QuizFormProps {
   store: QuizDetailsStore;
 }
 
 @observer
-class QuizFormik extends React.Component<QuizFormikProps> {
+class QuizForm extends React.Component<QuizFormProps> {
   render() {
     const { store } = this.props;
 
@@ -151,4 +151,4 @@ class QuizFormik extends React.Component<QuizFormikProps> {
   }
 }
 
-export default QuizFormik;
+export default QuizForm;

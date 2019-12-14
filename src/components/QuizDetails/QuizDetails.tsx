@@ -1,7 +1,7 @@
 import QuizDetailsStore, {
   QuizDetailsState,
 } from 'utils/store/quizDetailsStore';
-import QuizFormik from 'components/QuizFormik/QuizFormik';
+import QuizForm from 'components/QuizForm/QuizForm';
 import React from 'react';
 
 export interface QuizDetailsProps {
@@ -13,7 +13,7 @@ export const QuizDetails = ({ state, store }: QuizDetailsProps) => {
   switch (state) {
     case QuizDetailsState.LOADED:
     case QuizDetailsState.SUBMITTED:
-      return <QuizFormik store={store} />;
+      return <QuizForm store={store} />;
     case QuizDetailsState.NOT_FOUND:
       return <p>Quiz o podanym identyfikatorze nie istnieje</p>;
     case QuizDetailsState.ERROR:
