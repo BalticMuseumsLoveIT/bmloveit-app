@@ -4,24 +4,18 @@ import { CategorizedRoutesTilesList } from 'components/CategorizedRoutesTilesLis
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { action, observable } from 'mobx';
+import { UiStore } from '../utils/store/uiStore';
 
 interface Props {
   routesStore: RoutesStore;
+  uiStore: UiStore;
 }
 
-@inject('routesStore')
+@inject('routesStore', 'uiStore')
 @observer
 class RoutesPage extends React.Component<Props> {
   routesStore = this.props.routesStore;
-
-  @observable
-  contentState = ContentState.PROCESSING;
-
-  @action
-  setContentState(contentState: ContentState) {
-    this.contentState = contentState;
-  }
+  uiStore = this.props.uiStore;
 
   render() {
     return (
@@ -29,7 +23,7 @@ class RoutesPage extends React.Component<Props> {
         <Helmet>
           <title>Available Routes</title>
         </Helmet>
-        <Content state={this.contentState}>
+        <Content>
           <CategorizedRoutesTilesList routes={this.routesStore.routes} />
         </Content>
       </>
@@ -38,10 +32,11 @@ class RoutesPage extends React.Component<Props> {
 
   componentDidMount = async () => {
     try {
+      this.uiStore.setContentState(ContentState.PROCESSING);
       await this.routesStore.loadRoutes();
     } catch (e) {
     } finally {
-      this.setContentState(ContentState.AVAILABLE);
+      this.uiStore.setContentState(ContentState.AVAILABLE);
     }
   };
 }
