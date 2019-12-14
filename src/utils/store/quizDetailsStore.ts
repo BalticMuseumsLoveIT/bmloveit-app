@@ -5,7 +5,9 @@ import {
   QuizQuestionInterface,
 } from 'utils/interfaces';
 import Api from 'utils/api';
-import { action, computed, observable } from 'mobx';
+import { ContentState } from 'components/Content/Content';
+import { action, autorun, computed, observable } from 'mobx';
+import uiStore from './uiStore';
 
 export enum QuizDetailsState {
   NOT_LOADED,
@@ -23,6 +25,26 @@ export default class QuizDetailsStore {
 
   @observable answer: QuizAnswerResponse | null = null;
 
+  private _manageContentState = () => {
+    switch (this.state) {
+      case QuizDetailsState.LOADING:
+        uiStore.setContentState(ContentState.PROCESSING);
+        break;
+      case QuizDetailsState.NOT_LOADED:
+      case QuizDetailsState.LOADED:
+      case QuizDetailsState.SUBMITTED:
+      case QuizDetailsState.NOT_FOUND:
+      case QuizDetailsState.ERROR:
+      default:
+        uiStore.setContentState(ContentState.AVAILABLE);
+    }
+  };
+
+  constructor(manageContentState = false) {
+    if (manageContentState) {
+      autorun(this._manageContentState);
+    }
+  }
   @computed get question(): QuizQuestionInterface | null {
     switch (this.state) {
       case QuizDetailsState.LOADED:

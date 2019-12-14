@@ -10,7 +10,7 @@ interface Props extends RouteComponentProps<any> {}
 
 @observer
 class QuizPage extends React.Component<Props> {
-  quizDetailsStore = new QuizDetailsStore();
+  quizDetailsStore = new QuizDetailsStore(true);
 
   async componentDidMount() {
     const {
