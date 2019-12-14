@@ -10,7 +10,7 @@ interface SurveyDetailsProps extends RouteComponentProps<any> {}
 
 @observer
 class SurveyDetailsPage extends Component<SurveyDetailsProps> {
-  surveyDetailsStore = new SurveyDetailsStore();
+  surveyDetailsStore = new SurveyDetailsStore(true);
 
   async componentDidMount() {
     const {
