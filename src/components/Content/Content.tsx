@@ -1,52 +1,49 @@
+import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
+import { UiStore } from 'utils/store/uiStore';
 import React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import StyledWrapper from './Content.style';
 
 export enum ContentState {
-  UNAVAILABLE,
-  LOADING,
+  PROCESSING,
   AVAILABLE,
-  ERROR,
 }
 
 interface Props {
   children: React.ReactNode;
-  state?: ContentState;
 }
 
+interface InjectedProps extends Props {
+  uiStore: UiStore;
+}
+
+@inject('uiStore')
 @observer
 class Content extends React.Component<Props> {
-  state = { hasDescendantError: false };
-
-  render() {
-    let contentToRender: React.ReactNode;
-
-    if (this.state.hasDescendantError) {
-      contentToRender = <h1>Descendant Error</h1>;
-    } else {
-      switch (this.props.state) {
-        case ContentState.ERROR:
-          contentToRender = <h1>Error</h1>;
-          break;
-        case ContentState.UNAVAILABLE:
-          contentToRender = null;
-          break;
-        case ContentState.LOADING:
-          contentToRender = <h1>LOADING</h1>;
-          break;
-        case ContentState.AVAILABLE:
-        default:
-          contentToRender = this.props.children;
-          break;
-      }
-    }
-
-    return <StyledWrapper>{contentToRender}</StyledWrapper>;
+  get injected() {
+    return this.props as InjectedProps;
   }
 
-  static getDerivedStateFromError = () => {
-    return { hasDescendantError: true };
-  };
+  node: React.ReactNode = null;
+  uiStore = this.injected.uiStore;
+
+  render() {
+    switch (this.uiStore.contentState) {
+      case ContentState.PROCESSING:
+        this.node = <h1>Processing</h1>;
+        break;
+      case ContentState.AVAILABLE:
+      default:
+        this.node = this.props.children;
+        break;
+    }
+
+    return (
+      <ErrorBoundary>
+        <StyledWrapper>{this.node}</StyledWrapper>
+      </ErrorBoundary>
+    );
+  }
 }
 
 export default Content;

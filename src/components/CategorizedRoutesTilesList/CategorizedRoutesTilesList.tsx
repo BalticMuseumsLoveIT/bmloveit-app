@@ -11,6 +11,8 @@ export interface CategorizedRoutesTilesListProps {
 export const CategorizedRoutesTilesList = ({
   routes,
 }: CategorizedRoutesTilesListProps) => {
+  console.log('CRTL', routes);
+
   const groupedRoutes = groupObjectsByKey(routes, 'type');
 
   const tiles = groupedRoutes.map(groupedRoute => {
