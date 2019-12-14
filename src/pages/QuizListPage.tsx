@@ -1,5 +1,5 @@
 import QuizListStore from 'utils/store/quizListStore';
-import Content, { ContentState } from 'components/Content/Content';
+import Content from 'components/Content/Content';
 import { QuizInterface } from 'utils/interfaces';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -38,9 +38,7 @@ class QuizListPage extends React.Component {
         </Helmet>
         <Content>
           <h1>List of active quizzes</h1>
-          <Content>
-            <List list={this.quizListStore.list} />
-          </Content>
+          <List list={this.quizListStore.list} />
         </Content>
       </>
     );
