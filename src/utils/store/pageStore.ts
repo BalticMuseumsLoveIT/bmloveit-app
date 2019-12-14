@@ -2,7 +2,7 @@ import { ContentState } from 'components/Content/Content';
 import { action, observable } from 'mobx';
 
 export class PageStore {
-  @observable contentState: ContentState = ContentState.PROCESSING;
+  @observable contentState: ContentState = ContentState.UNAVAILABLE;
 
   @action setContentState(contentState: ContentState) {
     this.contentState = contentState;
