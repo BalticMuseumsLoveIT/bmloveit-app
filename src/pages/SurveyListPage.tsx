@@ -7,7 +7,7 @@ import { observer } from 'mobx-react';
 
 @observer
 class SurveyListPage extends Component {
-  surveyListStore = new SurveyListStore();
+  surveyListStore = new SurveyListStore(true);
 
   async componentDidMount() {
     await this.surveyListStore.loadList();

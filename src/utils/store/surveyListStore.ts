@@ -1,6 +1,8 @@
 import { SurveyInterface } from 'utils/interfaces';
 import Api from 'utils/api';
-import { action, observable } from 'mobx';
+import { ContentState } from 'components/Content/Content';
+import { action, autorun, observable } from 'mobx';
+import uiStore from './uiStore';
 
 export enum SurveyListState {
   NOT_LOADED,
@@ -12,6 +14,25 @@ export enum SurveyListState {
 export default class SurveyListStore {
   @observable state: SurveyListState = SurveyListState.NOT_LOADED;
   @observable list: Array<SurveyInterface> = [];
+
+  private _manageContentState = () => {
+    switch (this.state) {
+      case SurveyListState.LOADING:
+        uiStore.setContentState(ContentState.PROCESSING);
+        break;
+      case SurveyListState.NOT_LOADED:
+      case SurveyListState.LOADED:
+      case SurveyListState.ERROR:
+      default:
+        uiStore.setContentState(ContentState.AVAILABLE);
+    }
+  };
+
+  constructor(manageContentState = false) {
+    if (manageContentState) {
+      autorun(this._manageContentState);
+    }
+  }
 
   @action setState(state: SurveyListState) {
     this.state = state;
