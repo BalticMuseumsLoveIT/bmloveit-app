@@ -25,7 +25,9 @@ export default class QuizDetailsStore {
 
   @observable answer: QuizAnswerResponse | null = null;
 
-  private _manageContentState = () => {
+  private readonly _manageContentState: boolean;
+
+  private _handleContentState = () => {
     switch (this.state) {
       case QuizDetailsState.LOADING:
         uiStore.setContentState(ContentState.PROCESSING);
@@ -40,9 +42,17 @@ export default class QuizDetailsStore {
     }
   };
 
+  unmount = () => {
+    if (this._manageContentState) {
+      this.setState(QuizDetailsState.NOT_LOADED);
+    }
+  };
+
   constructor(manageContentState = false) {
+    this._manageContentState = manageContentState;
+
     if (manageContentState) {
-      autorun(this._manageContentState);
+      autorun(this._handleContentState);
     }
   }
   @computed get question(): QuizQuestionInterface | null {

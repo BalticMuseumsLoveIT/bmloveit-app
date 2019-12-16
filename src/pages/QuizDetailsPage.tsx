@@ -20,6 +20,10 @@ class QuizPage extends React.Component<Props> {
     await this.quizDetailsStore.loadQuiz(id);
   }
 
+  componentWillUnmount(): void {
+    this.quizDetailsStore.unmount();
+  }
+
   render() {
     return (
       <>

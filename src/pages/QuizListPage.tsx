@@ -13,6 +13,10 @@ class QuizListPage extends React.Component {
     await this.quizListStore.loadList();
   }
 
+  componentWillUnmount(): void {
+    this.quizListStore.unmount();
+  }
+
   render() {
     return (
       <>

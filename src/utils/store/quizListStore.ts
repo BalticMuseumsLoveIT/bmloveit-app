@@ -15,7 +15,9 @@ export default class QuizListStore {
   @observable state: QuizListState = QuizListState.NOT_LOADED;
   @observable list: Array<QuizInterface> = [];
 
-  private _manageContentState = () => {
+  private readonly _manageContentState: boolean;
+
+  private _handleContentState = () => {
     switch (this.state) {
       case QuizListState.LOADING:
         uiStore.setContentState(ContentState.PROCESSING);
@@ -28,9 +30,17 @@ export default class QuizListStore {
     }
   };
 
+  unmount = () => {
+    if (this._manageContentState) {
+      this.setState(QuizListState.NOT_LOADED);
+    }
+  };
+
   constructor(manageContentState = false) {
+    this._manageContentState = manageContentState;
+
     if (manageContentState) {
-      autorun(this._manageContentState);
+      autorun(this._handleContentState);
     }
   }
 

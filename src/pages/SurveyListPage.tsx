@@ -13,6 +13,10 @@ class SurveyListPage extends Component {
     await this.surveyListStore.loadList();
   }
 
+  componentWillUnmount(): void {
+    this.surveyListStore.unmount();
+  }
+
   render() {
     return (
       <>

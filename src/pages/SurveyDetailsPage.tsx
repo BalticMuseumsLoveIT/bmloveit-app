@@ -20,6 +20,10 @@ class SurveyDetailsPage extends Component<SurveyDetailsProps> {
     await this.surveyDetailsStore.loadSurvey(id);
   }
 
+  componentWillUnmount(): void {
+    this.surveyDetailsStore.unmount();
+  }
+
   render() {
     return (
       <>

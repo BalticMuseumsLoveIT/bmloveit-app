@@ -25,7 +25,9 @@ export default class SurveyDetailsStore {
 
   @observable surveyId: number | null = null;
 
-  private _manageContentState = () => {
+  private readonly _manageContentState: boolean;
+
+  private _handleContentState = () => {
     switch (this.state) {
       case SurveyDetailsState.LOADING:
         uiStore.setContentState(ContentState.PROCESSING);
@@ -40,9 +42,17 @@ export default class SurveyDetailsStore {
     }
   };
 
+  unmount = () => {
+    if (this._manageContentState) {
+      this.setState(SurveyDetailsState.NOT_LOADED);
+    }
+  };
+
   constructor(manageContentState = false) {
+    this._manageContentState = manageContentState;
+
     if (manageContentState) {
-      autorun(this._manageContentState);
+      autorun(this._handleContentState);
     }
   }
 
