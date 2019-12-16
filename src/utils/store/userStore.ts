@@ -30,7 +30,11 @@ export class UserStore {
   @action
   setToken = (token: string): void => {
     this.token = setItemToStorage('token', token);
-    this._cookies.set('access_token', token);
+    // const domain = new URL(process.env.REACT_APP_API_URL || '').hostname;
+    this._cookies.set('access_token', token, {
+      path: '/',
+      // domain: domain,
+    });
   };
 
   @action
