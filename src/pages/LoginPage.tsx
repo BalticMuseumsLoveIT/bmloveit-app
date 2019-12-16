@@ -15,6 +15,8 @@ interface Props extends RouteComponentProps {
 @inject('userStore')
 @observer
 class LoginPage extends React.Component<Props> {
+  userStore = this.props.userStore;
+
   render() {
     return (
       <>
@@ -23,29 +25,31 @@ class LoginPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h2>Login</h2>
-          {!this.props.userStore.isLoggedIn ? (
+          {!this.userStore.isLoggedIn ? (
             <>
               <FacebookButton onSuccess={this.login} />
               <br />
               <GoogleButton onSuccess={this.login} />
             </>
           ) : (
-            <button onClick={() => this.props.userStore.setToken('')}>
-              Logout
-            </button>
+            <button onClick={this.logout}>Logout</button>
           )}
         </Content>
       </>
     );
   }
 
+  logout = () => {
+    this.userStore.signOut();
+  };
+
   login = async ({
     provider,
     response,
   }: OAuthLoginArgumentInterface): Promise<void> => {
-    const { userStore, location } = this.props;
+    const { location } = this.props;
 
-    await userStore.signIn(provider, response.accessToken);
+    await this.userStore.signIn(provider, response.accessToken);
 
     const redirectTo = (location.state && location.state.from.pathname) || '/';
     this.props.history.push(redirectTo);

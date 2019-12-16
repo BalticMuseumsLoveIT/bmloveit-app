@@ -16,7 +16,7 @@ export enum SurveyDetailsState {
   ERROR,
 }
 
-export class SurveyDetailsStore {
+export default class SurveyDetailsStore {
   @observable state: SurveyDetailsState = SurveyDetailsState.NOT_LOADED;
 
   @observable survey: SurveyDetailsInterface | null = null;
@@ -126,7 +126,3 @@ export class SurveyDetailsStore {
     }
   };
 }
-
-const surveyDetailsStore = new SurveyDetailsStore();
-
-export default surveyDetailsStore;

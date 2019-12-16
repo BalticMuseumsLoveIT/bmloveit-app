@@ -1,27 +1,16 @@
 import Content from 'components/Content/Content';
+import QrCodeStore from 'utils/store/qrCodeStore';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import QrReader from 'react-qr-reader';
 
 interface Props extends RouteComponentProps {}
 
-interface State {
-  qrCodeData: string;
-}
-
-@inject('uiStore')
 @observer
-class QrCodePage extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.handleScan = this.handleScan.bind(this);
-
-    this.state = {
-      qrCodeData: '',
-    };
-  }
+class QrCodePage extends React.Component<Props> {
+  qrCodeStore = new QrCodeStore();
 
   render() {
     return (
@@ -34,19 +23,13 @@ class QrCodePage extends React.Component<Props, State> {
           <QrReader
             delay={300}
             onError={() => undefined}
-            onScan={this.handleScan}
+            onScan={this.qrCodeStore.handleScan}
             style={{ width: '100%' }}
           />
-          {this.state.qrCodeData}
+          {this.qrCodeStore.qrCodeData}
         </Content>
       </>
     );
-  }
-
-  handleScan(data: string | null): void {
-    if (data !== null && data !== this.state.qrCodeData) {
-      this.setState({ qrCodeData: data });
-    }
   }
 }
 

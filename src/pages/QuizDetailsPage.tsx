@@ -1,13 +1,12 @@
-import {
+import QuizDetailsStore, {
   QuizDetailsState,
-  QuizDetailsStore,
 } from 'utils/store/quizDetailsStore';
 import Content from 'components/Content/Content';
 import QuizFormik from 'components/QuizFormik/QuizFormik';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 interface QuizDetailsProps {
   state: QuizDetailsState;
@@ -30,19 +29,18 @@ const QuizDetails = function({ state, store }: QuizDetailsProps) {
   }
 };
 
-interface Props extends RouteComponentProps<any> {
-  quizDetailsStore: QuizDetailsStore;
-}
+interface Props extends RouteComponentProps<any> {}
 
-@inject('quizDetailsStore')
 @observer
 class QuizPage extends React.Component<Props> {
+  quizDetailsStore = new QuizDetailsStore();
+
   async componentDidMount() {
     const {
       params: { id },
     } = this.props.match;
 
-    await this.props.quizDetailsStore.loadQuiz(id);
+    await this.quizDetailsStore.loadQuiz(id);
   }
 
   render() {
@@ -54,8 +52,8 @@ class QuizPage extends React.Component<Props> {
         <Content>
           <h1>Quiz details</h1>
           <QuizDetails
-            state={this.props.quizDetailsStore.state}
-            store={this.props.quizDetailsStore}
+            state={this.quizDetailsStore.state}
+            store={this.quizDetailsStore}
           />
         </Content>
       </>

@@ -1,4 +1,4 @@
-import { QuizDetailsStore } from 'utils/store/quizDetailsStore';
+import QuizDetailsStore from 'utils/store/quizDetailsStore';
 import { QuizAnswerResponse, QuizQuestionInterface } from 'utils/interfaces';
 import React from 'react';
 import {

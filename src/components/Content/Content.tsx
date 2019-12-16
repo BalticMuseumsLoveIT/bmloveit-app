@@ -1,61 +1,49 @@
+import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
+import { UiStore } from 'utils/store/uiStore';
 import React from 'react';
+import { inject, observer } from 'mobx-react';
 import StyledWrapper from './Content.style';
 
 export enum ContentState {
-  LOADED,
   PROCESSING,
-  ERROR,
+  AVAILABLE,
 }
 
 interface Props {
   children: React.ReactNode;
-  initialState?: ContentState;
 }
 
-interface State {
-  state: ContentState;
+interface InjectedProps extends Props {
+  uiStore: UiStore;
 }
 
-class Content extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-
-    this.state = {
-      state: this.props.initialState || ContentState.LOADED,
-    };
+@inject('uiStore')
+@observer
+class Content extends React.Component<Props> {
+  get injected() {
+    return this.props as InjectedProps;
   }
+
+  node: React.ReactNode = null;
+  uiStore = this.injected.uiStore;
 
   render() {
-    let contentToRender: React.ReactNode;
-
-    switch (this.state.state) {
-      case ContentState.LOADED:
-        contentToRender = this.props.children;
-        break;
+    switch (this.uiStore.contentState) {
       case ContentState.PROCESSING:
-        contentToRender = <h1>PROCESSING</h1>;
+        this.node = <h1>Processing</h1>;
         break;
+      case ContentState.AVAILABLE:
       default:
-        contentToRender = <h1>ERROR</h1>;
+        this.node = this.props.children;
+        break;
     }
 
-    return <StyledWrapper>{contentToRender}</StyledWrapper>;
+    return (
+      <ErrorBoundary>
+        <StyledWrapper>{this.node}</StyledWrapper>
+      </ErrorBoundary>
+    );
   }
-
-  static getDerivedStateFromProps = (props: Props, state: State) => {
-    if (
-      props.initialState !== undefined &&
-      state.state !== props.initialState
-    ) {
-      return { state: props.initialState };
-    }
-
-    return null;
-  };
-
-  static getDerivedStateFromError = () => {
-    return { state: ContentState.ERROR };
-  };
 }
 
 export default Content;

@@ -9,7 +9,7 @@ export enum QuizListState {
   ERROR,
 }
 
-export class QuizListStore {
+export default class QuizListStore {
   @observable state: QuizListState = QuizListState.NOT_LOADED;
 
   @observable list: Array<QuizInterface> = [];
@@ -26,7 +26,6 @@ export class QuizListStore {
     this.setState(QuizListState.LOADING);
     try {
       const list = await Api.getQuizList();
-      console.log(list);
       this.setList(list);
       this.setState(QuizListState.LOADED);
     } catch (e) {
@@ -34,7 +33,3 @@ export class QuizListStore {
     }
   };
 }
-
-const quizListStore = new QuizListStore();
-
-export default quizListStore;
