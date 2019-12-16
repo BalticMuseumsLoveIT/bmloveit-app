@@ -21,6 +21,7 @@ abstract class Api {
       client_id: process.env.REACT_APP_CLIENT_ID,
       backend: provider,
       token: accessToken,
+      withCredentials: true,
     };
 
     const response = await userStore.axiosInstance.post(
@@ -43,14 +44,11 @@ abstract class Api {
     return response.data;
   };
 
-  public static async getPrivateMedia(path: string): Promise<string> {
-    const response = await userStore.axiosInstance.get(path, {
-      responseType: 'arraybuffer',
-    });
-
-    const data = Buffer.from(response.data, 'binary').toString('base64');
-
-    return `data:${response.headers['content-type']};base64,${data}`;
+  public static getPrivateMedia(path: string): string {
+    return (userStore.axiosInstance.defaults.baseURL + path).replace(
+      /([^:]\/)\/+/g,
+      '$1',
+    );
   }
 
   /**
