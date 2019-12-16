@@ -1,10 +1,10 @@
 import Content, { ContentState } from 'components/Content/Content';
 import { RoutesStore } from 'utils/store/routesStore';
 import { CategorizedRoutesTilesList } from 'components/CategorizedRoutesTilesList/CategorizedRoutesTilesList';
+import { UiStore } from 'utils/store/uiStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { UiStore } from '../utils/store/uiStore';
 
 interface Props {
   routesStore: RoutesStore;
