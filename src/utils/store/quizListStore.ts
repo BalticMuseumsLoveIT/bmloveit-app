@@ -1,8 +1,8 @@
 import { QuizInterface } from 'utils/interfaces';
 import Api from 'utils/api';
+import { ContentState } from 'components/Content/Content';
 import { action, autorun, observable } from 'mobx';
 import uiStore from './uiStore';
-import { ContentState } from '../../components/Content/Content';
 
 export enum QuizListState {
   NOT_LOADED,

@@ -1,7 +1,7 @@
 import translations from 'utils/translation/translations';
+import { ContentState } from 'components/Content/Content';
 import { action, observable } from 'mobx';
 import detectBrowserLanguage from 'detect-browser-language';
-import { ContentState } from '../../components/Content/Content';
 
 export class UiStore {
   @observable lang: string;
