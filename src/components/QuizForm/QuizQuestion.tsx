@@ -20,7 +20,7 @@ export const QuizQuestion = function({
   return (
     <fieldset disabled={isDisabled}>
       <legend>{question.description}</legend>
-      <QuestionImage url={question.file_url} />
+      <QuestionImage path={question.file_url} />
       {question.options_data.map(option => {
         const optionName = `option_${option.id}`;
         const isChecked = field.value === optionName;
