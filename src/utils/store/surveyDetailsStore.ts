@@ -4,8 +4,10 @@ import {
   SurveyQuestionType,
 } from 'utils/interfaces';
 import Api from 'utils/api';
-import { action, observable } from 'mobx';
+import { ContentState } from 'components/Content/Content';
+import { action, autorun, observable } from 'mobx';
 import { FormikValues } from 'formik';
+import uiStore from './uiStore';
 
 export enum SurveyDetailsState {
   NOT_LOADED,
@@ -22,6 +24,37 @@ export default class SurveyDetailsStore {
   @observable survey: SurveyDetailsInterface | null = null;
 
   @observable surveyId: number | null = null;
+
+  private readonly _manageContentState: boolean;
+
+  private _handleContentState = () => {
+    switch (this.state) {
+      case SurveyDetailsState.LOADING:
+        uiStore.setContentState(ContentState.PROCESSING);
+        break;
+      case SurveyDetailsState.NOT_LOADED:
+      case SurveyDetailsState.LOADED:
+      case SurveyDetailsState.SUBMITTED:
+      case SurveyDetailsState.NOT_FOUND:
+      case SurveyDetailsState.ERROR:
+      default:
+        uiStore.setContentState(ContentState.AVAILABLE);
+    }
+  };
+
+  unmount = () => {
+    if (this._manageContentState) {
+      this.setState(SurveyDetailsState.NOT_LOADED);
+    }
+  };
+
+  constructor(manageContentState = false) {
+    this._manageContentState = manageContentState;
+
+    if (manageContentState) {
+      autorun(this._handleContentState);
+    }
+  }
 
   @action setState(state: SurveyDetailsState) {
     this.state = state;

@@ -46,3 +46,10 @@ export const setItemToStorage = (key: string, item: any): string => {
   window.localStorage.setItem(key, item);
   return getItemFromStorage(key);
 };
+
+/**
+ * For testing purposes
+ * Usage: await sleep(1000);
+ * @param m milliseconds
+ */
+export const sleep = (m: number) => new Promise(r => setTimeout(r, m));
