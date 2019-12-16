@@ -15,7 +15,9 @@ export default class SurveyListStore {
   @observable state: SurveyListState = SurveyListState.NOT_LOADED;
   @observable list: Array<SurveyInterface> = [];
 
-  private _manageContentState = () => {
+  private readonly _manageContentState: boolean;
+
+  private _handleContentState = () => {
     switch (this.state) {
       case SurveyListState.LOADING:
         uiStore.setContentState(ContentState.PROCESSING);
@@ -28,9 +30,17 @@ export default class SurveyListStore {
     }
   };
 
+  unmount = () => {
+    if (this._manageContentState) {
+      this.setState(SurveyListState.NOT_LOADED);
+    }
+  };
+
   constructor(manageContentState = false) {
-    if (manageContentState) {
-      autorun(this._manageContentState);
+    this._manageContentState = manageContentState;
+
+    if (this._manageContentState) {
+      autorun(this._handleContentState);
     }
   }
 
