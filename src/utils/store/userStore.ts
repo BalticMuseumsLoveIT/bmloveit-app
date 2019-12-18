@@ -37,9 +37,7 @@ export class UserStore {
   };
 
   @action
-  signOut = (): void => {
-    this.setToken('');
-  };
+  signOut = (): void => this.setToken('');
 }
 
 const userStore = new UserStore();
