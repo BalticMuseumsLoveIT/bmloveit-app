@@ -44,13 +44,6 @@ abstract class Api {
     return response.data;
   };
 
-  public static getPrivateMedia(path: string): string {
-    return (userStore.axiosInstance.defaults.baseURL + path).replace(
-      /([^:]\/)\/+/g,
-      '$1',
-    );
-  }
-
   /**
    * Get list of all active quizzes.
    * Response will not include questions.
