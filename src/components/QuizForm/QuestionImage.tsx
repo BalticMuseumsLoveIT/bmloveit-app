@@ -1,10 +1,10 @@
-import Api from 'utils/api';
+import { getPrivateMediaURL } from 'utils/helpers';
 import React from 'react';
 
 export const QuestionImage = ({ path }: { path?: string }) => {
   return path && path.length ? (
     <div>
-      <img src={Api.getPrivateMedia(path)} alt="Question illustration" />
+      <img src={getPrivateMediaURL(path)} alt="Question illustration" />
     </div>
   ) : null;
 };
