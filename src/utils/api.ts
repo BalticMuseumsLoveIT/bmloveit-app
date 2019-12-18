@@ -21,7 +21,6 @@ abstract class Api {
       client_id: process.env.REACT_APP_CLIENT_ID,
       backend: provider,
       token: accessToken,
-      withCredentials: true,
     };
 
     const response = await userStore.axiosInstance.post(
