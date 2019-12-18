@@ -1,15 +1,12 @@
-import translations from 'utils/translation/translations';
 import { ContentState } from 'components/Content/Content';
 import { action, observable } from 'mobx';
-import detectBrowserLanguage from 'detect-browser-language';
 
 export class UiStore {
-  @observable lang: string;
+  @observable lang?: string;
   @observable isMenuOpened: boolean;
   @observable contentState: ContentState;
 
-  constructor(defaultLang: string) {
-    this.lang = defaultLang;
+  constructor() {
     this.isMenuOpened = false;
     this.contentState = ContentState.AVAILABLE;
   }
@@ -30,10 +27,6 @@ export class UiStore {
   };
 }
 
-const browserLang = detectBrowserLanguage();
-
-const defaultLang = browserLang in translations ? browserLang : 'en';
-
-const uiStore = new UiStore(defaultLang);
+const uiStore = new UiStore();
 
 export default uiStore;
