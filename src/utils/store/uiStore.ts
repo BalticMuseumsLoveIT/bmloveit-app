@@ -28,10 +28,6 @@ export class UiStore {
   toggleIsMenuOpened = (): void => {
     this.isMenuOpened = !this.isMenuOpened;
   };
-
-  getProperText = (key: string): string => {
-    return translations[this.lang][key];
-  };
 }
 
 const browserLang = detectBrowserLanguage();

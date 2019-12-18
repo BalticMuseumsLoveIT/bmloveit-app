@@ -18,7 +18,6 @@ class HomePage extends React.Component<Props> {
         <Helmet>
           <title>Home</title>
         </Helmet>
-        <Content>{this.props.uiStore.getProperText('hello')}</Content>
         <Content>
           HomePage
           <button onClick={(): void => this.props.uiStore.setLang('pl')}>
