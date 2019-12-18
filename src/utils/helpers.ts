@@ -47,6 +47,16 @@ export const setItemToStorage = (key: string, item: any): string => {
   return getItemFromStorage(key);
 };
 
+export const getPrivateMediaURL = (path: string): string => {
+  const domain = process.env.REACT_APP_PRIVATE_MEDIA_URL || '';
+  let privateMediaURL = `${domain}/${path}`;
+
+  // Remove double slashes
+  privateMediaURL = privateMediaURL.replace(/([^:]\/)\/+/g, '$1');
+
+  return privateMediaURL;
+};
+
 /**
  * For testing purposes
  * Usage: await sleep(1000);
