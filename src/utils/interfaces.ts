@@ -217,3 +217,11 @@ export interface APIErrorInterface {
 export function isAPIError(APIResponse: any): APIResponse is APIErrorInterface {
   return (APIResponse as APIErrorInterface).detail !== undefined;
 }
+
+// Common ----------------------------------------------------------------------
+
+export interface CommonLanguageInterface {
+  id: number;
+  key: string;
+  value: string;
+}

@@ -6,6 +6,7 @@ import QuizListPage from 'pages/QuizListPage';
 import QuizDetailsPage from 'pages/QuizDetailsPage';
 import SurveyListPage from 'pages/SurveyListPage';
 import SurveyDetailsPage from 'pages/SurveyDetailsPage';
+import LanguagePage from 'pages/LanguagePage';
 import LoginPage from 'pages/LoginPage';
 import userStore from 'utils/store/userStore';
 import QrCodePage from 'pages/QrCodePage';
@@ -18,6 +19,7 @@ class Routes extends React.Component {
       <>
         <Switch>
           <Route exact path="/" component={HomePage} />
+          <Route exact path="/language" component={LanguagePage} />
           <Route exact path="/login" component={LoginPage} />
           <AuthRoute exact path="/quiz" component={QuizListPage} />
           <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />

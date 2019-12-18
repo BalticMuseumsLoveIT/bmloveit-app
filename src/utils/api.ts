@@ -196,6 +196,17 @@ abstract class Api {
 
     return response.data;
   }
+
+  /**
+   * Get list of available languages
+   */
+  public static getLanguageList = async () => {
+    const endpoint = 'common/language/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    return response.data;
+  };
 }
 
 export default Api;
