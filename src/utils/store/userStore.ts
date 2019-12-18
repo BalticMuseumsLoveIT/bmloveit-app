@@ -2,11 +2,9 @@ import { getItemFromStorage, setItemToStorage } from 'utils/helpers';
 import Api from 'utils/api';
 import { observable, action, computed } from 'mobx';
 import axios from 'axios';
-import Cookies from 'universal-cookie';
 
 export class UserStore {
   @observable token = getItemFromStorage('token');
-  private _cookies = new Cookies();
 
   @computed get isLoggedIn(): boolean {
     return this.token !== '';
@@ -30,11 +28,6 @@ export class UserStore {
   @action
   setToken = (token: string): void => {
     this.token = setItemToStorage('token', token);
-    // const domain = new URL(process.env.REACT_APP_API_URL || '').hostname;
-    this._cookies.set('access_token', token, {
-      path: '/',
-      // domain: domain,
-    });
   };
 
   @action
@@ -46,7 +39,6 @@ export class UserStore {
   @action
   signOut = (): void => {
     this.setToken('');
-    this._cookies.remove('access_token');
   };
 }
 
