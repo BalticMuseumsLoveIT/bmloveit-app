@@ -16,17 +16,30 @@ export interface LanguageSwitchValues {
 
 interface LanguageSwitchProps {
   list: Array<CommonLanguageInterface>;
+  userLocale: string;
   onSubmit: (
     values: FormikValues,
     formikHelpers: FormikHelpers<LanguageSwitchValues>,
   ) => void;
 }
 
-export const LanguageSwitch = ({ list, onSubmit }: LanguageSwitchProps) => {
+export const LanguageSwitch = ({
+  list,
+  userLocale,
+  onSubmit,
+}: LanguageSwitchProps) => {
   const initialValues: LanguageSwitchValues = { language: '' };
   const validationSchema = Yup.object().shape({
     language: Yup.string().required('Please choose preferred language'),
   });
+
+  list.some(
+    language =>
+      // Set initial value based on user locale
+      !!(language.key === userLocale && (initialValues.language = userLocale)),
+  );
+
+  const hasInitialValue = initialValues.language.length > 0;
 
   return (
     <Formik
@@ -38,7 +51,9 @@ export const LanguageSwitch = ({ list, onSubmit }: LanguageSwitchProps) => {
         <Form>
           <div>
             <Field as="select" name="language">
-              <option value="">Choose a language</option>
+              <option value="" hidden={hasInitialValue}>
+                Choose a language
+              </option>
               {list.map(language => (
                 <option key={language.id} value={language.key}>
                   {language.value}

@@ -12,6 +12,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { action, observable } from 'mobx';
 import { FormikHelpers, FormikValues } from 'formik';
+import { getUserLocale } from 'get-user-locale';
+import ISO6391 from 'iso-639-1';
 
 interface Props extends RouteComponentProps {
   uiStore: UiStore;
@@ -22,9 +24,25 @@ interface Props extends RouteComponentProps {
 class LanguagePage extends React.Component<Props> {
   uiStore = this.props.uiStore;
   @observable languageList: Array<CommonLanguageInterface> = [];
+  @observable userLocale = '';
 
   @action setLanguageList = (languageList: Array<CommonLanguageInterface>) => {
-    this.languageList = languageList;
+    const filteredLanguageList = languageList.filter(language =>
+      ISO6391.validate(language.key),
+    );
+
+    if (filteredLanguageList.length === 0) {
+      throw Error('No valid languages has been provided');
+    }
+
+    this.languageList = filteredLanguageList;
+  };
+
+  @action setUserLocale = (userLocale: string) => {
+    const userLocaleISO6391 = userLocale.slice(0, 2);
+    const isLanguageCodeValid = ISO6391.validate(userLocaleISO6391);
+
+    this.userLocale = isLanguageCodeValid ? userLocaleISO6391 : '';
   };
 
   @action handleSubmit(
@@ -39,6 +57,7 @@ class LanguagePage extends React.Component<Props> {
     try {
       this.uiStore.setContentState(ContentState.PROCESSING);
       this.setLanguageList(await Api.getLanguageList());
+      this.setUserLocale(getUserLocale());
     } catch (e) {
     } finally {
       this.uiStore.setContentState(ContentState.AVAILABLE);
@@ -55,6 +74,7 @@ class LanguagePage extends React.Component<Props> {
           <p>Language</p>
           <LanguageSwitch
             list={this.languageList}
+            userLocale={this.userLocale}
             onSubmit={this.handleSubmit}
           />
         </Content>
