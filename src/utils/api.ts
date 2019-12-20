@@ -201,7 +201,7 @@ abstract class Api {
    * Get list of available languages
    */
   public static getLanguageList = async () => {
-    const endpoint = 'common/language/';
+    const endpoint = 'api/language/';
 
     const response = await userStore.axiosInstance.get(endpoint);
 

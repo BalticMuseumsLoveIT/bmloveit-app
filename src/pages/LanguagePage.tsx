@@ -14,8 +14,9 @@ import { action, observable } from 'mobx';
 import { FormikHelpers, FormikValues } from 'formik';
 import { getUserLocale } from 'get-user-locale';
 import ISO6391 from 'iso-639-1';
+import { WithTranslation, withTranslation } from 'react-i18next';
 
-interface Props extends RouteComponentProps {
+interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
 }
 
@@ -23,6 +24,7 @@ interface Props extends RouteComponentProps {
 @observer
 class LanguagePage extends React.Component<Props> {
   uiStore = this.props.uiStore;
+
   @observable languageList: Array<CommonLanguageInterface> = [];
   @observable userLocale = '';
 
@@ -32,7 +34,7 @@ class LanguagePage extends React.Component<Props> {
     );
 
     if (filteredLanguageList.length === 0) {
-      throw Error('No valid languages has been provided');
+      throw Error(this.props.t('No valid languages has been provided'));
     }
 
     this.languageList = filteredLanguageList;
@@ -45,19 +47,21 @@ class LanguagePage extends React.Component<Props> {
     this.userLocale = isLanguageCodeValid ? userLocaleISO6391 : '';
   };
 
-  @action handleSubmit(
+  @action handleSubmit = (
     values: FormikValues,
     { setSubmitting }: FormikHelpers<LanguageSwitchValues>,
-  ) {
-    console.log(values);
-    setSubmitting(false);
-  }
+  ) => {
+    this.props.i18n.changeLanguage(values.language).then(() => {
+      setSubmitting(false);
+    });
+  };
 
   async componentDidMount(): Promise<void> {
     try {
       this.uiStore.setContentState(ContentState.PROCESSING);
       this.setLanguageList(await Api.getLanguageList());
       this.setUserLocale(getUserLocale());
+      await this.props.i18n.changeLanguage(this.userLocale);
     } catch (e) {
     } finally {
       this.uiStore.setContentState(ContentState.AVAILABLE);
@@ -71,7 +75,7 @@ class LanguagePage extends React.Component<Props> {
           <title>Language</title>
         </Helmet>
         <Content>
-          <p>Language</p>
+          <h1>{this.props.t('Select language')}</h1>
           <LanguageSwitch
             list={this.languageList}
             userLocale={this.userLocale}
@@ -83,4 +87,4 @@ class LanguagePage extends React.Component<Props> {
   }
 }
 
-export default LanguagePage;
+export default withTranslation('LanguagePage')(LanguagePage);
