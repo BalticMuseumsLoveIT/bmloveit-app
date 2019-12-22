@@ -1,14 +1,8 @@
 import { CommonLanguageInterface } from 'utils/interfaces';
 import React from 'react';
 import * as Yup from 'yup';
-import {
-  ErrorMessage,
-  Field,
-  Form,
-  Formik,
-  FormikHelpers,
-  FormikValues,
-} from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 export interface LanguageSwitchValues {
   language: string;
@@ -17,10 +11,7 @@ export interface LanguageSwitchValues {
 interface LanguageSwitchProps {
   list: Array<CommonLanguageInterface>;
   userLocale: string;
-  onSubmit: (
-    values: FormikValues,
-    formikHelpers: FormikHelpers<LanguageSwitchValues>,
-  ) => void;
+  onSubmit: (values: FormikValues) => Promise<void>;
 }
 
 export const LanguageSwitch = ({
@@ -28,18 +19,31 @@ export const LanguageSwitch = ({
   userLocale,
   onSubmit,
 }: LanguageSwitchProps) => {
+  const { t, ready } = useTranslation('language-page');
+
   const initialValues: LanguageSwitchValues = { language: '' };
+  let userLocaleMatch = false;
+
   const validationSchema = Yup.object().shape({
-    language: Yup.string().required('Please choose preferred language'),
+    language: Yup.string().required(
+      t(
+        'validationSchema.language.required',
+        'Please choose your preferred language',
+      ),
+    ),
   });
 
   list.some(
     language =>
+      // some() will brake loop after first matched element
+      language.key === userLocale &&
       // Set initial value based on user locale
-      !!(language.key === userLocale && (initialValues.language = userLocale)),
+      (initialValues.language = userLocale) &&
+      (userLocaleMatch = true),
   );
 
-  const hasInitialValue = initialValues.language.length > 0;
+  // Render only when locales are available
+  if (!ready) return null;
 
   return (
     <Formik
@@ -50,10 +54,11 @@ export const LanguageSwitch = ({
       {formik => (
         <Form>
           <div>
-            <Field as="select" name="language">
-              <option value="" hidden={hasInitialValue}>
-                Choose a language
-              </option>
+            <label htmlFor="language">
+              {t('form.field.language.label', 'Choose a language')}
+            </label>
+            <Field as="select" name="language" id="language">
+              <option value="" hidden={userLocaleMatch} />
               {list.map(language => (
                 <option key={language.id} value={language.key}>
                   {language.value}
@@ -64,7 +69,7 @@ export const LanguageSwitch = ({
           <ErrorMessage name="language" component="div" />
           <div>
             <button type="submit" disabled={formik.isSubmitting}>
-              Submit
+              {t('form.button.submit.label', 'Next')}
             </button>
           </div>
         </Form>

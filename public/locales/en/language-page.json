@@ -1,0 +1,22 @@
+{
+  "form": {
+    "button": {
+      "submit": {
+        "label": "Next"
+      }
+    },
+    "field": {
+      "language": {
+        "label": "Choose a language"
+      }
+    }
+  },
+  "page": {
+    "title": "Language"
+  },
+  "validationSchema": {
+    "language": {
+      "required": "Please choose your preferred language"
+    }
+  }
+}

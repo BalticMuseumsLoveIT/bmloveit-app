@@ -1,0 +1,22 @@
+{
+  "form": {
+    "button": {
+      "submit": {
+        "label": ""
+      }
+    },
+    "field": {
+      "language": {
+        "label": ""
+      }
+    }
+  },
+  "page": {
+    "title": ""
+  },
+  "validationSchema": {
+    "language": {
+      "required": ""
+    }
+  }
+}
