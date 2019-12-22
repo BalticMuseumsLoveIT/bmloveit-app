@@ -27,7 +27,6 @@ i18n
     },
 
     // Use only 2 letter language code as directory name
-    // This setting also force props.i18n.language to return 2 letter code
     load: 'languageOnly',
 
     detection: {

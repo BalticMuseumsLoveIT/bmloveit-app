@@ -2,6 +2,7 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
 import LanguageListStore from 'utils/store/languageListStore';
+import { toISO6391 } from 'utils/helpers';
 import { RouteComponentProps } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import React from 'react';
@@ -47,7 +48,7 @@ class LanguagePage extends React.Component<Props> {
         <Content>
           <LanguageSwitch
             list={this.languageListStore.languageList}
-            userLocale={this.props.i18n.language}
+            userLocale={toISO6391(this.props.i18n.language)}
             onSubmit={this.languageListStore.handleSubmit}
           />
         </Content>
