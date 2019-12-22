@@ -21,20 +21,13 @@ interface Props extends WithTranslation, RouteComponentProps {
 class LanguagePage extends React.Component<Props> {
   uiStore = this.props.uiStore;
 
+  // INFO: App handles only 2 letter language codes
   @observable languageList: Array<CommonLanguageInterface> = [];
-  @observable userLocale = '';
 
   @action setLanguageList = (languageList: Array<CommonLanguageInterface>) => {
     this.languageList = languageList.filter(language =>
       ISO6391.validate(language.key),
     );
-  };
-
-  @action setUserLocale = (userLocale: string) => {
-    const userLocaleISO6391 = userLocale.slice(0, 2);
-    const isLanguageCodeValid = ISO6391.validate(userLocaleISO6391);
-
-    this.userLocale = isLanguageCodeValid ? userLocaleISO6391 : '';
   };
 
   @action handleSubmit = async (values: FormikValues): Promise<void> => {
@@ -52,7 +45,6 @@ class LanguagePage extends React.Component<Props> {
       ]);
 
       this.setLanguageList(languageList);
-      this.setUserLocale(this.props.i18n.language);
     } catch (e) {
     } finally {
       this.uiStore.setContentState(ContentState.AVAILABLE);
@@ -72,7 +64,7 @@ class LanguagePage extends React.Component<Props> {
         <Content>
           <LanguageSwitch
             list={this.languageList}
-            userLocale={this.userLocale}
+            userLocale={this.props.i18n.language}
             onSubmit={this.handleSubmit}
           />
         </Content>
