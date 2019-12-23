@@ -21,7 +21,6 @@ class LanguagePage extends React.Component<Props> {
 
   async componentDidMount(): Promise<void> {
     await this.languagePageStore.loadData();
-    console.log(this.languagePageStore.siteData[0].logo);
   }
 
   componentDidUpdate(prevProps: Props) {
