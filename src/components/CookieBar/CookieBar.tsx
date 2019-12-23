@@ -24,9 +24,16 @@ class CookieBar extends React.Component<Props> {
 
   cookieBarStore = this.injected.cookieBarStore;
 
+  componentDidMount = async () => {
+    await this.cookieBarStore.loadData();
+  };
+
   render() {
     // Wait for translations
     if (!this.props.tReady) return null;
+
+    // Wait for site data
+    if (!this.cookieBarStore.isSiteDataLoaded) return null;
 
     // Do not render is cookies were accepted
     if (this.cookieBarStore.isAccepted) return null;
@@ -36,7 +43,8 @@ class CookieBar extends React.Component<Props> {
       <StyledWrapper>
         <InfoMessage>
           <Trans i18nKey="cookieBar">
-            We use cookies. <Link to={`/cookies-info`}>Learn more</Link>
+            We use cookies.
+            <Link to={this.cookieBarStore.termsURL}>Learn more</Link>
           </Trans>
         </InfoMessage>
         <CloseButton
