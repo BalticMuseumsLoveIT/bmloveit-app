@@ -2,6 +2,7 @@
   "presets": ["react-app"],
   "plugins": [
     ["i18next-extract", {
+      "defaultNS": "app",
       "locales": [
         "en", "pl", "se"
       ],
