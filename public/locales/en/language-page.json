@@ -11,6 +11,9 @@
       }
     }
   },
+  "logo": {
+    "alt": "Museum logotype"
+  },
   "page": {
     "title": "Language"
   },

@@ -8,7 +8,7 @@ import {
   SurveyDetailsInterface,
   SurveyFulfillmentResponse,
   RouteInterface,
-  SignInResponseInterface,
+  SignInResponseInterface, SiteInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -205,6 +205,19 @@ abstract class Api {
 
     const response = await userStore.axiosInstance.get(endpoint);
 
+    return response.data;
+  };
+
+  /**
+   * Get list of sites
+   * Only 1 site object should be present inside this "list"
+   */
+  public static getSiteData = async (): Promise<Array<SiteInterface>> => {
+    const endpoint = 'api/site/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    // Response should be an array with only one site object inside
     return response.data;
   };
 }

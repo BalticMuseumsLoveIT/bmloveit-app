@@ -208,6 +208,21 @@ export interface SurveyAnswerResponse {
   value: string;
 }
 
+// Site ------------------------------------------------------------------------
+
+export interface SiteInterface {
+  id: number;
+  name: string;
+  title: string;
+  description: string;
+  terms_url: string;
+  logo: string;
+  image: string;
+  name_translation: Array<CommonApiTranslationInterface>;
+  title_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
+}
+
 // Generic ---------------------------------------------------------------------
 
 export interface APIErrorInterface {
@@ -224,4 +239,9 @@ export interface CommonLanguageInterface {
   id: number;
   key: string;
   value: string;
+}
+
+export interface CommonApiTranslationInterface {
+  language: number;
+  text: string;
 }

@@ -1,35 +1,36 @@
-import { CommonLanguageInterface } from 'utils/interfaces';
+import { CommonLanguageInterface, SiteInterface } from 'utils/interfaces';
 import Api from 'utils/api';
 import { ContentState } from 'components/Content/Content';
 import uiStore from 'utils/store/uiStore';
-import { action, autorun, observable, when } from 'mobx';
+import { action, autorun, computed, observable, when } from 'mobx';
 import ISO6391 from 'iso-639-1';
 import { FormikValues } from 'formik';
 import { i18n } from 'i18next';
 
-export enum LanguageListState {
+export enum LanguagePageState {
   NOT_LOADED,
   LOADING,
   LOADED,
   ERROR,
 }
 
-export default class LanguageListStore {
+export default class LanguagePageStore {
   private _i18n: i18n;
   private readonly _manageContentState: boolean;
 
-  @observable state: LanguageListState = LanguageListState.NOT_LOADED;
+  @observable state: LanguagePageState = LanguagePageState.NOT_LOADED;
   @observable languageList: Array<CommonLanguageInterface> = [];
+  @observable siteData: Array<SiteInterface> = [];
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
     switch (this.state) {
-      case LanguageListState.LOADING:
+      case LanguagePageState.LOADING:
         uiStore.setContentState(ContentState.PROCESSING);
         break;
-      case LanguageListState.NOT_LOADED:
-      case LanguageListState.LOADED:
-      case LanguageListState.ERROR:
+      case LanguagePageState.NOT_LOADED:
+      case LanguagePageState.LOADED:
+      case LanguagePageState.ERROR:
       default:
         uiStore.setContentState(ContentState.AVAILABLE);
     }
@@ -44,7 +45,15 @@ export default class LanguageListStore {
     }
   }
 
-  @action setState = (state: LanguageListState) => {
+  @computed get logotypeURL(): string {
+    if (Array.isArray(this.siteData) && this.siteData.length) {
+      return this.siteData[0].logo;
+    }
+
+    return '';
+  }
+
+  @action setState = (state: LanguagePageState) => {
     this.state = state;
   };
 
@@ -58,30 +67,36 @@ export default class LanguageListStore {
     );
   };
 
+  @action setSiteData = (siteData: Array<SiteInterface>) => {
+    this.siteData = siteData;
+  };
+
   @action handleSubmit = async (values: FormikValues): Promise<void> => {
     await this._i18n.changeLanguage(values.language);
   };
 
-  @action loadLanguageList = async () => {
+  @action loadData = async () => {
     try {
-      this.setState(LanguageListState.LOADING);
+      this.setState(LanguagePageState.LOADING);
 
-      const [languageList] = await Promise.all([
+      const [languageList, siteData] = await Promise.all([
         Api.getLanguageList(),
+        Api.getSiteData(),
         // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 
       this.setLanguageList(languageList);
-      this.setState(LanguageListState.LOADED);
+      this.setSiteData(siteData);
+      this.setState(LanguagePageState.LOADED);
     } catch (e) {
-      this.setState(LanguageListState.ERROR);
+      this.setState(LanguagePageState.ERROR);
     }
   };
 
   @action unmount = () => {
     if (this._manageContentState) {
-      this.setState(LanguageListState.NOT_LOADED);
+      this.setState(LanguagePageState.NOT_LOADED);
     }
   };
 }
