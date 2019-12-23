@@ -3,45 +3,52 @@ import {
   CloseButton,
   InfoMessage,
 } from 'components/CookieBar/CookieBar.style';
-import React, { SyntheticEvent } from 'react';
+import { CookieBarStore } from 'utils/store/cookieBarStore';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useLocalStore, useObserver } from 'mobx-react-lite';
-import { runInAction } from 'mobx';
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans, WithTranslation, withTranslation } from 'react-i18next';
+import { inject, observer } from 'mobx-react';
 
-export const CookieBar = () => {
-  const { ready } = useTranslation('app');
+interface Props extends WithTranslation {}
 
-  const COOKIES_KEY = 'cookies-accepted';
-  const COOKIES_VALUE = 'true';
+interface InjectedProps extends Props {
+  cookieBarStore: CookieBarStore;
+}
 
-  const cookies = useLocalStore(() => ({
-    accepted: localStorage.getItem(COOKIES_KEY),
-    accept() {
-      localStorage.setItem(COOKIES_KEY, COOKIES_VALUE);
-      runInAction(() => (this.accepted = COOKIES_VALUE));
-    },
-  }));
+@inject('cookieBarStore')
+@observer
+class CookieBar extends React.Component<Props> {
+  get injected() {
+    return this.props as InjectedProps;
+  }
 
-  const clickHandler = (e: SyntheticEvent) => {
-    e.preventDefault();
-    cookies.accept();
-  };
+  cookieBarStore = this.injected.cookieBarStore;
 
-  return useObserver(() => {
-    if (!ready) return null;
+  render() {
+    // Wait for translations
+    if (!this.props.tReady) return null;
 
-    return cookies.accepted ? null : (
+    // Do not render is cookies were accepted
+    if (this.cookieBarStore.isAccepted) return null;
+
+    return (
+      // Only if cookies not accepted
       <StyledWrapper>
         <InfoMessage>
           <Trans i18nKey="cookieBar">
             We use cookies. <Link to={`/cookies-info`}>Learn more</Link>
           </Trans>
         </InfoMessage>
-        <CloseButton type="button" className="close" onClick={clickHandler}>
+        <CloseButton
+          type="button"
+          className="close"
+          onClick={this.cookieBarStore.clickHandler}
+        >
           <span>&times;</span>
         </CloseButton>
       </StyledWrapper>
     );
-  });
-};
+  }
+}
+
+export default withTranslation('app')(CookieBar);

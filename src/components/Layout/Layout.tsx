@@ -1,6 +1,6 @@
 import theme from 'utils/theme';
 import Header from 'components/Header/Header';
-import { CookieBar } from 'components/CookieBar/CookieBar';
+import CookieBar from 'components/CookieBar/CookieBar';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import StyledWrapper, { GlobalStyle } from './Layout.style';

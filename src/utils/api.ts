@@ -8,7 +8,8 @@ import {
   SurveyDetailsInterface,
   SurveyFulfillmentResponse,
   RouteInterface,
-  SignInResponseInterface, SiteInterface,
+  SignInResponseInterface,
+  SiteInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
