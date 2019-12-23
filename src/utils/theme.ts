@@ -8,6 +8,18 @@ const theme = {
     error: '#FF0000',
     errorBackground: 'rgba(255, 0, 0, .2)',
     successBackground: 'rgba(0, 255, 0, .2)',
+    background: {
+      primary: 'white',
+      alternative: 'black',
+    },
+    font: {
+      primary: 'black',
+      alternative: 'white',
+    },
+    link: {
+      primary: 'deepskyblue',
+      hover: 'lightskyblue',
+    },
   },
   media: {
     tablet: '@media (min-width: 568px)',
