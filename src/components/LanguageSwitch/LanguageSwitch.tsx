@@ -33,14 +33,16 @@ export const LanguageSwitch = ({
     ),
   });
 
-  list.some(
-    language =>
-      // some() will brake loop after first matched element
-      language.key === userLocale &&
-      // Set initial value based on user locale
-      (initialValues.language = userLocale) &&
-      (userLocaleMatch = true),
-  );
+  list.some(language => {
+    // some() will brake loop after first matched element
+    if (language.key === userLocale) {
+      initialValues.language = userLocale;
+      userLocaleMatch = true;
+      return true;
+    }
+
+    return false;
+  });
 
   // Render only when locales are available
   if (!ready) return null;
