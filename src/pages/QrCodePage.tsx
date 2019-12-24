@@ -5,18 +5,21 @@ import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import QrReader from 'react-qr-reader';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface Props extends RouteComponentProps {}
+interface Props extends WithTranslation, RouteComponentProps {}
 
 @observer
 class QrCodePage extends React.Component<Props> {
   qrCodeStore = new QrCodeStore();
 
   render() {
+    if (!this.props.tReady) return null;
+
     return (
       <>
         <Helmet>
-          <title>QR code</title>
+          <title>{this.props.t('page.title', 'QR Code')}</title>
         </Helmet>
         <Content>
           QrCodePage
@@ -33,4 +36,4 @@ class QrCodePage extends React.Component<Props> {
   }
 }
 
-export default QrCodePage;
+export default withTranslation('qr-code-page')(QrCodePage);
