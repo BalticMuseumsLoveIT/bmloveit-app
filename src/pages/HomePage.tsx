@@ -20,12 +20,6 @@ class HomePage extends React.Component<Props> {
         </Helmet>
         <Content>
           HomePage
-          <button onClick={(): void => this.props.uiStore.setLang('pl')}>
-            PL
-          </button>
-          <button onClick={(): void => this.props.uiStore.setLang('en')}>
-            EN
-          </button>
           <Link to="/qrcode">QR code</Link>
         </Content>
       </>
