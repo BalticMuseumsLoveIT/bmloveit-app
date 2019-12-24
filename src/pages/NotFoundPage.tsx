@@ -1,13 +1,18 @@
 import Content from 'components/Content/Content';
 import React from 'react';
 import Helmet from 'react-helmet';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
-class NotFoundPage extends React.Component {
+interface Props extends WithTranslation {}
+
+class NotFoundPage extends React.Component<Props> {
   render() {
+    if (!this.props.tReady) return null;
+
     return (
       <>
         <Helmet>
-          <title>404</title>
+          <title>{this.props.t('page.title', 'Not found')}</title>
         </Helmet>
         <Content>404</Content>
       </>
@@ -15,4 +20,4 @@ class NotFoundPage extends React.Component {
   }
 }
 
-export default NotFoundPage;
+export default withTranslation('not-found-page')(NotFoundPage);
