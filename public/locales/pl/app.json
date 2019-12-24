@@ -1,3 +1,10 @@
 {
-  "cookieBar": "Używamy plików cookie. <1>Dowiedz się więcej</1>"
+  "cookieBar": "Używamy plików cookie. <1>Dowiedz się więcej</1>",
+  "mainMenu": {
+    "home": "Strona domowa",
+    "login": "Logowanie",
+    "quiz": "Quiz",
+    "routes": "Trasy",
+    "survey": "Ankieta"
+  }
 }

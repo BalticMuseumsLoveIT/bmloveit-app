@@ -1,3 +1,10 @@
 {
-  "cookieBar": "We use cookies. <1>Learn more</1>"
+  "cookieBar": "We use cookies. <1>Learn more</1>",
+  "mainMenu": {
+    "home": "Home",
+    "login": "Login",
+    "quiz": "Quiz",
+    "routes": "Available Routes",
+    "survey": "Survey"
+  }
 }

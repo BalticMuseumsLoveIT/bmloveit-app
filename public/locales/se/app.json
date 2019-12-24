@@ -1,3 +1,10 @@
 {
-  "cookieBar": ""
+  "cookieBar": "",
+  "mainMenu": {
+    "home": "",
+    "login": "",
+    "quiz": "",
+    "routes": "",
+    "survey": ""
+  }
 }

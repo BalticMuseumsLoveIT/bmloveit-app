@@ -2,47 +2,55 @@ import MenuItem from 'components/MenuItem/MenuItem';
 import { UiStore } from 'utils/store/uiStore';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { withTranslation, WithTranslation } from 'react-i18next';
 import StyledWrapper from './MobileMenu.style';
 
-interface Props {
+interface Props extends WithTranslation {
   uiStore?: UiStore;
 }
-
-const links = [
-  {
-    to: '/',
-    title: 'Home',
-  },
-  {
-    to: '/quiz',
-    title: 'Quiz',
-  },
-  {
-    to: '/survey',
-    title: 'Survey',
-  },
-  {
-    to: '/routes',
-    title: 'Available Routes',
-  },
-  {
-    to: '/login',
-    title: 'Login',
-  },
-];
 
 @inject('uiStore')
 @observer
 class MobileMenu extends React.Component<Props> {
+  private readonly _links = [
+    {
+      to: '/',
+      name: 'home',
+      label: 'Home',
+    },
+    {
+      to: '/quiz',
+      name: 'quiz',
+      label: 'Quiz',
+    },
+    {
+      to: '/survey',
+      name: 'survey',
+      label: 'Survey',
+    },
+    {
+      to: '/routes',
+      name: 'routes',
+      label: 'Available Routes',
+    },
+    {
+      to: '/login',
+      name: 'login',
+      label: 'Login',
+    },
+  ];
+
   render() {
-    const menuItems = links.map((item, index) => {
+    if (!this.props.tReady) return null;
+
+    const menuItems = this._links.map((item, index) => {
       return (
         <MenuItem
           key={index}
           to={item.to}
           onClick={() => this.props.uiStore!.toggleIsMenuOpened()}
         >
-          {item.title}
+          {this.props.t(`mainMenu.${item.name}`, item.label)}
         </MenuItem>
       );
     });
@@ -55,4 +63,4 @@ class MobileMenu extends React.Component<Props> {
   }
 }
 
-export default MobileMenu;
+export default withTranslation('app')(MobileMenu);
