@@ -5,14 +5,17 @@ import React from 'react';
 import { Formik, Form, FormikValues } from 'formik';
 import * as Yup from 'yup';
 import { observer } from 'mobx-react';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface QuizFormProps {
+interface QuizFormProps extends WithTranslation {
   store: QuizDetailsStore;
 }
 
 @observer
 class QuizForm extends React.Component<QuizFormProps> {
   render() {
+    if (!this.props.tReady) return null;
+
     const { store } = this.props;
 
     const question = store.question;
@@ -26,7 +29,10 @@ class QuizForm extends React.Component<QuizFormProps> {
       initialValues: { [radioGroupName]: '' },
       validationSchema: Yup.object({
         [radioGroupName]: Yup.string().required(
-          'At least one option must be selected',
+          this.props.t(
+            'validationSchema.question.required',
+            'At least one option must be selected',
+          ),
         ),
       }),
       onSubmit: async (values: FormikValues) => {
@@ -50,7 +56,7 @@ class QuizForm extends React.Component<QuizFormProps> {
                   isDisabled={isDisabled}
                 />
                 <button type="submit" disabled={isDisabled}>
-                  Submit
+                  {this.props.t('form.button.submit.label', 'Submit')}
                 </button>
               </Form>
             );
@@ -62,4 +68,4 @@ class QuizForm extends React.Component<QuizFormProps> {
   }
 }
 
-export default QuizForm;
+export default withTranslation('quiz-details-page')(QuizForm);
