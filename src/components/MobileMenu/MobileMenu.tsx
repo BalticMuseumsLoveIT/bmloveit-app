@@ -15,28 +15,25 @@ class MobileMenu extends React.Component<Props> {
   private readonly _links = [
     {
       to: '/',
-      name: 'home',
-      label: 'Home',
+      // Define label as function and run it inside render to allow extraction
+      // plugin to read those strings
+      label: () => this.props.t('mainMenu.home', 'Home'),
     },
     {
       to: '/quiz',
-      name: 'quiz',
-      label: 'Quiz',
+      label: () => this.props.t('mainMenu.quiz', 'Quiz'),
     },
     {
       to: '/survey',
-      name: 'survey',
-      label: 'Survey',
+      label: () => this.props.t('mainMenu.survey', 'Survey'),
     },
     {
       to: '/routes',
-      name: 'routes',
-      label: 'Available Routes',
+      label: () => this.props.t('mainMenu.routes', 'Available Routes'),
     },
     {
       to: '/login',
-      name: 'login',
-      label: 'Login',
+      label: () => this.props.t('mainMenu.login', 'Login'),
     },
   ];
 
@@ -50,7 +47,7 @@ class MobileMenu extends React.Component<Props> {
           to={item.to}
           onClick={() => this.props.uiStore!.toggleIsMenuOpened()}
         >
-          {this.props.t(`mainMenu.${item.name}`, item.label)}
+          {item.label()}
         </MenuItem>
       );
     });
