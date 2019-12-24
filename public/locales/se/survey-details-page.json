@@ -1,0 +1,31 @@
+{
+  "content": {
+    "title": ""
+  },
+  "error": {
+    "generic": "",
+    "notFound": ""
+  },
+  "form": {
+    "button": {
+      "submit": {
+        "label": ""
+      }
+    }
+  },
+  "page": {
+    "title": ""
+  },
+  "submitted": {
+    "backLink": "",
+    "summary": ""
+  },
+  "validationSchema": {
+    "multiselect": {
+      "required": ""
+    },
+    "single": {
+      "required": ""
+    }
+  }
+}
