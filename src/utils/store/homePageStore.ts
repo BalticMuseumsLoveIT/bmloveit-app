@@ -2,7 +2,7 @@ import { SiteInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
-import { action, autorun, observable } from 'mobx';
+import { action, autorun, computed, observable, when } from 'mobx';
 
 export enum PageState {
   NOT_LOADED,
@@ -16,6 +16,7 @@ export default class HomePageStore {
 
   @observable state: PageState = PageState.NOT_LOADED;
   @observable siteData: Array<SiteInterface> = [];
+  @observable tReady?: boolean;
 
   private _handleContentState = () => {
     switch (this.state) {
@@ -41,7 +42,13 @@ export default class HomePageStore {
   @action loadData = async () => {
     try {
       this.setState(PageState.LOADING);
-      const siteData = await Api.getSiteData();
+
+      const [siteData] = await Promise.all([
+        Api.getSiteData(),
+        // Keep `PROCESSING` state till translations are fetched
+        when(() => this.tReady === true),
+      ]);
+
       this.setSiteData(siteData);
       this.setState(PageState.LOADED);
     } catch (e) {
@@ -49,9 +56,21 @@ export default class HomePageStore {
     }
   };
 
+  @computed get siteTitle(): string {
+    return this.siteData.length ? this.siteData[0].title : '';
+  }
+
+  @computed get siteDescription(): string {
+    return this.siteData.length ? this.siteData[0].description : '';
+  }
+
   @action setState = (state: PageState) => {
     this.state = state;
   };
+
+  @action setTReady(tReady?: boolean) {
+    this.tReady = tReady;
+  }
 
   @action setSiteData = (siteData: Array<SiteInterface>) => {
     this.siteData = siteData;

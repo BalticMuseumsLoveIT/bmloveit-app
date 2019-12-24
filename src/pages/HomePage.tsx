@@ -20,6 +20,13 @@ class HomePage extends React.Component<Props> {
     await this.homePageStore.loadData();
   }
 
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.tReady !== this.props.tReady) {
+      // Inform state about translation status
+      this.homePageStore.setTReady(this.props.tReady);
+    }
+  }
+
   componentWillUnmount(): void {
     // Reset `<Content />` state
     this.homePageStore.unmount();
@@ -33,7 +40,10 @@ class HomePage extends React.Component<Props> {
         <Helmet>
           <title>{this.props.t('page.title', 'Homepage')}</title>
         </Helmet>
-        <Content>HomePage</Content>
+        <Content>
+          <h1>{this.homePageStore.siteTitle}</h1>
+          <div>{this.homePageStore.siteDescription}</div>
+        </Content>
       </>
     );
   }
