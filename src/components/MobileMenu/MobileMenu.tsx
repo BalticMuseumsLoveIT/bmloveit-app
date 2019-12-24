@@ -32,6 +32,10 @@ class MobileMenu extends React.Component<Props> {
       label: () => this.props.t('mainMenu.routes', 'Available Routes'),
     },
     {
+      to: '/qrcode',
+      label: () => this.props.t('mainMenu.qr', 'QR Code'),
+    },
+    {
       to: '/login',
       label: () => this.props.t('mainMenu.login', 'Login'),
     },

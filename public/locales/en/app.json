@@ -3,6 +3,7 @@
   "mainMenu": {
     "home": "Home",
     "login": "Login",
+    "qr": "QR Code",
     "quiz": "Quiz",
     "routes": "Available Routes",
     "survey": "Survey"
