@@ -20,6 +20,8 @@ class LanguagePage extends React.Component<Props> {
   languagePageStore = new LanguagePageStore(this.props.i18n, true);
 
   async componentDidMount(): Promise<void> {
+    this.languagePageStore.setTReady(this.props.tReady);
+
     await this.languagePageStore.loadData();
   }
 

@@ -18,6 +18,8 @@ class HomePage extends React.Component<Props> {
   homePageStore = new HomePageStore(true);
 
   async componentDidMount(): Promise<void> {
+    this.homePageStore.setTReady(this.props.tReady);
+
     await this.homePageStore.loadData();
   }
 

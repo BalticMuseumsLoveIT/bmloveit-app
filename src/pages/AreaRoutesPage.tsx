@@ -21,6 +21,8 @@ class AreaRoutesPage extends React.Component<Props> {
       params: { id },
     } = this.props.match;
 
+    this.areaRoutesPageStore.setTReady(this.props.tReady);
+
     await this.areaRoutesPageStore.loadData(Number.parseInt(id));
   }
 

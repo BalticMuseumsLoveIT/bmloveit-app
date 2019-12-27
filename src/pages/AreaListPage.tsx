@@ -17,6 +17,8 @@ class AreaListPage extends React.Component<Props> {
   areaListPageStore = new AreaPageStore(true);
 
   async componentDidMount(): Promise<void> {
+    this.areaListPageStore.setTReady(this.props.tReady);
+
     await this.areaListPageStore.loadData();
   }
 
