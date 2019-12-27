@@ -1,8 +1,9 @@
-import { AreaInterface } from 'utils/interfaces';
+import { AreaInterface, RouteInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
 import { action, autorun, observable, when } from 'mobx';
+import { createTransformer } from 'mobx-utils';
 
 export enum PageState {
   NOT_LOADED,
@@ -16,6 +17,7 @@ export default class AreaListPageStore {
 
   @observable state: PageState = PageState.NOT_LOADED;
   @observable areaData: Array<AreaInterface> = [];
+  @observable routesData: Array<RouteInterface> = [];
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -43,18 +45,27 @@ export default class AreaListPageStore {
     try {
       this.setState(PageState.LOADING);
 
-      const [areaData] = await Promise.all([
+      const [areaData, routesData] = await Promise.all([
         Api.getAreaData(),
+        Api.getRoutes(),
         // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 
       this.setAreaData(areaData);
+      this.setRoutesData(routesData);
       this.setState(PageState.LOADED);
     } catch (e) {
       this.setState(PageState.ERROR);
     }
   };
+
+  routesAmount = createTransformer((areaId: number) => {
+    return this.routesData.reduce(
+      (amount, route) => (route.areas.includes(areaId) ? amount + 1 : amount),
+      0,
+    );
+  });
 
   @action setState = (state: PageState) => {
     this.state = state;
@@ -67,6 +78,10 @@ export default class AreaListPageStore {
   @action setAreaData = (areaData: Array<AreaInterface>) => {
     this.areaData = areaData;
   };
+
+  @action setRoutesData(routesData: Array<RouteInterface>) {
+    this.routesData = routesData;
+  }
 
   @action unmount = () => {
     if (this._manageContentState) {

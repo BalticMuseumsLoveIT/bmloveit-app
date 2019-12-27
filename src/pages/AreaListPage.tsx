@@ -46,9 +46,11 @@ class AreaListPage extends React.Component<Props> {
           <h1>{this.props.t('content.title', 'Area list')}</h1>
           {this.areaListPageStore.areaData.map(area => {
             return (
-              <Link key={area.id} to={`/area/${area.id}`}>
-                <p>{area.name_full}</p>
-              </Link>
+              <p key={area.id}>
+                <Link to={`/area/${area.id}`}>{area.name_full}</Link>
+                <br />
+                Routes: {this.areaListPageStore.routesAmount(area.id)}
+              </p>
             );
           })}
         </Content>
