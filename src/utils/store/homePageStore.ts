@@ -64,6 +64,14 @@ export default class HomePageStore {
     return this.siteData.length ? this.siteData[0].description : '';
   }
 
+  @computed get siteLogo(): string {
+    return this.siteData.length ? this.siteData[0].logo : '';
+  }
+
+  @computed get siteImage(): string {
+    return this.siteData.length ? this.siteData[0].image : '';
+  }
+
   @action setState = (state: PageState) => {
     this.state = state;
   };

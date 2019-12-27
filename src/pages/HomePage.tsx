@@ -1,10 +1,11 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import HomePageStore from 'utils/store/homePageStore';
+import Footer from 'components/Footer/Footer';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 interface Props extends WithTranslation, RouteComponentProps {
@@ -41,8 +42,17 @@ class HomePage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Homepage')}</title>
         </Helmet>
         <Content>
+          <div>
+            <p>Site Image: {this.homePageStore.siteImage}</p>
+            <p>Site Logo: {this.homePageStore.siteLogo}</p>
+          </div>
           <h1>{this.homePageStore.siteTitle}</h1>
           <div>{this.homePageStore.siteDescription}</div>
+          <Footer>
+            <Link to="/locations">
+              {this.props.t('buttonStart.label', 'Start sightseeing')}
+            </Link>
+          </Footer>
         </Content>
       </>
     );

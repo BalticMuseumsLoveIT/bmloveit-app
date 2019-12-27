@@ -1,4 +1,7 @@
 {
+  "buttonStart": {
+    "label": "Rozpocznij zwiedzanie"
+  },
   "page": {
     "title": "Strona domowa"
   }
