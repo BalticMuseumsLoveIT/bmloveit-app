@@ -67,6 +67,18 @@ export default class AreaListPageStore {
     );
   });
 
+  languagesAmount = createTransformer((areaId: number) => {
+    const languages = new Set();
+
+    this.routesData.forEach(route => {
+      if (route.areas.includes(areaId) && route.languages.length) {
+        languages.add(route.languages[0]);
+      }
+    });
+
+    return languages.size;
+  });
+
   @action setState = (state: PageState) => {
     this.state = state;
   };
