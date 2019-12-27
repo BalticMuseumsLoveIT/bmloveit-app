@@ -48,12 +48,23 @@ class AreaRoutesPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>{this.props.t('content.title', 'Routes list')}</h1>
-          {this.areaRoutesPageStore.routesData.map(route => {
-            return (
-              <Link key={route.id} to={`/map/${route.id}`}>
-                <p>{route.name_full}</p>
-              </Link>
+          {this.areaRoutesPageStore.languagesData.map(language => {
+            const routes = this.areaRoutesPageStore.routesByLanguage(
+              language.id,
             );
+
+            return routes.length ? (
+              <div key={language.id}>
+                <h2>{language.value}</h2>
+                {routes.map(route => {
+                  return (
+                    <Link key={route.id} to={`/map/${route.id}`}>
+                      <p>{route.name_full}</p>
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : null;
           })}
         </Content>
       </>

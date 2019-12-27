@@ -1,8 +1,9 @@
-import { RouteInterface } from 'utils/interfaces';
+import { CommonLanguageInterface, RouteInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
 import { action, autorun, observable, when } from 'mobx';
+import { createTransformer } from 'mobx-utils';
 
 export enum PageState {
   NOT_LOADED,
@@ -16,6 +17,7 @@ export default class AreaRoutesPageStore {
 
   @observable state: PageState = PageState.NOT_LOADED;
   @observable routesData: Array<RouteInterface> = [];
+  @observable languagesData: Array<CommonLanguageInterface> = [];
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -43,18 +45,24 @@ export default class AreaRoutesPageStore {
     try {
       this.setState(PageState.LOADING);
 
-      const [routesData] = await Promise.all([
+      const [routesData, languagesData] = await Promise.all([
         Api.getRoutes(),
+        Api.getLanguageList(),
         // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 
       this.setRoutesData(routesData, areaId);
+      this.setLanguagesData(languagesData);
       this.setState(PageState.LOADED);
     } catch (e) {
       this.setState(PageState.ERROR);
     }
   };
+
+  routesByLanguage = createTransformer((languageId: number) =>
+    this.routesData.filter(route => route.languages.includes(languageId)),
+  );
 
   @action setState = (state: PageState) => {
     this.state = state;
@@ -69,6 +77,12 @@ export default class AreaRoutesPageStore {
     areaId: number,
   ) => {
     this.routesData = routesData.filter(route => route.areas.includes(areaId));
+  };
+
+  @action setLanguagesData = (
+    languagesData: Array<CommonLanguageInterface>,
+  ) => {
+    this.languagesData = languagesData;
   };
 
   @action unmount = () => {
