@@ -68,11 +68,7 @@ export default class AreaRoutesPageStore {
     routesData: Array<RouteInterface>,
     areaId: number,
   ) => {
-    const filteredRoutes = routesData.filter(route =>
-      route.areas.includes(areaId),
-    );
-    console.log(routesData, filteredRoutes, areaId);
-    this.routesData = filteredRoutes;
+    this.routesData = routesData.filter(route => route.areas.includes(areaId));
   };
 
   @action unmount = () => {
