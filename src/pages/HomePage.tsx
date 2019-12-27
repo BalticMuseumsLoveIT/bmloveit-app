@@ -51,7 +51,7 @@ class HomePage extends React.Component<Props> {
           <h1>{this.homePageStore.siteTitle}</h1>
           <div>{this.homePageStore.siteDescription}</div>
           <Footer>
-            <Link to="/locations">
+            <Link to="/area">
               {this.props.t('buttonStart.label', 'Start sightseeing')}
             </Link>
           </Footer>
