@@ -6,20 +6,6 @@ export interface SignInResponseInterface {
   token_type: string;
 }
 
-export interface AreaInterface {
-  id: number;
-  name: string;
-  name_full: string;
-  description: string;
-  type_data: TypeDataInterface;
-  country: number | null;
-  address: string;
-  active: boolean;
-  name_translation: Array<any>;
-  name_full_translation: Array<any>;
-  description_translation: Array<any>;
-}
-
 export interface RouteInterface {
   id: number;
   name: string;
@@ -220,6 +206,22 @@ export interface SiteInterface {
   image: string;
   name_translation: Array<CommonApiTranslationInterface>;
   title_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
+}
+
+// Area ------------------------------------------------------------------------
+
+export interface AreaInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  type_data: TypeDataInterface;
+  country: number;
+  adress: string;
+  logo: string | null;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
 }
 

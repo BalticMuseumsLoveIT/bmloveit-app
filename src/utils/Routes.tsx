@@ -10,6 +10,7 @@ import LanguagePage from 'pages/LanguagePage';
 import LoginPage from 'pages/LoginPage';
 import userStore from 'utils/store/userStore';
 import QrCodePage from 'pages/QrCodePage';
+import AreaListPage from 'pages/AreaListPage';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import React from 'react';
 
@@ -21,6 +22,7 @@ class Routes extends React.Component {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/language" component={LanguagePage} />
           <Route exact path="/login" component={LoginPage} />
+          <AuthRoute exact path="/area" component={AreaListPage} />
           <AuthRoute exact path="/quiz" component={QuizListPage} />
           <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />
           <AuthRoute exact path="/survey" component={SurveyListPage} />

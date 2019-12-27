@@ -10,6 +10,7 @@ import {
   RouteInterface,
   SignInResponseInterface,
   SiteInterface,
+  AreaInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -215,6 +216,18 @@ abstract class Api {
    */
   public static getSiteData = async (): Promise<Array<SiteInterface>> => {
     const endpoint = 'api/site/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    // Response should be an array with only one site object inside
+    return response.data;
+  };
+
+  /**
+   * Get list of areas
+   */
+  public static getAreaData = async (): Promise<Array<AreaInterface>> => {
+    const endpoint = 'api/area/';
 
     const response = await userStore.axiosInstance.get(endpoint);
 
