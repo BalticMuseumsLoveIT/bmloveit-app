@@ -12,6 +12,7 @@ import userStore from 'utils/store/userStore';
 import QrCodePage from 'pages/QrCodePage';
 import AreaListPage from 'pages/AreaListPage';
 import AreaRoutesPage from 'pages/AreaRoutesPage';
+import RouteMapPage from 'pages/RouteMapPage';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import React from 'react';
 
@@ -24,7 +25,8 @@ class Routes extends React.Component {
           <Route exact path="/language" component={LanguagePage} />
           <Route exact path="/login" component={LoginPage} />
           <AuthRoute exact path="/area" component={AreaListPage} />
-          <AuthRoute exact path="/area/:id" component={AreaRoutesPage} />
+          <AuthRoute exact path="/area/:id/routes" component={AreaRoutesPage} />
+          <AuthRoute exact path="/route/:id/map" component={RouteMapPage} />
           <AuthRoute exact path="/quiz" component={QuizListPage} />
           <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />
           <AuthRoute exact path="/survey" component={SurveyListPage} />
