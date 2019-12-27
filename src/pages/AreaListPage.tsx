@@ -47,7 +47,7 @@ class AreaListPage extends React.Component<Props> {
           {this.areaListPageStore.areaData.map(area => {
             return (
               <p key={area.id}>
-                <Link to={`/area/${area.id}`}>{area.name_full}</Link>
+                <Link to={`/area/${area.id}/routes`}>{area.name_full}</Link>
                 <br />
                 Routes: {this.areaListPageStore.routesAmount(area.id)}
                 <br />

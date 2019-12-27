@@ -58,7 +58,7 @@ class AreaRoutesPage extends React.Component<Props> {
                 <h2>{language.value}</h2>
                 {routes.map(route => {
                   return (
-                    <Link key={route.id} to={`/map/${route.id}`}>
+                    <Link key={route.id} to={`/route/${route.id}/map`}>
                       <p>{route.name_full}</p>
                     </Link>
                   );
