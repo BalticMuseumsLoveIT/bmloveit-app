@@ -72,6 +72,12 @@ export default class AreaRoutesPageStore {
     return this.routeData ? this.routeData.id.toString() : '';
   }
 
+  @computed get routeAreaId(): string {
+    return this.routeData && this.routeData.areas.length
+      ? this.routeData.areas[0].toString()
+      : '';
+  }
+
   @computed get routeTitle(): string {
     return this.routeData ? this.routeData.name_full : '';
   }

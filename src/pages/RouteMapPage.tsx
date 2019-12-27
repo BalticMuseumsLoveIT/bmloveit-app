@@ -52,7 +52,7 @@ class RouteMapPage extends React.Component<Props> {
           <h2>{this.routeMapPageStore.routeTitle}</h2>
           <div>Map Component</div>
           <Footer>
-            <Link to={`/area/${this.routeMapPageStore.routeId}/routes`}>
+            <Link to={`/area/${this.routeMapPageStore.routeAreaId}/routes`}>
               {this.props.t('button.changeRoute.label', 'Change route')}
             </Link>
             <Link to={`/route/${this.routeMapPageStore.routeId}/locations`}>
