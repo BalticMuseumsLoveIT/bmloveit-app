@@ -24,6 +24,7 @@ class AreaRoutesPage extends React.Component<Props> {
     this.areaRoutesPageStore.setTReady(this.props.tReady);
 
     await this.areaRoutesPageStore.loadData(Number.parseInt(id));
+    console.log(this.areaRoutesPageStore.itemsData);
   }
 
   componentDidUpdate(prevProps: Props) {
@@ -57,10 +58,18 @@ class AreaRoutesPage extends React.Component<Props> {
               <div key={language.id}>
                 <h2>{language.value}</h2>
                 {routes.map(route => {
+                  const attractions = this.areaRoutesPageStore.attractionsByRoute(
+                    route.id,
+                  ).length;
+
                   return (
-                    <Link key={route.id} to={`/route/${route.id}/map`}>
-                      <p>{route.name_full}</p>
-                    </Link>
+                    <p key={route.id}>
+                      <Link to={`/route/${route.id}/map`}>
+                        {route.name_full}
+                      </Link>
+                      <br />
+                      Attractions: {attractions}
+                    </p>
                   );
                 })}
               </div>

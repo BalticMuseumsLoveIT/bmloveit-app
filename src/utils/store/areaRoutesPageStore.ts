@@ -1,4 +1,8 @@
-import { CommonLanguageInterface, RouteInterface } from 'utils/interfaces';
+import {
+  CommonLanguageInterface,
+  ItemInterface,
+  RouteInterface,
+} from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
@@ -18,6 +22,7 @@ export default class AreaRoutesPageStore {
   @observable state: PageState = PageState.NOT_LOADED;
   @observable routesData: Array<RouteInterface> = [];
   @observable languagesData: Array<CommonLanguageInterface> = [];
+  @observable itemsData: Array<ItemInterface> = [];
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -45,15 +50,17 @@ export default class AreaRoutesPageStore {
     try {
       this.setState(PageState.LOADING);
 
-      const [routesData, languagesData] = await Promise.all([
+      const [routesData, languagesData, itemsData] = await Promise.all([
         Api.getRoutes(),
         Api.getLanguageList(),
+        Api.getItemsList(),
         // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 
       this.setRoutesData(routesData, areaId);
       this.setLanguagesData(languagesData);
+      this.setItemsData(itemsData);
       this.setState(PageState.LOADED);
     } catch (e) {
       this.setState(PageState.ERROR);
@@ -62,6 +69,13 @@ export default class AreaRoutesPageStore {
 
   routesByLanguage = createTransformer((languageId: number) =>
     this.routesData.filter(route => route.languages.includes(languageId)),
+  );
+
+  // This is probably wrong because items should not be directly attached to route
+  attractionsByRoute = createTransformer((routeId: number) =>
+    this.itemsData.filter(
+      item => item.routes.includes(routeId) && item.type_data.name === 'screen',
+    ),
   );
 
   @action setState = (state: PageState) => {
@@ -83,6 +97,10 @@ export default class AreaRoutesPageStore {
     languagesData: Array<CommonLanguageInterface>,
   ) => {
     this.languagesData = languagesData;
+  };
+
+  @action setItemsData = (itemsData: Array<ItemInterface>) => {
+    this.itemsData = itemsData;
   };
 
   @action unmount = () => {

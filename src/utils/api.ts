@@ -11,6 +11,7 @@ import {
   SignInResponseInterface,
   SiteInterface,
   AreaInterface,
+  ItemInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -232,6 +233,14 @@ abstract class Api {
     const response = await userStore.axiosInstance.get(endpoint);
 
     // Response should be an array with only one site object inside
+    return response.data;
+  };
+
+  public static getItemsList = async (): Promise<Array<ItemInterface>> => {
+    const endpoint = 'api/item/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
     return response.data;
   };
 }

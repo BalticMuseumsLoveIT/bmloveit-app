@@ -194,6 +194,53 @@ export interface SurveyAnswerResponse {
   value: string;
 }
 
+// Item ------------------------------------------------------------------------
+
+export interface ResourceDataInterface {
+  name: string;
+  type: string;
+  type_name: string;
+  file_url: string;
+}
+
+export interface ItemTypeInterface {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface ItemKindInterface {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface ItemInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  type: number;
+  type_data: ItemTypeInterface;
+  kind: number;
+  kind_data: ItemKindInterface;
+  locations: Array<number>;
+  resources_data: Array<ResourceDataInterface>;
+  quizzes_data: Array<QuizInterface>;
+  child_items_data: Array<ItemInterface>;
+  next_items_data: Array<ItemInterface>;
+  qr_code: string;
+  latitude: number | null;
+  longitude: number | null;
+  name_translation: Array<CommonLanguageInterface>;
+  name_full_translation: Array<CommonLanguageInterface>;
+  description_translation: Array<CommonLanguageInterface>;
+  actions_list: [];
+  routes: Array<number>;
+  x: number | null;
+  y: number | null;
+}
+
 // Site ------------------------------------------------------------------------
 
 export interface SiteInterface {
