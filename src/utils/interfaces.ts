@@ -36,9 +36,12 @@ export interface LocationInterface {
   qr_code: string;
   latitude: number | null;
   longitude: number | null;
-  name_translation: Array<any>;
-  name_full_translation: Array<any>;
-  description_translation: Array<any>;
+  name_translation: Array<CommonLanguageInterface>;
+  name_full_translation: Array<CommonLanguageInterface>;
+  description_translation: Array<CommonLanguageInterface>;
+  x: number | null;
+  y: number | null;
+  screens: Array<number>;
 }
 
 export interface TypeDataInterface {

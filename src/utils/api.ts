@@ -12,6 +12,7 @@ import {
   SiteInterface,
   AreaInterface,
   ItemInterface,
+  LocationInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -240,6 +241,20 @@ abstract class Api {
     const endpoint = 'api/item/';
 
     const response = await userStore.axiosInstance.get(endpoint);
+
+    return response.data;
+  };
+
+  public static getLocationsList = async (
+    routeId = NaN,
+  ): Promise<Array<LocationInterface>> => {
+    const params = {
+      location_routes__route__id: isNaN(routeId) ? '' : routeId,
+    };
+
+    const endpoint = 'api/locations/';
+
+    const response = await userStore.axiosInstance.get(endpoint, { params });
 
     return response.data;
   };
