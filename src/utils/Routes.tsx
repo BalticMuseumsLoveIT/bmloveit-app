@@ -21,7 +21,7 @@ class Routes extends React.Component {
     return (
       <>
         <Switch>
-          <Route exact path="/" component={HomePage} />
+          <AuthRoute exact path="/" component={HomePage} />
           <Route exact path="/language" component={LanguagePage} />
           <Route exact path="/login" component={LoginPage} />
           <AuthRoute exact path="/area" component={AreaListPage} />
