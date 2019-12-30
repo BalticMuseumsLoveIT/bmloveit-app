@@ -43,16 +43,6 @@ abstract class Api {
     return response.data;
   };
 
-  public static async getPrivateMedia(path: string): Promise<string> {
-    const response = await userStore.axiosInstance.get(path, {
-      responseType: 'arraybuffer',
-    });
-
-    const data = Buffer.from(response.data, 'binary').toString('base64');
-
-    return `data:${response.headers['content-type']};base64,${data}`;
-  }
-
   /**
    * Get list of all active quizzes.
    * Response will not include questions.

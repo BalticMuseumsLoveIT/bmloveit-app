@@ -13,7 +13,7 @@ export const SurveyQuestion = ({ field, question }: SurveyQuestionProps) => {
   return (
     <fieldset>
       <legend>{question.description}</legend>
-      <QuestionImage url={question.file_url} />
+      <QuestionImage path={question.file_url} />
       {(() => {
         switch (question.type) {
           case SurveyQuestionType.SELECT:
