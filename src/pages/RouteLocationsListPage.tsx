@@ -49,14 +49,29 @@ class RouteLocationsListPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>{this.props.t('content.title', 'Locations list')}</h1>
-          {this.routeLocationsListPageStore.locationsData.map(location => (
-            <p key={location.id}>
-              <Link to={`/`}>{location.name_full}</Link>
-              <br />
-              Attractions:{' '}
-              {this.routeLocationsListPageStore.screensAmount(location.id)}
-            </p>
-          ))}
+          {this.routeLocationsListPageStore.locationsData.map(location => {
+            const attractions = this.routeLocationsListPageStore.screensAmount(
+              location.id,
+            );
+
+            const firstScreenId = this.routeLocationsListPageStore.firstScreenId(
+              location.id,
+            );
+
+            return (
+              <p key={location.id}>
+                {isNaN(firstScreenId) ? (
+                  <span>{location.name_full}</span>
+                ) : (
+                  <Link to={`/item/${firstScreenId}`}>
+                    {location.name_full}
+                  </Link>
+                )}
+                <br />
+                Attractions: {attractions}
+              </p>
+            );
+          })}
           <Footer>
             <Link
               to={`/area/${this.routeLocationsListPageStore.areaId}/routes`}

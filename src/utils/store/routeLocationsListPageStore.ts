@@ -89,6 +89,14 @@ export default class RouteLocationsListPageStore {
     return location ? location.screens.length : 0;
   });
 
+  firstScreenId = createTransformer((locationId: number) => {
+    const location = this.locationsData.find(
+      location => location.id === locationId,
+    );
+
+    return location && location.screens.length ? location.screens[0] : NaN;
+  });
+
   @action unmount = () => {
     if (this._manageContentState) {
       this.setState(PageState.NOT_LOADED);
