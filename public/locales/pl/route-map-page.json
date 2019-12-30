@@ -1,19 +1,19 @@
 {
   "button": {
     "changeRoute": {
-      "label": ""
+      "label": "Zmień trasę"
     },
     "scanQR": {
-      "label": ""
+      "label": "Skanuj QR"
     },
     "viewList": {
-      "label": ""
+      "label": "Zobacz listę"
     }
   },
   "content": {
-    "title": ""
+    "title": "Mapa trasy"
   },
   "page": {
-    "title": ""
+    "title": "Mapa trasy"
   }
 }
