@@ -12,6 +12,7 @@ import AreaListPage from 'pages/AreaListPage';
 import AreaRoutesPage from 'pages/AreaRoutesPage';
 import RouteMapPage from 'pages/RouteMapPage';
 import RouteLocationsListPage from 'pages/RouteLocationsListPage';
+import ItemPage from 'pages/ItemPage';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import React from 'react';
 
@@ -31,6 +32,7 @@ class Routes extends React.Component {
             path="/route/:id/locations"
             component={RouteLocationsListPage}
           />
+          <AuthRoute exact path="/item/:id" component={ItemPage} />
           <AuthRoute exact path="/quiz" component={QuizListPage} />
           <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />
           <AuthRoute exact path="/survey" component={SurveyListPage} />

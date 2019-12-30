@@ -245,6 +245,17 @@ abstract class Api {
     return response.data;
   };
 
+  public static getItem = async (
+    itemId: number,
+  ): Promise<Array<ItemInterface>> => {
+    const params = { id: itemId };
+    const endpoint = 'api/item/';
+
+    const response = await userStore.axiosInstance.get(endpoint, { params });
+
+    return response.data;
+  };
+
   public static getLocationsList = async (
     routeId = NaN,
   ): Promise<Array<LocationInterface>> => {
