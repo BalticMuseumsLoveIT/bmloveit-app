@@ -52,7 +52,7 @@ const AuthRoute = ({ component: Page, ...rest }: any) => {
     <Route
       {...rest}
       render={props =>
-        userStore.token !== '' ? (
+        userStore.isLoggedIn ? (
           <Page {...props} />
         ) : (
           <Redirect
