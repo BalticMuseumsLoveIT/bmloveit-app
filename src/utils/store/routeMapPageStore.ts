@@ -45,7 +45,6 @@ export default class AreaRoutesPageStore {
 
       const [routeData] = await Promise.all([
         Api.getRoute(routeId),
-        // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 

@@ -25,13 +25,11 @@ class HomePage extends React.Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.tReady !== this.props.tReady) {
-      // Inform state about translation status
       this.homePageStore.setTReady(this.props.tReady);
     }
   }
 
   componentWillUnmount(): void {
-    // Reset `<Content />` state
     this.homePageStore.unmount();
   }
 

@@ -29,17 +29,13 @@ class CookieBar extends React.Component<Props> {
   };
 
   render() {
-    // Wait for translations
     if (!this.props.tReady) return null;
 
-    // Wait for site data
     if (!this.cookieBarStore.isSiteDataLoaded) return null;
 
-    // Do not render is cookies were accepted
     if (this.cookieBarStore.isAccepted) return null;
 
     return (
-      // Only if cookies not accepted
       <StyledWrapper>
         <InfoMessage>
           <Trans i18nKey="cookieBar">

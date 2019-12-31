@@ -22,7 +22,6 @@ class QuizForm extends React.Component<QuizFormProps> {
 
     if (question === null) return null;
 
-    // Radio group html name
     const radioGroupName = `question_${question.id}`;
 
     const formik = {

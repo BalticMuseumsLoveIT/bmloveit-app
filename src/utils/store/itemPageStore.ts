@@ -45,7 +45,6 @@ export default class ItemPageStore {
 
       const [itemData] = await Promise.all([
         Api.getItem(itemId),
-        // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 

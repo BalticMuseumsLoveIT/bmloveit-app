@@ -24,13 +24,11 @@ class AreaListPage extends React.Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.tReady !== this.props.tReady) {
-      // Inform state about translation status
       this.areaListPageStore.setTReady(this.props.tReady);
     }
   }
 
   componentWillUnmount(): void {
-    // Reset `<Content />` state
     this.areaListPageStore.unmount();
   }
 

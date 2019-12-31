@@ -28,13 +28,11 @@ class AreaRoutesPage extends React.Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.tReady !== this.props.tReady) {
-      // Inform state about translation status
       this.areaRoutesPageStore.setTReady(this.props.tReady);
     }
   }
 
   componentWillUnmount(): void {
-    // Reset `<Content />` state
     this.areaRoutesPageStore.unmount();
   }
 

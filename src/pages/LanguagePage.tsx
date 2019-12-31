@@ -27,13 +27,11 @@ class LanguagePage extends React.Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.tReady !== this.props.tReady) {
-      // Inform state about translation status
       this.languagePageStore.setTReady(this.props.tReady);
     }
   }
 
   componentWillUnmount(): void {
-    // Reset `<Content />` state
     this.languagePageStore.unmount();
   }
 

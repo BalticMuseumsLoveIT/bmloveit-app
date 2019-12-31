@@ -29,13 +29,11 @@ class ItemPage extends React.Component<Props> {
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.tReady !== this.props.tReady) {
-      // Inform state about translation status
       this.itemPageStore.setTReady(this.props.tReady);
     }
   }
 
   componentWillUnmount(): void {
-    // Reset `<Content />` state
     this.itemPageStore.unmount();
   }
 

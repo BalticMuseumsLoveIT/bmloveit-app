@@ -45,7 +45,6 @@ export default class HomePageStore {
 
       const [siteData] = await Promise.all([
         Api.getSiteData(),
-        // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 

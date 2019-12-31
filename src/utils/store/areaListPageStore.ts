@@ -48,7 +48,6 @@ export default class AreaListPageStore {
       const [areaData, routesData] = await Promise.all([
         Api.getAreaData(),
         Api.getRoutes(),
-        // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 

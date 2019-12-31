@@ -54,7 +54,6 @@ export default class AreaRoutesPageStore {
         Api.getRoutes(),
         Api.getLanguageList(),
         Api.getItemsList(),
-        // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 

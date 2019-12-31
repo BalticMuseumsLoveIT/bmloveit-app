@@ -46,7 +46,6 @@ export default class RouteLocationsListPageStore {
 
       const [locationsData] = await Promise.all([
         Api.getLocationsList(routeId),
-        // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 

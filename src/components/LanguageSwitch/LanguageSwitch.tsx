@@ -34,7 +34,6 @@ export const LanguageSwitch = ({
   });
 
   list.some(language => {
-    // some() will brake loop after first matched element
     if (language.key === userLocale) {
       initialValues.language = userLocale;
       userLocaleMatch = true;
@@ -44,7 +43,6 @@ export const LanguageSwitch = ({
     return false;
   });
 
-  // Render only when locales are available
   if (!ready) return null;
 
   return (

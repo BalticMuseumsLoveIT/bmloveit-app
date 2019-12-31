@@ -82,7 +82,6 @@ export default class LanguagePageStore {
       const [languageList, siteData] = await Promise.all([
         Api.getLanguageList(),
         Api.getSiteData(),
-        // Keep `PROCESSING` state till translations are fetched
         when(() => this.tReady === true),
       ]);
 
