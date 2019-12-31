@@ -39,6 +39,10 @@ class MobileMenu extends React.Component<Props> {
       to: '/login',
       label: () => this.props.t('mainMenu.login', 'Login'),
     },
+    {
+      to: '/profile',
+      label: () => this.props.t('mainMenu.profile', 'Profile'),
+    },
   ];
 
   render() {

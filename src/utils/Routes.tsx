@@ -13,6 +13,7 @@ import AreaRoutesPage from 'pages/AreaRoutesPage';
 import RouteMapPage from 'pages/RouteMapPage';
 import RouteLocationsListPage from 'pages/RouteLocationsListPage';
 import ItemPage from 'pages/ItemPage';
+import ProfilePage from 'pages/ProfilePage';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import React from 'react';
 
@@ -38,6 +39,7 @@ class Routes extends React.Component {
           <AuthRoute exact path="/survey" component={SurveyListPage} />
           <AuthRoute exact path="/survey/:id" component={SurveyDetailsPage} />
           <AuthRoute exact path="/qrcode" component={QrCodePage} />
+          <AuthRoute exact path="/profile" component={ProfilePage} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
       </>

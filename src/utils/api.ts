@@ -8,18 +8,19 @@ import {
   SurveyDetailsInterface,
   SurveyFulfillmentResponse,
   RouteInterface,
-  SignInResponseInterface,
+  AuthTokenInterface,
   SiteInterface,
   AreaInterface,
   ItemInterface,
   LocationInterface,
+  UserProfileInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
   public static signIn = async (
     provider: string,
     accessToken: string,
-  ): Promise<SignInResponseInterface> => {
+  ): Promise<AuthTokenInterface> => {
     const body = {
       grant_type: 'convert_token',
       client_id: process.env.REACT_APP_CLIENT_ID,
@@ -266,6 +267,16 @@ abstract class Api {
     const endpoint = 'api/locations/';
 
     const response = await userStore.axiosInstance.get(endpoint, { params });
+
+    return response.data;
+  };
+
+  public static getUserProfile = async (): Promise<
+    Array<UserProfileInterface>
+  > => {
+    const endpoint = 'api/user_profile/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
 
     return response.data;
   };

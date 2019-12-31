@@ -1,11 +1,3 @@
-export interface SignInResponseInterface {
-  access_token: string;
-  expires_in: number;
-  refresh_token: string;
-  scope: string;
-  token_type: string;
-}
-
 export interface RouteInterface {
   id: number;
   name: string;
@@ -279,6 +271,36 @@ export interface AreaInterface {
   name_translation: Array<CommonApiTranslationInterface>;
   name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
+}
+
+// User Profile ----------------------------------------------------------------
+
+export interface UserProfileInterface {
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+  status: string;
+  language: number;
+  country: number;
+  user: number;
+  guest: boolean;
+  points: number;
+  level_up_points: number | null;
+  for_delete: boolean;
+  owned_items_data: Array<any>;
+  avatar: string | null;
+  badges_data: Array<any>;
+}
+
+// Auth ------------------------------------------------------------------------
+
+export interface AuthTokenInterface {
+  access_token: string;
+  expires_in: number;
+  token_type: string;
+  scope: string;
+  refresh_token: string;
 }
 
 // Generic ---------------------------------------------------------------------
