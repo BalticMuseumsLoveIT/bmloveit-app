@@ -47,11 +47,7 @@ class CookieBar extends React.Component<Props> {
             <Link to={this.cookieBarStore.termsURL}>Learn more</Link>
           </Trans>
         </InfoMessage>
-        <CloseButton
-          type="button"
-          className="close"
-          onClick={this.cookieBarStore.clickHandler}
-        >
+        <CloseButton type="button" onClick={this.cookieBarStore.clickHandler}>
           <span>&times;</span>
         </CloseButton>
       </StyledWrapper>
