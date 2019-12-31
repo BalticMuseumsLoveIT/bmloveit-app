@@ -46,8 +46,18 @@ class ItemPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Item')}</title>
         </Helmet>
         <Content>
-          {/* TODO: Resources */}
           <h1>{this.itemPageStore.itemFullName}</h1>
+          <div>
+            {this.itemPageStore.itemImage && (
+              <p>Image: {this.itemPageStore.itemImage.file_url}</p>
+            )}
+            {this.itemPageStore.itemAudio && (
+              <p>Audio: {this.itemPageStore.itemAudio.file_url}</p>
+            )}
+            {this.itemPageStore.itemVideo && (
+              <p>Video: {this.itemPageStore.itemVideo.file_url}</p>
+            )}
+          </div>
           <div>{this.itemPageStore.itemDescription}</div>
           <Footer>
             <Link to={`#`}>{this.props.t('button.next.label', 'Next')}</Link>

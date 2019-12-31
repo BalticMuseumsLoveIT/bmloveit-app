@@ -1,4 +1,8 @@
-import { ItemInterface } from 'utils/interfaces';
+import {
+  ItemInterface,
+  ResourceDataInterface,
+  ResourceTypeName,
+} from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
@@ -60,8 +64,30 @@ export default class ItemPageStore {
   }
 
   @computed get itemDescription(): string {
-    console.log('Item data', this.itemData);
     return this.itemData.length ? this.itemData[0].description : '';
+  }
+
+  @computed get itemImage(): ResourceDataInterface | null {
+    return this._getResource(ResourceTypeName.Image);
+  }
+
+  @computed get itemAudio(): ResourceDataInterface | null {
+    return this._getResource(ResourceTypeName.Audio);
+  }
+
+  @computed get itemVideo(): ResourceDataInterface | null {
+    return this._getResource(ResourceTypeName.Video);
+  }
+
+  private _getResource(type: ResourceTypeName): ResourceDataInterface | null {
+    if (!this.itemData.length || !this.itemData[0].resources_data.length)
+      return null;
+
+    const resource = this.itemData[0].resources_data.find(
+      resource => resource.type_name === type,
+    );
+
+    return resource ? resource : null;
   }
 
   @action setState = (state: PageState) => {

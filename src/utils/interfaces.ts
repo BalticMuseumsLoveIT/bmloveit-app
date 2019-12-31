@@ -199,10 +199,16 @@ export interface SurveyAnswerResponse {
 
 // Item ------------------------------------------------------------------------
 
+export enum ResourceTypeName {
+  Image = 'image',
+  Video = 'video',
+  Audio = 'audio',
+}
+
 export interface ResourceDataInterface {
   name: string;
   type: string;
-  type_name: string;
+  type_name: ResourceTypeName;
   file_url: string;
 }
 
