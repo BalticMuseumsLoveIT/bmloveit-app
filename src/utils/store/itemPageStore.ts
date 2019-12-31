@@ -90,6 +90,12 @@ export default class ItemPageStore {
     return resource ? resource : null;
   }
 
+  @computed get nextItemId(): number {
+    return this.itemData.length && this.itemData[0].next_items_data.length
+      ? this.itemData[0].next_items_data[0].id
+      : NaN;
+  }
+
   @action setState = (state: PageState) => {
     this.state = state;
   };
