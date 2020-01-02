@@ -55,9 +55,13 @@ class AreaRoutesPage extends React.Component<Props> {
               <div key={language.id}>
                 <h2>{language.value}</h2>
                 {routes.map(route => {
+                  const locations = this.areaRoutesPageStore.locationsByRoute(
+                    route.id,
+                  );
+
                   const attractions = this.areaRoutesPageStore.attractionsByRoute(
                     route.id,
-                  ).length;
+                  );
 
                   return (
                     <p key={route.id}>
@@ -65,7 +69,17 @@ class AreaRoutesPage extends React.Component<Props> {
                         {route.name_full}
                       </Link>
                       <br />
-                      Attractions: {attractions}
+                      {this.props.t(
+                        'routeLocations',
+                        'Locations: {{locations}}',
+                        { locations: locations },
+                      )}
+                      <br />
+                      {this.props.t(
+                        'routeAttractions',
+                        'Attractions: {{attractions}}',
+                        { attractions: attractions },
+                      )}
                     </p>
                   );
                 })}

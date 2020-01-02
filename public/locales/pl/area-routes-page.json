@@ -4,5 +4,7 @@
   },
   "page": {
     "title": "Trasy"
-  }
+  },
+  "routeAttractions": "Liczba atrakcji: {{attractions}}",
+  "routeLocations": "Liczba lokalizacji: {{locations}}"
 }

@@ -70,12 +70,26 @@ export default class AreaRoutesPageStore {
     this.routesData.filter(route => route.languages.includes(languageId)),
   );
 
-  // This is probably wrong because items should not be directly attached to route
-  attractionsByRoute = createTransformer((routeId: number) =>
-    this.itemsData.filter(
-      item => item.routes.includes(routeId) && item.type_data.name === 'screen',
-    ),
-  );
+  locationsByRoute = createTransformer((routeId: number) => {
+    const route = this.routesData.find(route => route.id === routeId);
+
+    return route && route.locations_data.length
+      ? route.locations_data.length
+      : 0;
+  });
+
+  attractionsByRoute = createTransformer((routeId: number) => {
+    const route = this.routesData.find(route => route.id === routeId);
+    let attractions = 0;
+
+    if (route && route.locations_data.length) {
+      route.locations_data.forEach(location => {
+        attractions += location.screens.length;
+      });
+    }
+
+    return attractions;
+  });
 
   @action setState = (state: PageState) => {
     this.state = state;
