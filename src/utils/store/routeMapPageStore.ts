@@ -11,7 +11,7 @@ export enum PageState {
   ERROR,
 }
 
-export default class AreaRoutesPageStore {
+export default class RouteMapPageStore {
   private readonly _manageContentState: boolean;
 
   @observable state: PageState = PageState.NOT_LOADED;
