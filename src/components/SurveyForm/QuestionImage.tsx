@@ -1,9 +1,10 @@
+import { getPrivateMediaURL } from 'utils/helpers';
 import React from 'react';
 
-export const QuestionImage = ({ url, alt }: { url?: string; alt?: string }) => {
-  return url && url.length ? (
+export const QuestionImage = ({path, alt }: { path?: string; alt?: string }) => {
+  return path && path.length ? (
     <div>
-      <img src={url} alt={alt || ''} />
+      <img src={getPrivateMediaURL(path)} alt={alt || ''} />
     </div>
   ) : null;
 };
