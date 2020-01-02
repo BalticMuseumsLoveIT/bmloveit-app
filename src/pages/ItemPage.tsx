@@ -2,6 +2,7 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import ItemPageStore from 'utils/store/itemPageStore';
 import Footer from 'components/Footer/Footer';
+import { getPrivateMediaURL } from 'utils/helpers';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -49,7 +50,17 @@ class ItemPage extends React.Component<Props> {
           <h1>{this.itemPageStore.itemFullName}</h1>
           <div>
             {this.itemPageStore.itemImage && (
-              <p>Image: {this.itemPageStore.itemImage.file_url}</p>
+              <div>
+                <p>Image: {this.itemPageStore.itemImage.file_url}</p>
+                {this.itemPageStore.itemImage.file_url ? (
+                  <img
+                    src={getPrivateMediaURL(
+                      this.itemPageStore.itemImage.file_url,
+                    )}
+                    alt=""
+                  />
+                ) : null}
+              </div>
             )}
             {this.itemPageStore.itemAudio && (
               <p>Audio: {this.itemPageStore.itemAudio.file_url}</p>
