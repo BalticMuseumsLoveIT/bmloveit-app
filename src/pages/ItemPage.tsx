@@ -8,7 +8,9 @@ import { observer } from 'mobx-react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-export interface Props extends WithTranslation, RouteComponentProps<any> {}
+export interface Props
+  extends WithTranslation,
+    RouteComponentProps<{ id: string }> {}
 
 @observer
 class ItemPage extends React.Component<Props> {

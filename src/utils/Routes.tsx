@@ -44,7 +44,7 @@ class Routes extends React.Component {
           <AuthRoute
             exact
             path="/item/:id"
-            render={(props: RouteComponentProps<any>) => (
+            render={(props: RouteComponentProps<{ id: string }>) => (
               <ItemPage key={props.match.params.id} {...props} />
             )}
           />
