@@ -60,7 +60,7 @@ class ItemPage extends React.Component<Props> {
           </div>
           <div>{this.itemPageStore.itemDescription}</div>
           <Footer>
-            <Link to={`item/${this.itemPageStore.nextItemId}`}>
+            <Link to={`/item/${this.itemPageStore.nextItemId}`}>
               {this.props.t('button.next.label', 'Next')}
             </Link>
           </Footer>
