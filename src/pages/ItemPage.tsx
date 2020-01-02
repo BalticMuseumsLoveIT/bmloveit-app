@@ -1,19 +1,15 @@
 import Content from 'components/Content/Content';
-import { UiStore } from 'utils/store/uiStore';
 import ItemPageStore from 'utils/store/itemPageStore';
 import Footer from 'components/Footer/Footer';
 import { getPrivateMediaURL } from 'utils/helpers';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { inject, observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface Props extends WithTranslation, RouteComponentProps<any> {
-  uiStore: UiStore;
-}
+export interface Props extends WithTranslation, RouteComponentProps<any> {}
 
-@inject('uiStore')
 @observer
 class ItemPage extends React.Component<Props> {
   itemPageStore = new ItemPageStore(true);
