@@ -42,6 +42,7 @@ class Routes extends React.Component {
           <AuthRoute exact path="/survey/:id" component={SurveyDetailsPage} />
           <AuthRoute exact path="/qrcode" component={QrCodePage} />
           <AuthRoute exact path="/profile" component={ProfilePage} />
+          <Redirect from="/route/:id" to="/route/:id/map" />
           <Route path="*" component={NotFoundPage} />
         </Switch>
       </>
