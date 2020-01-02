@@ -11,6 +11,7 @@ import QrCodePage from 'pages/QrCodePage';
 import AreaListPage from 'pages/AreaListPage';
 import AreaRoutesPage from 'pages/AreaRoutesPage';
 import RouteMapPage from 'pages/RouteMapPage';
+import RouteEndPage from 'pages/RouteEndPage';
 import RouteLocationsListPage from 'pages/RouteLocationsListPage';
 import ItemPage from 'pages/ItemPage';
 import ProfilePage from 'pages/ProfilePage';
@@ -28,6 +29,7 @@ class Routes extends React.Component {
           <AuthRoute exact path="/area" component={AreaListPage} />
           <AuthRoute exact path="/area/:id/routes" component={AreaRoutesPage} />
           <AuthRoute exact path="/route/:id/map" component={RouteMapPage} />
+          <AuthRoute exact path="/route/:id/end" component={RouteEndPage} />
           <AuthRoute
             exact
             path="/route/:id/locations"
