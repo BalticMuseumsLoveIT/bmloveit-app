@@ -15,7 +15,13 @@ import RouteEndPage from 'pages/RouteEndPage';
 import RouteLocationsListPage from 'pages/RouteLocationsListPage';
 import ItemPage from 'pages/ItemPage';
 import ProfilePage from 'pages/ProfilePage';
-import { Route, Switch, Redirect, RouteComponentProps } from 'react-router-dom';
+import {
+  Route,
+  Switch,
+  Redirect,
+  RouteProps,
+  RouteComponentProps,
+} from 'react-router-dom';
 import React from 'react';
 
 class Routes extends React.Component {
@@ -56,9 +62,7 @@ class Routes extends React.Component {
   }
 }
 
-// AuthRoute's props should be type RouteProps, but typescript throws error:
-// "JSX element type 'Page' does not have any construct or call signatures.ts(2604)"
-const AuthRoute = ({ ...rest }: any) => {
+const AuthRoute = ({ ...rest }: RouteProps) => {
   return userStore.isLoggedIn ? (
     <Route {...rest} />
   ) : (
