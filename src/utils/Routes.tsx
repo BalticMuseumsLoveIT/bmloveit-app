@@ -35,7 +35,13 @@ class Routes extends React.Component {
             path="/route/:id/locations"
             component={RouteLocationsListPage}
           />
-          <AuthRoute exact path="/item/:id" component={ItemPage} />
+          <AuthRoute
+            exact
+            path="/item/:id"
+            render={(props: RouteComponentProps<any>) => (
+              <ItemPage key={props.match.params.id} {...props} />
+            )}
+          />
           <AuthRoute exact path="/quiz" component={QuizListPage} />
           <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />
           <AuthRoute exact path="/survey" component={SurveyListPage} />
