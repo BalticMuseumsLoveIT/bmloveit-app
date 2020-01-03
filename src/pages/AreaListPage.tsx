@@ -47,9 +47,13 @@ class AreaListPage extends React.Component<Props> {
               <p key={area.id}>
                 <Link to={`/area/${area.id}/routes`}>{area.name_full}</Link>
                 <br />
-                Routes: {this.areaListPageStore.routesAmount(area.id)}
+                {this.props.t('counter.routes', 'Routes: {{routes}}', {
+                  routes: this.areaListPageStore.routesAmount(area.id),
+                })}
                 <br />
-                Languages: {this.areaListPageStore.languagesAmount(area.id)}
+                {this.props.t('counter.languages', 'Languages: {{languages}}', {
+                  languages: this.areaListPageStore.languagesAmount(area.id),
+                })}
               </p>
             );
           })}

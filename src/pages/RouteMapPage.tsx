@@ -2,10 +2,11 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import RouteMapPageStore from 'utils/store/routeMapPageStore';
 import Footer from 'components/Footer/Footer';
+import { FooterLink } from 'components/Footer/Footer.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 interface Props extends WithTranslation, RouteComponentProps<any> {
@@ -50,15 +51,19 @@ class RouteMapPage extends React.Component<Props> {
           <h2>{this.routeMapPageStore.routeTitle}</h2>
           <div>Map Component</div>
           <Footer>
-            <Link to={`/area/${this.routeMapPageStore.routeAreaId}/routes`}>
+            <FooterLink
+              to={`/area/${this.routeMapPageStore.routeAreaId}/routes`}
+            >
               {this.props.t('button.changeRoute.label', 'Change route')}
-            </Link>
-            <Link to={`/route/${this.routeMapPageStore.routeId}/locations`}>
+            </FooterLink>
+            <FooterLink
+              to={`/route/${this.routeMapPageStore.routeId}/locations`}
+            >
               {this.props.t('button.viewList.label', 'View list')}
-            </Link>
-            <Link to={`/qrcode`}>
+            </FooterLink>
+            <FooterLink to={`/qrcode`}>
               {this.props.t('button.scanQR.label', 'Scan QR')}
-            </Link>
+            </FooterLink>
           </Footer>
         </Content>
       </>

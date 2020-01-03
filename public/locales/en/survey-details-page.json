@@ -1,4 +1,9 @@
 {
+  "button": {
+    "next": {
+      "label": "Next"
+    }
+  },
   "content": {
     "title": "Survey details"
   },
@@ -13,6 +18,7 @@
       }
     }
   },
+  "itemNotFound": "Item with a given ID was not found",
   "page": {
     "title": "Survey details"
   },

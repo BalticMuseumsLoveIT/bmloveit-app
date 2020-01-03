@@ -229,14 +229,16 @@ export interface ItemInterface {
   resources_data: Array<ResourceDataInterface>;
   quizzes_data: Array<QuizInterface>;
   child_items_data: Array<ItemInterface>;
+  child_items?: Array<number>;
   next_items_data: Array<ItemInterface>;
+  next_items?: Array<number>;
   qr_code: string;
   latitude: number | null;
   longitude: number | null;
   name_translation: Array<CommonLanguageInterface>;
   name_full_translation: Array<CommonLanguageInterface>;
   description_translation: Array<CommonLanguageInterface>;
-  actions_list: [];
+  actions_list: Array<{ id: number; name: string }>;
   routes: Array<number>;
   x: number | null;
   y: number | null;
@@ -289,7 +291,7 @@ export interface UserProfileInterface {
   level_up_points: number | null;
   for_delete: boolean;
   owned_items_data: Array<any>;
-  avatar: string | null;
+  avatar: ItemInterface | null;
   badges_data: Array<any>;
 }
 

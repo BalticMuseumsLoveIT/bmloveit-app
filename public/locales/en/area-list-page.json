@@ -2,6 +2,10 @@
   "content": {
     "title": "Area list"
   },
+  "counter": {
+    "languages": "Languages: {{languages}}",
+    "routes": "Routes: {{routes}}"
+  },
   "page": {
     "title": "Area"
   }

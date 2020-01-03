@@ -1,11 +1,10 @@
 import Content from 'components/Content/Content';
 import ItemPageStore from 'utils/store/itemPageStore';
-import Footer from 'components/Footer/Footer';
-import { getPrivateMediaURL } from 'utils/helpers';
+import { ItemDetails } from 'components/ItemDetails/ItemDetails';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 export interface Props
@@ -45,34 +44,7 @@ class ItemPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Item')}</title>
         </Helmet>
         <Content>
-          <h1>{this.itemPageStore.itemFullName}</h1>
-          <div>
-            {this.itemPageStore.itemImage && (
-              <div>
-                <p>Image: {this.itemPageStore.itemImage.file_url}</p>
-                {this.itemPageStore.itemImage.file_url ? (
-                  <img
-                    src={getPrivateMediaURL(
-                      this.itemPageStore.itemImage.file_url,
-                    )}
-                    alt=""
-                  />
-                ) : null}
-              </div>
-            )}
-            {this.itemPageStore.itemAudio && (
-              <p>Audio: {this.itemPageStore.itemAudio.file_url}</p>
-            )}
-            {this.itemPageStore.itemVideo && (
-              <p>Video: {this.itemPageStore.itemVideo.file_url}</p>
-            )}
-          </div>
-          <div>{this.itemPageStore.itemDescription}</div>
-          <Footer>
-            <Link to={`/item/${this.itemPageStore.nextItemId}`}>
-              {this.props.t('button.next.label', 'Next')}
-            </Link>
-          </Footer>
+          <ItemDetails itemPageStore={this.itemPageStore} />
         </Content>
       </>
     );

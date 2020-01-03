@@ -1,5 +1,7 @@
 import {
   CommonLanguageInterface,
+  ItemInterface,
+  ResourceTypeName,
   UserProfileInterface,
 } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
@@ -46,6 +48,20 @@ export default class ProfilePageStore {
     if (manageContentState) {
       autorun(this._handleContentState);
     }
+  }
+
+  @computed get userAvatar(): ItemInterface | null {
+    return this.userProfileData.length ? this.userProfileData[0].avatar : null;
+  }
+
+  @computed get userAvatarImageURL(): string {
+    if (!this.userAvatar || !this.userAvatar.resources_data.length) return '';
+
+    const resource = this.userAvatar.resources_data.find(
+      resource => resource.type_name === ResourceTypeName.Image,
+    );
+
+    return resource ? resource.file_url : '';
   }
 
   @computed get userName(): string {

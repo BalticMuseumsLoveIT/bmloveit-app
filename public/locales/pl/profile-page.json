@@ -1,13 +1,13 @@
 {
   "button": {
     "logout": {
-      "label": ""
+      "label": "Wyloguj się"
     }
   },
   "content": {
-    "title": ""
+    "title": "Profil użytkownika"
   },
   "page": {
-    "title": ""
+    "title": "Profil uzytkownika"
   }
 }

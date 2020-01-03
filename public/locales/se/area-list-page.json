@@ -2,6 +2,10 @@
   "content": {
     "title": ""
   },
+  "counter": {
+    "languages": "",
+    "routes": ""
+  },
   "page": {
     "title": ""
   }

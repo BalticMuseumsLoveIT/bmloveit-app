@@ -4,6 +4,9 @@
       "label": "Next"
     }
   },
+  "error": {
+    "noAvatarsFound": "No avatars was found for an item with a given ID"
+  },
   "page": {
     "title": "Item"
   }

@@ -1,7 +1,7 @@
 import Content from 'components/Content/Content';
 import ProfilePageStore from 'utils/store/profilePageStore';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
-import { toISO6391 } from 'utils/helpers';
+import { getPrivateMediaURL, toISO6391 } from 'utils/helpers';
 import { UserStore } from 'utils/store/userStore';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -51,6 +51,12 @@ class ProfilePage extends React.Component<Props> {
         <Content>
           <h1>{this.props.t('content.title', 'User Profile')}</h1>
           <p>{this.profilePageStore.userName}</p>
+          {this.profilePageStore.userAvatar && (
+            <img
+              src={getPrivateMediaURL(this.profilePageStore.userAvatarImageURL)}
+              alt={this.profilePageStore.userAvatar.name_full}
+            />
+          )}
           <LanguageSwitch
             list={this.profilePageStore.languageList}
             userLocale={toISO6391(this.props.i18n.language)}

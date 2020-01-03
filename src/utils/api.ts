@@ -270,6 +270,19 @@ abstract class Api {
 
     return response.data;
   };
+
+  public static createEvent = async (actionId: number) => {
+    const formData = {
+      action: actionId,
+    };
+
+    const response = await userStore.axiosInstance.post(
+      'api/events/',
+      formData,
+    );
+
+    return response.data;
+  };
 }
 
 export default Api;

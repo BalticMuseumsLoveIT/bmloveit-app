@@ -4,6 +4,9 @@
       "label": ""
     }
   },
+  "error": {
+    "noAvatarsFound": ""
+  },
   "page": {
     "title": ""
   }
