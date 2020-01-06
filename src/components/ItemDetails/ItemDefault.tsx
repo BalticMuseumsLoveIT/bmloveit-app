@@ -1,7 +1,7 @@
 import { getPrivateMediaURL } from 'utils/helpers';
 import Footer from 'components/Footer/Footer';
 import ItemPageStore from 'utils/store/itemPageStore';
-import { Link } from 'react-router-dom';
+import { FooterLink } from 'components/Footer/Footer.style';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -38,9 +38,9 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
       </div>
       <div>{itemPageStore.itemDescription}</div>
       <Footer>
-        <Link to={`/item/${itemPageStore.nextItemId}`}>
+        <FooterLink to={`/item/${itemPageStore.nextItemId}`}>
           {t('button.next.label', 'Next')}
-        </Link>
+        </FooterLink>
       </Footer>
     </>
   );
