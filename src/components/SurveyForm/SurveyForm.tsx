@@ -29,21 +29,16 @@ export const SurveyForm = ({ survey, onSubmit }: SurveyFormProps) => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {formik => (
-          <Form>
-            {survey.questions_data.map(question => (
-              <Field
-                key={question.id}
-                name={`question_${question.id}`}
-                question={question}
-                component={SurveyQuestion}
-              />
-            ))}
-            <button type="submit" disabled={formik.isSubmitting}>
-              {t('form.button.submit.label', 'Submit')}
-            </button>
-          </Form>
-        )}
+        <Form id="surveyForm">
+          {survey.questions_data.map(question => (
+            <Field
+              key={question.id}
+              name={`question_${question.id}`}
+              question={question}
+              component={SurveyQuestion}
+            />
+          ))}
+        </Form>
       </Formik>
     </>
   );

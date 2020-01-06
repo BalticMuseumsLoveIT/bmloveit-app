@@ -3,6 +3,7 @@ import { ItemNotFound } from 'components/ItemDetails/ItemNotFound';
 import { ItemDefault } from 'components/ItemDetails/ItemDefault';
 import { ItemAvatarChoice } from 'components/ItemDetails/ItemAvatarChoice';
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 interface ItemDetailsProps {
   itemPageStore: ItemPageStore;
@@ -18,6 +19,8 @@ export const ItemDetails = ({ itemPageStore }: ItemDetailsProps) => {
       return <ItemDefault itemPageStore={itemPageStore} />;
     case ItemType.AVATAR_CHOICE:
       return <ItemAvatarChoice itemPageStore={itemPageStore} />;
+    case ItemType.SURVEY:
+      return <Redirect to={`/survey/${itemPageStore.surveyId}`} />;
     default:
       return <ItemNotFound />;
   }

@@ -12,6 +12,10 @@ const StyledWrapper = styled.div`
 export const FooterLink = styled(({ isDisabled, ...rest }) => (
   <Link {...rest} />
 ))`
+  font-size: 1em;
+  background: white;
+  color: royalblue;
+  outline: none;
   display: inline-block;
   padding: 0.5em;
   margin-right: 0.5em;

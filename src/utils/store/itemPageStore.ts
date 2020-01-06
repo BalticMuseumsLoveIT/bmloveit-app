@@ -2,6 +2,7 @@ import {
   ItemInterface,
   ResourceDataInterface,
   ResourceTypeName,
+  SurveyInterface,
 } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
@@ -23,6 +24,7 @@ export enum ItemType {
   DEFAULT = 'default',
   AVATAR_CHOICE = 'avatar_choice',
   AVATAR = 'avatar',
+  SURVEY = 'survey',
   MAP = 'map',
 }
 
@@ -38,6 +40,7 @@ export default class ItemPageStore {
   @observable state: PageState = PageState.NOT_LOADED;
   @observable itemData: Array<ItemInterface> = [];
   @observable avatarData: ItemInterface | null = null;
+  @observable surveyData: SurveyInterface | null = null;
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -71,11 +74,21 @@ export default class ItemPageStore {
       ]);
 
       this.setItemData(itemData);
+
+      if (this.itemType === ItemType.SURVEY) {
+        const surveyData = await Api.getSurveyList(undefined, this.itemId);
+        this.setSurveyData(surveyData);
+      }
+
       this.setState(PageState.LOADED);
     } catch (e) {
       this.setState(PageState.ERROR);
     }
   };
+
+  @computed get itemId(): number {
+    return this.itemData.length ? this.itemData[0].id : NaN;
+  }
 
   @computed get itemType(): string | null {
     return this.itemData.length && null !== this.itemData[0].type
@@ -141,6 +154,10 @@ export default class ItemPageStore {
       : '';
   }
 
+  @computed get surveyId(): number {
+    return this.surveyData !== null ? this.surveyData.id : NaN;
+  }
+
   isAvatarSelected = createTransformer((id: number): boolean => {
     return this.avatarData !== null && this.avatarData.id === id;
   });
@@ -155,6 +172,10 @@ export default class ItemPageStore {
 
   @action setItemData = (itemData: Array<ItemInterface>) => {
     this.itemData = itemData;
+  };
+
+  @action setSurveyData = (surveyData: Array<SurveyInterface>) => {
+    this.surveyData = surveyData.length ? surveyData[0] : null;
   };
 
   @action setAvatar = (avatar: ItemInterface) => {

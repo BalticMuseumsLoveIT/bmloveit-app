@@ -1,11 +1,13 @@
 import {
   isAPIError,
+  ItemInterface,
   SurveyDetailsInterface,
+  SurveyInterface,
   SurveyQuestionType,
 } from 'utils/interfaces';
 import Api from 'utils/api';
 import { ContentState } from 'components/Content/Content';
-import { action, autorun, observable } from 'mobx';
+import { action, autorun, computed, observable } from 'mobx';
 import { FormikValues } from 'formik';
 import uiStore from './uiStore';
 
@@ -13,6 +15,7 @@ export enum SurveyDetailsState {
   NOT_LOADED,
   LOADING,
   LOADED,
+  SUBMITTING,
   SUBMITTED,
   NOT_FOUND,
   ERROR,
@@ -24,6 +27,8 @@ export default class SurveyDetailsStore {
   @observable survey: SurveyDetailsInterface | null = null;
 
   @observable surveyId: number | null = null;
+
+  @observable itemData: ItemInterface | null = null;
 
   private readonly _manageContentState: boolean;
 
@@ -56,6 +61,16 @@ export default class SurveyDetailsStore {
     }
   }
 
+  @computed get isSubmitting(): boolean {
+    return this.state === SurveyDetailsState.SUBMITTING;
+  }
+
+  @computed get nextItemId(): number {
+    return this.itemData !== null && this.itemData.next_item !== null
+      ? this.itemData.next_item
+      : NaN;
+  }
+
   @action setState(state: SurveyDetailsState) {
     this.state = state;
   }
@@ -68,11 +83,27 @@ export default class SurveyDetailsStore {
     this.surveyId = surveyId;
   }
 
+  @action setItemData(itemData: ItemInterface) {
+    this.itemData = itemData;
+  }
+
   @action loadSurvey = async (id: number) => {
     this.setState(SurveyDetailsState.LOADING);
     try {
       this.setSurvey(await Api.getSurveyDetails(id));
       this.setSurveyId(id);
+
+      // SurveyDetails has no information about item...
+      const surveyList = await Api.getSurveyList();
+      const survey: SurveyInterface | undefined = surveyList.find(
+        survey => survey.id === this.surveyId!,
+      );
+
+      if (survey && survey.item !== null) {
+        const item = await Api.getItem(survey.item);
+        if (item.length) this.setItemData(item[0]);
+      }
+
       this.setState(SurveyDetailsState.LOADED);
     } catch (error) {
       if (
@@ -95,6 +126,7 @@ export default class SurveyDetailsStore {
     }
 
     try {
+      this.setState(SurveyDetailsState.SUBMITTING);
       const fulfillment = await Api.getSurveyFulfillment(this.surveyId);
 
       const answers = [];

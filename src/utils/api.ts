@@ -124,8 +124,21 @@ abstract class Api {
    *
    * @throws Axios error
    */
-  public static async getSurveyList(): Promise<Array<SurveyInterface>> {
-    const response = await userStore.axiosInstance.get('api/survey');
+  public static async getSurveyList(
+    location__id?: number,
+    item__id?: number,
+  ): Promise<Array<SurveyInterface>> {
+    const params = {
+      location__id:
+        typeof location__id !== 'undefined' && isNaN(location__id)
+          ? ''
+          : location__id,
+      item__id:
+        typeof item__id !== 'undefined' && isNaN(item__id) ? '' : item__id,
+    };
+    const response = await userStore.axiosInstance.get('api/survey', {
+      params,
+    });
     return response.data;
   }
 

@@ -1,6 +1,7 @@
 import Content from 'components/Content/Content';
 import SurveyDetailsStore from 'utils/store/surveyDetailsStore';
 import { SurveyDetails } from 'components/SurveyDetails/SurveyDetails';
+import { SurveyFooter } from 'components/SurveyFooter/SurveyFooter';
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
@@ -20,7 +21,7 @@ class SurveyDetailsPage extends Component<SurveyDetailsProps> {
       params: { id },
     } = this.props.match;
 
-    await this.surveyDetailsStore.loadSurvey(id);
+    await this.surveyDetailsStore.loadSurvey(parseInt(id));
   }
 
   componentWillUnmount(): void {
@@ -41,6 +42,11 @@ class SurveyDetailsPage extends Component<SurveyDetailsProps> {
             state={this.surveyDetailsStore.state}
             survey={this.surveyDetailsStore.survey}
             onSubmit={this.surveyDetailsStore.handleSubmit}
+          />
+          <SurveyFooter
+            state={this.surveyDetailsStore.state}
+            nextItemId={this.surveyDetailsStore.nextItemId}
+            isSubmitting={this.surveyDetailsStore.isSubmitting}
           />
         </Content>
       </>
