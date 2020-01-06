@@ -130,16 +130,14 @@ export default class ItemPageStore {
   }
 
   @computed get nextItemId(): string {
-    return this.itemData.length && this.itemData[0].next_items_data.length
-      ? this.itemData[0].next_items_data[0].id.toString()
+    return this.itemData.length && this.itemData[0].next_item !== null
+      ? this.itemData[0].next_item.toString()
       : '';
   }
 
   @computed get selectedAvatarNextItemId(): string {
-    return this.avatarData !== null &&
-      this.avatarData.next_items &&
-      this.avatarData.next_items.length
-      ? this.avatarData.next_items[0].toString()
+    return this.avatarData !== null && this.avatarData.next_item !== null
+      ? this.avatarData.next_item.toString()
       : '';
   }
 

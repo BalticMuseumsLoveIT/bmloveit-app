@@ -230,8 +230,7 @@ export interface ItemInterface {
   quizzes_data: Array<QuizInterface>;
   child_items_data: Array<ItemInterface>;
   child_items?: Array<number>;
-  next_items_data: Array<ItemInterface>;
-  next_items?: Array<number>;
+  next_item: number | null;
   qr_code: string;
   latitude: number | null;
   longitude: number | null;
