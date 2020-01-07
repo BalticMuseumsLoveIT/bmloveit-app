@@ -5,11 +5,10 @@ export const StyledWrapper = styled.div`
   color: ${({ theme }) => theme.color.font.alternative};
   display: flex;
   align-items: center;
-  padding: 0.5em;
 `;
 
 export const InfoMessage = styled.p`
-  margin: 0;
+  margin: 0.5em;
   flex-grow: 1;
 
   a {
@@ -21,4 +20,11 @@ export const InfoMessage = styled.p`
   }
 `;
 
-export const CloseButton = styled.button``;
+export const CloseButton = styled.button`
+  padding: 0;
+  outline: none;
+  margin: 0.5em;
+  font-size: 1em;
+  width: 2em;
+  height: 2em;
+`;

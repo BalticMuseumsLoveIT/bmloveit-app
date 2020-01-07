@@ -7,14 +7,22 @@ interface InnerHamburgerProps {
 const StyledWrapper = styled.button`
   border: none;
   background: none;
-  padding: 20px 15px;
+  padding: 0;
+  outline: none;
+  margin: 0.5em;
+  width: 2em;
+  height: 2em;
+  font-size: 1em;
+  line-height: 0;
   z-index: 3;
+  grid-column-start: 5;
+  grid-column-end: span 1;
 `;
 
 export const InnerHamburger = styled.div<InnerHamburgerProps>`
   position: relative;
-  width: 25px;
-  height: 4px;
+  width: 2em;
+  height: 0.3125em;
   background-color: ${({ theme, isOpened }) =>
     isOpened ? 'transparent' : theme.color.dark};
   transition: background-color 0.25s ease;
@@ -31,14 +39,14 @@ export const InnerHamburger = styled.div<InnerHamburgerProps>`
   }
 
   ::before {
-    top: -8px;
-    transform: translateY(${({ isOpened }) => (isOpened ? '8px' : '0')})
+    top: -0.625em;
+    transform: translateY(${({ isOpened }) => (isOpened ? '0.625em' : '0')})
       rotate(${({ isOpened }) => (isOpened ? '45deg' : '0')});
   }
 
   ::after {
-    top: 8px;
-    transform: translateY(${({ isOpened }) => (isOpened ? '-8px' : '0')})
+    top: 0.625em;
+    transform: translateY(${({ isOpened }) => (isOpened ? '-0.625em' : '0')})
       rotate(${({ isOpened }) => (isOpened ? '-45deg' : '0')});
   }
 `;
