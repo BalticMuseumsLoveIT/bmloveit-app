@@ -14,6 +14,7 @@ import {
   ItemInterface,
   LocationInterface,
   UserProfileInterface,
+  TeamInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -295,6 +296,54 @@ abstract class Api {
     );
 
     return response.data;
+  };
+
+  public static getTeamList = async (): Promise<Array<TeamInterface>> => {
+    const endpoint = 'api/team/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    return response.data;
+  };
+
+  public static teamCreate = async (teamName: string) => {
+    const formData = {
+      name: teamName,
+    };
+
+    const response = await userStore.axiosInstance.post(
+      'api/team-create/',
+      formData,
+    );
+
+    return response;
+  };
+
+  public static teamJoin = async (teamName: string, teamAccessCode: string) => {
+    const formData = {
+      name: teamName,
+      access_code: teamAccessCode,
+    };
+
+    const response = await userStore.axiosInstance.post(
+      'api/team-membership/',
+      formData,
+    );
+
+    return response;
+  };
+
+  public static teamLeave = async (teamName: string) => {
+    const formData = {
+      name: teamName,
+    };
+
+    const response = await userStore.axiosInstance.post(
+      'api/team-membership/',
+      formData,
+    );
+
+    return response;
   };
 }
 

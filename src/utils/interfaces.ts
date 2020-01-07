@@ -304,6 +304,27 @@ export interface AuthTokenInterface {
   refresh_token: string;
 }
 
+// Teams -----------------------------------------------------------------------
+
+interface TeamUserInterface {
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+  points: number;
+  owned_items_data: [];
+  avatar: ItemInterface | null;
+  badges_data: [];
+}
+
+export interface TeamInterface {
+  id: number;
+  name: string;
+  users: Array<TeamUserInterface>;
+  avatar: ItemInterface | null;
+  access_code: number;
+}
+
 // Generic ---------------------------------------------------------------------
 
 export interface APIErrorInterface {

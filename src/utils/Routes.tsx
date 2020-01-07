@@ -15,6 +15,7 @@ import RouteEndPage from 'pages/RouteEndPage';
 import RouteLocationsListPage from 'pages/RouteLocationsListPage';
 import ItemPage from 'pages/ItemPage';
 import ProfilePage from 'pages/ProfilePage';
+import TeamPage from 'pages/TeamPage';
 import {
   Route,
   Switch,
@@ -48,6 +49,7 @@ class Routes extends React.Component {
               <ItemPage key={props.match.params.id} {...props} />
             )}
           />
+          <AuthRoute exact path="/team" component={TeamPage} />
           <AuthRoute exact path="/quiz" component={QuizListPage} />
           <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />
           <AuthRoute exact path="/survey" component={SurveyListPage} />

@@ -1,0 +1,39 @@
+{
+  "content": {
+    "title": {
+      "createTeam": "",
+      "joinTeam": "",
+      "teamList": ""
+    }
+  },
+  "form": {
+    "button": {
+      "create": {
+        "text": ""
+      },
+      "join": {
+        "text": ""
+      }
+    },
+    "teamAccessCode": {
+      "label": ""
+    },
+    "teamName": {
+      "label": ""
+    }
+  },
+  "page": {
+    "title": ""
+  },
+  "validationSchema": {
+    "name": {
+      "required": ""
+    },
+    "teamAccessCode": {
+      "required": ""
+    },
+    "teamName": {
+      "required": ""
+    }
+  }
+}
