@@ -14,7 +14,6 @@ export enum QuizDetailsState {
   NOT_LOADED,
   LOADING,
   LOADED,
-  SUBMITTING,
   SUBMITTED,
   NOT_FOUND,
   ERROR,
@@ -29,6 +28,8 @@ export default class QuizDetailsStore {
 
   @observable itemData: ItemInterface | null = null;
 
+  @observable isSubmitting = false;
+
   private readonly _manageContentState: boolean;
 
   private _handleContentState = () => {
@@ -38,7 +39,6 @@ export default class QuizDetailsStore {
         break;
       case QuizDetailsState.NOT_LOADED:
       case QuizDetailsState.LOADED:
-      case QuizDetailsState.SUBMITTING:
       case QuizDetailsState.SUBMITTED:
       case QuizDetailsState.NOT_FOUND:
       case QuizDetailsState.ERROR:
@@ -80,10 +80,6 @@ export default class QuizDetailsStore {
     return this.state === QuizDetailsState.SUBMITTED;
   }
 
-  @computed get isSubmitting(): boolean {
-    return this.state === QuizDetailsState.SUBMITTING;
-  }
-
   @computed get nextItemId(): number {
     return this.itemData !== null && this.itemData.next_item !== null
       ? this.itemData.next_item
@@ -104,6 +100,10 @@ export default class QuizDetailsStore {
 
   @action setItemData(itemData: Array<ItemInterface>) {
     this.itemData = itemData.length ? itemData[0] : null;
+  }
+
+  @action setIsSubmitting(isSubmitting: boolean) {
+    this.isSubmitting = isSubmitting;
   }
 
   @action
@@ -139,12 +139,15 @@ export default class QuizDetailsStore {
     }
 
     try {
+      this.setIsSubmitting(true);
       const fulfillment = await Api.getQuizFulfillment(this.quiz.id);
       const answer = await Api.getQuizAnswer(fulfillment.id, question, option);
       this.setAnswer(answer);
       this.setState(QuizDetailsState.SUBMITTED);
     } catch (e) {
       this.setState(QuizDetailsState.ERROR);
+    } finally {
+      this.setIsSubmitting(false);
     }
   }
 }
