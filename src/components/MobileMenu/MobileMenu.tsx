@@ -20,24 +20,8 @@ class MobileMenu extends React.Component<Props> {
       label: () => this.props.t('mainMenu.home', 'Home'),
     },
     {
-      to: '/quiz',
-      label: () => this.props.t('mainMenu.quiz', 'Quiz'),
-    },
-    {
-      to: '/survey',
-      label: () => this.props.t('mainMenu.survey', 'Survey'),
-    },
-    {
-      to: '/routes',
-      label: () => this.props.t('mainMenu.routes', 'Available Routes'),
-    },
-    {
-      to: '/qrcode',
-      label: () => this.props.t('mainMenu.qr', 'QR Code'),
-    },
-    {
-      to: '/login',
-      label: () => this.props.t('mainMenu.login', 'Login'),
+      to: '/area',
+      label: () => this.props.t('mainMenu.areas', 'Change area'),
     },
     {
       to: '/profile',
