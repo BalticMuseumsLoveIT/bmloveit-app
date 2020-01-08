@@ -21,7 +21,6 @@ export const QuizFooter = function({
 
   switch (state) {
     case QuizDetailsState.LOADED:
-    case QuizDetailsState.SUBMITTING:
       return (
         <Footer>
           <FooterLink

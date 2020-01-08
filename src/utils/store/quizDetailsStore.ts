@@ -38,6 +38,7 @@ export default class QuizDetailsStore {
         break;
       case QuizDetailsState.NOT_LOADED:
       case QuizDetailsState.LOADED:
+      case QuizDetailsState.SUBMITTING:
       case QuizDetailsState.SUBMITTED:
       case QuizDetailsState.NOT_FOUND:
       case QuizDetailsState.ERROR:
@@ -138,7 +139,6 @@ export default class QuizDetailsStore {
     }
 
     try {
-      this.setState(QuizDetailsState.SUBMITTING);
       const fulfillment = await Api.getQuizFulfillment(this.quiz.id);
       const answer = await Api.getQuizAnswer(fulfillment.id, question, option);
       this.setAnswer(answer);
