@@ -250,12 +250,14 @@ export interface SiteInterface {
   name: string;
   title: string;
   description: string;
+  about: string;
   terms_url: string;
   logo: string;
   image: string;
   name_translation: Array<CommonApiTranslationInterface>;
   title_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
+  about_translation: Array<CommonApiTranslationInterface>;
 }
 
 // Area ------------------------------------------------------------------------

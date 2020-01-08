@@ -16,6 +16,7 @@ import RouteLocationsListPage from 'pages/RouteLocationsListPage';
 import ItemPage from 'pages/ItemPage';
 import ProfilePage from 'pages/ProfilePage';
 import TeamPage from 'pages/TeamPage';
+import AboutPage from 'pages/AboutPage';
 import {
   Route,
   Switch,
@@ -31,6 +32,7 @@ class Routes extends React.Component {
       <>
         <Switch>
           <AuthRoute exact path="/" component={HomePage} />
+          <AuthRoute exact path="/about" component={AboutPage} />
           <Route exact path="/language" component={LanguagePage} />
           <Route exact path="/login" component={LoginPage} />
           <AuthRoute exact path="/area" component={AreaListPage} />
