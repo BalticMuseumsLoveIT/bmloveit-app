@@ -21,6 +21,8 @@ export const ItemDetails = ({ itemPageStore }: ItemDetailsProps) => {
       return <ItemAvatarChoice itemPageStore={itemPageStore} />;
     case ItemType.SURVEY:
       return <Redirect to={`/survey/${itemPageStore.surveyId}`} />;
+    case ItemType.QUIZ:
+      return <Redirect to={`/quiz/${itemPageStore.quizId}`} />;
     default:
       return <ItemNotFound />;
   }

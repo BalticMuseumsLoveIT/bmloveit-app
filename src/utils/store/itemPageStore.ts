@@ -25,6 +25,7 @@ export enum ItemType {
   AVATAR_CHOICE = 'avatar_choice',
   AVATAR = 'avatar',
   SURVEY = 'survey',
+  QUIZ = 'quiz',
   MAP = 'map',
 }
 
@@ -156,6 +157,12 @@ export default class ItemPageStore {
 
   @computed get surveyId(): number {
     return this.surveyData !== null ? this.surveyData.id : NaN;
+  }
+
+  @computed get quizId(): number {
+    return this.itemData.length && this.itemData[0].quizzes_data.length
+      ? this.itemData[0].quizzes_data[0].id
+      : NaN;
   }
 
   isAvatarSelected = createTransformer((id: number): boolean => {

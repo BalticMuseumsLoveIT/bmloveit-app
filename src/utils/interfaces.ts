@@ -87,6 +87,8 @@ export interface QuizInterface {
   name: string;
   name_full: string;
   description: string;
+  location: number | null;
+  item: number | null;
   language: number;
   name_translation: Array<TranslationItemInterface>;
   name_full_translation: Array<TranslationItemInterface>;

@@ -1,22 +1,23 @@
 import { QuizAnswerResponse } from 'utils/interfaces';
-import { Link } from 'react-router-dom';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface QuizSummaryProps {
   answer: QuizAnswerResponse | null;
 }
 
 export const QuizSummary = function({ answer }: QuizSummaryProps) {
+  const { t, ready } = useTranslation('quiz-details-page');
+
+  if (!ready) return null;
+
   return (
     answer && (
       <div>
         <p>
           {answer.correct
-            ? 'Congratulations! This is a correct answer'
-            : 'Sorry but selected answer is incorrect'}
-        </p>
-        <p>
-          <Link to="/quiz">Go to the list of active quizzes</Link>
+            ? t('summary.correct', 'Congratulations! This is a correct answer')
+            : t('summary.incorrect', 'Sorry but selected answer is incorrect')}
         </p>
       </div>
     )

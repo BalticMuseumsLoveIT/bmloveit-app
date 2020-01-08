@@ -1,6 +1,7 @@
 import QuizDetailsStore from 'utils/store/quizDetailsStore';
 import Content from 'components/Content/Content';
 import { QuizDetails } from 'components/QuizDetails/QuizDetails';
+import { QuizFooter } from 'components/QuizFooter/QuizFooter';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
@@ -38,6 +39,11 @@ class QuizPage extends React.Component<Props> {
           <QuizDetails
             state={this.quizDetailsStore.state}
             store={this.quizDetailsStore}
+          />
+          <QuizFooter
+            state={this.quizDetailsStore.state}
+            nextItemId={this.quizDetailsStore.nextItemId}
+            isSubmitting={this.quizDetailsStore.isSubmitting}
           />
         </Content>
       </>

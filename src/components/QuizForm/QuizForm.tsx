@@ -48,15 +48,12 @@ class QuizForm extends React.Component<QuizFormProps> {
           {({ isSubmitting }) => {
             const isDisabled = isSubmitting || store.isSubmitted;
             return (
-              <Form>
+              <Form id="quizForm">
                 <QuizQuestion
                   name={radioGroupName}
                   question={question}
                   isDisabled={isDisabled}
                 />
-                <button type="submit" disabled={isDisabled}>
-                  {this.props.t('form.button.submit.label', 'Submit')}
-                </button>
               </Form>
             );
           }}

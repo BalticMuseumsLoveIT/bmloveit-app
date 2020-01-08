@@ -16,6 +16,10 @@
   "page": {
     "title": ""
   },
+  "summary": {
+    "correct": "",
+    "incorrect": ""
+  },
   "validationSchema": {
     "question": {
       "required": ""

@@ -16,6 +16,10 @@
   "page": {
     "title": "Quiz"
   },
+  "summary": {
+    "correct": "Gratulacje! To jest prawidłowa odpowiedź",
+    "incorrect": "Niestety zaznaczona odpowiedź jest nieprawidłowa"
+  },
   "validationSchema": {
     "question": {
       "required": "Quiz wymaga zaznaczenia 1 odpowiedzi"

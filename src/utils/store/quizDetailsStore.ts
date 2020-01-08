@@ -1,5 +1,6 @@
 import {
   isQuizDetailsNotFound,
+  ItemInterface,
   QuizAnswerResponse,
   QuizDetailsInterface,
   QuizQuestionInterface,
@@ -13,6 +14,7 @@ export enum QuizDetailsState {
   NOT_LOADED,
   LOADING,
   LOADED,
+  SUBMITTING,
   SUBMITTED,
   NOT_FOUND,
   ERROR,
@@ -24,6 +26,8 @@ export default class QuizDetailsStore {
   @observable quiz: QuizDetailsInterface | null = null;
 
   @observable answer: QuizAnswerResponse | null = null;
+
+  @observable itemData: ItemInterface | null = null;
 
   private readonly _manageContentState: boolean;
 
@@ -55,6 +59,7 @@ export default class QuizDetailsStore {
       autorun(this._handleContentState);
     }
   }
+
   @computed get question(): QuizQuestionInterface | null {
     switch (this.state) {
       case QuizDetailsState.LOADED:
@@ -74,6 +79,16 @@ export default class QuizDetailsStore {
     return this.state === QuizDetailsState.SUBMITTED;
   }
 
+  @computed get isSubmitting(): boolean {
+    return this.state === QuizDetailsState.SUBMITTING;
+  }
+
+  @computed get nextItemId(): number {
+    return this.itemData !== null && this.itemData.next_item !== null
+      ? this.itemData.next_item
+      : NaN;
+  }
+
   @action setState(state: QuizDetailsState) {
     this.state = state;
   }
@@ -86,11 +101,21 @@ export default class QuizDetailsStore {
     this.answer = answer;
   }
 
+  @action setItemData(itemData: Array<ItemInterface>) {
+    this.itemData = itemData.length ? itemData[0] : null;
+  }
+
   @action
   async loadQuiz(id: number) {
     this.setState(QuizDetailsState.LOADING);
     try {
       this.setQuiz(await Api.getQuiz(id));
+
+      if (this.quiz && this.quiz.item !== null) {
+        const item = await Api.getItem(this.quiz.item);
+        if (item.length) this.setItemData(item);
+      }
+
       this.setState(QuizDetailsState.LOADED);
     } catch (e) {
       if (
@@ -113,8 +138,10 @@ export default class QuizDetailsStore {
     }
 
     try {
+      this.setState(QuizDetailsState.SUBMITTING);
       const fulfillment = await Api.getQuizFulfillment(this.quiz.id);
-      this.setAnswer(await Api.getQuizAnswer(fulfillment.id, question, option));
+      const answer = await Api.getQuizAnswer(fulfillment.id, question, option);
+      this.setAnswer(answer);
       this.setState(QuizDetailsState.SUBMITTED);
     } catch (e) {
       this.setState(QuizDetailsState.ERROR);
