@@ -1,11 +1,12 @@
 import Content from 'components/Content/Content';
-import ItemPageStore from 'utils/store/itemPageStore';
+import ItemPageStore, { ItemKind } from 'utils/store/itemPageStore';
 import { ItemDetails } from 'components/ItemDetails/ItemDetails';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import ReactModal from 'react-modal';
 
 export interface Props
   extends WithTranslation,
@@ -37,6 +38,13 @@ class ItemPage extends React.Component<Props> {
 
   render() {
     if (!this.props.tReady) return null;
+
+    if (this.itemPageStore.itemKind === ItemKind.POPUP)
+      return (
+        <ReactModal isOpen={true}>
+          <ItemDetails itemPageStore={this.itemPageStore} />
+        </ReactModal>
+      );
 
     return (
       <>

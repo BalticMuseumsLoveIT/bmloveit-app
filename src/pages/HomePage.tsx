@@ -6,7 +6,7 @@ import { FooterLink } from 'components/Footer/Footer.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 interface Props extends WithTranslation, RouteComponentProps {
@@ -49,6 +49,14 @@ class HomePage extends React.Component<Props> {
           </div>
           <h1>{this.homePageStore.siteTitle}</h1>
           <div>{this.homePageStore.siteDescription}</div>
+          <Link
+            to={{
+              pathname: '/item/22',
+              state: { popup: this.props.location },
+            }}
+          >
+            Item Popup
+          </Link>
           <Footer>
             <FooterLink to="/area">
               {this.props.t('buttonStart.label', 'Start sightseeing')}
