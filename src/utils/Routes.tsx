@@ -19,7 +19,6 @@ import TeamPage from 'pages/TeamPage';
 import AboutPage from 'pages/AboutPage';
 import ReactModal from 'react-modal';
 import {
-  useLocation,
   Route,
   Switch,
   Redirect,
@@ -31,45 +30,38 @@ import React from 'react';
 ReactModal.setAppElement('#root');
 
 const Routes = () => {
-  const location = useLocation();
-  const popup = location.state && location.state.popup;
-
   return (
-    <>
-      <Switch location={popup || location}>
-        <AuthRoute exact path="/" component={HomePage} />
-        <AuthRoute exact path="/about" component={AboutPage} />
-        <Route exact path="/language" component={LanguagePage} />
-        <Route exact path="/login" component={LoginPage} />
-        <AuthRoute exact path="/area" component={AreaListPage} />
-        <AuthRoute exact path="/area/:id/routes" component={AreaRoutesPage} />
-        <AuthRoute exact path="/route/:id/map" component={RouteMapPage} />
-        <AuthRoute exact path="/route/:id/end" component={RouteEndPage} />
-        <AuthRoute
-          exact
-          path="/route/:id/locations"
-          component={RouteLocationsListPage}
-        />
-        <AuthRoute
-          exact
-          path="/item/:id"
-          render={(props: RouteComponentProps<{ id: string }>) => (
-            <ItemPage key={props.match.params.id} {...props} />
-          )}
-        />
-        <AuthRoute exact path="/team" component={TeamPage} />
-        <AuthRoute exact path="/quiz" component={QuizListPage} />
-        <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />
-        <AuthRoute exact path="/survey" component={SurveyListPage} />
-        <AuthRoute exact path="/survey/:id" component={SurveyDetailsPage} />
-        <AuthRoute exact path="/qrcode" component={QrCodePage} />
-        <AuthRoute exact path="/profile" component={ProfilePage} />
-        <Redirect from="/route/:id" to="/route/:id/map" />
-        <Route path="*" component={NotFoundPage} />
-      </Switch>
-
-      {popup && <Route path="/item/:id" component={ItemPage} />}
-    </>
+    <Switch>
+      <AuthRoute exact path="/" component={HomePage} />
+      <AuthRoute exact path="/about" component={AboutPage} />
+      <Route exact path="/language" component={LanguagePage} />
+      <Route exact path="/login" component={LoginPage} />
+      <AuthRoute exact path="/area" component={AreaListPage} />
+      <AuthRoute exact path="/area/:id/routes" component={AreaRoutesPage} />
+      <AuthRoute exact path="/route/:id/map" component={RouteMapPage} />
+      <AuthRoute exact path="/route/:id/end" component={RouteEndPage} />
+      <AuthRoute
+        exact
+        path="/route/:id/locations"
+        component={RouteLocationsListPage}
+      />
+      <AuthRoute
+        exact
+        path="/item/:id"
+        render={(props: RouteComponentProps<{ id: string }>) => (
+          <ItemPage key={props.match.params.id} {...props} />
+        )}
+      />
+      <AuthRoute exact path="/team" component={TeamPage} />
+      <AuthRoute exact path="/quiz" component={QuizListPage} />
+      <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />
+      <AuthRoute exact path="/survey" component={SurveyListPage} />
+      <AuthRoute exact path="/survey/:id" component={SurveyDetailsPage} />
+      <AuthRoute exact path="/qrcode" component={QrCodePage} />
+      <AuthRoute exact path="/profile" component={ProfilePage} />
+      <Redirect from="/route/:id" to="/route/:id/map" />
+      <Route path="*" component={NotFoundPage} />
+    </Switch>
   );
 };
 

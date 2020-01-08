@@ -6,7 +6,6 @@ import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import ReactModal from 'react-modal';
 
 export interface Props
   extends WithTranslation,
@@ -39,23 +38,24 @@ class ItemPage extends React.Component<Props> {
   render() {
     if (!this.props.tReady) return null;
 
-    if (this.itemPageStore.itemKind === ItemKind.POPUP)
+    if (ItemKind.SCREEN === this.itemPageStore.itemKind) {
       return (
-        <ReactModal isOpen={true}>
-          <ItemDetails itemPageStore={this.itemPageStore} />
-        </ReactModal>
+        <>
+          <Helmet>
+            <title>{this.props.t('page.title', 'Item')}</title>
+          </Helmet>
+          <Content>
+            <ItemDetails itemPageStore={this.itemPageStore} />
+          </Content>
+        </>
       );
+    }
 
-    return (
-      <>
-        <Helmet>
-          <title>{this.props.t('page.title', 'Item')}</title>
-        </Helmet>
-        <Content>
-          <ItemDetails itemPageStore={this.itemPageStore} />
-        </Content>
-      </>
-    );
+    if (ItemKind.POPUP === this.itemPageStore.itemKind) {
+      return <ItemDetails itemPageStore={this.itemPageStore} />;
+    }
+
+    return null;
   }
 }
 
