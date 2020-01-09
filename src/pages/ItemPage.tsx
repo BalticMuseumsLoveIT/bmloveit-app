@@ -1,7 +1,7 @@
 import Content from 'components/Content/Content';
 import ItemPageStore from 'utils/store/itemPageStore';
 import { ItemDetails } from 'components/ItemDetails/ItemDetails';
-import ModalStore from 'utils/store/modalStore';
+import ReactModalStore from 'utils/store/reactModalStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
@@ -17,14 +17,14 @@ export interface Props
 @observer
 class ItemPage extends React.Component<Props> {
   itemPageStore = new ItemPageStore(true);
-  modalStore: ModalStore;
+  modalStore: ReactModalStore;
 
   constructor(props: Props) {
     super(props);
 
     const { popup } = queryString.parse(this.props.location.search);
 
-    this.modalStore = new ModalStore({
+    this.modalStore = new ReactModalStore({
       isOpen:
         typeof popup !== 'undefined' && popup !== null && popup.length > 0,
     });

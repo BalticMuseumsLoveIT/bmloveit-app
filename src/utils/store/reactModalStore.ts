@@ -2,7 +2,7 @@ import { action, observable } from 'mobx';
 import { ReactNode } from 'react';
 import { Props as ReactModalProps } from 'react-modal';
 
-export default class ModalStore {
+export default class ReactModalStore {
   @observable props: ReactModalProps;
 
   @observable content: ReactNode = null;
