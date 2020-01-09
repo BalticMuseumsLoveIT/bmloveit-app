@@ -8,6 +8,7 @@ import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
+import queryString from 'query-string';
 
 export interface Props
   extends WithTranslation,
@@ -16,7 +17,18 @@ export interface Props
 @observer
 class ItemPage extends React.Component<Props> {
   itemPageStore = new ItemPageStore(true);
-  modalStore = new ModalStore();
+  modalStore: ModalStore;
+
+  constructor(props: Props) {
+    super(props);
+
+    const { popup } = queryString.parse(this.props.location.search);
+
+    this.modalStore = new ModalStore({
+      isOpen:
+        typeof popup !== 'undefined' && popup !== null && popup.length > 0,
+    });
+  }
 
   async componentDidMount(): Promise<void> {
     const {
