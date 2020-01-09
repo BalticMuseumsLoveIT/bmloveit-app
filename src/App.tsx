@@ -1,3 +1,4 @@
+import Layout from 'components/Layout/Layout';
 import Routes from 'utils/Routes';
 import stores from 'utils/store/stores';
 import React from 'react';
@@ -9,7 +10,9 @@ class App extends React.Component {
     return (
       <Provider {...stores}>
         <BrowserRouter>
-          <Routes />
+          <Layout>
+            <Routes />
+          </Layout>
         </BrowserRouter>
       </Provider>
     );
