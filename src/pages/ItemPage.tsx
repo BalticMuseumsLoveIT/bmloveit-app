@@ -19,13 +19,21 @@ class ItemPage extends React.Component<Props> {
   itemPageStore = new ItemPageStore(true);
 
   itemPopupStore = new ItemPopupStore();
-  reactModalStore = new ReactModalStore(undefined, this
-    .props as RouteComponentProps);
+
+  reactModalStore = new ReactModalStore({
+    isOpen: false,
+    onRequestClose: () => this._closePopup(),
+  });
 
   private _openPopup = async (popupItemId: number) => {
     this.reactModalStore.openModal();
     await this.itemPopupStore.load(popupItemId);
     this.reactModalStore.setModalContent(this.itemPopupStore.title);
+  };
+
+  private _closePopup = () => {
+    this.reactModalStore.closeModal();
+    this.props.history.push(this.props.location.pathname);
   };
 
   async componentDidMount(): Promise<void> {
