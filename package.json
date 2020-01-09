@@ -22,6 +22,7 @@
     "mobx-localstorage": "^2.0.0-alpha.1",
     "mobx-react": "^6.1.4",
     "mobx-utils": "^5.5.2",
+    "query-string": "^6.9.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-facebook-login": "^4.1.1",
