@@ -2,13 +2,13 @@ import Content from 'components/Content/Content';
 import ItemPageStore from 'utils/store/itemPageStore';
 import { ItemDetails } from 'components/ItemDetails/ItemDetails';
 import ReactModalStore from 'utils/store/reactModalStore';
+import ItemPopupStore from 'utils/store/itemPopupStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
-import queryString from 'query-string';
 
 export interface Props
   extends WithTranslation,
@@ -17,18 +17,16 @@ export interface Props
 @observer
 class ItemPage extends React.Component<Props> {
   itemPageStore = new ItemPageStore(true);
-  modalStore: ReactModalStore;
 
-  constructor(props: Props) {
-    super(props);
+  itemPopupStore = new ItemPopupStore();
+  reactModalStore = new ReactModalStore(undefined, this
+    .props as RouteComponentProps);
 
-    const { popup } = queryString.parse(this.props.location.search);
-
-    this.modalStore = new ReactModalStore({
-      isOpen:
-        typeof popup !== 'undefined' && popup !== null && popup.length > 0,
-    });
-  }
+  private _openPopup = async (popupItemId: number) => {
+    this.reactModalStore.openModal();
+    await this.itemPopupStore.load(popupItemId);
+    this.reactModalStore.setModalContent(this.itemPopupStore.title);
+  };
 
   async componentDidMount(): Promise<void> {
     const {
@@ -38,11 +36,32 @@ class ItemPage extends React.Component<Props> {
     this.itemPageStore.setTReady(this.props.tReady);
 
     await this.itemPageStore.loadData(Number.parseInt(id));
+
+    const popupItemId = this.itemPopupStore.getIdFromQS(
+      this.props.location.search,
+    );
+
+    if (!isNaN(popupItemId)) this._openPopup(popupItemId);
   }
 
-  componentDidUpdate(prevProps: Props) {
+  async componentDidUpdate(prevProps: Props) {
     if (prevProps.tReady !== this.props.tReady) {
       this.itemPageStore.setTReady(this.props.tReady);
+    }
+
+    const previousPopupItemId = this.itemPopupStore.getIdFromQS(
+      prevProps.location.search,
+    );
+
+    const currentPopupItemId = this.itemPopupStore.getIdFromQS(
+      this.props.location.search,
+    );
+
+    if (
+      previousPopupItemId !== currentPopupItemId &&
+      !isNaN(currentPopupItemId)
+    ) {
+      this._openPopup(currentPopupItemId);
     }
   }
 
@@ -59,10 +78,11 @@ class ItemPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Item')}</title>
         </Helmet>
         <Content>
+          <Link to="?popup=22">Open popup 22</Link>
           <ItemDetails itemPageStore={this.itemPageStore} />
         </Content>
-        <ReactModal {...this.modalStore.props}>
-          {this.modalStore.content}
+        <ReactModal {...this.reactModalStore.props}>
+          {this.reactModalStore.content}
         </ReactModal>
       </>
     );
