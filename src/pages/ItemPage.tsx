@@ -6,7 +6,7 @@ import ItemPopupStore from 'utils/store/itemPopupStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 
@@ -86,7 +86,6 @@ class ItemPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Item')}</title>
         </Helmet>
         <Content>
-          <Link to="?popup=22">Open popup 22</Link>
           <ItemDetails itemPageStore={this.itemPageStore} />
         </Content>
         <ReactModal {...this.reactModalStore.props}>
