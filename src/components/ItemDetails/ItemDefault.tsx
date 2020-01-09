@@ -3,7 +3,10 @@ import Footer from 'components/Footer/Footer';
 import ItemPageStore from 'utils/store/itemPageStore';
 import { FooterLink } from 'components/Footer/Footer.style';
 import React from 'react';
+import ReactHtmlParser, { processNodes } from 'react-html-parser';
+import { DomElement } from 'htmlparser2';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface ItemDefaultProps {
   itemPageStore: ItemPageStore;
@@ -13,6 +16,16 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
   const { t, ready } = useTranslation('survey-details-page');
 
   if (!ready) return null;
+
+  function transform(node: DomElement) {
+    if (node.type === 'tag' && node.name === 'a') {
+      return (
+        <Link to={(node.attribs && node.attribs.href) || ''}>
+          {processNodes(node.children || [], transform)}
+        </Link>
+      );
+    }
+  }
 
   return (
     <>
@@ -36,9 +49,11 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
           <p>Video: {itemPageStore.itemVideo.file_url}</p>
         )}
       </div>
-      <div
-        dangerouslySetInnerHTML={{ __html: itemPageStore.itemDescription }}
-      />
+      <div>
+        {ReactHtmlParser(itemPageStore.itemDescription, {
+          transform: transform,
+        })}
+      </div>
       <Footer>
         <FooterLink to={`/item/${itemPageStore.nextItemId}`}>
           {t('button.next.label', 'Next')}
