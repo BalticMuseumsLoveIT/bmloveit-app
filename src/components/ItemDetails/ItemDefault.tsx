@@ -17,7 +17,7 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
 
   if (!ready) return null;
 
-  function transform(node: DomElement) {
+  const transform = (node: DomElement) => {
     if (node.type === 'tag' && node.name === 'a') {
       return (
         <Link to={(node.attribs && node.attribs.href) || ''}>
@@ -25,7 +25,7 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
         </Link>
       );
     }
-  }
+  };
 
   return (
     <>
