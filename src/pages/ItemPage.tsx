@@ -66,7 +66,7 @@ class ItemPage extends React.Component<Props> {
     );
 
     if (
-      previousPopupItemId !== currentPopupItemId &&
+      currentPopupItemId !== previousPopupItemId &&
       !isNaN(currentPopupItemId)
     ) {
       this._openPopup(currentPopupItemId);
