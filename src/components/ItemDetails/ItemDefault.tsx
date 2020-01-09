@@ -36,7 +36,9 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
           <p>Video: {itemPageStore.itemVideo.file_url}</p>
         )}
       </div>
-      <div>{itemPageStore.itemDescription}</div>
+      <div
+        dangerouslySetInnerHTML={{ __html: itemPageStore.itemDescription }}
+      />
       <Footer>
         <FooterLink to={`/item/${itemPageStore.nextItemId}`}>
           {t('button.next.label', 'Next')}
