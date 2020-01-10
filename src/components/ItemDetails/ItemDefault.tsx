@@ -43,7 +43,14 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
           </div>
         )}
         {itemPageStore.itemAudio && (
-          <p>Audio: {itemPageStore.itemAudio.file_url}</p>
+          <p>
+            <audio controls id="audio_player">
+              <source
+                src={getPrivateMediaURL(itemPageStore.itemAudio.file_url)}
+                type="audio/mpeg"
+              />
+            </audio>
+          </p>
         )}
         {itemPageStore.itemVideo && (
           <p>Video: {itemPageStore.itemVideo.file_url}</p>
