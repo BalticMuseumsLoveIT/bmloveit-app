@@ -53,7 +53,13 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
           </p>
         )}
         {itemPageStore.itemVideo && (
-          <p>Video: {itemPageStore.itemVideo.file_url}</p>
+          <p>
+            <video
+              controls
+              id="video_player"
+              src={getPrivateMediaURL(itemPageStore.itemVideo.file_url)}
+            />
+          </p>
         )}
       </div>
       <div>
