@@ -33,7 +33,7 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
       <div>
         {itemPageStore.itemImage && (
           <div>
-            <p>Image: {itemPageStore.itemImage.file_url}</p>
+            <p>Private Image: {itemPageStore.itemImage.file_url}</p>
             {itemPageStore.itemImage.file_url ? (
               <img
                 src={getPrivateMediaURL(itemPageStore.itemImage.file_url)}
@@ -43,23 +43,25 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
           </div>
         )}
         {itemPageStore.itemAudio && (
-          <p>
+          <div>
+            <p>Private Audio: {itemPageStore.itemAudio.file_url}</p>
             <audio controls id="audio_player">
               <source
                 src={getPrivateMediaURL(itemPageStore.itemAudio.file_url)}
                 type="audio/mpeg"
               />
             </audio>
-          </p>
+          </div>
         )}
         {itemPageStore.itemVideo && (
-          <p>
+          <div>
+            <p>Private video: {itemPageStore.itemVideo.file_url}</p>
             <video
               controls
               id="video_player"
               src={getPrivateMediaURL(itemPageStore.itemVideo.file_url)}
             />
-          </p>
+          </div>
         )}
       </div>
       <div>
