@@ -8,10 +8,10 @@ export interface RouteInterface {
   areas: Array<number>;
   areas_data: Array<AreaInterface>;
   locations_data: Array<LocationInterface>;
-  items_data: Array<any>;
-  name_translation: Array<any>;
-  name_full_translation: Array<any>;
-  description_translation: Array<any>;
+  items_data: Array<ItemInterface>;
+  name_translation: Array<CommonLanguageInterface>;
+  name_full_translation: Array<CommonLanguageInterface>;
+  description_translation: Array<CommonLanguageInterface>;
   languages: Array<number>;
 }
 
