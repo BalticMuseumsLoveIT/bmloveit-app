@@ -1,7 +1,8 @@
-import { RouteInterface } from 'utils/interfaces';
+import { ItemInterface, RouteInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
+import { ItemType } from 'utils/store/itemPageStore';
 import { action, autorun, computed, observable, when } from 'mobx';
 
 export enum PageState {
@@ -16,6 +17,7 @@ export default class RouteMapPageStore {
 
   @observable state: PageState = PageState.NOT_LOADED;
   @observable routeData: RouteInterface | null = null;
+  @observable routeMapData: ItemInterface | null = null;
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -49,6 +51,15 @@ export default class RouteMapPageStore {
       ]);
 
       this.setRouteData(routeData);
+
+      if (this.routeData && this.routeData.items_data.length) {
+        const routeMapData = this.routeData.items_data.find(
+          item => ItemType.MAP === item.type_data.name,
+        );
+
+        this.setRouteMapData(routeMapData || null);
+      }
+
       this.setState(PageState.LOADED);
     } catch (e) {
       this.setState(PageState.ERROR);
@@ -65,6 +76,10 @@ export default class RouteMapPageStore {
 
   @action setRouteData = (routesData: RouteInterface) => {
     this.routeData = routesData;
+  };
+
+  @action setRouteMapData = (routeMapData: ItemInterface | null) => {
+    this.routeMapData = routeMapData;
   };
 
   @computed get routeId(): string {
