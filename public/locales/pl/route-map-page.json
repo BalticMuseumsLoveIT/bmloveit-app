@@ -13,6 +13,9 @@
   "content": {
     "title": "Mapa trasy"
   },
+  "error": {
+    "noMap": "Mapa nie została odnaleziona"
+  },
   "page": {
     "title": "Mapa trasy"
   }

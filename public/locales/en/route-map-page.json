@@ -13,6 +13,9 @@
   "content": {
     "title": "Route map"
   },
+  "error": {
+    "noMap": "No map was found"
+  },
   "page": {
     "title": "Route Map"
   }

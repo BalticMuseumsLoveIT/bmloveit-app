@@ -3,11 +3,13 @@ import { UiStore } from 'utils/store/uiStore';
 import RouteMapPageStore from 'utils/store/routeMapPageStore';
 import Footer from 'components/Footer/Footer';
 import { FooterLink } from 'components/Footer/Footer.style';
+import { getPrivateMediaURL } from 'utils/helpers';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 interface Props extends WithTranslation, RouteComponentProps<any> {
   uiStore: UiStore;
@@ -49,7 +51,22 @@ class RouteMapPage extends React.Component<Props> {
         <Content>
           <h1>{this.props.t('content.title', 'Route map')}</h1>
           <h2>{this.routeMapPageStore.routeTitle}</h2>
-          <div>Map Component</div>
+          <div>
+            {(this.routeMapPageStore.routeMapImageURL && (
+              <TransformWrapper>
+                <TransformComponent>
+                  <img
+                    style={{ maxWidth: '100%' }}
+                    src={getPrivateMediaURL(
+                      this.routeMapPageStore.routeMapImageURL,
+                    )}
+                    alt=""
+                  />
+                </TransformComponent>
+              </TransformWrapper>
+            )) ||
+              this.props.t('error.noMap', 'No map was found')}
+          </div>
           <Footer>
             <FooterLink
               to={`/area/${this.routeMapPageStore.routeAreaId}/routes`}

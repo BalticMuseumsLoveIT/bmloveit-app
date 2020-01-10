@@ -1,4 +1,9 @@
-import { ItemInterface, RouteInterface } from 'utils/interfaces';
+import {
+  ItemInterface,
+  ResourceDataInterface,
+  ResourceTypeName,
+  RouteInterface,
+} from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
@@ -94,6 +99,25 @@ export default class RouteMapPageStore {
 
   @computed get routeTitle(): string {
     return this.routeData ? this.routeData.name_full : '';
+  }
+
+  @computed get routeMapImageResource(): ResourceDataInterface | null {
+    if (
+      this.routeMapData === null ||
+      this.routeMapData.resources_data.length === 0
+    )
+      return null;
+
+    return (
+      this.routeMapData.resources_data.find(
+        resource => ResourceTypeName.Image === resource.type_name,
+      ) || null
+    );
+  }
+
+  @computed get routeMapImageURL(): string {
+    const mapImageResource = this.routeMapImageResource;
+    return (mapImageResource && mapImageResource.file_url) || '';
   }
 
   @action unmount = () => {
