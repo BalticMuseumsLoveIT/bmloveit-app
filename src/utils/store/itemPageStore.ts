@@ -27,6 +27,7 @@ export enum ItemType {
   SURVEY = 'survey',
   QUIZ = 'quiz',
   MAP = 'map',
+  PANORAMA = '360',
 }
 
 export enum ItemKind {
@@ -42,6 +43,7 @@ export default class ItemPageStore {
   @observable itemData: Array<ItemInterface> = [];
   @observable avatarData: ItemInterface | null = null;
   @observable surveyData: SurveyInterface | null = null;
+  @observable panoramaItems: Array<ItemInterface> = [];
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -79,6 +81,21 @@ export default class ItemPageStore {
       if (this.itemType === ItemType.SURVEY) {
         const surveyData = await Api.getSurveyList(undefined, this.itemId);
         this.setSurveyData(surveyData);
+      }
+
+      if (this.itemType === ItemType.PANORAMA) {
+        const childItems: Array<ItemInterface> =
+          (this.itemData.length &&
+            this.itemData[0].child_items_data.filter(
+              item => item.kind_data.name === ItemKind.POPUP,
+            )) ||
+          [];
+
+        const responses = await Promise.all(
+          childItems.map(item => Api.getItem(item.id)),
+        );
+
+        this.setPanoramaItems(responses.map(response => response[0]));
       }
 
       this.setState(PageState.LOADED);
@@ -143,6 +160,24 @@ export default class ItemPageStore {
     return resource ? resource : null;
   }
 
+  @computed get panoramaMapItems(): Array<{
+    x: number;
+    y: number;
+    link: string;
+  }> {
+    return (
+      (this.panoramaItems.length &&
+        this.panoramaItems
+          .filter(item => item.x !== null && item.y !== null)
+          .map(item => ({
+            x: item.x!,
+            y: item.y!,
+            link: `?popup=${item.id}`,
+          }))) ||
+      []
+    );
+  }
+
   @computed get nextItemId(): string {
     return this.itemData.length && this.itemData[0].next_item !== null
       ? this.itemData[0].next_item.toString()
@@ -190,6 +225,10 @@ export default class ItemPageStore {
       throw Error('Provided item type is not allowed');
 
     this.avatarData = avatar;
+  };
+
+  @action setPanoramaItems = (panoramaItems: Array<ItemInterface>) => {
+    this.panoramaItems = panoramaItems;
   };
 
   @action handleAvatarChoice = async (event: SyntheticEvent) => {

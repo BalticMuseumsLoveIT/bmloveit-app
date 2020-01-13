@@ -2,6 +2,7 @@ import ItemPageStore, { ItemType } from 'utils/store/itemPageStore';
 import { ItemNotFound } from 'components/ItemDetails/ItemNotFound';
 import { ItemDefault } from 'components/ItemDetails/ItemDefault';
 import { ItemAvatarChoice } from 'components/ItemDetails/ItemAvatarChoice';
+import { ItemPanorama } from 'components/ItemDetails/ItemPanorama';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
@@ -15,6 +16,8 @@ export const ItemDetails = ({ itemPageStore }: ItemDetailsProps) => {
       return <ItemDefault itemPageStore={itemPageStore} />;
     case ItemType.AVATAR_CHOICE:
       return <ItemAvatarChoice itemPageStore={itemPageStore} />;
+    case ItemType.PANORAMA:
+      return <ItemPanorama itemPageStore={itemPageStore} />;
     case ItemType.SURVEY:
       return <Redirect to={`/survey/${itemPageStore.surveyId}`} />;
     case ItemType.QUIZ:
