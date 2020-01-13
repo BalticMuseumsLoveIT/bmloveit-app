@@ -3,6 +3,7 @@ import { UiStore } from 'utils/store/uiStore';
 import RouteMapPageStore from 'utils/store/routeMapPageStore';
 import Footer from 'components/Footer/Footer';
 import { FooterLink } from 'components/Footer/Footer.style';
+import { ImageMap } from 'components/ImageMap/ImageMap';
 import { getPrivateMediaURL } from 'utils/helpers';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -55,12 +56,11 @@ class RouteMapPage extends React.Component<Props> {
             {(this.routeMapPageStore.routeMapImageURL && (
               <TransformWrapper>
                 <TransformComponent>
-                  <img
-                    style={{ maxWidth: '100%' }}
+                  <ImageMap
                     src={getPrivateMediaURL(
                       this.routeMapPageStore.routeMapImageURL,
                     )}
-                    alt=""
+                    coordinates={this.routeMapPageStore.routeMapLocations}
                   />
                 </TransformComponent>
               </TransformWrapper>

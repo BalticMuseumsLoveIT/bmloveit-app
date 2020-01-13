@@ -120,6 +120,24 @@ export default class RouteMapPageStore {
     return (mapImageResource && mapImageResource.file_url) || '';
   }
 
+  @computed get routeMapLocations(): Array<{
+    x: number;
+    y: number;
+    link: string;
+  }> {
+    return (
+      (this.routeData &&
+        this.routeData.locations_data
+          .filter(location => location.x !== null && location.y !== null)
+          .map(location => ({
+            x: location.x!,
+            y: location.y!,
+            link: location.screens.length ? `/item/${location.screens[0]}` : '',
+          }))) ||
+      []
+    );
+  }
+
   @action unmount = () => {
     if (this._manageContentState) {
       this.setState(PageState.NOT_LOADED);
