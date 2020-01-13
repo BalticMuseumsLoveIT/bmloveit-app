@@ -3,12 +3,12 @@ import ItemPageStore from 'utils/store/itemPageStore';
 import { ItemDetails } from 'components/ItemDetails/ItemDetails';
 import ReactModalStore from 'utils/store/reactModalStore';
 import ItemPopupStore from 'utils/store/itemPopupStore';
+import { ItemModal } from 'components/ItemModal/ItemModal';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import ReactModal from 'react-modal';
 
 export interface Props
   extends WithTranslation,
@@ -88,9 +88,9 @@ class ItemPage extends React.Component<Props> {
         <Content>
           <ItemDetails itemPageStore={this.itemPageStore} />
         </Content>
-        <ReactModal {...this.reactModalStore.props}>
+        <ItemModal props={this.reactModalStore.props}>
           {this.reactModalStore.content}
-        </ReactModal>
+        </ItemModal>
       </>
     );
   }
