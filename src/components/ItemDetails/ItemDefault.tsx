@@ -13,7 +13,7 @@ interface ItemDefaultProps {
 }
 
 export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
-  const { t, ready } = useTranslation('survey-details-page');
+  const { t, ready } = useTranslation('item-page');
 
   if (!ready) return null;
 
