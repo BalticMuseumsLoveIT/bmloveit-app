@@ -286,8 +286,8 @@ export interface UserProfileInterface {
   first_name: string;
   last_name: string;
   status: string;
-  language: number;
-  country: number;
+  language: number | null;
+  country: number | null;
   user: number;
   guest: boolean;
   points: number;
@@ -296,6 +296,7 @@ export interface UserProfileInterface {
   owned_items_data: Array<any>;
   avatar: ItemInterface | null;
   badges_data: Array<any>;
+  team: number | null;
 }
 
 // Auth ------------------------------------------------------------------------
