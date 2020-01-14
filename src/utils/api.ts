@@ -298,6 +298,10 @@ abstract class Api {
     return response.data;
   };
 
+  /**
+   * Get list of teams in which user is a member
+   * In normal conditions only 0 or 1 teams should be recieved
+   */
   public static getTeamList = async (): Promise<Array<TeamInterface>> => {
     const endpoint = 'api/team/';
 
