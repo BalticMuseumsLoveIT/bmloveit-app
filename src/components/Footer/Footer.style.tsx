@@ -13,6 +13,7 @@ export const FooterLink = styled(({ isDisabled, ...rest }) => (
   <Link {...rest} />
 ))`
   font-size: 1em;
+  line-height: 1;
   background: white;
   color: royalblue;
   outline: none;
