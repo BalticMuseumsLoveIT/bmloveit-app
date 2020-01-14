@@ -5,7 +5,6 @@ import {
 } from 'components/CookieBar/CookieBar.style';
 import { CookieBarStore } from 'utils/store/cookieBarStore';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Trans, WithTranslation, withTranslation } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 
@@ -40,7 +39,7 @@ class CookieBar extends React.Component<Props> {
         <InfoMessage>
           <Trans i18nKey="cookieBar">
             We use cookies.
-            <Link to={this.cookieBarStore.termsURL}>Learn more</Link>
+            <a href={this.cookieBarStore.termsURL}>Learn more</a>
           </Trans>
         </InfoMessage>
         <CloseButton type="button" onClick={this.cookieBarStore.clickHandler}>
