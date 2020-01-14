@@ -1,39 +1,50 @@
 {
+  "button": {
+    "leaveTeam": "Opuść drużynę"
+  },
   "content": {
+    "subtitle": {
+      "teamAccessCode": "Kod dostępu",
+      "teamName": "Nazwa drużyny"
+    },
     "title": {
-      "createTeam": "",
-      "joinTeam": "",
-      "teamList": ""
+      "createTeam": "Utwórz drużynę",
+      "joinTeam": "Dołącz do drużyny",
+      "teamDetails": "Twoja drużyna",
+      "teamList": "Lista drużyn"
     }
+  },
+  "footerLink": {
+    "continue": "Kontynuuj"
   },
   "form": {
     "button": {
       "create": {
-        "text": ""
+        "text": "Utwórz"
       },
       "join": {
-        "text": ""
+        "text": "Dołącz"
       }
     },
     "teamAccessCode": {
-      "label": ""
+      "label": "Kod dostępu"
     },
     "teamName": {
-      "label": ""
+      "label": "Nazwa drużyny"
     }
   },
   "page": {
-    "title": ""
+    "title": "Drużyna"
   },
   "validationSchema": {
     "name": {
-      "required": ""
+      "required": "Nazwa drużyny jest wymagana"
     },
     "teamAccessCode": {
-      "required": ""
+      "required": "Kod dostępu jest wymagany"
     },
     "teamName": {
-      "required": ""
+      "required": "Nazwa drużyny jest wymagana"
     }
   }
 }

@@ -1,10 +1,21 @@
 {
+  "button": {
+    "leaveTeam": "Leave team"
+  },
   "content": {
+    "subtitle": {
+      "teamAccessCode": "Team access code",
+      "teamName": "Team name"
+    },
     "title": {
       "createTeam": "Create team",
       "joinTeam": "Join team",
+      "teamDetails": "Your Team",
       "teamList": "Team list"
     }
+  },
+  "footerLink": {
+    "continue": "Continue"
   },
   "form": {
     "button": {

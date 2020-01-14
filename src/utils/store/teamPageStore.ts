@@ -2,7 +2,7 @@ import { TeamInterface, UserProfileInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
-import { action, autorun, observable, when } from 'mobx';
+import { action, autorun, computed, observable, when } from 'mobx';
 import { FormikValues } from 'formik';
 
 export enum PageState {
@@ -59,6 +59,22 @@ export default class TeamPageStore {
     }
   };
 
+  @computed get isTeamMember(): boolean {
+    return this.teamListData !== null && this.teamListData.length > 0;
+  }
+
+  @computed get teamName(): string {
+    return this.isTeamMember ? this.teamListData[0].name : '';
+  }
+
+  @computed get teamAccessCode(): string {
+    return this.isTeamMember ? this.teamListData[0].access_code.toString() : '';
+  }
+
+  @computed get teamId(): number {
+    return this.isTeamMember ? this.teamListData[0].id : NaN;
+  }
+
   @action setUserProfile(userProfileData: Array<UserProfileInterface>) {
     this.userProfileData = userProfileData.length ? userProfileData[0] : null;
   }
@@ -75,27 +91,25 @@ export default class TeamPageStore {
     this.tReady = tReady;
   }
 
+  @action handleLeaveTeam = async () => {
+    try {
+      await Api.teamLeave(this.teamId);
+      await this.loadData();
+    } catch (e) {}
+  };
+
   @action handleJoinTeam = async (values: FormikValues) => {
     try {
-      const response = await Api.teamJoin(
-        values.teamName,
-        values.teamAccessCode,
-      );
-      console.log(response);
-      debugger;
-    } catch (e) {
-      debugger;
-    }
+      await Api.teamJoin(values.teamName, values.teamAccessCode);
+      await this.loadData();
+    } catch (e) {}
   };
 
   @action handleCreateTeam = async (values: FormikValues) => {
     try {
-      const response = await Api.teamCreate(values.teamName);
-      console.log(response);
-      debugger;
-    } catch (e) {
-      debugger;
-    }
+      await Api.teamCreate(values.teamName);
+      await this.loadData();
+    } catch (e) {}
   };
 
   @action unmount = () => {

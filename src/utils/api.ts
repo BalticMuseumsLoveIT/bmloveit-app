@@ -300,7 +300,7 @@ abstract class Api {
 
   /**
    * Get list of teams in which user is a member
-   * In normal conditions only 0 or 1 teams should be recieved
+   * In normal conditions only 0 or 1 teams should be received
    */
   public static getTeamList = async (): Promise<Array<TeamInterface>> => {
     const endpoint = 'api/team/';
@@ -315,12 +315,7 @@ abstract class Api {
       name: teamName,
     };
 
-    const response = await userStore.axiosInstance.post(
-      'api/team-create/',
-      formData,
-    );
-
-    return response;
+    return await userStore.axiosInstance.post('api/team-create/', formData);
   };
 
   public static teamJoin = async (teamName: string, teamAccessCode: string) => {
@@ -329,25 +324,13 @@ abstract class Api {
       access_code: teamAccessCode,
     };
 
-    const response = await userStore.axiosInstance.post(
-      'api/team-membership/',
-      formData,
-    );
-
-    return response;
+    return await userStore.axiosInstance.post('api/team-membership/', formData);
   };
 
-  public static teamLeave = async (teamName: string) => {
-    const formData = {
-      name: teamName,
-    };
-
-    const response = await userStore.axiosInstance.post(
-      'api/team-membership/',
-      formData,
+  public static teamLeave = async (teamId: number) => {
+    return await userStore.axiosInstance.delete(
+      `api/team-membership/${teamId}/`,
     );
-
-    return response;
   };
 }
 

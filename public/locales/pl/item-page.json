@@ -5,7 +5,8 @@
     }
   },
   "error": {
-    "noAvatarsFound": ""
+    "noAvatarsFound": "",
+    "noImage": ""
   },
   "page": {
     "title": "Przedmiot"
