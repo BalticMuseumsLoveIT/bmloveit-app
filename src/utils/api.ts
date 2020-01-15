@@ -327,10 +327,14 @@ abstract class Api {
     return await userStore.axiosInstance.post('api/team-membership/', formData);
   };
 
-  public static teamLeave = async (teamId: number) => {
-    return await userStore.axiosInstance.delete(
-      `api/team-membership/${teamId}/`,
-    );
+  public static teamLeave = async (teamName: string) => {
+    const formData = {
+      name: teamName,
+    };
+
+    return await userStore.axiosInstance.delete(`api/team-membership/`, {
+      data: formData,
+    });
   };
 }
 

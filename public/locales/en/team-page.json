@@ -36,6 +36,22 @@
   "page": {
     "title": "Team"
   },
+  "teamCreateForm": {
+    "error": {
+      "alreadyMember": "You are already a member of another team",
+      "notAvailable": "Name \"{{teamName}}\" is not available",
+      "unknownError": "Team could not be created due to unknown error"
+    }
+  },
+  "teamJoinForm": {
+    "error": {
+      "alreadyMember": "You are already a member",
+      "alreadyMemberOfAnotherTeam": "You are already a member of another team",
+      "invalidCredentials": "Provided credentials are invalid",
+      "notFound": "Name \"{{teamName}}\" was not found",
+      "unknownError": "Team could not be joined due to unknown error"
+    }
+  },
   "validationSchema": {
     "name": {
       "required": "Required"

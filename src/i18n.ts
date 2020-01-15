@@ -43,5 +43,6 @@ i18n
       // cache user language on
       caches: ['localStorage'],
     },
-  })
-  .then();
+  });
+
+export default i18n;

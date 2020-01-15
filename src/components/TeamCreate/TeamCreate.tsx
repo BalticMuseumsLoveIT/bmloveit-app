@@ -1,10 +1,17 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+
+export interface TeamCreateFormValues {
+  teamName: string;
+}
 
 export interface TeamCreateProps {
-  onSubmit: (values: FormikValues) => Promise<void>;
+  onSubmit: (
+    values: TeamCreateFormValues,
+    formikBag: FormikHelpers<TeamCreateFormValues>,
+  ) => Promise<void>;
 }
 
 export const TeamCreateForm = ({ onSubmit }: TeamCreateProps) => {
@@ -12,7 +19,7 @@ export const TeamCreateForm = ({ onSubmit }: TeamCreateProps) => {
 
   if (!ready) return null;
 
-  const initialValues = { teamName: '' };
+  const initialValues: TeamCreateFormValues = { teamName: '' };
 
   const validationSchema = Yup.object({
     teamName: Yup.string().required(
@@ -26,20 +33,23 @@ export const TeamCreateForm = ({ onSubmit }: TeamCreateProps) => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      <Form id="teamCreateForm">
-        <div>
-          <label htmlFor="teamName">
-            {t('form.teamName.label', 'Team name')}
-          </label>
-          <Field name="teamName" type="text" />
-          <ErrorMessage name="teamName" />
-        </div>
-        <div>
-          <button type="submit">
-            {t('form.button.create.text', 'Create')}
-          </button>
-        </div>
-      </Form>
+      {({ status }) => (
+        <Form id="teamCreateForm">
+          <div>
+            <label htmlFor="teamName">
+              {t('form.teamName.label', 'Team name')}
+            </label>
+            <Field name="teamName" type="text" />
+            <ErrorMessage name="teamName" />
+          </div>
+          <div>
+            {status && <p>{status()}</p>}
+            <button type="submit">
+              {t('form.button.create.text', 'Create')}
+            </button>
+          </div>
+        </Form>
+      )}
     </Formik>
   );
 };

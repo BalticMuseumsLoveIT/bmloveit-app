@@ -36,6 +36,22 @@
   "page": {
     "title": ""
   },
+  "teamCreateForm": {
+    "error": {
+      "alreadyMember": "",
+      "notAvailable": "",
+      "unknownError": ""
+    }
+  },
+  "teamJoinForm": {
+    "error": {
+      "alreadyMember": "",
+      "alreadyMemberOfAnotherTeam": "",
+      "invalidCredentials": "",
+      "notFound": "",
+      "unknownError": ""
+    }
+  },
   "validationSchema": {
     "name": {
       "required": ""

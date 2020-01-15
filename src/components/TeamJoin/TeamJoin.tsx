@@ -1,10 +1,18 @@
 import React from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+
+export interface TeamJoinFormValues {
+  teamName: string;
+  teamAccessCode: string;
+}
 
 export interface TeamJoinProps {
-  onSubmit: (values: FormikValues) => Promise<void>;
+  onSubmit: (
+    values: TeamJoinFormValues,
+    formikBag: FormikHelpers<TeamJoinFormValues>,
+  ) => Promise<void>;
 }
 
 export const TeamJoinForm = ({ onSubmit }: TeamJoinProps) => {
@@ -12,7 +20,10 @@ export const TeamJoinForm = ({ onSubmit }: TeamJoinProps) => {
 
   if (!ready) return null;
 
-  const initialValues = { teamName: '', teamAccessCode: '' };
+  const initialValues: TeamJoinFormValues = {
+    teamName: '',
+    teamAccessCode: '',
+  };
 
   const validationSchema = Yup.object({
     teamName: Yup.string().required(
@@ -29,25 +40,28 @@ export const TeamJoinForm = ({ onSubmit }: TeamJoinProps) => {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      <Form id="teamJoinForm">
-        <div>
-          <label htmlFor="teamName">
-            {t('form.teamName.label', 'Team name')}
-          </label>
-          <Field name="teamName" type="text" />
-          <ErrorMessage name="teamName" />
-        </div>
-        <div>
-          <label htmlFor="teamAccessCode">
-            {t('form.teamAccessCode.label', 'Team access code')}
-          </label>
-          <Field name="teamAccessCode" type="password" />
-          <ErrorMessage name="teamAccessCode" />
-        </div>
-        <div>
-          <button type="submit">{t('form.button.join.text', 'Join')}</button>
-        </div>
-      </Form>
+      {({ status }) => (
+        <Form id="teamJoinForm">
+          <div>
+            <label htmlFor="teamName">
+              {t('form.teamName.label', 'Team name')}
+            </label>
+            <Field name="teamName" type="text" />
+            <ErrorMessage name="teamName" />
+          </div>
+          <div>
+            <label htmlFor="teamAccessCode">
+              {t('form.teamAccessCode.label', 'Team access code')}
+            </label>
+            <Field name="teamAccessCode" type="password" />
+            <ErrorMessage name="teamAccessCode" />
+          </div>
+          <div>
+            {status && <p>{status()}</p>}
+            <button type="submit">{t('form.button.join.text', 'Join')}</button>
+          </div>
+        </Form>
+      )}
     </Formik>
   );
 };
