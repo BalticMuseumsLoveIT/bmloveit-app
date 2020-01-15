@@ -1,17 +1,27 @@
 import Hamburger from 'components/Hamburger/Hamburger';
 import MobileMenu from 'components/MobileMenu/MobileMenu';
+import MuseumLogo from 'components/Header/MuseumLogo';
+import UserAvatar from 'components/Header/UserAvatar';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import React from 'react';
-import StyledWrapper from './Header.style';
+import AppHeader, { BackButton } from './Header.style';
 
-class Header extends React.Component {
+interface HeaderProps extends RouteComponentProps<any> {}
+
+class Header extends React.Component<HeaderProps> {
   render() {
     return (
-      <StyledWrapper>
-        <Hamburger />
+      <>
+        <AppHeader>
+          <BackButton onClick={this.props.history.goBack}>&larr;</BackButton>
+          <MuseumLogo />
+          <UserAvatar />
+          <Hamburger />
+        </AppHeader>
         <MobileMenu />
-      </StyledWrapper>
+      </>
     );
   }
 }
 
-export default Header;
+export default withRouter(Header);

@@ -1,0 +1,66 @@
+{
+  "button": {
+    "leaveTeam": "Leave team"
+  },
+  "content": {
+    "subtitle": {
+      "teamAccessCode": "Team access code",
+      "teamName": "Team name"
+    },
+    "title": {
+      "createTeam": "Create team",
+      "joinTeam": "Join team",
+      "teamDetails": "Your Team",
+      "teamList": "Team list"
+    }
+  },
+  "footerLink": {
+    "continue": "Continue"
+  },
+  "form": {
+    "button": {
+      "create": {
+        "text": "Create"
+      },
+      "join": {
+        "text": "Join"
+      }
+    },
+    "teamAccessCode": {
+      "label": "Team access code"
+    },
+    "teamName": {
+      "label": "Team name"
+    }
+  },
+  "page": {
+    "title": "Team"
+  },
+  "teamCreateForm": {
+    "error": {
+      "alreadyMember": "You are already a member of another team",
+      "notAvailable": "Name \"{{teamName}}\" is not available",
+      "unknownError": "Team could not be created due to unknown error"
+    }
+  },
+  "teamJoinForm": {
+    "error": {
+      "alreadyMember": "You are already a member",
+      "alreadyMemberOfAnotherTeam": "You are already a member of another team",
+      "invalidCredentials": "Provided credentials are invalid",
+      "notFound": "Name \"{{teamName}}\" was not found",
+      "unknownError": "Team could not be joined due to unknown error"
+    }
+  },
+  "validationSchema": {
+    "name": {
+      "required": "Required"
+    },
+    "teamAccessCode": {
+      "required": "Required"
+    },
+    "teamName": {
+      "required": "Required"
+    }
+  }
+}

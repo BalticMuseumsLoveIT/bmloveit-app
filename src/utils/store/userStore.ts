@@ -1,13 +1,22 @@
-import { getItemFromStorage, setItemToStorage } from 'utils/helpers';
 import Api from 'utils/api';
-import { observable, action, computed } from 'mobx';
+import { AuthTokenInterface } from 'utils/interfaces';
+import localStorage from 'mobx-localstorage';
+import { action, computed } from 'mobx';
 import axios from 'axios';
 
 export class UserStore {
-  @observable token = getItemFromStorage('token');
+  private readonly AUTH_TOKEN_KEY = 'authToken';
+
+  @computed get authToken(): AuthTokenInterface | null {
+    return localStorage.getItem(this.AUTH_TOKEN_KEY);
+  }
 
   @computed get isLoggedIn(): boolean {
-    return this.token !== '';
+    return !!(this.authToken && this.authToken.access_token.length);
+  }
+
+  @computed get accessToken(): string {
+    return this.authToken ? this.authToken.access_token : '';
   }
 
   @computed get axiosInstance() {
@@ -16,28 +25,29 @@ export class UserStore {
     };
 
     if (this.isLoggedIn) {
-      headers['Authorization'] = `Bearer ${this.token}`;
+      headers['Authorization'] = `Bearer ${this.accessToken}`;
     }
 
     return axios.create({
       baseURL: process.env.REACT_APP_API_URL,
       headers: headers,
+      withCredentials: true,
     });
   }
 
   @action
-  setToken = (token: string): void => {
-    this.token = setItemToStorage('token', token);
+  setAuthToken = (authToken: AuthTokenInterface): void => {
+    localStorage.setItem(this.AUTH_TOKEN_KEY, authToken);
   };
 
   @action
   signIn = async (provider: string, accessToken: string): Promise<void> => {
-    const data = await Api.signIn(provider, accessToken);
-    this.setToken(data.access_token);
+    const authToken = await Api.signIn(provider, accessToken);
+    this.setAuthToken(authToken);
   };
 
   @action
-  signOut = (): void => this.setToken('');
+  signOut = (): boolean => localStorage.delete(this.AUTH_TOKEN_KEY);
 }
 
 const userStore = new UserStore();

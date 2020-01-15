@@ -1,0 +1,25 @@
+{
+  "form": {
+    "button": {
+      "submit": {
+        "label": "Next"
+      }
+    },
+    "field": {
+      "language": {
+        "label": "Choose a language"
+      }
+    }
+  },
+  "logo": {
+    "alt": "Museum logotype"
+  },
+  "page": {
+    "title": "Language"
+  },
+  "validationSchema": {
+    "language": {
+      "required": "Please choose your preferred language"
+    }
+  }
+}

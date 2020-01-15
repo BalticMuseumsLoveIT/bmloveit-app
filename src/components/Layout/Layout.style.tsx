@@ -6,6 +6,9 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const StyledWrapper = styled.div``;
+const StyledWrapper = styled.div`
+  max-width: 960px;
+  margin: auto;
+`;
 
 export default StyledWrapper;

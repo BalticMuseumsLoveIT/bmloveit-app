@@ -1,0 +1,28 @@
+{
+  "content": {
+    "title": ""
+  },
+  "error": {
+    "generic": "",
+    "notFound": ""
+  },
+  "form": {
+    "button": {
+      "submit": {
+        "label": ""
+      }
+    }
+  },
+  "page": {
+    "title": ""
+  },
+  "summary": {
+    "correct": "",
+    "incorrect": ""
+  },
+  "validationSchema": {
+    "question": {
+      "required": ""
+    }
+  }
+}

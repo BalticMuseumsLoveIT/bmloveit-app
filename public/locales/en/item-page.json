@@ -1,0 +1,14 @@
+{
+  "button": {
+    "next": {
+      "label": "Next"
+    }
+  },
+  "error": {
+    "noAvatarsFound": "No avatars was found for an item with a given ID",
+    "noImage": "Image not found"
+  },
+  "page": {
+    "title": "Item"
+  }
+}

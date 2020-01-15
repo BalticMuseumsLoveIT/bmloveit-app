@@ -1,25 +1,3 @@
-export interface SignInResponseInterface {
-  access_token: string;
-  expires_in: number;
-  refresh_token: string;
-  scope: string;
-  token_type: string;
-}
-
-export interface AreaInterface {
-  id: number;
-  name: string;
-  name_full: string;
-  description: string;
-  type_data: TypeDataInterface;
-  country: number | null;
-  address: string;
-  active: boolean;
-  name_translation: Array<any>;
-  name_full_translation: Array<any>;
-  description_translation: Array<any>;
-}
-
 export interface RouteInterface {
   id: number;
   name: string;
@@ -30,10 +8,10 @@ export interface RouteInterface {
   areas: Array<number>;
   areas_data: Array<AreaInterface>;
   locations_data: Array<LocationInterface>;
-  items_data: Array<any>;
-  name_translation: Array<any>;
-  name_full_translation: Array<any>;
-  description_translation: Array<any>;
+  items_data: Array<ItemInterface>;
+  name_translation: Array<CommonLanguageInterface>;
+  name_full_translation: Array<CommonLanguageInterface>;
+  description_translation: Array<CommonLanguageInterface>;
   languages: Array<number>;
 }
 
@@ -50,9 +28,12 @@ export interface LocationInterface {
   qr_code: string;
   latitude: number | null;
   longitude: number | null;
-  name_translation: Array<any>;
-  name_full_translation: Array<any>;
-  description_translation: Array<any>;
+  name_translation: Array<CommonLanguageInterface>;
+  name_full_translation: Array<CommonLanguageInterface>;
+  description_translation: Array<CommonLanguageInterface>;
+  x: number | null;
+  y: number | null;
+  screens: Array<number>;
 }
 
 export interface TypeDataInterface {
@@ -106,6 +87,8 @@ export interface QuizInterface {
   name: string;
   name_full: string;
   description: string;
+  location: number | null;
+  item: number | null;
   language: number;
   name_translation: Array<TranslationItemInterface>;
   name_full_translation: Array<TranslationItemInterface>;
@@ -208,6 +191,145 @@ export interface SurveyAnswerResponse {
   value: string;
 }
 
+// Item ------------------------------------------------------------------------
+
+export enum ResourceTypeName {
+  Image = 'image',
+  Video = 'video',
+  Audio = 'audio',
+}
+
+export interface ResourceDataInterface {
+  name: string;
+  type: string;
+  type_name: ResourceTypeName;
+  file_url: string;
+}
+
+export interface ItemTypeInterface {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface ItemKindInterface {
+  id: number;
+  name: string;
+  description: string;
+}
+
+export interface ItemInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  type: number;
+  type_data: ItemTypeInterface;
+  kind: number;
+  kind_data: ItemKindInterface;
+  locations: Array<number>;
+  resources_data: Array<ResourceDataInterface>;
+  quizzes_data: Array<QuizInterface>;
+  child_items_data: Array<ItemInterface>;
+  child_items?: Array<number>;
+  next_item: number | null;
+  qr_code: string;
+  latitude: number | null;
+  longitude: number | null;
+  name_translation: Array<CommonLanguageInterface>;
+  name_full_translation: Array<CommonLanguageInterface>;
+  description_translation: Array<CommonLanguageInterface>;
+  actions_list: Array<{ id: number; name: string }>;
+  routes: Array<number>;
+  x: number | null;
+  y: number | null;
+}
+
+// Site ------------------------------------------------------------------------
+
+export interface SiteInterface {
+  id: number;
+  name: string;
+  title: string;
+  description: string;
+  about: string;
+  terms_url: string;
+  logo: string;
+  image: string;
+  name_translation: Array<CommonApiTranslationInterface>;
+  title_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
+  about_translation: Array<CommonApiTranslationInterface>;
+}
+
+// Area ------------------------------------------------------------------------
+
+export interface AreaInterface {
+  id: number;
+  name: string;
+  name_full: string;
+  description: string;
+  type_data: TypeDataInterface;
+  country: number;
+  adress: string;
+  logo: string | null;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
+}
+
+// User Profile ----------------------------------------------------------------
+
+export interface UserProfileInterface {
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+  status: string;
+  language: number | null;
+  country: number | null;
+  user: number;
+  guest: boolean;
+  points: number;
+  level_up_points: number | null;
+  for_delete: boolean;
+  owned_items_data: Array<any>;
+  avatar: ItemInterface | null;
+  badges_data: Array<any>;
+  team: number | null;
+}
+
+// Auth ------------------------------------------------------------------------
+
+export interface AuthTokenInterface {
+  access_token: string;
+  expires_in: number;
+  token_type: string;
+  scope: string;
+  refresh_token: string;
+}
+
+// Teams -----------------------------------------------------------------------
+
+interface TeamUserInterface {
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+  points: number;
+  owned_items_data: [];
+  avatar: ItemInterface | null;
+  badges_data: [];
+}
+
+export interface TeamInterface {
+  id: number;
+  name: string;
+  users: Array<TeamUserInterface>;
+  avatar: ItemInterface | null;
+  access_code: number;
+}
+
 // Generic ---------------------------------------------------------------------
 
 export interface APIErrorInterface {
@@ -216,4 +338,17 @@ export interface APIErrorInterface {
 
 export function isAPIError(APIResponse: any): APIResponse is APIErrorInterface {
   return (APIResponse as APIErrorInterface).detail !== undefined;
+}
+
+// Common ----------------------------------------------------------------------
+
+export interface CommonLanguageInterface {
+  id: number;
+  key: string;
+  value: string;
+}
+
+export interface CommonApiTranslationInterface {
+  language: number;
+  text: string;
 }

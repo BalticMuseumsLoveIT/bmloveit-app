@@ -1,0 +1,28 @@
+{
+  "content": {
+    "title": "Quiz details"
+  },
+  "error": {
+    "generic": "Sorry but quiz cannot be displayed right now",
+    "notFound": "Quiz with a given ID was not found"
+  },
+  "form": {
+    "button": {
+      "submit": {
+        "label": "Submit"
+      }
+    }
+  },
+  "page": {
+    "title": "Quiz"
+  },
+  "summary": {
+    "correct": "Congratulations! This is a correct answer",
+    "incorrect": "Sorry but selected answer is incorrect"
+  },
+  "validationSchema": {
+    "question": {
+      "required": "At least one option must be selected"
+    }
+  }
+}

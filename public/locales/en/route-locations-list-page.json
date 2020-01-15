@@ -1,0 +1,19 @@
+{
+  "button": {
+    "changeRoute": {
+      "label": "Change route"
+    },
+    "scanQR": {
+      "label": "Scan QR"
+    },
+    "viewMap": {
+      "label": "View map"
+    }
+  },
+  "content": {
+    "title": "Locations list"
+  },
+  "page": {
+    "title": "Route locations"
+  }
+}

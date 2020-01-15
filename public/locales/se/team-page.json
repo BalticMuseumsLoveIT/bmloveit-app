@@ -1,0 +1,66 @@
+{
+  "button": {
+    "leaveTeam": ""
+  },
+  "content": {
+    "subtitle": {
+      "teamAccessCode": "",
+      "teamName": ""
+    },
+    "title": {
+      "createTeam": "",
+      "joinTeam": "",
+      "teamDetails": "",
+      "teamList": ""
+    }
+  },
+  "footerLink": {
+    "continue": ""
+  },
+  "form": {
+    "button": {
+      "create": {
+        "text": ""
+      },
+      "join": {
+        "text": ""
+      }
+    },
+    "teamAccessCode": {
+      "label": ""
+    },
+    "teamName": {
+      "label": ""
+    }
+  },
+  "page": {
+    "title": ""
+  },
+  "teamCreateForm": {
+    "error": {
+      "alreadyMember": "",
+      "notAvailable": "",
+      "unknownError": ""
+    }
+  },
+  "teamJoinForm": {
+    "error": {
+      "alreadyMember": "",
+      "alreadyMemberOfAnotherTeam": "",
+      "invalidCredentials": "",
+      "notFound": "",
+      "unknownError": ""
+    }
+  },
+  "validationSchema": {
+    "name": {
+      "required": ""
+    },
+    "teamAccessCode": {
+      "required": ""
+    },
+    "teamName": {
+      "required": ""
+    }
+  }
+}

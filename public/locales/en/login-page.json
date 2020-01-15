@@ -1,0 +1,13 @@
+{
+  "button": {
+    "logout": {
+      "label": "Logout"
+    }
+  },
+  "content": {
+    "title": "Login"
+  },
+  "page": {
+    "title": "Login"
+  }
+}

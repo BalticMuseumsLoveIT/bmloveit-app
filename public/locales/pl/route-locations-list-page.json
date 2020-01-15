@@ -1,0 +1,19 @@
+{
+  "button": {
+    "changeRoute": {
+      "label": "Zmień trasę"
+    },
+    "scanQR": {
+      "label": "Skanuj QR"
+    },
+    "viewMap": {
+      "label": "Zobacz mapę"
+    }
+  },
+  "content": {
+    "title": "Lista lokalizacji"
+  },
+  "page": {
+    "title": "Lokalizacja na trasie"
+  }
+}

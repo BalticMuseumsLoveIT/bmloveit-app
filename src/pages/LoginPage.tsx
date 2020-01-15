@@ -7,8 +7,9 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface Props extends RouteComponentProps {
+interface Props extends WithTranslation, RouteComponentProps {
   userStore: UserStore;
 }
 
@@ -18,13 +19,15 @@ class LoginPage extends React.Component<Props> {
   userStore = this.props.userStore;
 
   render() {
+    if (!this.props.tReady) return null;
+
     return (
       <>
         <Helmet>
-          <title>Login</title>
+          <title>{this.props.t('page.title', 'Login')}</title>
         </Helmet>
         <Content>
-          <h2>Login</h2>
+          <h2>{this.props.t('content.title', 'Login')}</h2>
           {!this.userStore.isLoggedIn ? (
             <>
               <FacebookButton onSuccess={this.login} />
@@ -32,7 +35,9 @@ class LoginPage extends React.Component<Props> {
               <GoogleButton onSuccess={this.login} />
             </>
           ) : (
-            <button onClick={this.logout}>Logout</button>
+            <button onClick={this.logout}>
+              {this.props.t('button.logout.label', 'Logout')}
+            </button>
           )}
         </Content>
       </>
@@ -56,4 +61,4 @@ class LoginPage extends React.Component<Props> {
   };
 }
 
-export default LoginPage;
+export default withTranslation('login-page')(LoginPage);

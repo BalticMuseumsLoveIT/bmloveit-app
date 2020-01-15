@@ -8,14 +8,20 @@ import {
   SurveyDetailsInterface,
   SurveyFulfillmentResponse,
   RouteInterface,
-  SignInResponseInterface,
+  AuthTokenInterface,
+  SiteInterface,
+  AreaInterface,
+  ItemInterface,
+  LocationInterface,
+  UserProfileInterface,
+  TeamInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
   public static signIn = async (
     provider: string,
     accessToken: string,
-  ): Promise<SignInResponseInterface> => {
+  ): Promise<AuthTokenInterface> => {
     const body = {
       grant_type: 'convert_token',
       client_id: process.env.REACT_APP_CLIENT_ID,
@@ -119,8 +125,21 @@ abstract class Api {
    *
    * @throws Axios error
    */
-  public static async getSurveyList(): Promise<Array<SurveyInterface>> {
-    const response = await userStore.axiosInstance.get('api/survey');
+  public static async getSurveyList(
+    location__id?: number,
+    item__id?: number,
+  ): Promise<Array<SurveyInterface>> {
+    const params = {
+      location__id:
+        typeof location__id !== 'undefined' && isNaN(location__id)
+          ? ''
+          : location__id,
+      item__id:
+        typeof item__id !== 'undefined' && isNaN(item__id) ? '' : item__id,
+    };
+    const response = await userStore.axiosInstance.get('api/survey', {
+      params,
+    });
     return response.data;
   }
 
@@ -186,6 +205,137 @@ abstract class Api {
 
     return response.data;
   }
+
+  /**
+   * Get list of available languages
+   */
+  public static getLanguageList = async () => {
+    const endpoint = 'api/language/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    return response.data;
+  };
+
+  /**
+   * Get list of sites
+   * Only 1 site object should be present inside this "list"
+   */
+  public static getSiteData = async (): Promise<Array<SiteInterface>> => {
+    const endpoint = 'api/site/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    // Response should be an array with only one site object inside
+    return response.data;
+  };
+
+  /**
+   * Get list of areas
+   */
+  public static getAreaData = async (): Promise<Array<AreaInterface>> => {
+    const endpoint = 'api/area/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    // Response should be an array with only one site object inside
+    return response.data;
+  };
+
+  public static getItemsList = async (): Promise<Array<ItemInterface>> => {
+    const endpoint = 'api/item/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    return response.data;
+  };
+
+  public static getItem = async (
+    itemId: number,
+  ): Promise<Array<ItemInterface>> => {
+    const params = { id: itemId };
+    const endpoint = 'api/item/';
+
+    const response = await userStore.axiosInstance.get(endpoint, { params });
+
+    return response.data;
+  };
+
+  public static getLocationsList = async (
+    routeId = NaN,
+  ): Promise<Array<LocationInterface>> => {
+    const params = {
+      location_routes__route__id: isNaN(routeId) ? '' : routeId,
+    };
+
+    const endpoint = 'api/locations/';
+
+    const response = await userStore.axiosInstance.get(endpoint, { params });
+
+    return response.data;
+  };
+
+  public static getUserProfile = async (): Promise<
+    Array<UserProfileInterface>
+  > => {
+    const endpoint = 'api/user_profile/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    return response.data;
+  };
+
+  public static createEvent = async (actionId: number) => {
+    const formData = {
+      action: actionId,
+    };
+
+    const response = await userStore.axiosInstance.post(
+      'api/events/',
+      formData,
+    );
+
+    return response.data;
+  };
+
+  /**
+   * Get list of teams in which user is a member
+   * In normal conditions only 0 or 1 teams should be received
+   */
+  public static getTeamList = async (): Promise<Array<TeamInterface>> => {
+    const endpoint = 'api/team/';
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    return response.data;
+  };
+
+  public static teamCreate = async (teamName: string) => {
+    const formData = {
+      name: teamName,
+    };
+
+    return await userStore.axiosInstance.post('api/team-create/', formData);
+  };
+
+  public static teamJoin = async (teamName: string, teamAccessCode: string) => {
+    const formData = {
+      name: teamName,
+      access_code: teamAccessCode,
+    };
+
+    return await userStore.axiosInstance.post('api/team-membership/', formData);
+  };
+
+  public static teamLeave = async (teamName: string) => {
+    const formData = {
+      name: teamName,
+    };
+
+    return await userStore.axiosInstance.delete(`api/team-membership/`, {
+      data: formData,
+    });
+  };
 }
 
 export default Api;
