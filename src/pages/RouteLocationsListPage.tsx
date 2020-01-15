@@ -73,16 +73,18 @@ class RouteLocationsListPage extends React.Component<Props> {
           })}
           <Footer>
             <FooterLink
+              as={Link}
               to={`/area/${this.routeLocationsListPageStore.areaId}/routes`}
             >
               {this.props.t('button.changeRoute.label', 'Change route')}
             </FooterLink>
             <FooterLink
+              as={Link}
               to={`/route/${this.routeLocationsListPageStore.routeId}/map`}
             >
               {this.props.t('button.viewMap.label', 'View map')}
             </FooterLink>
-            <FooterLink to={`/qrcode`}>
+            <FooterLink as={Link} to={`/qrcode`}>
               {this.props.t('button.scanQR.label', 'Scan QR')}
             </FooterLink>
           </Footer>

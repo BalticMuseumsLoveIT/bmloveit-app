@@ -70,7 +70,7 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
         })}
       </div>
       <Footer>
-        <FooterLink to={`/item/${itemPageStore.nextItemId}`}>
+        <FooterLink as={Link} to={`/item/${itemPageStore.nextItemId}`}>
           {t('button.next.label', 'Next')}
         </FooterLink>
       </Footer>

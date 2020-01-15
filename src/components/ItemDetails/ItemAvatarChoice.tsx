@@ -8,6 +8,7 @@ import {
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useObserver } from 'mobx-react';
+import { useHistory } from 'react-router-dom';
 
 interface ItemAvatarChoiceProps {
   itemPageStore: ItemPageStore;
@@ -15,6 +16,13 @@ interface ItemAvatarChoiceProps {
 
 export const ItemAvatarChoice = ({ itemPageStore }: ItemAvatarChoiceProps) => {
   const { t, ready } = useTranslation('item-page');
+
+  const history = useHistory();
+
+  const clickHandler = async () => {
+    await itemPageStore.handleAvatarChoice();
+    history.push(`/item/${itemPageStore.selectedAvatarNextItemId}`);
+  };
 
   return useObserver(() => {
     if (!ready) return null;
@@ -47,12 +55,11 @@ export const ItemAvatarChoice = ({ itemPageStore }: ItemAvatarChoiceProps) => {
         </AvatarList>
         <Footer>
           <FooterLink
-            to={`/item/${itemPageStore.selectedAvatarNextItemId}`}
-            isDisabled={
+            disabled={
               itemPageStore.state === PageState.SUBMITTING ||
               itemPageStore.avatarData === null
             }
-            onClick={itemPageStore.handleAvatarChoice}
+            onClick={clickHandler}
           >
             {t('button.next.label', 'Next')}
           </FooterLink>
