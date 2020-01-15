@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import React from 'react';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -8,10 +7,15 @@ const StyledWrapper = styled.div`
   margin: 1em 0;
 `;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const FooterLink = styled(({ isDisabled, ...rest }) => (
-  <Link {...rest} />
-))`
+interface FooterLinkProps {
+  isDisabled?: boolean;
+}
+
+export const FooterLink = styled(Link).attrs<FooterLinkProps>(
+  ({ isDisabled }) => ({
+    isDisabled: isDisabled || false,
+  }),
+)<FooterLinkProps>`
   font-size: 1em;
   line-height: 1;
   background: white;

@@ -3,6 +3,7 @@ import {
   ItemInterface,
   SurveyDetailsInterface,
   SurveyInterface,
+  SurveyQuestionInterface,
   SurveyQuestionType,
 } from 'utils/interfaces';
 import Api from 'utils/api';
@@ -138,7 +139,9 @@ export default class SurveyDetailsStore {
           continue;
         }
 
-        const questionData = this.survey.questions_data.find(
+        const questionData:
+          | SurveyQuestionInterface
+          | undefined = this.survey.questions_data.find(
           question => question.id === questionId,
         );
 
