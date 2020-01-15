@@ -70,7 +70,6 @@ const AuthRoute = ({ ...rest }: RouteProps) => {
     <Route {...rest} />
   ) : (
     <Route
-      {...rest}
       render={({ location }) => (
         <Redirect to={{ pathname: '/login', state: { from: location } }} />
       )}
