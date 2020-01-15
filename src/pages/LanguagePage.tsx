@@ -36,8 +36,6 @@ class LanguagePage extends React.Component<Props> {
   }
 
   render() {
-    // Render only when locales are available
-    // This prevents `i18next::translator: missingKey` invocation
     if (!this.props.tReady) return null;
 
     return (
