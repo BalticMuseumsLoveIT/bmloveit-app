@@ -1,8 +1,14 @@
 {
+  "badges": {
+    "header": "Odznaki"
+  },
   "button": {
     "logout": {
       "label": "Wyloguj się"
     }
+  },
+  "cards": {
+    "header": "Karty"
   },
   "content": {
     "title": "Profil użytkownika"

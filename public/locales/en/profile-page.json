@@ -1,8 +1,14 @@
 {
+  "badges": {
+    "header": "Badges"
+  },
   "button": {
     "logout": {
       "label": "Logout"
     }
+  },
+  "cards": {
+    "header": "Cards"
   },
   "content": {
     "title": "User Profile"

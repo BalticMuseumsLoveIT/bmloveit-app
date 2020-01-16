@@ -3,6 +3,8 @@ import ProfilePageStore, { PageState } from 'utils/store/profilePageStore';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
 import { getPrivateMediaURL, toISO6391 } from 'utils/helpers';
 import { UserStore } from 'utils/store/userStore';
+import BadgesList from 'components/BadgesList/BadgesList';
+import CardsList from 'components/CardsList/CardsList';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -72,6 +74,14 @@ class ProfilePage extends React.Component<Props> {
               src={getPrivateMediaURL(this.profilePageStore.userAvatarImageURL)}
               alt={this.profilePageStore.userAvatar.name_full}
             />
+          )}
+          {this.profilePageStore.userProfileData!.badges_data.length > 0 && (
+            <BadgesList
+              badges={this.profilePageStore.userProfileData!.badges_data}
+            />
+          )}
+          {this.profilePageStore.cards.length > 0 && (
+            <CardsList cards={this.profilePageStore.cards} />
           )}
           <LanguageSwitch
             list={this.profilePageStore.languageList}

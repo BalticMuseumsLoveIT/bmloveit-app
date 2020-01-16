@@ -86,6 +86,16 @@ export default class ProfilePageStore {
     return [this.userProfileData.points, maxPoints];
   }
 
+  @computed get cards(): Array<any> {
+    if (this.userProfileData === null) return [];
+
+    const cards = this.userProfileData.owned_items_data.filter(item => {
+      return item.item_data.type_data.name === 'card';
+    });
+
+    return cards;
+  }
+
   @action setLanguageList = (
     languageListData: Array<CommonLanguageInterface>,
   ) => {
