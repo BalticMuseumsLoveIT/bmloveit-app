@@ -38,6 +38,7 @@ class LanguagePage extends React.Component<Props> {
 
   handleLanguageSwitch = async (values: FormikValues): Promise<void> => {
     await this.props.i18n.changeLanguage(values.language);
+    this.props.history.push('/login');
   };
 
   render() {
