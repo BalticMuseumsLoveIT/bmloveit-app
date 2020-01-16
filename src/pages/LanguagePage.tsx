@@ -8,6 +8,7 @@ import { inject, observer } from 'mobx-react';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { WithTranslation, withTranslation } from 'react-i18next';
+import { FormikValues } from 'formik';
 
 export interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
@@ -17,7 +18,7 @@ export interface Props extends WithTranslation, RouteComponentProps {
 @observer
 class LanguagePage extends React.Component<Props> {
   uiStore = this.props.uiStore;
-  languagePageStore = new LanguagePageStore(this.props.i18n, true);
+  languagePageStore = new LanguagePageStore(true);
 
   async componentDidMount(): Promise<void> {
     this.languagePageStore.setTReady(this.props.tReady);
@@ -35,6 +36,10 @@ class LanguagePage extends React.Component<Props> {
     this.languagePageStore.unmount();
   }
 
+  handleLanguageSwitch = async (values: FormikValues): Promise<void> => {
+    await this.props.i18n.changeLanguage(values.language);
+  };
+
   render() {
     if (!this.props.tReady) return null;
 
@@ -51,7 +56,7 @@ class LanguagePage extends React.Component<Props> {
           <LanguageSwitch
             list={this.languagePageStore.languageList}
             userLocale={toISO6391(this.props.i18n.language)}
-            onSubmit={this.languagePageStore.handleSubmit}
+            onSubmit={this.handleLanguageSwitch}
           />
         </Content>
       </>
