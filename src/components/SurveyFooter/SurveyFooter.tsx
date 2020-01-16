@@ -1,6 +1,6 @@
 import { SurveyDetailsState } from 'utils/store/surveyDetailsStore';
 import Footer from 'components/Footer/Footer';
-import { FooterLink } from 'components/Footer/Footer.style';
+import { FooterButton } from 'components/Footer/Footer.style';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -25,17 +25,17 @@ export const SurveyFooter = function({
     case SurveyDetailsState.SUBMITTING:
       return (
         <Footer>
-          <FooterLink type="submit" form="surveyForm" disabled={isSubmitting}>
+          <FooterButton type="submit" form="surveyForm" disabled={isSubmitting}>
             {t('form.button.submit.label', 'Submit')}
-          </FooterLink>
+          </FooterButton>
         </Footer>
       );
     case SurveyDetailsState.SUBMITTED:
       return (
         <Footer>
-          <FooterLink as={Link} to={`/item/${nextItemId}`}>
+          <FooterButton as={Link} to={`/item/${nextItemId}`}>
             {t('button.next.label', 'Next')}
-          </FooterLink>
+          </FooterButton>
         </Footer>
       );
     default:

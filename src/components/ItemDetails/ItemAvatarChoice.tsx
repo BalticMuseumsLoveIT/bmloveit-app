@@ -1,6 +1,6 @@
 import ItemPageStore, { PageState } from 'utils/store/itemPageStore';
 import Footer from 'components/Footer/Footer';
-import { FooterLink } from 'components/Footer/Footer.style';
+import { FooterButton } from 'components/Footer/Footer.style';
 import {
   AvatarButton,
   AvatarList,
@@ -58,7 +58,7 @@ export const ItemAvatarChoice = inject('userStore')(
             )}
           </AvatarList>
           <Footer>
-            <FooterLink
+            <FooterButton
               disabled={
                 itemPageStore.state === PageState.SUBMITTING ||
                 itemPageStore.avatarData === null
@@ -66,7 +66,7 @@ export const ItemAvatarChoice = inject('userStore')(
               onClick={clickHandler}
             >
               {t('button.next.label', 'Next')}
-            </FooterLink>
+            </FooterButton>
           </Footer>
         </>
       );

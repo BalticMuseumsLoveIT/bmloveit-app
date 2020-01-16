@@ -10,7 +10,7 @@ interface FooterLinkProps {
   disabled?: boolean;
 }
 
-export const FooterLink = styled.button`
+export const FooterButton = styled.button`
   font-size: 1em;
   line-height: 1;
   background: white;

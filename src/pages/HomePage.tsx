@@ -2,7 +2,7 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import HomePageStore from 'utils/store/homePageStore';
 import Footer from 'components/Footer/Footer';
-import { FooterLink } from 'components/Footer/Footer.style';
+import { FooterButton } from 'components/Footer/Footer.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -50,9 +50,9 @@ class HomePage extends React.Component<Props> {
           <h1>{this.homePageStore.siteTitle}</h1>
           <div>{this.homePageStore.siteDescription}</div>
           <Footer>
-            <FooterLink as={Link} to="/area">
+            <FooterButton as={Link} to="/area">
               {this.props.t('buttonStart.label', 'Start sightseeing')}
-            </FooterLink>
+            </FooterButton>
           </Footer>
         </Content>
       </>
