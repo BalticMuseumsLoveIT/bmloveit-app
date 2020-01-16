@@ -24,7 +24,7 @@ export default class ProfilePageStore {
   private readonly _manageContentState: boolean;
 
   @observable state: PageState = PageState.NOT_LOADED;
-  @observable userProfileData: Array<UserProfileInterface> = [];
+  @observable userProfileData: UserProfileInterface | null = null;
   @observable languageList: Array<CommonLanguageInterface> = [];
   @observable tReady?: boolean;
 
@@ -51,7 +51,7 @@ export default class ProfilePageStore {
   }
 
   @computed get userAvatar(): ItemInterface | null {
-    return this.userProfileData.length ? this.userProfileData[0].avatar : null;
+    return this.userProfileData !== null ? this.userProfileData.avatar : null;
   }
 
   @computed get userAvatarImageURL(): string {
@@ -65,14 +65,25 @@ export default class ProfilePageStore {
   }
 
   @computed get userName(): string {
-    if (!this.userProfileData.length) return '';
+    if (this.userProfileData === null) return '';
 
-    const profile = this.userProfileData[0];
+    const profile = this.userProfileData;
 
     if (profile.first_name.length && profile.last_name.length)
       return `${profile.first_name} ${profile.last_name}`;
 
     return profile.username;
+  }
+
+  @computed get pointsData(): Array<number> {
+    if (this.userProfileData === null) return [];
+
+    const maxPoints =
+      this.userProfileData.level_up_points !== null
+        ? this.userProfileData.level_up_points
+        : 0;
+
+    return [this.userProfileData.points, maxPoints];
   }
 
   @action setLanguageList = (
@@ -113,7 +124,7 @@ export default class ProfilePageStore {
     this.tReady = tReady;
   }
 
-  @action setUserProfile(userProfileData: Array<UserProfileInterface>) {
+  @action setUserProfile(userProfileData: UserProfileInterface) {
     this.userProfileData = userProfileData;
   }
 

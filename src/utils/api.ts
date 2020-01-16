@@ -275,14 +275,12 @@ abstract class Api {
     return response.data;
   };
 
-  public static getUserProfile = async (): Promise<
-    Array<UserProfileInterface>
-  > => {
+  public static getUserProfile = async (): Promise<UserProfileInterface> => {
     const endpoint = 'api/user_profile/';
 
     const response = await userStore.axiosInstance.get(endpoint);
 
-    return response.data;
+    return response.data[0];
   };
 
   public static createEvent = async (actionId: number) => {

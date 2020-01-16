@@ -1,5 +1,5 @@
 import Content from 'components/Content/Content';
-import ProfilePageStore from 'utils/store/profilePageStore';
+import ProfilePageStore, { PageState } from 'utils/store/profilePageStore';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
 import { getPrivateMediaURL, toISO6391 } from 'utils/helpers';
 import { UserStore } from 'utils/store/userStore';
@@ -8,6 +8,7 @@ import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
+import { toJS } from 'mobx';
 
 interface Props extends WithTranslation, RouteComponentProps {
   userStore: UserStore;
@@ -41,7 +42,21 @@ class ProfilePage extends React.Component<Props> {
   };
 
   render() {
-    if (!this.props.tReady) return null;
+    if (!this.props.tReady || this.profilePageStore.state !== PageState.LOADED)
+      return null;
+
+    let pointsSectionValue = 0;
+    if (this.profilePageStore.pointsData.length > 0) {
+      const [userPoints, maxPoints] = this.profilePageStore.pointsData;
+
+      if (userPoints > 0) {
+        if (maxPoints === 0 || userPoints > maxPoints) {
+          pointsSectionValue = userPoints;
+        } else {
+          pointsSectionValue = userPoints / maxPoints;
+        }
+      }
+    }
 
     return (
       <>
@@ -51,6 +66,7 @@ class ProfilePage extends React.Component<Props> {
         <Content>
           <h1>{this.props.t('content.title', 'User Profile')}</h1>
           <p>{this.profilePageStore.userName}</p>
+          {pointsSectionValue > 0 && <p>{pointsSectionValue}</p>}
           {this.profilePageStore.userAvatar && (
             <img
               src={getPrivateMediaURL(this.profilePageStore.userAvatarImageURL)}

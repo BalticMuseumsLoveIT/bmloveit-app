@@ -14,8 +14,8 @@ export default class UserAvatarStore {
     this.setUserProfileData(userProfileData);
   }
 
-  @action setUserProfileData(userAvatarData: Array<UserProfileInterface>) {
-    this.userProfileData = userAvatarData.length ? userAvatarData[0] : null;
+  @action setUserProfileData(userAvatarData: UserProfileInterface) {
+    this.userProfileData = userAvatarData !== null ? userAvatarData : null;
   }
 
   @computed get userAvatar(): ItemInterface | null {
