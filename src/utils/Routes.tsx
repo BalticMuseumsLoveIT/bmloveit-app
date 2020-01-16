@@ -17,14 +17,9 @@ import ItemPage from 'pages/ItemPage';
 import ProfilePage from 'pages/ProfilePage';
 import TeamPage from 'pages/TeamPage';
 import AboutPage from 'pages/AboutPage';
+import { withLayout } from 'components/Layout/Layout';
 import ReactModal from 'react-modal';
-import {
-  Route,
-  Switch,
-  Redirect,
-  RouteProps,
-  RouteComponentProps,
-} from 'react-router-dom';
+import { Route, Switch, Redirect, RouteProps } from 'react-router-dom';
 import React from 'react';
 
 ReactModal.setAppElement('#root');
@@ -32,47 +27,68 @@ ReactModal.setAppElement('#root');
 const Routes = () => {
   return (
     <Switch>
-      <AuthRoute exact path="/" component={HomePage} />
-      <AuthRoute exact path="/about" component={AboutPage} />
-      <Route exact path="/language" component={LanguagePage} />
-      <Route exact path="/login" component={LoginPage} />
-      <AuthRoute exact path="/area" component={AreaListPage} />
-      <AuthRoute exact path="/area/:id/routes" component={AreaRoutesPage} />
-      <AuthRoute exact path="/route/:id/map" component={RouteMapPage} />
-      <AuthRoute exact path="/route/:id/end" component={RouteEndPage} />
-      <AuthRoute
+      <PageRoute exact path="/" component={HomePage} />
+      <PageRoute exact path="/about" component={AboutPage} />
+      <PageRoute
+        exact
+        path="/language"
+        header={false}
+        authorization={false}
+        component={LanguagePage}
+      />
+      <PageRoute
+        exact
+        path="/login"
+        header={false}
+        authorization={false}
+        component={LoginPage}
+      />
+      <PageRoute exact path="/area" component={AreaListPage} />
+      <PageRoute exact path="/area/:id/routes" component={AreaRoutesPage} />
+      <PageRoute exact path="/route/:id/map" component={RouteMapPage} />
+      <PageRoute exact path="/route/:id/end" component={RouteEndPage} />
+      <PageRoute
         exact
         path="/route/:id/locations"
         component={RouteLocationsListPage}
       />
-      <AuthRoute
-        exact
-        path="/item/:id"
-        render={(props: RouteComponentProps<{ id: string }>) => (
-          <ItemPage key={props.match.params.id} {...props} />
-        )}
-      />
-      <AuthRoute exact path="/team" component={TeamPage} />
-      <AuthRoute exact path="/quiz" component={QuizListPage} />
-      <AuthRoute exact path="/quiz/:id" component={QuizDetailsPage} />
-      <AuthRoute exact path="/survey" component={SurveyListPage} />
-      <AuthRoute exact path="/survey/:id" component={SurveyDetailsPage} />
-      <AuthRoute exact path="/qrcode" component={QrCodePage} />
-      <AuthRoute exact path="/profile" component={ProfilePage} />
+      <PageRoute exact path="/item/:id" component={ItemPage} />
+      <PageRoute exact path="/team" component={TeamPage} />
+      <PageRoute exact path="/quiz" component={QuizListPage} />
+      <PageRoute exact path="/quiz/:id" component={QuizDetailsPage} />
+      <PageRoute exact path="/survey" component={SurveyListPage} />
+      <PageRoute exact path="/survey/:id" component={SurveyDetailsPage} />
+      <PageRoute exact path="/qrcode" component={QrCodePage} />
+      <PageRoute exact path="/profile" component={ProfilePage} />
       <Redirect from="/route/:id" to="/route/:id/map" />
-      <Route path="*" component={NotFoundPage} />
+      <PageRoute
+        path="*"
+        header={false}
+        authorization={false}
+        component={NotFoundPage}
+      />
     </Switch>
   );
 };
 
-const AuthRoute = ({ ...rest }: RouteProps) => {
-  return userStore.isLoggedIn ? (
-    <Route {...rest} />
+interface PageRouteProps extends RouteProps {
+  header?: boolean;
+  authorization?: boolean;
+}
+
+const PageRoute = ({
+  component: Component,
+  header = true,
+  authorization = true,
+  ...routeProps
+}: PageRouteProps) => {
+  if (!Component) return null;
+
+  return !authorization || userStore.isLoggedIn ? (
+    <Route {...routeProps} component={withLayout(Component, header)} />
   ) : (
-    <Route
-      render={({ location }) => (
-        <Redirect to={{ pathname: '/login', state: { from: location } }} />
-      )}
+    <Redirect
+      to={{ pathname: '/login', state: { from: routeProps.location } }}
     />
   );
 };
