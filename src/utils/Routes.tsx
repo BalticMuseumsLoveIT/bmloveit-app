@@ -27,8 +27,7 @@ ReactModal.setAppElement('#root');
 const Routes = () => {
   return (
     <Switch>
-      <PageRoute exact path="/" component={HomePage} />
-      <PageRoute exact path="/about" component={AboutPage} />
+      <Redirect exact from="/" to="/language" />
       <PageRoute
         exact
         path="/language"
@@ -43,8 +42,12 @@ const Routes = () => {
         authorization={false}
         component={LoginPage}
       />
+      <PageRoute exact path="/welcome" component={HomePage} />
+      <PageRoute exact path="/about" component={AboutPage} />
       <PageRoute exact path="/area" component={AreaListPage} />
+      <Redirect exact from="/area/:id" to="/area/:id/routes" />
       <PageRoute exact path="/area/:id/routes" component={AreaRoutesPage} />
+      <Redirect exact from="/route/:id" to="/route/:id/map" />
       <PageRoute exact path="/route/:id/map" component={RouteMapPage} />
       <PageRoute exact path="/route/:id/end" component={RouteEndPage} />
       <PageRoute
@@ -60,7 +63,6 @@ const Routes = () => {
       <PageRoute exact path="/survey/:id" component={SurveyDetailsPage} />
       <PageRoute exact path="/qrcode" component={QrCodePage} />
       <PageRoute exact path="/profile" component={ProfilePage} />
-      <Redirect from="/route/:id" to="/route/:id/map" />
       <PageRoute
         path="*"
         header={false}
