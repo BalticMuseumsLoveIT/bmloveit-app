@@ -1,6 +1,6 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
-import HomePageStore from 'utils/store/homePageStore';
+import WelcomePageStore from 'utils/store/welcomePageStore';
 import Footer from 'components/Footer/Footer';
 import { FooterButton } from 'components/Footer/Footer.style';
 import React from 'react';
@@ -15,23 +15,23 @@ interface Props extends WithTranslation, RouteComponentProps {
 
 @inject('uiStore')
 @observer
-class HomePage extends React.Component<Props> {
-  homePageStore = new HomePageStore(true);
+class WelcomePage extends React.Component<Props> {
+  welcomePageStore = new WelcomePageStore(true);
 
   async componentDidMount(): Promise<void> {
-    this.homePageStore.setTReady(this.props.tReady);
+    this.welcomePageStore.setTReady(this.props.tReady);
 
-    await this.homePageStore.loadData();
+    await this.welcomePageStore.loadData();
   }
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.tReady !== this.props.tReady) {
-      this.homePageStore.setTReady(this.props.tReady);
+      this.welcomePageStore.setTReady(this.props.tReady);
     }
   }
 
   componentWillUnmount(): void {
-    this.homePageStore.unmount();
+    this.welcomePageStore.unmount();
   }
 
   render() {
@@ -44,11 +44,11 @@ class HomePage extends React.Component<Props> {
         </Helmet>
         <Content>
           <div>
-            <p>Site Image: {this.homePageStore.siteImage}</p>
-            <p>Site Logo: {this.homePageStore.siteLogo}</p>
+            <p>Site Image: {this.welcomePageStore.siteImage}</p>
+            <p>Site Logo: {this.welcomePageStore.siteLogo}</p>
           </div>
-          <h1>{this.homePageStore.siteTitle}</h1>
-          <div>{this.homePageStore.siteDescription}</div>
+          <h1>{this.welcomePageStore.siteTitle}</h1>
+          <div>{this.welcomePageStore.siteDescription}</div>
           <Footer>
             <FooterButton as={Link} to="/area">
               {this.props.t('buttonStart.label', 'Start sightseeing')}
@@ -60,4 +60,4 @@ class HomePage extends React.Component<Props> {
   }
 }
 
-export default withTranslation('home-page')(HomePage);
+export default withTranslation('welcome-page')(WelcomePage);

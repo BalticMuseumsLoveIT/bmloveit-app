@@ -1,4 +1,4 @@
-import HomePage from 'pages/HomePage';
+import HomePage from 'pages/WelcomePage';
 import NotFoundPage from 'pages/NotFoundPage';
 import QuizListPage from 'pages/QuizListPage';
 import QuizDetailsPage from 'pages/QuizDetailsPage';
