@@ -17,6 +17,7 @@ interface Props extends WithTranslation, RouteComponentProps {
 @observer
 class LoginPage extends React.Component<Props> {
   userStore = this.props.userStore;
+  readonly WELCOME_PAGE = '/welcome';
 
   render() {
     if (!this.props.tReady) return null;
@@ -35,7 +36,7 @@ class LoginPage extends React.Component<Props> {
               <GoogleButton onSuccess={this.login} />
             </>
           ) : (
-            <Redirect to="/" />
+            <Redirect to={this.WELCOME_PAGE} />
           )}
         </Content>
       </>
@@ -54,7 +55,8 @@ class LoginPage extends React.Component<Props> {
 
     await this.userStore.signIn(provider, response.accessToken);
 
-    const redirectTo = (location.state && location.state.from.pathname) || '/';
+    const redirectTo =
+      (location.state && location.state.from.pathname) || this.WELCOME_PAGE;
     this.props.history.push(redirectTo);
   };
 }
