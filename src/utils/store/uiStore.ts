@@ -6,6 +6,7 @@ export class UiStore {
   @observable isMenuOpened: boolean;
   @observable contentState: ContentState;
   @observable languages: Array<CommonLanguageInterface> = [];
+  @observable language: string | null = null;
 
   constructor() {
     this.isMenuOpened = false;
@@ -14,6 +15,10 @@ export class UiStore {
 
   @action setLanguages = (languages: Array<CommonLanguageInterface>) => {
     this.languages = languages;
+  };
+
+  @action setLanguage = (language: string) => {
+    this.language = language;
   };
 
   @action
