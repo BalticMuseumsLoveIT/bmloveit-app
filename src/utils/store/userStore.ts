@@ -1,11 +1,14 @@
 import Api from 'utils/api';
 import { AuthTokenInterface } from 'utils/interfaces';
+import UserAvatarStore from 'utils/store/userAvatarStore';
 import localStorage from 'mobx-localstorage';
 import { action, computed } from 'mobx';
 import axios from 'axios';
 
 export class UserStore {
   private readonly AUTH_TOKEN_KEY = 'authToken';
+
+  readonly userAvatarStore = new UserAvatarStore();
 
   @computed get authToken(): AuthTokenInterface | null {
     return localStorage.getItem(this.AUTH_TOKEN_KEY);

@@ -9,7 +9,6 @@ import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
 import { action, autorun, computed, observable, when } from 'mobx';
 import { createTransformer } from 'mobx-utils';
-import { SyntheticEvent } from 'react';
 
 export enum PageState {
   NOT_LOADED,
@@ -231,11 +230,8 @@ export default class ItemPageStore {
     this.panoramaItems = panoramaItems;
   };
 
-  @action handleAvatarChoice = async (event: SyntheticEvent) => {
+  @action handleAvatarChoice = async () => {
     if (this.state === PageState.SUBMITTED) return true;
-
-    event.persist();
-    event.preventDefault();
 
     if (
       this.avatarData !== null &&
@@ -249,8 +245,6 @@ export default class ItemPageStore {
         this.setState(PageState.SUBMITTED);
       } catch (e) {
         this.setState(PageState.ERROR);
-      } finally {
-        event.target.dispatchEvent(new MouseEvent('click'));
       }
     }
   };

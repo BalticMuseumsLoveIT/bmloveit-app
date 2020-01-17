@@ -37,7 +37,7 @@ class ProfilePage extends React.Component<Props> {
 
   logout = () => {
     this.userStore.signOut();
-    this.props.history.push('/login');
+    this.props.history.push('/');
   };
 
   render() {

@@ -1,9 +1,14 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
-import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
+import {
+  LanguageSwitch,
+  LanguageSwitchValues,
+} from 'components/LanguageSwitch/LanguageSwitch';
 import LanguagePageStore from 'utils/store/languagePageStore';
 import { toISO6391 } from 'utils/helpers';
-import { RouteComponentProps } from 'react-router-dom';
+import Footer from 'components/Footer/Footer';
+import { FooterButton } from 'components/Footer/Footer.style';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -17,7 +22,7 @@ export interface Props extends WithTranslation, RouteComponentProps {
 @observer
 class LanguagePage extends React.Component<Props> {
   uiStore = this.props.uiStore;
-  languagePageStore = new LanguagePageStore(this.props.i18n, true);
+  languagePageStore = new LanguagePageStore(true);
 
   async componentDidMount(): Promise<void> {
     this.languagePageStore.setTReady(this.props.tReady);
@@ -35,6 +40,12 @@ class LanguagePage extends React.Component<Props> {
     this.languagePageStore.unmount();
   }
 
+  handleLanguageSwitch = async (
+    values: LanguageSwitchValues,
+  ): Promise<void> => {
+    await this.props.i18n.changeLanguage(values.language);
+  };
+
   render() {
     if (!this.props.tReady) return null;
 
@@ -51,8 +62,13 @@ class LanguagePage extends React.Component<Props> {
           <LanguageSwitch
             list={this.languagePageStore.languageList}
             userLocale={toISO6391(this.props.i18n.language)}
-            onSubmit={this.languagePageStore.handleSubmit}
+            onSubmit={this.handleLanguageSwitch}
           />
+          <Footer>
+            <FooterButton as={Link} to="/login">
+              {this.props.t('form.button.submit.label', 'Next')}
+            </FooterButton>
+          </Footer>
         </Content>
       </>
     );

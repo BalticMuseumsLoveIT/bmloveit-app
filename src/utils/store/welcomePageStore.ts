@@ -11,7 +11,7 @@ export enum PageState {
   ERROR,
 }
 
-export default class HomePageStore {
+export default class WelcomePageStore {
   private readonly _manageContentState: boolean;
 
   @observable state: PageState = PageState.NOT_LOADED;

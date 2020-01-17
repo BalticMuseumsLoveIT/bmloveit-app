@@ -1,63 +1,75 @@
 import ItemPageStore, { PageState } from 'utils/store/itemPageStore';
 import Footer from 'components/Footer/Footer';
-import { FooterLink } from 'components/Footer/Footer.style';
+import { FooterButton } from 'components/Footer/Footer.style';
 import {
   AvatarButton,
   AvatarList,
 } from 'components/ItemDetails/ItemAvatarChoice.style';
+import { UserStore } from 'utils/store/userStore';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useObserver } from 'mobx-react';
+import { inject, useObserver } from 'mobx-react';
+import { useHistory } from 'react-router-dom';
 
 interface ItemAvatarChoiceProps {
   itemPageStore: ItemPageStore;
+  userStore?: UserStore;
 }
 
-export const ItemAvatarChoice = ({ itemPageStore }: ItemAvatarChoiceProps) => {
-  const { t, ready } = useTranslation('item-page');
+export const ItemAvatarChoice = inject('userStore')(
+  ({ itemPageStore, userStore }: ItemAvatarChoiceProps) => {
+    const { t, ready } = useTranslation('item-page');
 
-  return useObserver(() => {
-    if (!ready) return null;
+    const history = useHistory();
 
-    return (
-      <>
-        <h1>{itemPageStore.itemFullName}</h1>
-        <div>{itemPageStore.itemDescription}</div>
-        <AvatarList>
-          {itemPageStore.itemAvatars.length ? (
-            <>
-              {itemPageStore.itemAvatars.map(avatar => (
-                <AvatarButton
-                  key={avatar.id}
-                  isSelected={itemPageStore.isAvatarSelected(avatar.id)}
-                  onClick={() => itemPageStore.setAvatar(avatar)}
-                >
-                  {avatar.name_full}
-                </AvatarButton>
-              ))}
-            </>
-          ) : (
-            <p>
-              {t(
-                'error.noAvatarsFound',
-                'No avatars was found for an item with a given ID',
-              )}
-            </p>
-          )}
-        </AvatarList>
-        <Footer>
-          <FooterLink
-            to={`/item/${itemPageStore.selectedAvatarNextItemId}`}
-            isDisabled={
-              itemPageStore.state === PageState.SUBMITTING ||
-              itemPageStore.avatarData === null
-            }
-            onClick={itemPageStore.handleAvatarChoice}
-          >
-            {t('button.next.label', 'Next')}
-          </FooterLink>
-        </Footer>
-      </>
-    );
-  });
-};
+    const clickHandler = async () => {
+      await itemPageStore.handleAvatarChoice();
+      await userStore!.userAvatarStore.load();
+      history.push(`/item/${itemPageStore.selectedAvatarNextItemId}`);
+    };
+
+    return useObserver(() => {
+      if (!ready) return null;
+
+      return (
+        <>
+          <h1>{itemPageStore.itemFullName}</h1>
+          <div>{itemPageStore.itemDescription}</div>
+          <AvatarList>
+            {itemPageStore.itemAvatars.length ? (
+              <>
+                {itemPageStore.itemAvatars.map(avatar => (
+                  <AvatarButton
+                    key={avatar.id}
+                    isSelected={itemPageStore.isAvatarSelected(avatar.id)}
+                    onClick={() => itemPageStore.setAvatar(avatar)}
+                  >
+                    {avatar.name_full}
+                  </AvatarButton>
+                ))}
+              </>
+            ) : (
+              <p>
+                {t(
+                  'error.noAvatarsFound',
+                  'No avatars was found for an item with a given ID',
+                )}
+              </p>
+            )}
+          </AvatarList>
+          <Footer>
+            <FooterButton
+              disabled={
+                itemPageStore.state === PageState.SUBMITTING ||
+                itemPageStore.avatarData === null
+              }
+              onClick={clickHandler}
+            >
+              {t('button.next.label', 'Next')}
+            </FooterButton>
+          </Footer>
+        </>
+      );
+    });
+  },
+);

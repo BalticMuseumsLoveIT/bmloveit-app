@@ -14,7 +14,7 @@ interface Props extends WithTranslation {
 class MobileMenu extends React.Component<Props> {
   private readonly _links = [
     {
-      to: '/',
+      to: '/welcome',
       // Define label as function and run it inside render to allow extraction
       // plugin to read those strings
       label: () => this.props.t('mainMenu.home', 'Home'),

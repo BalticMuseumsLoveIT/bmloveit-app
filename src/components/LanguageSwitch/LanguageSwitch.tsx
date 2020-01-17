@@ -1,17 +1,33 @@
 import { CommonLanguageInterface } from 'utils/interfaces';
 import React from 'react';
 import * as Yup from 'yup';
-import { ErrorMessage, Field, Form, Formik, FormikValues } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 export interface LanguageSwitchValues {
   language: string;
 }
 
+interface AutoSubmitProps extends LanguageSwitchValues {
+  submitForm: (values: LanguageSwitchValues) => Promise<void>;
+}
+
+class AutoSubmit extends React.Component<AutoSubmitProps> {
+  componentDidUpdate = async (previous: Readonly<LanguageSwitchValues>) => {
+    const { language, submitForm } = this.props;
+    previous.language !== language &&
+      (await submitForm(this.props as LanguageSwitchValues));
+  };
+
+  render = () => {
+    return null;
+  };
+}
+
 interface LanguageSwitchProps {
   list: Array<CommonLanguageInterface>;
   userLocale: string;
-  onSubmit: (values: FormikValues) => Promise<void>;
+  onSubmit: (values: LanguageSwitchValues) => Promise<void>;
 }
 
 export const LanguageSwitch = ({
@@ -51,7 +67,7 @@ export const LanguageSwitch = ({
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {formik => (
+      {({ submitForm, values }) => (
         <Form>
           <div>
             <label htmlFor="language">
@@ -68,9 +84,7 @@ export const LanguageSwitch = ({
           </div>
           <ErrorMessage name="language" component="div" />
           <div>
-            <button type="submit" disabled={formik.isSubmitting}>
-              {t('form.button.submit.label', 'Next')}
-            </button>
+            <AutoSubmit {...values} submitForm={submitForm} />
           </div>
         </Form>
       )}
