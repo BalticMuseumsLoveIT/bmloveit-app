@@ -6,7 +6,7 @@ const StyledWrapper = styled.div`
   margin: 1em 0;
 `;
 
-interface FooterLinkProps {
+interface FooterButtonProps {
   disabled?: boolean;
 }
 
@@ -23,7 +23,7 @@ export const FooterButton = styled.button`
   border-radius: 3px;
   text-decoration: none;
 
-  ${({ disabled }: FooterLinkProps) =>
+  ${({ disabled }: FooterButtonProps) =>
     disabled &&
     `
     cursor: default;
@@ -32,7 +32,7 @@ export const FooterButton = styled.button`
   `}
 
   &:hover {
-    background: ${({ disabled }: FooterLinkProps) =>
+    background: ${({ disabled }: FooterButtonProps) =>
       disabled ? 'inherit' : 'paleturquoise'};
   }
 
