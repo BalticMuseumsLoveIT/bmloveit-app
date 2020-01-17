@@ -5,7 +5,20 @@ import { action, observable } from 'mobx';
 export class UiStore {
   @observable isMenuOpened: boolean;
   @observable contentState: ContentState;
+
+  /**
+   * List of all supported languages provided by a backend server
+   *
+   * Should be initialized as soon as possible, for example in
+   * componentDidMount method of <App /> component
+   */
   @observable languages: Array<CommonLanguageInterface> = [];
+
+  /**
+   * Current UI language provided by i18next auto detection or user choice
+   *
+   * Should be hooked into i18next `languageChanged` event
+   */
   @observable language: string | null = null;
 
   constructor() {
