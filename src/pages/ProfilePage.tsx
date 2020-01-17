@@ -10,7 +10,6 @@ import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
-import { toJS } from 'mobx';
 
 interface Props extends WithTranslation, RouteComponentProps {
   userStore: UserStore;
@@ -68,6 +67,9 @@ class ProfilePage extends React.Component<Props> {
         <Content>
           <h1>{this.props.t('content.title', 'User Profile')}</h1>
           <p>{this.profilePageStore.userName}</p>
+          {this.profilePageStore.team && (
+            <h2>You are in group: {this.profilePageStore.team.name}</h2>
+          )}
           {pointsSectionValue > 0 && <p>{pointsSectionValue}</p>}
           {this.profilePageStore.userAvatar && (
             <img

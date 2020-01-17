@@ -308,6 +308,14 @@ abstract class Api {
     return response.data;
   };
 
+  public static getTeam = async (id: number): Promise<TeamInterface> => {
+    const endpoint = `api/team/${id}`;
+
+    const response = await userStore.axiosInstance.get(endpoint);
+
+    return response.data;
+  };
+
   public static teamCreate = async (teamName: string) => {
     const formData = {
       name: teamName,

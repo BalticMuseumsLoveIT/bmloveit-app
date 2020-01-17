@@ -3,6 +3,7 @@ import {
   ItemInterface,
   ResourceTypeName,
   UserProfileInterface,
+  TeamInterface,
 } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
@@ -26,6 +27,7 @@ export default class ProfilePageStore {
   @observable state: PageState = PageState.NOT_LOADED;
   @observable userProfileData: UserProfileInterface | null = null;
   @observable languageList: Array<CommonLanguageInterface> = [];
+  @observable team: TeamInterface | null = null;
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -118,6 +120,10 @@ export default class ProfilePageStore {
         when(() => this.tReady === true),
       ]);
 
+      if (userProfileData.team !== null) {
+        this.setTeam(await Api.getTeam(userProfileData.team));
+      }
+
       this.setUserProfile(userProfileData);
       this.setLanguageList(languageListData);
       this.setState(PageState.LOADED);
@@ -136,6 +142,10 @@ export default class ProfilePageStore {
 
   @action setUserProfile(userProfileData: UserProfileInterface) {
     this.userProfileData = userProfileData;
+  }
+
+  @action setTeam(team: TeamInterface) {
+    this.team = team;
   }
 
   @action unmount = () => {
