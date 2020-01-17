@@ -1,14 +1,20 @@
 import { ContentState } from 'components/Content/Content';
+import { CommonLanguageInterface } from 'utils/interfaces';
 import { action, observable } from 'mobx';
 
 export class UiStore {
   @observable isMenuOpened: boolean;
   @observable contentState: ContentState;
+  @observable languages: Array<CommonLanguageInterface> = [];
 
   constructor() {
     this.isMenuOpened = false;
     this.contentState = ContentState.AVAILABLE;
   }
+
+  @action setLanguages = (languages: Array<CommonLanguageInterface>) => {
+    this.languages = languages;
+  };
 
   @action
   setContentState(contentState: ContentState) {
