@@ -5,7 +5,6 @@ import {
   LanguageSwitchValues,
 } from 'components/LanguageSwitch/LanguageSwitch';
 import LanguagePageStore from 'utils/store/languagePageStore';
-import { toISO6391 } from 'utils/helpers';
 import Footer from 'components/Footer/Footer';
 import { FooterButton } from 'components/Footer/Footer.style';
 import { Link, RouteComponentProps } from 'react-router-dom';
@@ -61,7 +60,7 @@ class LanguagePage extends React.Component<Props> {
           />
           <LanguageSwitch
             list={this.languagePageStore.languageList}
-            userLocale={toISO6391(this.props.i18n.language)}
+            userLocale={this.props.i18n.language}
             onSubmit={this.handleLanguageSwitch}
           />
           <Footer>

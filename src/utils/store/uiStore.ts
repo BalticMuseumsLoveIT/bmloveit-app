@@ -1,5 +1,6 @@
 import { ContentState } from 'components/Content/Content';
 import { CommonLanguageInterface } from 'utils/interfaces';
+import { toISO6391 } from 'utils/helpers';
 import { action, observable } from 'mobx';
 
 export class UiStore {
@@ -31,7 +32,7 @@ export class UiStore {
   };
 
   @action setLanguage = (language: string) => {
-    this.language = language;
+    this.language = toISO6391(language) || null;
   };
 
   @action
