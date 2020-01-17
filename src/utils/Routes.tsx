@@ -31,14 +31,14 @@ const Routes = () => {
       <PageRoute
         exact
         path="/language"
-        header={false}
+        displayHeader={false}
         authorization={false}
         component={LanguagePage}
       />
       <PageRoute
         exact
         path="/login"
-        header={false}
+        displayHeader={false}
         authorization={false}
         component={LoginPage}
       />
@@ -65,7 +65,7 @@ const Routes = () => {
       <PageRoute exact path="/profile" component={ProfilePage} />
       <PageRoute
         path="*"
-        header={false}
+        displayHeader={false}
         authorization={false}
         component={NotFoundPage}
       />
@@ -74,20 +74,20 @@ const Routes = () => {
 };
 
 interface PageRouteProps extends RouteProps {
-  header?: boolean;
+  displayHeader?: boolean;
   authorization?: boolean;
 }
 
 const PageRoute = ({
   component: Component,
-  header = true,
+  displayHeader = true,
   authorization = true,
   ...routeProps
 }: PageRouteProps) => {
   if (!Component) return null;
 
   return !authorization || userStore.isLoggedIn ? (
-    <Route {...routeProps} component={withLayout(Component, header)} />
+    <Route {...routeProps} component={withLayout(Component, displayHeader)} />
   ) : (
     <Redirect
       to={{ pathname: '/login', state: { from: routeProps.location } }}

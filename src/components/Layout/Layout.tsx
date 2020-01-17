@@ -7,12 +7,12 @@ import StyledWrapper, { GlobalStyle } from './Layout.style';
 
 export interface LayoutProps {
   children?: React.ReactNode;
-  header?: boolean;
+  displayHeader?: boolean;
 }
 
 export default class Layout extends React.Component<LayoutProps> {
   render() {
-    const { header, children } = this.props;
+    const { displayHeader, children } = this.props;
 
     return (
       <ThemeProvider theme={theme}>
@@ -20,7 +20,7 @@ export default class Layout extends React.Component<LayoutProps> {
           <GlobalStyle />
           <StyledWrapper>
             <CookieBar />
-            {header && <Header />}
+            {displayHeader && <Header />}
             {children}
           </StyledWrapper>
         </>
@@ -31,12 +31,12 @@ export default class Layout extends React.Component<LayoutProps> {
 
 export const withLayout = <P extends object>(
   Component: React.ComponentType<P>,
-  header = true,
+  displayHeader = true,
 ) =>
   class WithLayout extends React.Component<P> {
     render() {
       return (
-        <Layout header={header}>
+        <Layout displayHeader={displayHeader}>
           <Component {...this.props} />
         </Layout>
       );
