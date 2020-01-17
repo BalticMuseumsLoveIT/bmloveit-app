@@ -2,7 +2,6 @@ import { ContentState } from 'components/Content/Content';
 import { action, observable } from 'mobx';
 
 export class UiStore {
-  @observable lang?: string;
   @observable isMenuOpened: boolean;
   @observable contentState: ContentState;
 
@@ -10,11 +9,6 @@ export class UiStore {
     this.isMenuOpened = false;
     this.contentState = ContentState.AVAILABLE;
   }
-
-  @action
-  setLang = (lang: string): void => {
-    this.lang = lang;
-  };
 
   @action
   setContentState(contentState: ContentState) {

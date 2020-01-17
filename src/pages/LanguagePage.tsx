@@ -1,14 +1,18 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
-import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
+import {
+  LanguageSwitch,
+  LanguageSwitchValues,
+} from 'components/LanguageSwitch/LanguageSwitch';
 import LanguagePageStore from 'utils/store/languagePageStore';
 import { toISO6391 } from 'utils/helpers';
-import { RouteComponentProps } from 'react-router-dom';
+import Footer from 'components/Footer/Footer';
+import { FooterButton } from 'components/Footer/Footer.style';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { WithTranslation, withTranslation } from 'react-i18next';
-import { FormikValues } from 'formik';
 
 export interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
@@ -36,9 +40,10 @@ class LanguagePage extends React.Component<Props> {
     this.languagePageStore.unmount();
   }
 
-  handleLanguageSwitch = async (values: FormikValues): Promise<void> => {
+  handleLanguageSwitch = async (
+    values: LanguageSwitchValues,
+  ): Promise<void> => {
     await this.props.i18n.changeLanguage(values.language);
-    this.props.history.push('/login');
   };
 
   render() {
@@ -59,6 +64,11 @@ class LanguagePage extends React.Component<Props> {
             userLocale={toISO6391(this.props.i18n.language)}
             onSubmit={this.handleLanguageSwitch}
           />
+          <Footer>
+            <FooterButton as={Link} to="/login">
+              {this.props.t('form.button.submit.label', 'Next')}
+            </FooterButton>
+          </Footer>
         </Content>
       </>
     );
