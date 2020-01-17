@@ -1,7 +1,6 @@
 import { ContentState } from 'components/Content/Content';
 import { CommonLanguageInterface } from 'utils/interfaces';
-import { toISO6391 } from 'utils/helpers';
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 export class UiStore {
   @observable isMenuOpened: boolean;
@@ -25,6 +24,18 @@ export class UiStore {
   constructor() {
     this.isMenuOpened = false;
     this.contentState = ContentState.AVAILABLE;
+  }
+
+  @computed get languageId(): number {
+    let languageData;
+
+    if (this.language && this.languages.length) {
+      languageData = this.languages.find(
+        language => language.key === this.language,
+      );
+    }
+
+    return languageData ? languageData.id : NaN;
   }
 
   @action setLanguages = (languages: Array<CommonLanguageInterface>) => {
