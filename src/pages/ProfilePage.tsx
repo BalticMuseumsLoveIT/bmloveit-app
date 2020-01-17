@@ -58,8 +58,8 @@ class ProfilePage extends React.Component<Props> {
             />
           )}
           <LanguageSwitch
-            list={this.profilePageStore.languageList}
-            userLocale={this.props.i18n.language}
+            uiLanguages={this.profilePageStore.languageList}
+            userLanguage={this.props.i18n.language}
             onSubmit={this.profilePageStore.handleSubmit}
           />
           <p>
