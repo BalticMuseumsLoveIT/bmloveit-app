@@ -1,3 +1,5 @@
+import { CommonApiTranslationInterface } from 'utils/interfaces';
+import stores from 'utils/store/stores';
 import ISO6391 from 'iso-639-1';
 
 export const getItemFromStorage = (key: string): string => {
@@ -37,4 +39,21 @@ export const toISO6391 = (languageCode: string): string => {
   const isLanguageCodeValid = ISO6391.validate(languageCodeISO6391);
 
   return isLanguageCodeValid ? languageCodeISO6391 : '';
+};
+
+export const getTranslatedString = (
+  fallback: string,
+  translations: Array<CommonApiTranslationInterface>,
+): string => {
+  const {
+    uiStore: { languageId },
+  } = stores;
+
+  if (Number.isNaN(languageId) || translations.length === 0) return fallback;
+
+  const translationData = translations.find(
+    languageData => languageData.language === languageId,
+  );
+
+  return translationData ? translationData.text : fallback;
 };

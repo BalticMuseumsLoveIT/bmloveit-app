@@ -6,6 +6,7 @@ import {
   AvatarList,
 } from 'components/ItemDetails/ItemAvatarChoice.style';
 import { UserStore } from 'utils/store/userStore';
+import { getTranslatedString } from 'utils/helpers';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { inject, useObserver } from 'mobx-react';
@@ -44,7 +45,10 @@ export const ItemAvatarChoice = inject('userStore')(
                     isSelected={itemPageStore.isAvatarSelected(avatar.id)}
                     onClick={() => itemPageStore.setAvatar(avatar)}
                   >
-                    {avatar.name_full}
+                    {getTranslatedString(
+                      avatar.name_full,
+                      avatar.name_full_translation,
+                    )}
                   </AvatarButton>
                 ))}
               </>

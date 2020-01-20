@@ -1,6 +1,7 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import AreaRoutesPageStore from 'utils/store/areaRoutesPageStore';
+import { getTranslatedString } from 'utils/helpers';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -66,7 +67,10 @@ class AreaRoutesPage extends React.Component<Props> {
                   return (
                     <p key={route.id}>
                       <Link to={`/route/${route.id}/map`}>
-                        {route.name_full}
+                        {getTranslatedString(
+                          route.name_full,
+                          route.name_full_translation,
+                        )}
                       </Link>
                       <br />
                       {this.props.t(

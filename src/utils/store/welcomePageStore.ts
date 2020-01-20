@@ -2,6 +2,7 @@ import { SiteInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
+import { getTranslatedString } from 'utils/helpers';
 import { action, autorun, computed, observable, when } from 'mobx';
 
 export enum PageState {
@@ -56,11 +57,21 @@ export default class WelcomePageStore {
   };
 
   @computed get siteTitle(): string {
-    return this.siteData.length ? this.siteData[0].title : '';
+    return this.siteData.length
+      ? getTranslatedString(
+          this.siteData[0].title,
+          this.siteData[0].title_translation,
+        )
+      : '';
   }
 
   @computed get siteDescription(): string {
-    return this.siteData.length ? this.siteData[0].description : '';
+    return this.siteData.length
+      ? getTranslatedString(
+          this.siteData[0].description,
+          this.siteData[0].description_translation,
+        )
+      : '';
   }
 
   @computed get siteLogo(): string {
