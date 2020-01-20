@@ -18,11 +18,8 @@ import ProfilePage from 'pages/ProfilePage';
 import TeamPage from 'pages/TeamPage';
 import AboutPage from 'pages/AboutPage';
 import Layout from 'components/Layout/Layout';
-import ReactModal from 'react-modal';
 import { Route, Switch, Redirect, RouteProps } from 'react-router-dom';
 import React from 'react';
-
-ReactModal.setAppElement('#root');
 
 const Routes = () => {
   return (
