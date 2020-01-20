@@ -15,7 +15,16 @@ export class UserStore {
   }
 
   @computed get isLoggedIn(): boolean {
-    return !!(this.authToken && this.authToken.access_token.length);
+    if (this.authToken === null) {
+      return false;
+    }
+
+    const expirationDate = new Date(this.authToken.expires_date).getTime();
+    const currentDate = new Date().getTime();
+
+    return !!(
+      this.authToken.access_token.length && currentDate < expirationDate
+    );
   }
 
   @computed get accessToken(): string {
