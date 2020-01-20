@@ -1,6 +1,7 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import AreaPageStore from 'utils/store/areaListPageStore';
+import { getTranslatedString } from 'utils/helpers';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -45,7 +46,12 @@ class AreaListPage extends React.Component<Props> {
           {this.areaListPageStore.areaData.map(area => {
             return (
               <p key={area.id}>
-                <Link to={`/area/${area.id}/routes`}>{area.name_full}</Link>
+                <Link to={`/area/${area.id}/routes`}>
+                  {getTranslatedString(
+                    area.name_full,
+                    area.name_full_translation,
+                  )}
+                </Link>
                 <br />
                 {this.props.t('counter.routes', 'Routes: {{routes}}', {
                   routes: this.areaListPageStore.routesAmount(area.id),
