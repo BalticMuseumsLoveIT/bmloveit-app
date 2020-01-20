@@ -43,7 +43,7 @@ export class UiStore {
   };
 
   @action setLanguage = (language: string) => {
-    this.language = toISO6391(language) || null;
+    this.language = language.substring(0, 2).toLowerCase() || null;
   };
 
   @action
