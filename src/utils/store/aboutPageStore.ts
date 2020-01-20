@@ -1,5 +1,6 @@
 import { SiteInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
+import { getTranslatedString } from 'utils/helpers';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
 import { action, autorun, computed, observable, when } from 'mobx';
@@ -40,7 +41,12 @@ export default class AboutPageStore {
   }
 
   @computed get aboutContent(): string {
-    return this.siteData ? this.siteData.about : '';
+    return this.siteData
+      ? getTranslatedString(
+          this.siteData.about,
+          this.siteData.about_translation,
+        )
+      : '';
   }
 
   @action loadData = async () => {
