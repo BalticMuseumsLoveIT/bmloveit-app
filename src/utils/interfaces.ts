@@ -28,9 +28,9 @@ export interface LocationInterface {
   qr_code: string;
   latitude: number | null;
   longitude: number | null;
-  name_translation: Array<CommonLanguageInterface>;
-  name_full_translation: Array<CommonLanguageInterface>;
-  description_translation: Array<CommonLanguageInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
   x: number | null;
   y: number | null;
   screens: Array<number>;

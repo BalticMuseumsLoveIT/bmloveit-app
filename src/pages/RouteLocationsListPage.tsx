@@ -3,6 +3,7 @@ import { UiStore } from 'utils/store/uiStore';
 import RouteLocationsListPageStore from 'utils/store/routeLocationsListPageStore';
 import Footer from 'components/Footer/Footer';
 import { FooterButton } from 'components/Footer/Footer.style';
+import { getTranslatedString } from 'utils/helpers';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -60,10 +61,18 @@ class RouteLocationsListPage extends React.Component<Props> {
             return (
               <p key={location.id}>
                 {isNaN(firstScreenId) ? (
-                  <span>{location.name_full}</span>
+                  <span>
+                    {getTranslatedString(
+                      location.name_full,
+                      location.name_full_translation,
+                    )}
+                  </span>
                 ) : (
                   <Link to={`/item/${firstScreenId}`}>
-                    {location.name_full}
+                    {getTranslatedString(
+                      location.name_full,
+                      location.name_full_translation,
+                    )}
                   </Link>
                 )}
                 <br />
