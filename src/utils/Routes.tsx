@@ -17,7 +17,7 @@ import ItemPage from 'pages/ItemPage';
 import ProfilePage from 'pages/ProfilePage';
 import TeamPage from 'pages/TeamPage';
 import AboutPage from 'pages/AboutPage';
-import { withLayout } from 'components/Layout/Layout';
+import Layout, { withLayout } from 'components/Layout/Layout';
 import ReactModal from 'react-modal';
 import { Route, Switch, Redirect, RouteProps } from 'react-router-dom';
 import React from 'react';
@@ -86,8 +86,22 @@ const PageRoute = ({
 }: PageRouteProps) => {
   if (!Component) return null;
 
+  const route =
+    routeProps.path === '/item/:id' ? (
+      <Route
+        {...routeProps}
+        render={props => (
+          <Layout displayHeader={displayHeader}>
+            <ItemPage key={props.match.params.id} {...props} />
+          </Layout>
+        )}
+      />
+    ) : (
+      <Route {...routeProps} component={withLayout(Component, displayHeader)} />
+    );
+
   return !authorization || userStore.isLoggedIn ? (
-    <Route {...routeProps} component={withLayout(Component, displayHeader)} />
+    route
   ) : (
     <Redirect
       to={{ pathname: '/login', state: { from: routeProps.location } }}
