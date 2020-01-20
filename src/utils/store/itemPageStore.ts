@@ -7,6 +7,7 @@ import {
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
+import { getTranslatedString } from 'utils/helpers';
 import { action, autorun, computed, observable, when } from 'mobx';
 import { createTransformer } from 'mobx-utils';
 
@@ -129,11 +130,21 @@ export default class ItemPageStore {
   }
 
   @computed get itemFullName(): string {
-    return this.itemData.length ? this.itemData[0].name_full : '';
+    return this.itemData.length
+      ? getTranslatedString(
+          this.itemData[0].name_full,
+          this.itemData[0].name_full_translation,
+        )
+      : '';
   }
 
   @computed get itemDescription(): string {
-    return this.itemData.length ? this.itemData[0].description : '';
+    return this.itemData.length
+      ? getTranslatedString(
+          this.itemData[0].description,
+          this.itemData[0].description_translation,
+        )
+      : '';
   }
 
   @computed get itemImage(): ResourceDataInterface | null {

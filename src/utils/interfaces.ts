@@ -236,9 +236,9 @@ export interface ItemInterface {
   qr_code: string;
   latitude: number | null;
   longitude: number | null;
-  name_translation: Array<CommonLanguageInterface>;
-  name_full_translation: Array<CommonLanguageInterface>;
-  description_translation: Array<CommonLanguageInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
   actions_list: Array<{ id: number; name: string }>;
   routes: Array<number>;
   x: number | null;
