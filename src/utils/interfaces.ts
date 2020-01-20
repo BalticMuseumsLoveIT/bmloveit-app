@@ -9,9 +9,9 @@ export interface RouteInterface {
   areas_data: Array<AreaInterface>;
   locations_data: Array<LocationInterface>;
   items_data: Array<ItemInterface>;
-  name_translation: Array<CommonLanguageInterface>;
-  name_full_translation: Array<CommonLanguageInterface>;
-  description_translation: Array<CommonLanguageInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
   languages: Array<number>;
 }
 
