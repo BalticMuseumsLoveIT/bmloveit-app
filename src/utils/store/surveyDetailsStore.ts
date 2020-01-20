@@ -74,14 +74,12 @@ export default class SurveyDetailsStore {
   }
 
   @computed get title(): string {
-    return (
-      (this.itemData &&
-        getTranslatedString(
+    return this.itemData
+      ? getTranslatedString(
           this.itemData.name_full,
           this.itemData.name_full_translation,
-        )) ||
-      ''
-    );
+        )
+      : '';
   }
 
   @action setState(state: SurveyDetailsState) {

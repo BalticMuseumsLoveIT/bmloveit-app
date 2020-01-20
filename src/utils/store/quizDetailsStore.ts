@@ -63,25 +63,21 @@ export default class QuizDetailsStore {
   }
 
   @computed get title(): string {
-    return (
-      (this.quiz &&
-        getTranslatedString(
+    return this.quiz
+      ? getTranslatedString(
           this.quiz.name_full,
           this.quiz.name_full_translation,
-        )) ||
-      ''
-    );
+        )
+      : '';
   }
 
   @computed get description(): string {
-    return (
-      (this.quiz &&
-        getTranslatedString(
+    return this.quiz
+      ? getTranslatedString(
           this.quiz.description,
           this.quiz.description_translation,
-        )) ||
-      ''
-    );
+        )
+      : '';
   }
 
   @computed get question(): QuizQuestionInterface | null {
