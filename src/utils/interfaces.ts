@@ -51,17 +51,12 @@ export interface OAuthLoginArgumentInterface {
   response: any;
 }
 
-export interface TranslationItemInterface {
-  language: number;
-  text: string;
-}
-
 export interface QuizOptionInterface {
   id: number;
   no: number;
   description: string;
   file_url: string;
-  description_translation?: Array<TranslationItemInterface>;
+  description_translation?: Array<CommonApiTranslationInterface>;
   correct?: boolean;
 }
 
@@ -78,7 +73,7 @@ export interface QuizQuestionInterface {
   description: string;
   value_type: string;
   file_url: string;
-  description_translation?: Array<TranslationItemInterface>;
+  description_translation?: Array<CommonApiTranslationInterface>;
   options_data: Array<QuizOptionInterface>;
 }
 
@@ -90,9 +85,9 @@ export interface QuizInterface {
   location: number | null;
   item: number | null;
   language: number;
-  name_translation: Array<TranslationItemInterface>;
-  name_full_translation: Array<TranslationItemInterface>;
-  description_translation: Array<TranslationItemInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
 }
 
 export interface QuizDetailsInterface extends QuizInterface {
@@ -136,9 +131,9 @@ export interface SurveyInterface {
   location: number | null;
   item: number | null;
   language: number;
-  name_translation: Array<TranslationItemInterface>;
-  name_full_translation: Array<TranslationItemInterface>;
-  description_translation: Array<TranslationItemInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
 }
 
 export interface SurveyDetailsInterface {
@@ -147,9 +142,9 @@ export interface SurveyDetailsInterface {
   name_full: string;
   description: string;
   language: number;
-  name_translation: Array<TranslationItemInterface>;
-  name_full_translation: Array<TranslationItemInterface>;
-  description_translation: Array<TranslationItemInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
   questions_data: Array<SurveyQuestionInterface>;
 }
 
@@ -165,7 +160,7 @@ export interface SurveyQuestionInterface {
   type: SurveyQuestionType;
   description: string;
   file_url: string;
-  description_translation: Array<TranslationItemInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
   options_data: Array<SurveyOptionInterface>;
 }
 
@@ -174,7 +169,7 @@ export interface SurveyOptionInterface {
   no: number;
   description: string;
   file_url: string;
-  description_translation: Array<TranslationItemInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
 }
 
 export interface SurveyFulfillmentResponse {
