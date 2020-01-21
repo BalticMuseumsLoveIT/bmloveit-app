@@ -86,7 +86,7 @@ export default class ItemPageStore {
         const childItems: Array<ItemInterface> =
           (this.itemData.length &&
             this.itemData[0].child_items_data.filter(
-              item => item.kind_data.name === ItemKind.POPUP,
+              item => item.kind_data && item.kind_data.name === ItemKind.POPUP,
             )) ||
           [];
 
@@ -109,13 +109,13 @@ export default class ItemPageStore {
 
   @computed get itemType(): string | null {
     return this.itemData.length && null !== this.itemData[0].type
-      ? this.itemData[0].type_data.name
+      ? this.itemData[0].type_data!.name
       : null;
   }
 
   @computed get itemKind(): string | null {
     return this.itemData.length && null !== this.itemData[0].kind
-      ? this.itemData[0].kind_data.name
+      ? this.itemData[0].kind_data!.name
       : null;
   }
 
@@ -124,7 +124,7 @@ export default class ItemPageStore {
       return [];
 
     return this.itemData[0].child_items_data.filter(
-      item => item.type !== null && item.type_data.name === ItemType.AVATAR,
+      item => item.type !== null && item.type_data!.name === ItemType.AVATAR,
     );
   }
 
@@ -220,7 +220,7 @@ export default class ItemPageStore {
   };
 
   @action setAvatar = (avatar: ItemInterface) => {
-    if (avatar.type === null || avatar.type_data.name !== ItemType.AVATAR)
+    if (avatar.type === null || avatar.type_data!.name !== ItemType.AVATAR)
       throw Error('Provided item type is not allowed');
 
     this.avatarData = avatar;

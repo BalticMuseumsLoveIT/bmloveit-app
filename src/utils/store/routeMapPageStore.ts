@@ -59,7 +59,7 @@ export default class RouteMapPageStore {
 
       if (this.routeData && this.routeData.items_data.length) {
         const routeMapData = this.routeData.items_data.find(
-          item => ItemType.MAP === item.type_data.name,
+          item => item.type_data && ItemType.MAP === item.type_data.name,
         );
 
         this.setRouteMapData(routeMapData || null);

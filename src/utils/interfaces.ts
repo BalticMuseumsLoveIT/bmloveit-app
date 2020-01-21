@@ -223,10 +223,10 @@ export interface ItemInterface {
   name: string;
   name_full: string;
   description: string;
-  type: number;
-  type_data: ItemTypeInterface;
-  kind: number;
-  kind_data: ItemKindInterface;
+  type: number | null;
+  type_data: ItemTypeInterface | null;
+  kind: number | null;
+  kind_data: ItemKindInterface | null;
   locations: Array<number>;
   resources_data: Array<ResourceDataInterface>;
   quizzes_data: Array<QuizInterface>;
