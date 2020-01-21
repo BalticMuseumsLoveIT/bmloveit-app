@@ -32,19 +32,54 @@ export class UserStore {
   }
 
   @computed get axiosInstance() {
-    const headers: { [key: string]: string } = {
-      'Content-Type': 'application/json',
-    };
-
-    if (this.isLoggedIn) {
-      headers['Authorization'] = `Bearer ${this.accessToken}`;
-    }
-
-    return axios.create({
+    const axiosInstance = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
-      headers: headers,
+      headers: {
+        'Content-Type': 'application/json',
+      },
       withCredentials: true,
     });
+
+    axiosInstance.interceptors.request.use(
+      config => {
+        if (this.isLoggedIn) {
+          config.headers['Authorization'] = `Bearer ${this.accessToken}`;
+        }
+
+        return config;
+      },
+      error => {
+        Promise.reject(error);
+      },
+    );
+
+    axiosInstance.interceptors.response.use(
+      response => {
+        return response;
+      },
+      async error => {
+        const originalRequest = error.config;
+
+        if (
+          error.response.status === 401 &&
+          originalRequest._isRetry !== true
+        ) {
+          originalRequest._isRetry = true; // custom field for avoiding request loop
+
+          const refreshTokenData = await Api.refreshToken(
+            this.authToken!.refresh_token,
+          );
+
+          this.setAuthToken(refreshTokenData);
+
+          return axiosInstance(originalRequest);
+        }
+
+        return Promise.reject(error);
+      },
+    );
+
+    return axiosInstance;
   }
 
   @action
