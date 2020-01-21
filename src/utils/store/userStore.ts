@@ -62,12 +62,13 @@ export class UserStore {
 
         if (
           error.response.status === 401 &&
-          originalRequest._isRetry !== true
+          originalRequest._isRetry !== true &&
+          this.authToken !== null
         ) {
           originalRequest._isRetry = true; // custom field for avoiding request loop
 
           const refreshTokenData = await Api.refreshToken(
-            this.authToken!.refresh_token,
+            this.authToken.refresh_token,
           );
 
           this.setAuthToken(refreshTokenData);
