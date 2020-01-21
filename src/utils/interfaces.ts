@@ -193,6 +193,23 @@ export interface SurveyAnswerResponse {
 
 // Item ------------------------------------------------------------------------
 
+export enum ItemType {
+  DEFAULT = 'default',
+  AVATAR_CHOICE = 'avatar_choice',
+  AVATAR = 'avatar',
+  SURVEY = 'survey',
+  QUIZ = 'quiz',
+  MAP = 'map',
+  PANORAMA = 'panorama',
+  CARD = 'card',
+}
+
+export enum ItemKind {
+  SCREEN = 'screen',
+  POPUP = 'popup',
+  URL = 'url',
+}
+
 export enum ResourceTypeName {
   Image = 'image',
   Video = 'video',
@@ -208,13 +225,13 @@ export interface ResourceDataInterface {
 
 export interface ItemTypeInterface {
   id: number;
-  name: string;
+  name: ItemType;
   description: string;
 }
 
 export interface ItemKindInterface {
   id: number;
-  name: string;
+  name: ItemKind;
   description: string;
 }
 

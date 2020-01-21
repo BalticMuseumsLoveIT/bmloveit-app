@@ -3,10 +3,11 @@ import {
   ResourceDataInterface,
   ResourceTypeName,
   SurveyInterface,
+  ItemKind,
+  ItemType,
 } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
-import { ItemType, ItemKind } from 'utils/store/itemStore';
 import Api from 'utils/api';
 import { action, autorun, computed, observable, when } from 'mobx';
 import { createTransformer } from 'mobx-utils';

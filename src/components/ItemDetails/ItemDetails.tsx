@@ -1,5 +1,5 @@
 import ItemPageStore from 'utils/store/itemPageStore';
-import { ItemType } from 'utils/store/itemStore';
+import { ItemType } from 'utils/interfaces';
 import { ItemNotFound } from 'components/ItemDetails/ItemNotFound';
 import { ItemDefault } from 'components/ItemDetails/ItemDefault';
 import { ItemAvatarChoice } from 'components/ItemDetails/ItemAvatarChoice';
