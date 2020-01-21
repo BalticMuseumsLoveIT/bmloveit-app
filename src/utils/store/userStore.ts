@@ -19,8 +19,8 @@ export class UserStore {
       return false;
     }
 
-    const expirationDate = new Date(this.authToken.expires_date).getTime();
-    const currentDate = new Date().getTime();
+    const expirationDate = Date.parse(this.authToken.expires_date);
+    const currentDate = Date.now();
 
     return !!(
       this.authToken.access_token.length && currentDate < expirationDate
