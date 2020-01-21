@@ -8,6 +8,7 @@ import {
 } from 'utils/interfaces';
 import Api from 'utils/api';
 import { ContentState } from 'components/Content/Content';
+import { getTranslatedString } from 'utils/helpers';
 import { action, autorun, computed, observable } from 'mobx';
 import { FormikValues } from 'formik';
 import uiStore from './uiStore';
@@ -70,6 +71,15 @@ export default class SurveyDetailsStore {
     return this.itemData !== null && this.itemData.next_item !== null
       ? this.itemData.next_item
       : NaN;
+  }
+
+  @computed get title(): string {
+    return this.itemData
+      ? getTranslatedString(
+          this.itemData.name_full,
+          this.itemData.name_full_translation,
+        )
+      : '';
   }
 
   @action setState(state: SurveyDetailsState) {

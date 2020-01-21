@@ -1,4 +1,5 @@
 import { CommonLanguageInterface } from 'utils/interfaces';
+import { toISO6391 } from 'utils/helpers';
 import React from 'react';
 import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
@@ -25,20 +26,19 @@ class AutoSubmit extends React.Component<AutoSubmitProps> {
 }
 
 interface LanguageSwitchProps {
-  list: Array<CommonLanguageInterface>;
-  userLocale: string;
+  uiLanguages: Array<CommonLanguageInterface>;
+  userLanguage: string;
   onSubmit: (values: LanguageSwitchValues) => Promise<void>;
 }
 
 export const LanguageSwitch = ({
-  list,
-  userLocale,
+  uiLanguages,
+  userLanguage,
   onSubmit,
 }: LanguageSwitchProps) => {
   const { t, ready } = useTranslation('language-page');
 
   const initialValues: LanguageSwitchValues = { language: '' };
-  let userLocaleMatch = false;
 
   const validationSchema = Yup.object().shape({
     language: Yup.string().required(
@@ -49,9 +49,15 @@ export const LanguageSwitch = ({
     ),
   });
 
-  list.some(language => {
-    if (language.key === userLocale) {
-      initialValues.language = userLocale;
+  let userLocaleMatch = false;
+
+  userLanguage = toISO6391(userLanguage);
+
+  uiLanguages.some(({ key: uiLanguage }) => {
+    uiLanguage = toISO6391(uiLanguage);
+
+    if (uiLanguage === userLanguage) {
+      initialValues.language = userLanguage;
       userLocaleMatch = true;
       return true;
     }
@@ -75,7 +81,7 @@ export const LanguageSwitch = ({
             </label>
             <Field as="select" name="language" id="language">
               <option value="" hidden={userLocaleMatch} />
-              {list.map(language => (
+              {uiLanguages.map(language => (
                 <option key={language.id} value={language.key}>
                   {language.value}
                 </option>

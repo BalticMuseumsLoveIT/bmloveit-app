@@ -1,7 +1,7 @@
 import Content from 'components/Content/Content';
 import ProfilePageStore from 'utils/store/profilePageStore';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
-import { getPrivateMediaURL, toISO6391 } from 'utils/helpers';
+import { getPrivateMediaURL } from 'utils/helpers';
 import { UserStore } from 'utils/store/userStore';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -58,8 +58,8 @@ class ProfilePage extends React.Component<Props> {
             />
           )}
           <LanguageSwitch
-            list={this.profilePageStore.languageList}
-            userLocale={toISO6391(this.props.i18n.language)}
+            uiLanguages={this.profilePageStore.languageList}
+            userLanguage={this.props.i18n.language}
             onSubmit={this.profilePageStore.handleSubmit}
           />
           <p>
