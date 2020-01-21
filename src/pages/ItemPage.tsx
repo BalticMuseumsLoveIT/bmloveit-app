@@ -33,7 +33,15 @@ class ItemPage extends React.Component<Props> {
 
   private _closePopup = () => {
     this.reactModalStore.closeModal();
-    this.props.history.push(this.props.location.pathname);
+
+    const search = this.itemPopupStore.removeIdFromQS(
+      this.props.location.search,
+    );
+
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: search,
+    });
   };
 
   async componentDidMount(): Promise<void> {

@@ -20,8 +20,14 @@ export default class ItemPopupStore {
     } catch (e) {}
   };
 
-  getIdFromQS = (query: string): number => {
-    const { popup } = queryString.parse(query);
+  removeIdFromQS = (search: string): string => {
+    const parsedQuery = queryString.parse(search);
+    if ('popup' in parsedQuery) delete parsedQuery.popup;
+    return queryString.stringify(parsedQuery);
+  };
+
+  getIdFromQS = (search: string): number => {
+    const { popup } = queryString.parse(search);
 
     const pattern = new RegExp('^\\d+$');
 
