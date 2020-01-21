@@ -6,6 +6,7 @@ import {
 } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
+import { ItemType, ItemKind } from 'utils/store/itemStore';
 import Api from 'utils/api';
 import { action, autorun, computed, observable, when } from 'mobx';
 import { createTransformer } from 'mobx-utils';
@@ -17,22 +18,6 @@ export enum PageState {
   ERROR,
   SUBMITTING,
   SUBMITTED,
-}
-
-export enum ItemType {
-  DEFAULT = 'default',
-  AVATAR_CHOICE = 'avatar_choice',
-  AVATAR = 'avatar',
-  SURVEY = 'survey',
-  QUIZ = 'quiz',
-  MAP = 'map',
-  PANORAMA = '360',
-}
-
-export enum ItemKind {
-  SCREEN = 'screen',
-  POPUP = 'popup',
-  URL = 'url',
 }
 
 export default class ItemPageStore {
