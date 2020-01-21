@@ -7,7 +7,7 @@ import {
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
-import { ItemType } from 'utils/store/itemPageStore';
+import { ItemType } from 'utils/store/itemStore';
 import { action, autorun, computed, observable, when } from 'mobx';
 
 export enum PageState {
