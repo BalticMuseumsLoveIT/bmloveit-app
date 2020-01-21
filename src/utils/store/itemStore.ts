@@ -3,8 +3,11 @@ import {
   ItemKind,
   ItemInterface,
   CommonApiTranslationInterface,
+  ResourceDataInterface,
+  ResourceTypeName,
 } from 'utils/interfaces';
 import Api from 'utils/api';
+import { getTranslatedString } from 'utils/helpers';
 import { action, computed, observable } from 'mobx';
 
 export default class ItemStore {
@@ -40,13 +43,22 @@ export default class ItemStore {
       : null;
   }
 
+  /**
+   * This is item's name used as an identifier
+   * It should be composed of ([a-z0-9\-\_]+)
+   */
   @computed get itemName(): string {
     return this.itemData ? this.itemData.name : '';
   }
 
+  /**
+   * Get translated name full
+   */
   @computed get itemNameFull(): string {
-    // TODO: Integrate translation helper
-    return this.itemNameFullFallback;
+    return getTranslatedString(
+      this.itemNameFullFallback,
+      this.itemDescriptionTranslations,
+    );
   }
 
   @computed get itemNameFullFallback(): string {
@@ -59,9 +71,15 @@ export default class ItemStore {
     return this.itemData ? this.itemData.name_full_translation : [];
   }
 
+  /**
+   * Get translated description
+   * Description can contain HTML or plain text
+   */
   @computed get itemDescription(): string {
-    // TODO: Integrate translation helper
-    return this.itemDescriptionFallback;
+    return getTranslatedString(
+      this.itemDescriptionFallback,
+      this.itemDescriptionTranslations,
+    );
   }
 
   @computed get itemDescriptionFallback(): string {
