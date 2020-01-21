@@ -2,7 +2,7 @@ import {
   ItemType,
   ItemKind,
   ItemInterface,
-  CommonLanguageInterface,
+  CommonApiTranslationInterface,
 } from 'utils/interfaces';
 import Api from 'utils/api';
 import { action, computed, observable } from 'mobx';
@@ -53,7 +53,9 @@ export default class ItemStore {
     return this.itemData ? this.itemData.name_full : '';
   }
 
-  @computed get itemNameFullTranslations(): Array<CommonLanguageInterface> {
+  @computed get itemNameFullTranslations(): Array<
+    CommonApiTranslationInterface
+  > {
     return this.itemData ? this.itemData.name_full_translation : [];
   }
 
@@ -66,7 +68,9 @@ export default class ItemStore {
     return this.itemData ? this.itemData.description : '';
   }
 
-  @computed get itemDescriptionTranslations(): Array<CommonLanguageInterface> {
+  @computed get itemDescriptionTranslations(): Array<
+    CommonApiTranslationInterface
+  > {
     return this.itemData ? this.itemData.description_translation : [];
   }
 }
