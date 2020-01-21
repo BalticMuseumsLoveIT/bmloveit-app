@@ -91,4 +91,26 @@ export default class ItemStore {
   > {
     return this.itemData ? this.itemData.description_translation : [];
   }
+
+  @computed get itemImage(): ResourceDataInterface | null {
+    return this._getResource(ResourceTypeName.Image);
+  }
+
+  @computed get itemAudio(): ResourceDataInterface | null {
+    return this._getResource(ResourceTypeName.Audio);
+  }
+
+  @computed get itemVideo(): ResourceDataInterface | null {
+    return this._getResource(ResourceTypeName.Video);
+  }
+
+  private _getResource(type: ResourceTypeName): ResourceDataInterface | null {
+    if (!this.itemData || !this.itemData.resources_data.length) return null;
+
+    const resource = this.itemData.resources_data.find(
+      resource => resource.type_name === type,
+    );
+
+    return resource ? resource : null;
+  }
 }
