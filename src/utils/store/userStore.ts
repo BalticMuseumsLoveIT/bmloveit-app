@@ -15,16 +15,7 @@ export class UserStore {
   }
 
   @computed get isLoggedIn(): boolean {
-    if (this.authToken === null) {
-      return false;
-    }
-
-    const expirationDate = Date.parse(this.authToken.expires_date);
-    const currentDate = Date.now();
-
-    return !!(
-      this.authToken.access_token.length && currentDate < expirationDate
-    );
+    return !!(this.authToken && this.authToken.access_token.length);
   }
 
   @computed get accessToken(): string {
@@ -67,11 +58,16 @@ export class UserStore {
         ) {
           originalRequest._isRetry = true; // custom field for avoiding request loop
 
-          const refreshTokenData = await Api.refreshToken(
-            this.authToken.refresh_token,
-          );
+          const expirationDate = Date.parse(this.authToken.expires_date);
+          const currentDate = Date.now();
 
-          this.setAuthToken(refreshTokenData);
+          if (currentDate < expirationDate) {
+            const refreshTokenData = await Api.refreshToken(
+              this.authToken.refresh_token,
+            );
+
+            this.setAuthToken(refreshTokenData);
+          }
 
           return axiosInstance(originalRequest);
         }
