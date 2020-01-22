@@ -5,6 +5,7 @@ import {
   CommonApiTranslationInterface,
   ResourceDataInterface,
   ResourceTypeName,
+  ItemMapElementInterface,
 } from 'utils/interfaces';
 import Api from 'utils/api';
 import { getTranslatedString } from 'utils/helpers';
@@ -124,5 +125,25 @@ export default class ItemStore {
     return this.itemData && this.itemData.quizzes_data.length
       ? this.itemData.quizzes_data[0].id
       : NaN;
+  }
+
+  @computed get panoramaMapItems(): Array<ItemMapElementInterface> {
+    return (
+      (this.itemData &&
+        this.itemData.child_items_data
+          .filter(
+            item =>
+              item.kind_data &&
+              item.kind_data.name === ItemKind.POPUP &&
+              item.x !== null &&
+              item.y !== null,
+          )
+          .map(item => ({
+            x: item.x!,
+            y: item.y!,
+            link: `?popup=${item.id}`,
+          }))) ||
+      []
+    );
   }
 }

@@ -258,6 +258,12 @@ export interface ItemInterface {
   y: number | null;
 }
 
+export interface ItemMapElementInterface {
+  x: number;
+  y: number;
+  link: string;
+}
+
 // Site ------------------------------------------------------------------------
 
 export interface SiteInterface {
