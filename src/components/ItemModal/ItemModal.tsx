@@ -1,3 +1,5 @@
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
+import { getPrivateMediaURL } from 'utils/helpers';
 import ItemModalStore from 'utils/store/itemModalStore';
 import ReactModal from 'react-modal';
 import 'components/ItemModal/ItemModal.css';
@@ -10,8 +12,35 @@ interface ItemModalProps {
 
 export const ItemModal = observer(({ store }: ItemModalProps) => {
   return (
-    <ReactModal {...store.modalProps}>{store.item.itemNameFull}</ReactModal>
+    <ReactModal {...store.modalProps}>
+      {store.item.itemNameFull && <h1>{store.item.itemNameFull}</h1>}
+      {store.item.itemDescription && (
+        <ItemHtmlParser html={store.item.itemDescription} />
+      )}
+      {store.item.itemImage && (
+        <div>
+          <img src={getPrivateMediaURL(store.item.itemImage.file_url)} alt="" />
+        </div>
+      )}
+      {store.item.itemAudio && (
+        <div>
+          <audio controls id="audio_player">
+            <source
+              src={getPrivateMediaURL(store.item.itemAudio.file_url)}
+              type="audio/mpeg"
+            />
+          </audio>
+        </div>
+      )}
+      {store.item.itemVideo && (
+        <div>
+          <video
+            controls
+            id="video_player"
+            src={getPrivateMediaURL(store.item.itemVideo.file_url)}
+          />
+        </div>
+      )}
+    </ReactModal>
   );
 });
-
-export default ItemModal;
