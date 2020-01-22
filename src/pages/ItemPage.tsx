@@ -1,7 +1,7 @@
 import Content from 'components/Content/Content';
 import ItemPageStore from 'utils/store/itemPageStore';
 import { ItemDetails } from 'components/ItemDetails/ItemDetails';
-import ItemModalStore from 'utils/store/itemModalStore';
+import ItemModalStore, { ModalState } from 'utils/store/itemModalStore';
 import { ItemModal } from 'components/ItemModal/ItemModal';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -23,13 +23,24 @@ class ItemPage extends React.Component<Props> {
   });
 
   private _openPopup = async (popupItemId: number) => {
+    this.itemModalStore.setModalState(ModalState.NOT_LOADED);
     this.itemModalStore.openModal();
 
     if (
       this.itemModalStore.item.itemData === null ||
       this.itemModalStore.item.itemId !== popupItemId
     )
-      await this.itemModalStore.item.loadItemData(popupItemId);
+      try {
+        this.itemModalStore.setModalState(ModalState.LOADING);
+        await this.itemModalStore.item.loadItemData(popupItemId);
+      } catch (e) {
+        this.itemModalStore.setModalState(ModalState.ERROR);
+        return;
+      }
+
+    this.itemModalStore.item.itemData === null
+      ? this.itemModalStore.setModalState(ModalState.NOT_FOUND)
+      : this.itemModalStore.setModalState(ModalState.LOADED);
   };
 
   private _closePopup = () => {

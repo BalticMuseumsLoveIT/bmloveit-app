@@ -7,6 +7,7 @@ export enum ModalState {
   NOT_LOADED,
   LOADING,
   LOADED,
+  NOT_FOUND,
   ERROR,
 }
 
