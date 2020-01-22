@@ -13,11 +13,21 @@ export enum ModalState {
 export default class ItemModalStore {
   @observable item: ItemStore = new ItemStore();
   @observable modalState: ModalState = ModalState.NOT_LOADED;
-  @observable modalProps: ReactModalProps;
+  @observable modalProps!: ReactModalProps;
+
+  constructor(modalProps: ReactModalProps | undefined = undefined) {
+    this.setModalProps(modalProps || {});
+  }
 
   @action openModal = () => (this.modalProps.isOpen = true);
 
   @action closeModal = () => (this.modalProps.isOpen = false);
+
+  @action setModalState = (modalState: ModalState) =>
+    (this.modalState = modalState);
+
+  @action setModalProps = (modalProps: ReactModalProps | {}) =>
+    (this.modalProps = { ...this.defaultModalProps, ...modalProps });
 
   removeIdFromQS = (search: string): string => {
     const parsedQuery = queryString.parse(search);
@@ -35,12 +45,8 @@ export default class ItemModalStore {
       : NaN;
   };
 
-  private _defaultModalProps: ReactModalProps = {
+  readonly defaultModalProps: ReactModalProps = {
     isOpen: false,
     onRequestClose: this.closeModal,
   };
-
-  constructor(modalProps: ReactModalProps | undefined = undefined) {
-    this.modalProps = { ...this._defaultModalProps, ...(modalProps || {}) };
-  }
 }
