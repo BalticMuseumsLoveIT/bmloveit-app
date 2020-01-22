@@ -58,7 +58,7 @@ export default class ItemStore {
   @computed get itemNameFull(): string {
     return getTranslatedString(
       this.itemNameFullFallback,
-      this.itemDescriptionTranslations,
+      this.itemNameFullTranslations,
     );
   }
 
