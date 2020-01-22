@@ -57,7 +57,7 @@ export class UserStore {
         return response;
       },
       async error => {
-        if (error.response.status === 401 && this.authToken !== null) {
+        if (error.response.status === 401) {
           localStorage.removeItem(this.AUTH_TOKEN_KEY);
           history.push('/login');
         }
