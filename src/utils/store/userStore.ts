@@ -35,15 +35,22 @@ export class UserStore {
     axiosInstance.interceptors.request.use(async config => {
       if (this.isLoggedIn) {
         const expirationDate = Date.parse(this.authToken!.expires_date);
+        const createdDate = Date.parse(this.authToken!.created_date);
         const currentDate = Date.now();
+        const timeOffset = (expirationDate - createdDate) / 2;
 
-        if (expirationDate < currentDate) {
-          const token = this.authToken!.refresh_token;
-          localStorage.removeItem(this.AUTH_TOKEN_KEY);
+        if (expirationDate - timeOffset < currentDate) {
+          try {
+            const token = this.authToken!.refresh_token;
+            this.signOut();
 
-          const refreshTokenData = await Api.refreshToken(token);
+            const refreshTokenData = await Api.refreshToken(token);
 
-          this.setAuthToken(refreshTokenData);
+            this.setAuthToken(refreshTokenData);
+          } catch (error) {
+            this.signOut();
+            history.push('/login');
+          }
         }
 
         config.headers['Authorization'] = `Bearer ${this.accessToken}`;
@@ -58,7 +65,7 @@ export class UserStore {
       },
       async error => {
         if (error.response.status === 401) {
-          localStorage.removeItem(this.AUTH_TOKEN_KEY);
+          this.signOut();
           history.push('/login');
         }
 
