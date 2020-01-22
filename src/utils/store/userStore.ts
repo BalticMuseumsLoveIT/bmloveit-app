@@ -1,6 +1,7 @@
 import Api from 'utils/api';
 import { AuthTokenInterface } from 'utils/interfaces';
 import UserAvatarStore from 'utils/store/userAvatarStore';
+import { history } from 'App';
 import localStorage from 'mobx-localstorage';
 import { action, computed } from 'mobx';
 import axios from 'axios';
@@ -31,45 +32,34 @@ export class UserStore {
       withCredentials: true,
     });
 
-    axiosInstance.interceptors.request.use(
-      config => {
-        if (this.isLoggedIn) {
-          config.headers['Authorization'] = `Bearer ${this.accessToken}`;
+    axiosInstance.interceptors.request.use(async config => {
+      if (this.isLoggedIn) {
+        const expirationDate = Date.parse(this.authToken!.expires_date);
+        const currentDate = Date.now();
+
+        if (expirationDate < currentDate) {
+          const token = this.authToken!.refresh_token;
+          localStorage.removeItem(this.AUTH_TOKEN_KEY);
+
+          const refreshTokenData = await Api.refreshToken(token);
+
+          this.setAuthToken(refreshTokenData);
         }
 
-        return config;
-      },
-      error => {
-        Promise.reject(error);
-      },
-    );
+        config.headers['Authorization'] = `Bearer ${this.accessToken}`;
+      }
+
+      return config;
+    });
 
     axiosInstance.interceptors.response.use(
       response => {
         return response;
       },
       async error => {
-        const originalRequest = error.config;
-
-        if (
-          error.response.status === 401 &&
-          originalRequest._isRetry !== true &&
-          this.authToken !== null
-        ) {
-          originalRequest._isRetry = true; // custom field for avoiding request loop
-
-          const expirationDate = Date.parse(this.authToken.expires_date);
-          const currentDate = Date.now();
-
-          if (currentDate < expirationDate) {
-            const refreshTokenData = await Api.refreshToken(
-              this.authToken.refresh_token,
-            );
-
-            this.setAuthToken(refreshTokenData);
-          }
-
-          return axiosInstance(originalRequest);
+        if (error.response.status === 401 && this.authToken !== null) {
+          localStorage.removeItem(this.AUTH_TOKEN_KEY);
+          history.push('/login');
         }
 
         return Promise.reject(error);
