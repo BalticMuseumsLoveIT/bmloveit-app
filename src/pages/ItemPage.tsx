@@ -1,8 +1,7 @@
 import Content from 'components/Content/Content';
 import ItemPageStore from 'utils/store/itemPageStore';
 import { ItemDetails } from 'components/ItemDetails/ItemDetails';
-import ReactModalStore from 'utils/store/reactModalStore';
-import ItemPopupStore from 'utils/store/itemPopupStore';
+import ItemModalStore from 'utils/store/itemModalStore';
 import { ItemModal } from 'components/ItemModal/ItemModal';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -18,23 +17,25 @@ export interface Props
 class ItemPage extends React.Component<Props> {
   itemPageStore = new ItemPageStore(true);
 
-  itemPopupStore = new ItemPopupStore();
-
-  reactModalStore = new ReactModalStore({
+  itemModalStore = new ItemModalStore({
     isOpen: false,
     onRequestClose: () => this._closePopup(),
   });
 
   private _openPopup = async (popupItemId: number) => {
-    this.reactModalStore.openModal();
-    await this.itemPopupStore.load(popupItemId);
-    this.reactModalStore.setModalContent(this.itemPopupStore.title);
+    this.itemModalStore.openModal();
+
+    if (
+      this.itemModalStore.item.itemData === null ||
+      this.itemModalStore.item.itemId !== popupItemId
+    )
+      await this.itemModalStore.item.loadItemData(popupItemId);
   };
 
   private _closePopup = () => {
-    this.reactModalStore.closeModal();
+    this.itemModalStore.closeModal();
 
-    const search = this.itemPopupStore.removeIdFromQS(
+    const search = this.itemModalStore.removeIdFromQS(
       this.props.location.search,
     );
 
@@ -53,7 +54,7 @@ class ItemPage extends React.Component<Props> {
 
     await this.itemPageStore.loadData(Number.parseInt(id));
 
-    const popupItemId = this.itemPopupStore.getIdFromQS(
+    const popupItemId = this.itemModalStore.getIdFromQS(
       this.props.location.search,
     );
 
@@ -65,11 +66,11 @@ class ItemPage extends React.Component<Props> {
       this.itemPageStore.setTReady(this.props.tReady);
     }
 
-    const previousPopupItemId = this.itemPopupStore.getIdFromQS(
+    const previousPopupItemId = this.itemModalStore.getIdFromQS(
       prevProps.location.search,
     );
 
-    const currentPopupItemId = this.itemPopupStore.getIdFromQS(
+    const currentPopupItemId = this.itemModalStore.getIdFromQS(
       this.props.location.search,
     );
 
@@ -96,9 +97,7 @@ class ItemPage extends React.Component<Props> {
         <Content>
           <ItemDetails itemPageStore={this.itemPageStore} />
         </Content>
-        <ItemModal props={this.reactModalStore.props}>
-          {this.reactModalStore.content}
-        </ItemModal>
+        <ItemModal store={this.itemModalStore} />
       </>
     );
   }
