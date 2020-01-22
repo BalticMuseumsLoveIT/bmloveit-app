@@ -242,6 +242,7 @@ export interface ItemInterface {
   locations: Array<number>;
   resources_data: Array<ResourceDataInterface>;
   quizzes_data: Array<QuizInterface>;
+  surveys_data: Array<SurveyInterface>;
   child_items_data: Array<ItemInterface>;
   child_items?: Array<number>;
   next_item: number | null;

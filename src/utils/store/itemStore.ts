@@ -113,4 +113,16 @@ export default class ItemStore {
 
     return resource ? resource : null;
   }
+
+  @computed get surveyId(): number {
+    return this.itemData && this.itemData.surveys_data.length
+      ? this.itemData.surveys_data[0].id
+      : NaN;
+  }
+
+  @computed get quizId(): number {
+    return this.itemData && this.itemData.quizzes_data.length
+      ? this.itemData.quizzes_data[0].id
+      : NaN;
+  }
 }
