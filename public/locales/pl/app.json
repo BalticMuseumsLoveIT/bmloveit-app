@@ -1,8 +1,7 @@
 {
   "cookieBar": "Używamy plików cookie. <1>Dowiedz się więcej</1>",
   "mainMenu": {
-    "areas": "Zmień miejsce",
-    "home": "Strona domowa",
-    "profile": "Profil"
+    "about": "O aplikacji",
+    "home": "Strona domowa"
   }
 }
