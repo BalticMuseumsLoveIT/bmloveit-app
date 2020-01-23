@@ -23,6 +23,18 @@ export class UserStore {
     return this.authToken ? this.authToken.access_token : '';
   }
 
+  @computed get expirationDate(): number {
+    return this.authToken ? Date.parse(this.authToken.expires_date) : NaN;
+  }
+
+  @computed get createdDate(): number {
+    return this.authToken ? Date.parse(this.authToken.created_date) : NaN;
+  }
+
+  @computed get timeOffset(): number {
+    return (this.expirationDate - this.createdDate) / 2;
+  }
+
   @computed get axiosInstance() {
     const axiosInstance = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
@@ -34,17 +46,14 @@ export class UserStore {
 
     axiosInstance.interceptors.request.use(async config => {
       if (this.isLoggedIn) {
-        const expirationDate = Date.parse(this.authToken!.expires_date);
-        const createdDate = Date.parse(this.authToken!.created_date);
-        const currentDate = Date.now();
-        const timeOffset = (expirationDate - createdDate) / 2;
-
-        if (expirationDate - timeOffset < currentDate) {
+        if (
+          config.url !== 'auth/token' &&
+          this.expirationDate - this.timeOffset < Date.now()
+        ) {
           try {
-            const token = this.authToken!.refresh_token;
-            this.signOut();
-
-            const refreshTokenData = await Api.refreshToken(token);
+            const refreshTokenData = await Api.refreshToken(
+              this.authToken!.refresh_token,
+            );
 
             this.setAuthToken(refreshTokenData);
           } catch (error) {
@@ -58,20 +67,6 @@ export class UserStore {
 
       return config;
     });
-
-    axiosInstance.interceptors.response.use(
-      response => {
-        return response;
-      },
-      async error => {
-        if (error.response.status === 401) {
-          this.signOut();
-          history.push('/login');
-        }
-
-        return Promise.reject(error);
-      },
-    );
 
     return axiosInstance;
   }
