@@ -53,7 +53,6 @@ class MobileMenu extends React.Component<Props> {
   };
 
   @action loadMenu = async (id: number): Promise<boolean> => {
-    debugger;
     try {
       const menuItems = await Api.getItem({
         id: id,
