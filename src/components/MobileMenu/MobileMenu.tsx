@@ -1,11 +1,11 @@
 import { UiStore } from 'utils/store/uiStore';
 import Api from 'utils/api';
-import { ItemInterface, ItemKind, ItemTag } from 'utils/interfaces';
+import { ItemInterface, ItemKind, ItemTag, ItemType } from 'utils/interfaces';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import StyledWrapper, {
   LinkItem,
   LinkList,
@@ -19,8 +19,6 @@ interface Props extends WithTranslation {
 @inject('uiStore')
 @observer
 class MobileMenu extends React.Component<Props> {
-  @observable menu: ItemInterface | null = null;
-
   private readonly _links = [
     {
       to: '/welcome',
@@ -34,20 +32,91 @@ class MobileMenu extends React.Component<Props> {
     },
   ];
 
+  // Store ---------------------------------------------------------------------
+
+  @observable menu: ItemInterface | null = null;
+
+  @observable root: Array<number> = [];
+
+  @action setMenu = (menu: ItemInterface): boolean => {
+    if (
+      menu.kind_data &&
+      menu.kind_data.name === ItemKind.MENU &&
+      menu.type_data &&
+      menu.type_data.name === ItemType.DEFAULT
+    ) {
+      this.menu = menu;
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  @action loadMenu = async (id: number): Promise<boolean> => {
+    debugger;
+    try {
+      const menuItems = await Api.getItem({
+        id: id,
+        kind__name: ItemKind.MENU,
+        type__name: ItemType.DEFAULT,
+      });
+
+      return menuItems.length > 0 ? this.setMenu(menuItems[0]) : false;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  @action rootPush = (id: number) => {
+    this.root.push(id);
+  };
+
+  @action rootPop = (): number => {
+    return this.root.length > 1 ? this.root.pop()! : -1;
+  };
+
+  @computed get parent(): number {
+    return this.root.length > 1 ? this.root[this.root.length - 2] : -1;
+  }
+
+  @computed get items(): Array<ItemInterface> {
+    return (
+      (this.menu &&
+        this.menu.child_items_data.filter((item: ItemInterface) => {
+          return item.kind_data && item.kind_data.name === ItemKind.MENU;
+        })) ||
+      []
+    );
+  }
+
+  // Methods -------------------------------------------------------------------
+
+  handleMenuChangeIn = async (e: React.SyntheticEvent, id: number) => {
+    (await this.loadMenu(id)) && this.rootPush(this.menu!.id);
+  };
+
+  handleMenuChangeOut = async () => {
+    if (this.root.length > 1)
+      (await this.loadMenu(this.parent)) && this.rootPop();
+  };
+
   componentDidMount = async () => {
     const menuItems = await Api.getItem({
       kind__name: ItemKind.MENU,
       item_tags__tag__name: ItemTag.MAIN,
     });
 
-    if (menuItems.length > 0) this.menu = menuItems[0];
+    if (menuItems.length > 0)
+      this.setMenu(menuItems[0]) && this.rootPush(this.menu!.id);
   };
+
+  // Subcomponents -------------------------------------------------------------
 
   MenuLogo = () => {
     return <StyledLogo src="/images/logo-eu.png" alt="" />;
   };
 
-  MenuLinks = () => {
+  MenuLinks = observer(() => {
     const { toggleIsMenuOpened: closeMenu } = this.props.uiStore!;
 
     return this._links.length > 0 ? (
@@ -63,13 +132,49 @@ class MobileMenu extends React.Component<Props> {
         })}
       </LinkList>
     ) : null;
-  };
+  });
 
-  MenuItems = () => {
-    if (this.menu === null) return null;
+  MenuItem = observer(({ item }: { item: ItemInterface }) => {
+    const { toggleIsMenuOpened: closeMenu } = this.props.uiStore!;
 
-    return <p>Main menu items</p>;
-  };
+    switch (item.type_data.name) {
+      case ItemType.DEFAULT:
+        return (
+          <button onClick={e => this.handleMenuChangeIn(e, item.id)}>
+            {item.name_full}
+          </button>
+        );
+      case ItemType.LINK:
+        return (
+          <Link to={item.description} onClick={closeMenu}>
+            {item.name_full}
+          </Link>
+        );
+      default:
+        return null;
+    }
+  });
+
+  MenuItems = observer(() => {
+    const { MenuItem } = this;
+
+    return this.items.length > 0 ? (
+      <ul>
+        {this.root.length > 1 && (
+          <li>
+            <button onClick={this.handleMenuChangeOut}>Back</button>
+          </li>
+        )}
+        {this.items.map((item: ItemInterface) => (
+          <li key={item.id}>
+            <MenuItem item={item} />
+          </li>
+        ))}
+      </ul>
+    ) : null;
+  });
+
+  // Render --------------------------------------------------------------------
 
   render() {
     if (!this.props.tReady) return null;
