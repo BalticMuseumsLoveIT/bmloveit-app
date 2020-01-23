@@ -4,12 +4,13 @@ import UserAvatarStore from 'utils/store/userAvatarStore';
 import { history } from 'App';
 import localStorage from 'mobx-localstorage';
 import { action, computed } from 'mobx';
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 export class UserStore {
   private readonly AUTH_TOKEN_KEY = 'authToken';
-
   readonly userAvatarStore = new UserAvatarStore();
+  private isRefreshingToken = false;
+  private pendingRequests: Array<{ (accessToken: string): void }> = [];
 
   @computed get authToken(): AuthTokenInterface | null {
     return localStorage.getItem(this.AUTH_TOKEN_KEY);
@@ -44,6 +45,9 @@ export class UserStore {
       withCredentials: true,
     });
 
+    // @TODO: Fix "config" type error
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore: Unreachable code error
     axiosInstance.interceptors.request.use(async config => {
       if (this.isLoggedIn) {
         if (
@@ -51,11 +55,29 @@ export class UserStore {
           this.expirationDate - this.timeOffset < Date.now()
         ) {
           try {
+            if (this.isRefreshingToken) {
+              const accessToken = await new Promise(async resolve => {
+                this.pendingRequests.push(resolve);
+              });
+
+              config.headers['Authorization'] = `Bearer ${accessToken}`;
+              return config;
+            }
+
+            this.isRefreshingToken = true;
+
             const refreshTokenData = await Api.refreshToken(
               this.authToken!.refresh_token,
             );
 
-            this.setAuthToken(refreshTokenData);
+            return new Promise(resolve => {
+              this.setAuthToken(refreshTokenData);
+
+              this.resolvePendingRequests(this.accessToken);
+              resolve(config);
+
+              this.isRefreshingToken = false;
+            });
           } catch (error) {
             this.signOut();
             history.push('/login');
@@ -84,6 +106,15 @@ export class UserStore {
 
   @action
   signOut = (): boolean => localStorage.delete(this.AUTH_TOKEN_KEY);
+
+  @action
+  resolvePendingRequests = (accessToken: string) => {
+    this.pendingRequests.forEach(resolve => {
+      resolve(accessToken);
+    });
+
+    this.pendingRequests = [];
+  };
 }
 
 const userStore = new UserStore();
