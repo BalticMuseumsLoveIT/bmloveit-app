@@ -188,6 +188,28 @@ export interface SurveyAnswerResponse {
 
 // Item ------------------------------------------------------------------------
 
+export enum ItemType {
+  DEFAULT = 'default',
+  AVATAR_CHOICE = 'avatar_choice',
+  AVATAR = 'avatar',
+  SURVEY = 'survey',
+  QUIZ = 'quiz',
+  MAP = 'map',
+  PANORAMA = 'panorama',
+  CARD = 'card',
+  LINK = 'link',
+}
+
+export enum ItemKind {
+  SCREEN = 'screen',
+  POPUP = 'popup',
+  MENU = 'menu',
+}
+
+export enum ItemTag {
+  MAIN = 'main',
+}
+
 export enum ResourceTypeName {
   Image = 'image',
   Video = 'video',
