@@ -9,6 +9,8 @@ import axios, { AxiosRequestConfig } from 'axios';
 export class UserStore {
   private readonly AUTH_TOKEN_KEY = 'authToken';
   readonly userAvatarStore = new UserAvatarStore();
+  private isRefreshingToken = false;
+  private pendingRequests: Array<{ (accessToken: string): void }> = [];
 
   @computed get authToken(): AuthTokenInterface | null {
     return localStorage.getItem(this.AUTH_TOKEN_KEY);
@@ -34,16 +36,8 @@ export class UserStore {
     return this.authToken ? Date.parse(this.authToken.created_date) : NaN;
   }
 
-  @computed get refreshDate(): number {
-    return this.expirationDate - this.timeOffset;
-  }
-
   @computed get timeOffset(): number {
     return (this.expirationDate - this.createdDate) / 2;
-  }
-
-  @computed get shouldRefresh(): boolean {
-    return this.refreshDate < Date.now();
   }
 
   @computed get axiosInstance() {
@@ -57,17 +51,41 @@ export class UserStore {
 
     axiosInstance.interceptors.request.use(
       async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
-        if (config.url !== 'auth/token' && this.shouldRefresh) {
-          try {
-            const token = await Api.refreshToken(this.refreshToken);
-            this.setAuthToken(token);
-          } catch (error) {
-            this.signOut();
-            history.push('/login');
-          }
-        }
-
         if (this.isLoggedIn) {
+          if (
+            config.url !== 'auth/token' &&
+            this.expirationDate - this.timeOffset < Date.now()
+          ) {
+            try {
+              if (this.isRefreshingToken) {
+                const accessToken = await new Promise(async resolve => {
+                  this.pendingRequests.push(resolve);
+                });
+
+                config.headers['Authorization'] = `Bearer ${accessToken}`;
+                return config;
+              }
+
+              this.isRefreshingToken = true;
+
+              const refreshTokenData = await Api.refreshToken(
+                this.refreshToken,
+              );
+
+              return new Promise(resolve => {
+                this.setAuthToken(refreshTokenData);
+
+                this.resolvePendingRequests(this.accessToken);
+                resolve(config);
+
+                this.isRefreshingToken = false;
+              });
+            } catch (error) {
+              this.signOut();
+              history.push('/login');
+            }
+          }
+
           config.headers['Authorization'] = `Bearer ${this.accessToken}`;
         }
 
@@ -91,6 +109,15 @@ export class UserStore {
 
   @action
   signOut = (): boolean => localStorage.delete(this.AUTH_TOKEN_KEY);
+
+  @action
+  resolvePendingRequests = (accessToken: string) => {
+    this.pendingRequests.forEach(resolve => {
+      resolve(accessToken);
+    });
+
+    this.pendingRequests = [];
+  };
 }
 
 const userStore = new UserStore();
