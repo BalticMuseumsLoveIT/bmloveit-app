@@ -6,11 +6,19 @@ import localStorage from 'mobx-localstorage';
 import { action, computed } from 'mobx';
 import axios, { AxiosRequestConfig } from 'axios';
 
+enum FetchingRefreshedTokenState {
+  PENDING,
+  RESOLVED,
+}
+
 export class UserStore {
   private readonly AUTH_TOKEN_KEY = 'authToken';
   readonly userAvatarStore = new UserAvatarStore();
-  private isRefreshingToken = false;
-  private pendingRequests: Array<{ (accessToken: string): void }> = [];
+  private fetchingRefreshedTokenState: FetchingRefreshedTokenState =
+    FetchingRefreshedTokenState.RESOLVED;
+  private pendingRequests: Array<{
+    resolve: { (accessToken: string): void };
+  }> = [];
 
   @computed get authToken(): AuthTokenInterface | null {
     return localStorage.getItem(this.AUTH_TOKEN_KEY);
@@ -36,8 +44,10 @@ export class UserStore {
     return this.authToken ? Date.parse(this.authToken.created_date) : NaN;
   }
 
-  @computed get timeOffset(): number {
-    return (this.expirationDate - this.createdDate) / 2;
+  @computed get refreshDate(): number {
+    const timeOffset = (this.expirationDate - this.createdDate) / 2;
+
+    return this.expirationDate - timeOffset;
   }
 
   @computed get axiosInstance() {
@@ -52,21 +62,27 @@ export class UserStore {
     axiosInstance.interceptors.request.use(
       async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
         if (this.isLoggedIn) {
-          if (
-            config.url !== 'auth/token' &&
-            this.expirationDate - this.timeOffset < Date.now()
-          ) {
+          if (this.refreshDate < Date.now() && config.url !== 'auth/token') {
             try {
-              if (this.isRefreshingToken) {
+              if (
+                this.fetchingRefreshedTokenState ===
+                FetchingRefreshedTokenState.PENDING
+              ) {
+                // Add current request to array of pending requests
+                // It will be resolved immediately after fetching the refreshed token
                 const accessToken = await new Promise(async resolve => {
-                  this.pendingRequests.push(resolve);
+                  this.pendingRequests.push({ resolve });
                 });
 
                 config.headers['Authorization'] = `Bearer ${accessToken}`;
                 return config;
               }
 
-              this.isRefreshingToken = true;
+              // Section for the first request of the group of requests
+              // that need to refresh token before resolving
+              this.setFetchingRefreshedTokenState(
+                FetchingRefreshedTokenState.PENDING,
+              );
 
               const refreshTokenData = await Api.refreshToken(
                 this.refreshToken,
@@ -75,10 +91,12 @@ export class UserStore {
               return new Promise(resolve => {
                 this.setAuthToken(refreshTokenData);
 
-                this.resolvePendingRequests(this.accessToken);
                 resolve(config);
+                this.resolvePendingRequests(this.accessToken);
 
-                this.isRefreshingToken = false;
+                this.setFetchingRefreshedTokenState(
+                  FetchingRefreshedTokenState.RESOLVED,
+                );
               });
             } catch (error) {
               this.signOut();
@@ -102,6 +120,13 @@ export class UserStore {
   };
 
   @action
+  setFetchingRefreshedTokenState = (
+    state: FetchingRefreshedTokenState,
+  ): void => {
+    this.fetchingRefreshedTokenState = state;
+  };
+
+  @action
   signIn = async (provider: string, accessToken: string): Promise<void> => {
     const authToken = await Api.signIn(provider, accessToken);
     this.setAuthToken(authToken);
@@ -112,8 +137,8 @@ export class UserStore {
 
   @action
   resolvePendingRequests = (accessToken: string) => {
-    this.pendingRequests.forEach(resolve => {
-      resolve(accessToken);
+    this.pendingRequests.forEach(request => {
+      request.resolve(accessToken);
     });
 
     this.pendingRequests = [];
