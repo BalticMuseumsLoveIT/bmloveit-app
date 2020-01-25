@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
-interface InnerHamburgerProps {
-  isOpened: boolean;
-}
-
-const StyledWrapper = styled.button`
+export const Button = styled.button`
   border: none;
   background: none;
   padding: 0;
@@ -19,7 +15,11 @@ const StyledWrapper = styled.button`
   grid-column-end: span 1;
 `;
 
-export const InnerHamburger = styled.div<InnerHamburgerProps>`
+interface SwitchInnerProps {
+  isOpened: boolean;
+}
+
+export const Hamburger = styled.div<SwitchInnerProps>`
   position: relative;
   width: 2em;
   height: 0.3125em;
@@ -50,5 +50,3 @@ export const InnerHamburger = styled.div<InnerHamburgerProps>`
       rotate(${({ isOpened }) => (isOpened ? '-45deg' : '0')});
   }
 `;
-
-export default StyledWrapper;
