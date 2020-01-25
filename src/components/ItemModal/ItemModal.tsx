@@ -14,67 +14,62 @@ interface ItemModalProps {
 export const ItemModal = observer(({ store }: ItemModalProps) => {
   const { t, ready } = useTranslation();
 
+  if (!ready) return null;
+
   return (
-    (ready && (
-      <ReactModal {...store.modalProps}>
-        <button onClick={store.modalProps.onRequestClose}>
-          {t('button.modalClose.label', 'Close')}
-        </button>
-        {(() => {
-          switch (store.modalState) {
-            case ModalState.NOT_LOADED:
-              return null;
-            case ModalState.LOADING:
-              return <h1>Loading...</h1>;
-            case ModalState.NOT_FOUND:
-              return <h1>Not found</h1>;
-            case ModalState.ERROR:
-              return <h1>Error</h1>;
-            case ModalState.LOADED:
-            default:
-              return (
-                <>
-                  {store.item.itemNameFull && (
-                    <h1>{store.item.itemNameFull}</h1>
-                  )}
-                  {store.item.itemDescription && (
-                    <ItemHtmlParser html={store.item.itemDescription} />
-                  )}
-                  {store.item.itemImage && (
-                    <div>
-                      <img
-                        src={getPrivateMediaURL(store.item.itemImage.file_url)}
-                        alt=""
+    <ReactModal {...store.modalProps}>
+      <button onClick={store.modalProps.onRequestClose}>
+        {t('button.modalClose.label', 'Close')}
+      </button>
+      {(() => {
+        switch (store.modalState) {
+          case ModalState.NOT_LOADED:
+            return null;
+          case ModalState.LOADING:
+            return <h1>Loading...</h1>;
+          case ModalState.NOT_FOUND:
+            return <h1>Not found</h1>;
+          case ModalState.ERROR:
+            return <h1>Error</h1>;
+          case ModalState.LOADED:
+          default:
+            return (
+              <>
+                {store.item.itemNameFull && <h1>{store.item.itemNameFull}</h1>}
+                {store.item.itemDescription && (
+                  <ItemHtmlParser html={store.item.itemDescription} />
+                )}
+                {store.item.itemImage && (
+                  <div>
+                    <img
+                      src={getPrivateMediaURL(store.item.itemImage.file_url)}
+                      alt=""
+                    />
+                  </div>
+                )}
+                {store.item.itemAudio && (
+                  <div>
+                    <audio controls id="audio_player">
+                      <source
+                        src={getPrivateMediaURL(store.item.itemAudio.file_url)}
+                        type="audio/mpeg"
                       />
-                    </div>
-                  )}
-                  {store.item.itemAudio && (
-                    <div>
-                      <audio controls id="audio_player">
-                        <source
-                          src={getPrivateMediaURL(
-                            store.item.itemAudio.file_url,
-                          )}
-                          type="audio/mpeg"
-                        />
-                      </audio>
-                    </div>
-                  )}
-                  {store.item.itemVideo && (
-                    <div>
-                      <video
-                        controls
-                        id="video_player"
-                        src={getPrivateMediaURL(store.item.itemVideo.file_url)}
-                      />
-                    </div>
-                  )}
-                </>
-              );
-          }
-        })()}
-      </ReactModal>
-    )) ||
-    null
+                    </audio>
+                  </div>
+                )}
+                {store.item.itemVideo && (
+                  <div>
+                    <video
+                      controls
+                      id="video_player"
+                      src={getPrivateMediaURL(store.item.itemVideo.file_url)}
+                    />
+                  </div>
+                )}
+              </>
+            );
+        }
+      })()}
+    </ReactModal>
   );
 });
