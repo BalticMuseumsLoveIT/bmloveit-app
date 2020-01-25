@@ -20,15 +20,21 @@ export default class ItemModalStore {
     this.setModalProps(modalProps || {});
   }
 
-  @action openModal = () => (this.modalProps.isOpen = true);
+  @action openModal = () => {
+    this.modalProps.isOpen = true;
+  };
 
-  @action closeModal = () => (this.modalProps.isOpen = false);
+  @action closeModal = () => {
+    this.modalProps.isOpen = false;
+  };
 
-  @action setModalState = (modalState: ModalState) =>
-    (this.modalState = modalState);
+  @action setModalState = (modalState: ModalState) => {
+    this.modalState = modalState;
+  };
 
-  @action setModalProps = (modalProps: ReactModalProps | {}) =>
-    (this.modalProps = { ...this.defaultModalProps, ...modalProps });
+  @action setModalProps = (modalProps: ReactModalProps | {}) => {
+    this.modalProps = { ...this.defaultModalProps, ...modalProps };
+  };
 
   removeIdFromQS = (search: string): string => {
     const parsedQuery = queryString.parse(search);
