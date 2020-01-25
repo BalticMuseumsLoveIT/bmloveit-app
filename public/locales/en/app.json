@@ -2,6 +2,7 @@
   "cookieBar": "We use cookies. <1>Learn more</1>",
   "mainMenu": {
     "about": "About application",
+    "back": "Go back",
     "home": "Home"
   }
 }

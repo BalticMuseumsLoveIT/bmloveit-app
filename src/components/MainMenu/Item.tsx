@@ -1,4 +1,5 @@
 import { ItemInterface, ItemType } from 'utils/interfaces';
+import { getTranslatedString } from 'utils/helpers';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import React from 'react';
@@ -10,15 +11,15 @@ interface Props {
 }
 
 export const Item = observer(({ item, closeMenu, openSubMenu }: Props) => {
+  const label = getTranslatedString(item.name_full, item.name_full_translation);
+
   switch (item.type_data.name) {
     case ItemType.DEFAULT:
-      return (
-        <button onClick={e => openSubMenu(e, item.id)}>{item.name_full}</button>
-      );
+      return <button onClick={e => openSubMenu(e, item.id)}>{label}</button>;
     case ItemType.LINK:
       return (
         <Link to={item.description} onClick={closeMenu}>
-          {item.name_full}
+          {label}
         </Link>
       );
     default:
