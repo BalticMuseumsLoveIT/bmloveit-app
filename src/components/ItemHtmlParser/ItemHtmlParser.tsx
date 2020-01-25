@@ -18,9 +18,5 @@ export const ItemHtmlParser = ({ html }: ItemHtmlParserProps) => {
     }
   };
 
-  return (
-    <React.Fragment>
-      {ReactHtmlParser(html, { transform: transform })}
-    </React.Fragment>
-  );
+  return <>{ReactHtmlParser(html, { transform: transform })}</>;
 };
