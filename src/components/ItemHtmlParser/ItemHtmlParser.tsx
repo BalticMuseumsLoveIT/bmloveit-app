@@ -8,10 +8,25 @@ interface ItemHtmlParserProps {
 }
 
 export const ItemHtmlParser = ({ html }: ItemHtmlParserProps) => {
-  const transform = (node: DomElement) => {
-    if (node.type === 'tag' && node.name === 'a') {
+  const anchorElement = document.createElement('a');
+
+  const transform = (node: DomElement, index: any) => {
+    if (
+      node.type === 'tag' &&
+      node.name === 'a' &&
+      node.attribs &&
+      node.attribs.hasOwnProperty('href') &&
+      node.attribs.href.length > 0
+    ) {
+      anchorElement.href = node.attribs.href;
+
+      const isInternalLink =
+        anchorElement.hostname === window.location.hostname;
+
+      if (!isInternalLink) return undefined;
+
       return (
-        <Link to={(node.attribs && node.attribs.href) || ''}>
+        <Link to={node.attribs.href} key={index}>
           {processNodes(node.children || [], transform)}
         </Link>
       );
