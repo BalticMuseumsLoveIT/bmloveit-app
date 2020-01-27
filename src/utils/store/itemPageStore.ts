@@ -5,11 +5,13 @@ import {
   SurveyInterface,
   ItemKind,
   ItemType,
+  ItemMapElementInterface,
 } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
-import { getTranslatedString } from 'utils/helpers';
+import { getPrivateMediaURL, getTranslatedString } from 'utils/helpers';
+import ItemStore from 'utils/store/itemStore';
 import { action, autorun, computed, observable, when } from 'mobx';
 import { createTransformer } from 'mobx-utils';
 
@@ -29,7 +31,7 @@ export default class ItemPageStore {
   @observable itemData: Array<ItemInterface> = [];
   @observable avatarData: ItemInterface | null = null;
   @observable surveyData: SurveyInterface | null = null;
-  @observable panoramaItems: Array<ItemInterface> = [];
+  @observable panoramaItems: Array<ItemStore> = [];
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -160,21 +162,23 @@ export default class ItemPageStore {
     return resource ? resource : null;
   }
 
-  @computed get panoramaMapItems(): Array<{
-    x: number;
-    y: number;
-    link: string;
-    icon: string;
-  }> {
+  @computed get panoramaMapItems(): Array<ItemMapElementInterface> {
     return (
       (this.panoramaItems.length &&
         this.panoramaItems
-          .filter(item => item.x !== null && item.y !== null)
+          .filter(
+            item =>
+              item.itemData !== null &&
+              item.itemData.x !== null &&
+              item.itemData.y !== null,
+          )
           .map(item => ({
-            x: item.x!,
-            y: item.y!,
-            link: `?popup=${item.id}`,
-            icon: this.itemIcon ? this.itemIcon.file_url : '',
+            x: item.itemData!.x!,
+            y: item.itemData!.y!,
+            link: `?popup=${item.itemData!.id}`,
+            icon: item.itemIcon
+              ? getPrivateMediaURL(item.itemIcon.file_url)
+              : '',
           }))) ||
       []
     );
@@ -230,7 +234,7 @@ export default class ItemPageStore {
   };
 
   @action setPanoramaItems = (panoramaItems: Array<ItemInterface>) => {
-    this.panoramaItems = panoramaItems;
+    this.panoramaItems = panoramaItems.map(item => new ItemStore(item));
   };
 
   @action handleAvatarChoice = async () => {
