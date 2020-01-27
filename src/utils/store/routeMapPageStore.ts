@@ -1,14 +1,15 @@
 import {
   ItemInterface,
+  ItemMapElementInterface,
+  ItemType,
   ResourceDataInterface,
   ResourceTypeName,
   RouteInterface,
-  ItemType,
-  ItemMapElementInterface,
 } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
+import { getPrivateMediaURL, getResource } from 'utils/helpers';
 import { action, autorun, computed, observable, when } from 'mobx';
 
 export enum PageState {
@@ -126,12 +127,18 @@ export default class RouteMapPageStore {
       (this.routeData &&
         this.routeData.locations_data
           .filter(location => location.x !== null && location.y !== null)
-          .map(location => ({
-            x: location.x!,
-            y: location.y!,
-            link: location.screens.length ? `/item/${location.screens[0]}` : '',
-            icon: '',
-          }))) ||
+          .map(location => {
+            const icon = getResource(location, ResourceTypeName.Icon);
+
+            return {
+              x: location.x!,
+              y: location.y!,
+              link: location.screens.length
+                ? `/item/${location.screens[0]}`
+                : '',
+              icon: icon ? getPrivateMediaURL(icon.file_url) : '',
+            };
+          })) ||
       []
     );
   }
