@@ -13,6 +13,8 @@ interface Props {
 export const Item = observer(({ item, closeMenu, openSubMenu }: Props) => {
   const label = getTranslatedString(item.name_full, item.name_full_translation);
 
+  if (item.type_data === null) return null;
+
   switch (item.type_data.name) {
     case ItemType.DEFAULT:
       return <button onClick={e => openSubMenu(e, item.id)}>{label}</button>;
