@@ -75,6 +75,7 @@ export const ImageMap = (props: ImageMapProps) => {
               height={imageStore.dimensions.height}
               widthSF={imageStore.widthScaleFactor}
               heightSF={imageStore.heightScaleFactor}
+              isCustom={point.icon.length}
               key={`${point.x}${point.y}`}
               onClick={() =>
                 point.link &&
@@ -87,7 +88,9 @@ export const ImageMap = (props: ImageMapProps) => {
                   ),
                 })
               }
-            />
+            >
+              {point.icon && <StyledIcon src={point.icon} alt="" />}
+            </StyledButton>
           );
         })}
     </StyledWrapper>
