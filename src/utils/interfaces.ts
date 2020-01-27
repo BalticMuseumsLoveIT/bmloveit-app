@@ -209,6 +209,7 @@ export enum ResourceTypeName {
   Image = 'image',
   Video = 'video',
   Audio = 'audio',
+  Icon = 'icon',
 }
 
 export interface ResourceDataInterface {
