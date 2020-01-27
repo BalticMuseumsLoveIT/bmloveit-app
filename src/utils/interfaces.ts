@@ -188,6 +188,23 @@ export interface SurveyAnswerResponse {
 
 // Item ------------------------------------------------------------------------
 
+export enum ItemType {
+  DEFAULT = 'default',
+  AVATAR_CHOICE = 'avatar_choice',
+  AVATAR = 'avatar',
+  SURVEY = 'survey',
+  QUIZ = 'quiz',
+  MAP = 'map',
+  PANORAMA = 'panorama',
+  CARD = 'card',
+}
+
+export enum ItemKind {
+  SCREEN = 'screen',
+  POPUP = 'popup',
+  URL = 'url',
+}
+
 export enum ResourceTypeName {
   Image = 'image',
   Video = 'video',
@@ -203,13 +220,13 @@ export interface ResourceDataInterface {
 
 export interface ItemTypeInterface {
   id: number;
-  name: string;
+  name: ItemType;
   description: string;
 }
 
 export interface ItemKindInterface {
   id: number;
-  name: string;
+  name: ItemKind;
   description: string;
 }
 
@@ -218,13 +235,14 @@ export interface ItemInterface {
   name: string;
   name_full: string;
   description: string;
-  type: number;
-  type_data: ItemTypeInterface;
-  kind: number;
-  kind_data: ItemKindInterface;
+  type: number | null;
+  type_data: ItemTypeInterface | null;
+  kind: number | null;
+  kind_data: ItemKindInterface | null;
   locations: Array<number>;
   resources_data: Array<ResourceDataInterface>;
   quizzes_data: Array<QuizInterface>;
+  surveys_data: Array<SurveyInterface>;
   child_items_data: Array<ItemInterface>;
   child_items?: Array<number>;
   next_item: number | null;
@@ -238,6 +256,12 @@ export interface ItemInterface {
   routes: Array<number>;
   x: number | null;
   y: number | null;
+}
+
+export interface ItemMapElementInterface {
+  x: number;
+  y: number;
+  link: string;
 }
 
 // Site ------------------------------------------------------------------------
