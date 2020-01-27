@@ -14,8 +14,13 @@ import { action, computed, observable } from 'mobx';
 export default class ItemStore {
   @observable itemData: ItemInterface | null = null;
 
-  @action setItemData = (itemData: ItemInterface | null) =>
-    (this.itemData = itemData);
+  constructor(itemData: ItemInterface | null = null) {
+    this.setItemData(itemData);
+  }
+
+  @action setItemData = (itemData: ItemInterface | null) => {
+    this.itemData = itemData;
+  };
 
   @action loadItemData = async (itemId: number) => {
     const itemData = await Api.getItem(itemId);
