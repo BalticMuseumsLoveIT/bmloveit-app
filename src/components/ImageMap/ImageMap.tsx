@@ -10,6 +10,7 @@ import { useObserver, useLocalStore } from 'mobx-react';
 import { action } from 'mobx';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
+import { LocationDescriptorObject } from 'history';
 
 interface ImageMapProps {
   src: string;
@@ -77,17 +78,24 @@ export const ImageMap = (props: ImageMapProps) => {
               heightSF={imageStore.heightScaleFactor}
               isCustom={point.icon.length}
               key={`${point.x}${point.y}`}
-              onClick={() =>
-                point.link &&
-                history.push({
-                  search: queryString.stringify(
-                    {
-                      ...queryString.parse(location.search),
-                      ...queryString.parse(point.link),
-                    } || {},
-                  ),
-                })
-              }
+              onClick={() => {
+                if (!point.link) return;
+
+                const isPopupLink = point.link.slice(0, 1) === '?';
+
+                const newLocation: LocationDescriptorObject<Location> = isPopupLink
+                  ? {
+                      search: queryString.stringify(
+                        {
+                          ...queryString.parse(location.search),
+                          ...queryString.parse(point.link),
+                        } || {},
+                      ),
+                    }
+                  : { pathname: point.link };
+
+                history.push(newLocation);
+              }}
             >
               {point.icon && <StyledIcon src={point.icon} alt="" />}
             </StyledButton>
