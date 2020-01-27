@@ -1,4 +1,9 @@
 {
+  "button": {
+    "modalClose": {
+      "label": "Close"
+    }
+  },
   "cookieBar": "We use cookies. <1>Learn more</1>",
   "mainMenu": {
     "about": "About application",

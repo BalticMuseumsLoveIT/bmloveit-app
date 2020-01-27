@@ -1,4 +1,9 @@
 {
+  "button": {
+    "modalClose": {
+      "label": ""
+    }
+  },
   "cookieBar": "",
   "mainMenu": {
     "about": "",

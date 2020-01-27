@@ -6,7 +6,8 @@ import {
 import React from 'react';
 import { useObserver, useLocalStore } from 'mobx-react';
 import { action } from 'mobx';
-import { useHistory } from 'react-router-dom';
+import queryString from 'query-string';
+import { useHistory, useLocation } from 'react-router-dom';
 
 interface ImageMapProps {
   src: string;
@@ -15,6 +16,7 @@ interface ImageMapProps {
 
 export const ImageMap = (props: ImageMapProps) => {
   const history = useHistory();
+  const location = useLocation();
 
   const imageStore = useLocalStore(() => ({
     loaded: false,
@@ -72,7 +74,17 @@ export const ImageMap = (props: ImageMapProps) => {
               widthSF={imageStore.widthScaleFactor}
               heightSF={imageStore.heightScaleFactor}
               key={`${point.x}${point.y}`}
-              onClick={() => (point.link && history.push(point.link)) || false}
+              onClick={() =>
+                point.link &&
+                history.push({
+                  search: queryString.stringify(
+                    {
+                      ...queryString.parse(location.search),
+                      ...queryString.parse(point.link),
+                    } || {},
+                  ),
+                })
+              }
             />
           );
         })}
