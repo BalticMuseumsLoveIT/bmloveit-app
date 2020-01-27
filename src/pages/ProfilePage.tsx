@@ -46,18 +46,10 @@ class ProfilePage extends React.Component<Props> {
     if (!this.props.tReady || this.profilePageStore.state !== PageState.LOADED)
       return null;
 
-    let pointsSectionValue = 0;
-    if (this.profilePageStore.pointsData.length > 0) {
-      const [userPoints, maxPoints] = this.profilePageStore.pointsData;
-
-      if (userPoints > 0) {
-        if (maxPoints === 0 || userPoints > maxPoints) {
-          pointsSectionValue = userPoints;
-        } else {
-          pointsSectionValue = userPoints / maxPoints;
-        }
-      }
-    }
+    const {
+      shouldDisplayProgressBar,
+      value: pointsValue,
+    } = this.profilePageStore.pointsData;
 
     return (
       <>
@@ -70,7 +62,12 @@ class ProfilePage extends React.Component<Props> {
           {this.profilePageStore.team && (
             <h2>You are in group: {this.profilePageStore.team.name}</h2>
           )}
-          {pointsSectionValue > 0 && <p>{pointsSectionValue}</p>}
+          {pointsValue > 0 &&
+            (shouldDisplayProgressBar === false ? (
+              <p>Punkty: {pointsValue}</p>
+            ) : (
+              <p>Progress: {pointsValue}</p>
+            ))}
           {this.profilePageStore.userAvatar && (
             <img
               src={getPrivateMediaURL(this.profilePageStore.userAvatarImageURL)}

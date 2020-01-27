@@ -292,6 +292,7 @@ export interface UserProfileInterface {
   guest: boolean;
   points: number;
   level_up_points: number | null;
+  level_current_points: number | null;
   for_delete: boolean;
   owned_items_data: Array<any>;
   avatar: ItemInterface | null;

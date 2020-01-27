@@ -77,15 +77,40 @@ export default class ProfilePageStore {
     return profile.username;
   }
 
-  @computed get pointsData(): Array<number> {
-    if (this.userProfileData === null) return [];
+  @computed get pointsData(): {
+    shouldDisplayProgressBar: boolean;
+    value: number;
+  } {
+    let pointsData = {
+      shouldDisplayProgressBar: false,
+      value: 0,
+    };
 
-    const maxPoints =
-      this.userProfileData.level_up_points !== null
-        ? this.userProfileData.level_up_points
-        : 0;
+    if (this.userProfileData === null) {
+      return pointsData;
+    }
 
-    return [this.userProfileData.points, maxPoints];
+    const userPoints = this.userProfileData.points || 0;
+    const levelUpPoints = this.userProfileData.level_up_points || 0;
+    const pointsRequiredForCurrentLevel =
+      this.userProfileData.level_current_points || 0;
+
+    pointsData.value = userPoints;
+
+    if (
+      userPoints > 0 &&
+      levelUpPoints > 0 &&
+      levelUpPoints !== pointsRequiredForCurrentLevel
+    ) {
+      pointsData = {
+        shouldDisplayProgressBar: true,
+        value:
+          (userPoints - pointsRequiredForCurrentLevel) /
+          (levelUpPoints - pointsRequiredForCurrentLevel),
+      };
+    }
+
+    return pointsData;
   }
 
   @computed get cards(): Array<any> {
