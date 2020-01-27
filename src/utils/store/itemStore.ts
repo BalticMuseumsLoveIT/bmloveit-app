@@ -105,6 +105,10 @@ export default class ItemStore {
     return this._getResource(ResourceTypeName.Video);
   }
 
+  @computed get itemIcon(): ResourceDataInterface | null {
+    return this._getResource(ResourceTypeName.Icon);
+  }
+
   private _getResource(type: ResourceTypeName): ResourceDataInterface | null {
     if (!this.itemData || !this.itemData.resources_data.length) return null;
 

@@ -145,6 +145,10 @@ export default class ItemPageStore {
     return this._getResource(ResourceTypeName.Video);
   }
 
+  @computed get itemIcon(): ResourceDataInterface | null {
+    return this._getResource(ResourceTypeName.Icon);
+  }
+
   private _getResource(type: ResourceTypeName): ResourceDataInterface | null {
     if (!this.itemData.length || !this.itemData[0].resources_data.length)
       return null;
