@@ -2,7 +2,9 @@ import {
   StyledWrapper,
   StyledImage,
   StyledButton,
+  StyledIcon,
 } from 'components/ImageMap/ImageMap.style';
+import { ItemMapElementInterface } from 'utils/interfaces';
 import React from 'react';
 import { useObserver, useLocalStore } from 'mobx-react';
 import { action } from 'mobx';
@@ -11,7 +13,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 
 interface ImageMapProps {
   src: string;
-  coordinates: Array<{ x: number; y: number; link: string }>;
+  coordinates: Array<ItemMapElementInterface>;
 }
 
 export const ImageMap = (props: ImageMapProps) => {
