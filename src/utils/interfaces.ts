@@ -263,6 +263,7 @@ export interface ItemMapElementInterface {
   x: number;
   y: number;
   link: string;
+  icon: string;
 }
 
 // Site ------------------------------------------------------------------------
