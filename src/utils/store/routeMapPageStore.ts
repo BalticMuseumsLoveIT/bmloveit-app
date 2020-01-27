@@ -4,6 +4,7 @@ import {
   ResourceTypeName,
   RouteInterface,
   ItemType,
+  ItemMapElementInterface,
 } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
@@ -120,11 +121,7 @@ export default class RouteMapPageStore {
     return (mapImageResource && mapImageResource.file_url) || '';
   }
 
-  @computed get routeMapLocations(): Array<{
-    x: number;
-    y: number;
-    link: string;
-  }> {
+  @computed get routeMapLocations(): Array<ItemMapElementInterface> {
     return (
       (this.routeData &&
         this.routeData.locations_data
@@ -133,6 +130,7 @@ export default class RouteMapPageStore {
             x: location.x!,
             y: location.y!,
             link: location.screens.length ? `/item/${location.screens[0]}` : '',
+            icon: '',
           }))) ||
       []
     );
