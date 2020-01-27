@@ -146,6 +146,7 @@ export default class ItemStore {
             x: item.x!,
             y: item.y!,
             link: `?popup=${item.id}`,
+            icon: this.itemIcon ? this.itemIcon.file_url : '',
           }))) ||
       []
     );

@@ -164,6 +164,7 @@ export default class ItemPageStore {
     x: number;
     y: number;
     link: string;
+    icon: string;
   }> {
     return (
       (this.panoramaItems.length &&
@@ -173,6 +174,7 @@ export default class ItemPageStore {
             x: item.x!,
             y: item.y!,
             link: `?popup=${item.id}`,
+            icon: this.itemIcon ? this.itemIcon.file_url : '',
           }))) ||
       []
     );
