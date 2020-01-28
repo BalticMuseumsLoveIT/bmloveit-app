@@ -3,7 +3,7 @@ import Header from 'components/Header/Header';
 import CookieBar from 'components/CookieBar/CookieBar';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import MainMenu, { GlobalStyle } from './Layout.style';
+import StyledWrapper, { GlobalStyle } from './Layout.style';
 
 export interface LayoutProps {
   children?: React.ReactNode;
@@ -18,11 +18,11 @@ export default class Layout extends React.Component<LayoutProps> {
       <ThemeProvider theme={theme}>
         <>
           <GlobalStyle />
-          <MainMenu>
+          <StyledWrapper>
             <CookieBar />
             {displayHeader && <Header />}
             {children}
-          </MainMenu>
+          </StyledWrapper>
         </>
       </ThemeProvider>
     );
