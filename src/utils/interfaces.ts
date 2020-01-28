@@ -4,7 +4,7 @@ export interface RouteInterface {
   name_full: string;
   description: string;
   type: number;
-  type_data: TypeDataInterface;
+  type_data: RouteTypeInterface;
   areas: Array<number>;
   areas_data: Array<AreaInterface>;
   locations_data: Array<LocationInterface>;
@@ -20,7 +20,7 @@ export interface LocationInterface {
   name: string;
   name_full: string;
   description: string;
-  type_data: TypeDataInterface;
+  type_data: RouteTypeInterface;
   areas: Array<number>;
   routes: Array<any>;
   resources_data: Array<any>;
@@ -36,7 +36,7 @@ export interface LocationInterface {
   screens: Array<number>;
 }
 
-export interface TypeDataInterface {
+export interface RouteTypeInterface {
   id: number;
   name: string;
   description: string;
@@ -293,7 +293,7 @@ export interface AreaInterface {
   name: string;
   name_full: string;
   description: string;
-  type_data: TypeDataInterface;
+  type_data: RouteTypeInterface;
   country: number;
   adress: string;
   logo: string | null;
