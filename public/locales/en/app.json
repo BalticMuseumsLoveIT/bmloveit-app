@@ -6,8 +6,8 @@
   },
   "cookieBar": "We use cookies. <1>Learn more</1>",
   "mainMenu": {
-    "areas": "Change area",
-    "home": "Home",
-    "profile": "Profile"
+    "about": "About application",
+    "back": "Go back",
+    "home": "Home"
   }
 }

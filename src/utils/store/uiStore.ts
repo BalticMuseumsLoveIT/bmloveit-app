@@ -1,10 +1,12 @@
 import { ContentState } from 'components/Content/Content';
 import { CommonLanguageInterface } from 'utils/interfaces';
+import MainMenuStore from 'utils/store/mainMenuStore';
 import { action, computed, observable } from 'mobx';
 
 export class UiStore {
-  @observable isMenuOpened: boolean;
   @observable contentState: ContentState;
+
+  @observable nav = new MainMenuStore();
 
   /**
    * List of all supported languages provided by a backend server
@@ -22,7 +24,6 @@ export class UiStore {
   @observable language: string | null = null;
 
   constructor() {
-    this.isMenuOpened = false;
     this.contentState = ContentState.AVAILABLE;
   }
 
@@ -46,15 +47,9 @@ export class UiStore {
     this.language = language.substring(0, 2).toLowerCase() || null;
   };
 
-  @action
-  setContentState(contentState: ContentState) {
+  @action setContentState(contentState: ContentState) {
     this.contentState = contentState;
   }
-
-  @action
-  toggleIsMenuOpened = (): void => {
-    this.isMenuOpened = !this.isMenuOpened;
-  };
 }
 
 const uiStore = new UiStore();

@@ -197,12 +197,17 @@ export enum ItemType {
   MAP = 'map',
   PANORAMA = 'panorama',
   CARD = 'card',
+  LINK = 'link',
 }
 
 export enum ItemKind {
   SCREEN = 'screen',
   POPUP = 'popup',
-  URL = 'url',
+  MENU = 'menu',
+}
+
+export enum ItemTag {
+  MAIN = 'main',
 }
 
 export enum ResourceTypeName {

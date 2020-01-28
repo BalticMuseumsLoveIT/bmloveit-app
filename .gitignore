@@ -4,6 +4,9 @@
 # production
 /build
 
+# public
+public/images/*
+
 # misc
 .idea
 .DS_Store
@@ -13,3 +16,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# never ignore .gitkeep
+!.gitkeep

@@ -6,13 +6,8 @@
   },
   "cookieBar": "",
   "mainMenu": {
-    "areas": "",
-    "home": "",
-    "login": "",
-    "profile": "",
-    "qr": "",
-    "quiz": "",
-    "routes": "",
-    "survey": ""
+    "about": "",
+    "back": "",
+    "login": ""
   }
 }

@@ -265,11 +265,26 @@ abstract class Api {
   };
 
   public static getItem = async (
-    itemId: number,
+    params:
+      | number
+      | {
+          id?: number;
+          name?: string;
+          type__id?: number;
+          type__name?: string;
+          kind__id?: number;
+          kind__name?: string;
+          item_locations__location__id?: number;
+          item_locations__location__name?: string;
+          item_tags__tag__name?: string;
+          parent_item__item__id?: number;
+          item_routes__route__id?: number;
+          item_routes__route__name?: string;
+        },
   ): Promise<Array<ItemInterface>> => {
-    const params = { id: itemId };
     const endpoint = 'api/item/';
 
+    if (typeof params === 'number') params = { id: params };
     const response = await userStore.axiosInstance.get(endpoint, { params });
 
     return response.data;
