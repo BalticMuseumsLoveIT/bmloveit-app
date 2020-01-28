@@ -79,6 +79,10 @@ export default class AreaRoutesPageStore {
     this.routesData.filter(route => route.languages.includes(languageId)),
   );
 
+  routesByType = createTransformer((typeId: number | null) =>
+    this.routesData.filter(route => route.type === typeId),
+  );
+
   locationsByRoute = createTransformer((routeId: number) => {
     const route = this.routesData.find(route => route.id === routeId);
 
