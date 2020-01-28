@@ -69,7 +69,10 @@ export default class AreaListPageStore {
 
   routesAmount = createTransformer((areaId: number) => {
     return this.routesData.reduce(
-      (amount, route) => (route.areas.includes(areaId) ? amount + 1 : amount),
+      (amount, route) =>
+        route.areas.includes(areaId) && route.type !== null
+          ? amount + 1
+          : amount,
       0,
     );
   });
