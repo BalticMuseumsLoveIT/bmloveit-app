@@ -5,7 +5,7 @@ import { getTranslatedString } from 'utils/helpers';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps, Redirect } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 interface Props extends WithTranslation, RouteComponentProps {
@@ -34,6 +34,15 @@ class AreaListPage extends React.Component<Props> {
   }
 
   render() {
+    if (
+      this.areaListPageStore.skipAreaList &&
+      !Number.isNaN(this.areaListPageStore.firstAreaId)
+    ) {
+      return (
+        <Redirect to={`/area/${this.areaListPageStore.firstAreaId}/routes`} />
+      );
+    }
+
     if (!this.props.tReady) return null;
 
     return (

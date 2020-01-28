@@ -2,7 +2,7 @@ import { AreaInterface, RouteInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
-import { action, autorun, observable, when } from 'mobx';
+import { action, autorun, computed, observable, when } from 'mobx';
 import { createTransformer } from 'mobx-utils';
 
 export enum PageState {
@@ -58,6 +58,14 @@ export default class AreaListPageStore {
       this.setState(PageState.ERROR);
     }
   };
+
+  @computed get skipAreaList(): boolean {
+    return this.areaData.length === 1;
+  }
+
+  @computed get firstAreaId(): number {
+    return this.areaData.length ? this.areaData[0].id : NaN;
+  }
 
   routesAmount = createTransformer((areaId: number) => {
     return this.routesData.reduce(
