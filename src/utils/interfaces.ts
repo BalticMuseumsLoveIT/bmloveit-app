@@ -7,6 +7,7 @@ export interface RouteInterface {
   type_data: RouteTypeInterface;
   areas: Array<number>;
   areas_data: Array<AreaInterface>;
+  locations: Array<number>;
   locations_data: Array<LocationInterface>;
   items_data: Array<ItemInterface>;
   name_translation: Array<CommonApiTranslationInterface>;
