@@ -37,6 +37,20 @@ abstract class Api {
     return response.data;
   };
 
+  public static refreshToken = async (
+    refreshToken: string,
+  ): Promise<AuthTokenInterface> => {
+    const body = JSON.stringify({
+      grant_type: 'refresh_token',
+      client_id: process.env.REACT_APP_CLIENT_ID,
+      refresh_token: refreshToken,
+    });
+
+    const response = await userStore.axiosInstance.post('auth/token', body);
+
+    return response.data;
+  };
+
   public static getRoutes = async (): Promise<Array<RouteInterface>> => {
     const response = await userStore.axiosInstance.get('api/route/');
 

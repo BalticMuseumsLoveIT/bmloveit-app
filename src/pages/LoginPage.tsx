@@ -57,6 +57,7 @@ class LoginPage extends React.Component<Props> {
 
     const redirectTo =
       (location.state && location.state.from.pathname) || this.WELCOME_PAGE;
+
     this.props.history.push(redirectTo);
   };
 }

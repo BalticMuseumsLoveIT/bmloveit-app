@@ -326,6 +326,8 @@ export interface AuthTokenInterface {
   token_type: string;
   scope: string;
   refresh_token: string;
+  expires_date: string;
+  created_date: string;
 }
 
 // Teams -----------------------------------------------------------------------
