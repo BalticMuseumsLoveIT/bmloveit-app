@@ -53,6 +53,7 @@ export class UserStore {
   @computed get axiosInstance() {
     const axiosInstance = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
+      timeout: Number.parseInt(process.env.REACT_APP_API_TIMEOUT || '') || 5000,
       headers: {
         'Content-Type': 'application/json',
       },
