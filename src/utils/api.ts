@@ -15,6 +15,7 @@ import {
   LocationInterface,
   UserProfileInterface,
   TeamInterface,
+  UserProfileCreateInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -300,6 +301,22 @@ abstract class Api {
     const endpoint = 'api/locations/';
 
     const response = await userStore.axiosInstance.get(endpoint, { params });
+
+    return response.data;
+  };
+
+  public static createGuestProfile = async (): Promise<
+    UserProfileCreateInterface
+  > => {
+    const params = {
+      guest: true,
+      password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
+      confirm_password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
+    };
+
+    const endpoint = 'api/user_profile/';
+
+    const response = await userStore.axiosInstance.post(endpoint, { params });
 
     return response.data;
   };
