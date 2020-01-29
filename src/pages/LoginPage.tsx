@@ -36,7 +36,7 @@ class LoginPage extends React.Component<Props> {
               <br />
               <GoogleButton onSuccess={this.login} />
               <br />
-              <GuestButton />
+              <GuestButton handleLogin={this.loginAsGuest} />
             </>
           ) : (
             <Redirect to={this.WELCOME_PAGE} />
@@ -54,9 +54,17 @@ class LoginPage extends React.Component<Props> {
     provider,
     response,
   }: OAuthLoginArgumentInterface): Promise<void> => {
-    const { location } = this.props;
-
     await this.userStore.signIn(provider, response.accessToken);
+    this._redirect();
+  };
+
+  loginAsGuest = async () => {
+    await this.userStore.signInAsGuest();
+    this._redirect();
+  };
+
+  private _redirect = () => {
+    const { location } = this.props;
 
     const redirectTo =
       (location.state && location.state.from.pathname) || this.WELCOME_PAGE;

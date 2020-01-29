@@ -134,6 +134,13 @@ export class UserStore {
   };
 
   @action
+  signInAsGuest = async () => {
+    const guest = await Api.createGuestProfile();
+    const authToken = await Api.signInAsGuest(guest.username);
+    this.setAuthToken(authToken);
+  };
+
+  @action
   signOut = (): boolean => localStorage.delete(this.AUTH_TOKEN_KEY);
 
   @action

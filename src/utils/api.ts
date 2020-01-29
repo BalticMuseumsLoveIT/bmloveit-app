@@ -38,22 +38,21 @@ abstract class Api {
     return response.data;
   };
 
-  public static guestSignIn = async (userParams: {
-    username: string;
-    password: string;
-  }): Promise<AuthTokenInterface> => {
-    const defaultParams = {
-      username: '',
-      password: '',
+  public static signInAsGuest = async (
+    username: string,
+  ): Promise<AuthTokenInterface> => {
+    const params = {
+      username: username,
+      password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
       grant_type: 'password',
       client_id: process.env.REACT_APP_CLIENT_ID,
     };
 
-    const params = { ...defaultParams, ...userParams };
+    const jsonParams = JSON.stringify(params);
 
-    const endpoint = 'auth/convert-token/';
+    const endpoint = 'auth/token';
 
-    const response = await userStore.axiosInstance.post(endpoint, { params });
+    const response = await userStore.axiosInstance.post(endpoint, jsonParams);
 
     return response.data;
   };
@@ -328,7 +327,7 @@ abstract class Api {
   public static createGuestProfile = async (): Promise<
     UserProfileCreateInterface
   > => {
-    const params = {
+    const formData = {
       guest: true,
       password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
       confirm_password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
@@ -336,7 +335,7 @@ abstract class Api {
 
     const endpoint = 'api/user_profile/';
 
-    const response = await userStore.axiosInstance.post(endpoint, { params });
+    const response = await userStore.axiosInstance.post(endpoint, formData);
 
     return response.data;
   };

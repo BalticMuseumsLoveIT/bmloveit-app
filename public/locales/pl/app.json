@@ -2,6 +2,9 @@
   "button": {
     "modalClose": {
       "label": "Zamknij"
+    },
+    "signInAsGuest": {
+      "label": "Zaloguj się jako Gość"
     }
   },
   "cookieBar": "Używamy plików cookie. <1>Dowiedz się więcej</1>",
