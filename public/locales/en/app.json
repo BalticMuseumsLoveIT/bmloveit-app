@@ -2,9 +2,6 @@
   "button": {
     "modalClose": {
       "label": "Close"
-    },
-    "signInAsGuest": {
-      "label": "Sign in as Guest"
     }
   },
   "cookieBar": "We use cookies. <1>Learn more</1>",

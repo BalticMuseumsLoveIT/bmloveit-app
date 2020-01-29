@@ -2,9 +2,6 @@
   "button": {
     "modalClose": {
       "label": ""
-    },
-    "signInAsGuest": {
-      "label": ""
     }
   },
   "cookieBar": "",

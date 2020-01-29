@@ -3,7 +3,6 @@ import GoogleButton from 'components/LoginButtons/GoogleButton/GoogleButton';
 import FacebookButton from 'components/LoginButtons/FacebookButton/FacebookButton';
 import { UserStore } from 'utils/store/userStore';
 import { OAuthLoginArgumentInterface } from 'utils/interfaces';
-import { GuestButton } from 'components/LoginButtons/GuestButton/GuestButton';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -35,8 +34,6 @@ class LoginPage extends React.Component<Props> {
               <FacebookButton onSuccess={this.login} />
               <br />
               <GoogleButton onSuccess={this.login} />
-              <br />
-              <GuestButton handleLogin={this.loginAsGuest} />
             </>
           ) : (
             <Redirect to={this.WELCOME_PAGE} />
@@ -54,17 +51,9 @@ class LoginPage extends React.Component<Props> {
     provider,
     response,
   }: OAuthLoginArgumentInterface): Promise<void> => {
-    await this.userStore.signIn(provider, response.accessToken);
-    this._redirect();
-  };
-
-  loginAsGuest = async () => {
-    await this.userStore.signInAsGuest();
-    this._redirect();
-  };
-
-  private _redirect = () => {
     const { location } = this.props;
+
+    await this.userStore.signIn(provider, response.accessToken);
 
     const redirectTo =
       (location.state && location.state.from.pathname) || this.WELCOME_PAGE;
