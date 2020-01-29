@@ -38,6 +38,26 @@ abstract class Api {
     return response.data;
   };
 
+  public static guestSignIn = async (userParams: {
+    username: string;
+    password: string;
+  }): Promise<AuthTokenInterface> => {
+    const defaultParams = {
+      username: '',
+      password: '',
+      grant_type: 'password',
+      client_id: process.env.REACT_APP_CLIENT_ID,
+    };
+
+    const params = { ...defaultParams, ...userParams };
+
+    const endpoint = 'auth/convert-token/';
+
+    const response = await userStore.axiosInstance.post(endpoint, { params });
+
+    return response.data;
+  };
+
   public static refreshToken = async (
     refreshToken: string,
   ): Promise<AuthTokenInterface> => {
