@@ -323,6 +323,18 @@ export interface UserProfileInterface {
   team: number | null;
 }
 
+export interface UserProfileCreateInterface {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  confirm_password: string;
+  language: number | null;
+  country: number | null;
+  for_delete: boolean;
+  guest: boolean;
+}
+
 // Auth ------------------------------------------------------------------------
 
 export interface AuthTokenInterface {

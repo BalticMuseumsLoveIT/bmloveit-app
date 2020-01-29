@@ -15,6 +15,7 @@ import {
   LocationInterface,
   UserProfileInterface,
   TeamInterface,
+  UserProfileCreateInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -33,6 +34,25 @@ abstract class Api {
       'auth/convert-token',
       JSON.stringify(body),
     );
+
+    return response.data;
+  };
+
+  public static signInAsGuest = async (
+    username: string,
+  ): Promise<AuthTokenInterface> => {
+    const params = {
+      username: username,
+      password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
+      grant_type: 'password',
+      client_id: process.env.REACT_APP_CLIENT_ID,
+    };
+
+    const jsonParams = JSON.stringify(params);
+
+    const endpoint = 'auth/token';
+
+    const response = await userStore.axiosInstance.post(endpoint, jsonParams);
 
     return response.data;
   };
@@ -300,6 +320,22 @@ abstract class Api {
     const endpoint = 'api/locations/';
 
     const response = await userStore.axiosInstance.get(endpoint, { params });
+
+    return response.data;
+  };
+
+  public static createGuestProfile = async (): Promise<
+    UserProfileCreateInterface
+  > => {
+    const formData = {
+      guest: true,
+      password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
+      confirm_password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
+    };
+
+    const endpoint = 'api/user_profile/';
+
+    const response = await userStore.axiosInstance.post(endpoint, formData);
 
     return response.data;
   };
