@@ -3,6 +3,8 @@ import ProfilePageStore from 'utils/store/profilePageStore';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
 import { getPrivateMediaURL } from 'utils/helpers';
 import { UserStore } from 'utils/store/userStore';
+import { UserProfileStore } from 'utils/store/userProfileStore';
+import { UiStore } from 'utils/store/uiStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -10,13 +12,18 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 
 interface Props extends WithTranslation, RouteComponentProps {
+  uiStore: UiStore;
   userStore: UserStore;
+  userProfileStore: UserProfileStore;
 }
 
-@inject('userStore')
+@inject('uiStore', 'userStore', 'userProfileStore')
 @observer
 class ProfilePage extends React.Component<Props> {
+  uiStore = this.props.uiStore;
   userStore = this.props.userStore;
+  userProfileStore = this.props.userProfileStore;
+
   profilePageStore = new ProfilePageStore(this.props.i18n, true);
 
   async componentDidMount(): Promise<void> {
@@ -50,16 +57,16 @@ class ProfilePage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>{this.props.t('content.title', 'User Profile')}</h1>
-          <p>{this.profilePageStore.userName}</p>
-          {this.profilePageStore.userAvatar && (
+          <p>{this.userProfileStore.userName}</p>
+          {this.userProfileStore.userHasAvatar && (
             <img
-              src={getPrivateMediaURL(this.profilePageStore.userAvatarImageURL)}
-              alt={this.profilePageStore.userAvatar.name_full}
+              src={getPrivateMediaURL(this.userProfileStore.userAvatarURL)}
+              alt={this.userProfileStore.userAvatarName}
             />
           )}
           <LanguageSwitch
-            uiLanguages={this.profilePageStore.languageList}
-            userLanguage={this.props.i18n.language}
+            uiLanguages={this.uiStore.languages}
+            userLanguage={this.uiStore.language}
             onSubmit={this.profilePageStore.handleSubmit}
           />
           <p>

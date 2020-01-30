@@ -1,6 +1,5 @@
 import Routes from 'utils/Routes';
 import stores from 'utils/store/stores';
-import Api from 'utils/api';
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { Provider } from 'mobx-react';
@@ -11,7 +10,10 @@ export const history = createBrowserHistory();
 class App extends React.Component {
   componentDidMount = async () => {
     try {
-      stores.uiStore.setLanguages(await Api.getLanguageList());
+      await Promise.all([
+        stores.uiStore.loadLanguages(),
+        stores.userProfileStore.loadUserProfile(),
+      ]);
     } catch (e) {}
   };
 

@@ -10,6 +10,8 @@ export enum MainMenuState {
 }
 
 export default class MainMenuStore {
+  private _defaultMenu: ItemInterface | null = null;
+
   @observable links: Array<StaticLinkInterface> = [
     {
       to: '/welcome',
@@ -38,6 +40,17 @@ export default class MainMenuStore {
   @observable menu: ItemInterface | null = null;
 
   @observable ancestors: Array<number> = [];
+
+  @action initMenu = (menu: ItemInterface) => {
+    const success = this.setMenu(menu);
+
+    if (success) {
+      this._defaultMenu = menu;
+
+      this.clearAncestors();
+      this.pushAncestor(menu.id);
+    }
+  };
 
   @action setMenu = (menu: ItemInterface): boolean => {
     if (
@@ -73,6 +86,10 @@ export default class MainMenuStore {
 
   @action close = () => {
     this.setState(MainMenuState.CLOSED);
+
+    if (this.isSubmenu && this._defaultMenu !== null) {
+      this.initMenu(this._defaultMenu);
+    }
   };
 
   @action open = () => {
@@ -81,6 +98,10 @@ export default class MainMenuStore {
 
   @action toggle = () => {
     this.state === MainMenuState.OPENED ? this.close() : this.open();
+  };
+
+  @action clearAncestors = () => {
+    this.ancestors = [];
   };
 
   @action pushAncestor = (id: number) => {
