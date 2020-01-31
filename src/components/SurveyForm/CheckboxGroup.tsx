@@ -1,4 +1,5 @@
 import { SurveyOptionInterface } from 'utils/interfaces';
+import { getTranslatedString } from 'utils/helpers';
 import { Field, FieldProps } from 'formik';
 import React from 'react';
 
@@ -20,7 +21,12 @@ export const CheckboxGroup = ({ field, options }: CheckboxGroupProps) => {
               value={optionName}
               multiple
             />
-            <label htmlFor={optionName}>{option.description}</label>
+            <label htmlFor={optionName}>
+              {getTranslatedString(
+                option.description,
+                option.description_translation,
+              )}
+            </label>
           </div>
         );
       })}

@@ -37,7 +37,7 @@ class SurveyDetailsPage extends Component<SurveyDetailsProps> {
           <title>{this.props.t('page.title', 'Survey details')}</title>
         </Helmet>
         <Content>
-          <h1>{this.props.t('content.title', 'Survey details')}</h1>
+          <h1>{this.surveyDetailsStore.title}</h1>
           <SurveyDetails
             state={this.surveyDetailsStore.state}
             survey={this.surveyDetailsStore.survey}

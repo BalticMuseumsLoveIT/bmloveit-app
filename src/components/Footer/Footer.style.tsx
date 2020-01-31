@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -7,15 +6,11 @@ const StyledWrapper = styled.div`
   margin: 1em 0;
 `;
 
-interface FooterLinkProps {
-  isDisabled?: boolean;
+interface FooterButtonProps {
+  disabled?: boolean;
 }
 
-export const FooterLink = styled(Link).attrs<FooterLinkProps>(
-  ({ isDisabled }) => ({
-    isDisabled: isDisabled || false,
-  }),
-)<FooterLinkProps>`
+export const FooterButton = styled.button`
   font-size: 1em;
   line-height: 1;
   background: white;
@@ -28,8 +23,8 @@ export const FooterLink = styled(Link).attrs<FooterLinkProps>(
   border-radius: 3px;
   text-decoration: none;
 
-  ${props =>
-    props.isDisabled &&
+  ${({ disabled }: FooterButtonProps) =>
+    disabled &&
     `
     cursor: default;
     border-color: lightgrey;
@@ -37,7 +32,8 @@ export const FooterLink = styled(Link).attrs<FooterLinkProps>(
   `}
 
   &:hover {
-    background: ${props => (props.isDisabled ? 'inherit' : 'paleturquoise')};
+    background: ${({ disabled }: FooterButtonProps) =>
+      disabled ? 'inherit' : 'paleturquoise'};
   }
 
   &:last-child {

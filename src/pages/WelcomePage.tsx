@@ -1,37 +1,40 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
-import HomePageStore from 'utils/store/homePageStore';
+import { SiteStore } from 'utils/store/siteStore';
+import WelcomePageStore from 'utils/store/welcomePageStore';
 import Footer from 'components/Footer/Footer';
-import { FooterLink } from 'components/Footer/Footer.style';
+import { FooterButton } from 'components/Footer/Footer.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
+  siteStore: SiteStore;
 }
 
-@inject('uiStore')
+@inject('uiStore', 'siteStore')
 @observer
-class HomePage extends React.Component<Props> {
-  homePageStore = new HomePageStore(true);
+class WelcomePage extends React.Component<Props> {
+  welcomePageStore = new WelcomePageStore(true);
+  siteStore = this.props.siteStore;
 
   async componentDidMount(): Promise<void> {
-    this.homePageStore.setTReady(this.props.tReady);
+    this.welcomePageStore.setTReady(this.props.tReady);
 
-    await this.homePageStore.loadData();
+    await this.welcomePageStore.loadData();
   }
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.tReady !== this.props.tReady) {
-      this.homePageStore.setTReady(this.props.tReady);
+      this.welcomePageStore.setTReady(this.props.tReady);
     }
   }
 
   componentWillUnmount(): void {
-    this.homePageStore.unmount();
+    this.welcomePageStore.unmount();
   }
 
   render() {
@@ -44,15 +47,15 @@ class HomePage extends React.Component<Props> {
         </Helmet>
         <Content>
           <div>
-            <p>Site Image: {this.homePageStore.siteImage}</p>
-            <p>Site Logo: {this.homePageStore.siteLogo}</p>
+            <p>Site Image: {this.siteStore.image}</p>
+            <p>Site Logo: {this.siteStore.logo}</p>
           </div>
-          <h1>{this.homePageStore.siteTitle}</h1>
-          <div>{this.homePageStore.siteDescription}</div>
+          <h1>{this.siteStore.title}</h1>
+          <div>{this.siteStore.description}</div>
           <Footer>
-            <FooterLink to="/area">
+            <FooterButton as={Link} to="/area">
               {this.props.t('buttonStart.label', 'Start sightseeing')}
-            </FooterLink>
+            </FooterButton>
           </Footer>
         </Content>
       </>
@@ -60,4 +63,4 @@ class HomePage extends React.Component<Props> {
   }
 }
 
-export default withTranslation('home-page')(HomePage);
+export default withTranslation('welcome-page')(WelcomePage);

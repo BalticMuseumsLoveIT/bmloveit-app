@@ -1,11 +1,8 @@
-import { CommonLanguageInterface, SiteInterface } from 'utils/interfaces';
+import { SiteInterface } from 'utils/interfaces';
 import Api from 'utils/api';
 import { ContentState } from 'components/Content/Content';
 import uiStore from 'utils/store/uiStore';
 import { action, autorun, computed, observable, when } from 'mobx';
-import ISO6391 from 'iso-639-1';
-import { FormikValues } from 'formik';
-import { i18n } from 'i18next';
 
 export enum LanguagePageState {
   NOT_LOADED,
@@ -15,11 +12,9 @@ export enum LanguagePageState {
 }
 
 export default class LanguagePageStore {
-  private _i18n: i18n;
   private readonly _manageContentState: boolean;
 
   @observable state: LanguagePageState = LanguagePageState.NOT_LOADED;
-  @observable languageList: Array<CommonLanguageInterface> = [];
   @observable siteData: Array<SiteInterface> = [];
   @observable tReady?: boolean;
 
@@ -36,8 +31,7 @@ export default class LanguagePageStore {
     }
   };
 
-  constructor(i18n: i18n, manageContentState = false) {
-    this._i18n = i18n;
+  constructor(manageContentState = false) {
     this._manageContentState = manageContentState;
 
     if (manageContentState) {
@@ -61,31 +55,19 @@ export default class LanguagePageStore {
     this.tReady = tReady;
   }
 
-  @action setLanguageList = (languageList: Array<CommonLanguageInterface>) => {
-    this.languageList = languageList.filter(language =>
-      ISO6391.validate(language.key),
-    );
-  };
-
   @action setSiteData = (siteData: Array<SiteInterface>) => {
     this.siteData = siteData;
-  };
-
-  @action handleSubmit = async (values: FormikValues): Promise<void> => {
-    await this._i18n.changeLanguage(values.language);
   };
 
   @action loadData = async () => {
     try {
       this.setState(LanguagePageState.LOADING);
 
-      const [languageList, siteData] = await Promise.all([
-        Api.getLanguageList(),
+      const [siteData] = await Promise.all([
         Api.getSiteData(),
         when(() => this.tReady === true),
       ]);
 
-      this.setLanguageList(languageList);
       this.setSiteData(siteData);
       this.setState(LanguagePageState.LOADED);
     } catch (e) {

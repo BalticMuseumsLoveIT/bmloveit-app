@@ -1,9 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { configure } from 'mobx';
+import ReactModal from 'react-modal';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './i18n';
+
+ReactModal.setAppElement('#root');
+configure({ enforceActions: 'observed' });
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

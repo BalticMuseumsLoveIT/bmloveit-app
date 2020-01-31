@@ -1,14 +1,15 @@
-import { configure } from 'mobx';
-import userStore from './userStore';
-import uiStore from './uiStore';
-import cookieBarStore from './cookieBarStore';
-
-configure({ enforceActions: 'observed' });
+import siteStore from 'utils/store/siteStore';
+import authStore from 'utils/store/authStore';
+import userProfileStore from 'utils/store/userProfileStore';
+import uiStore from 'utils/store/uiStore';
+import cookieBarStore from 'utils/store/cookieBarStore';
 
 const stores = {
-  userStore,
+  authStore,
+  userProfileStore,
   uiStore,
   cookieBarStore,
+  siteStore,
 };
 
 export default stores;

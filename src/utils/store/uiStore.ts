@@ -1,30 +1,61 @@
 import { ContentState } from 'components/Content/Content';
-import { action, observable } from 'mobx';
+import { CommonLanguageInterface } from 'utils/interfaces';
+import MainMenuStore from 'utils/store/mainMenuStore';
+import Api from 'utils/api';
+import { action, computed, observable } from 'mobx';
 
 export class UiStore {
-  @observable lang?: string;
-  @observable isMenuOpened: boolean;
   @observable contentState: ContentState;
 
+  @observable nav: MainMenuStore = new MainMenuStore();
+
+  /**
+   * List of all supported languages provided by a backend server
+   *
+   * Should be initialized as soon as possible, for example in
+   * componentDidMount method of <App /> component
+   */
+  @observable languages: Array<CommonLanguageInterface> = [];
+
+  /**
+   * Current UI language provided by i18next auto detection or user choice
+   *
+   * Should be hooked into i18next `languageChanged` event
+   */
+  @observable language: string | null = null;
+
   constructor() {
-    this.isMenuOpened = false;
     this.contentState = ContentState.AVAILABLE;
   }
 
-  @action
-  setLang = (lang: string): void => {
-    this.lang = lang;
-  };
+  @computed get languageId(): number {
+    let languageData;
 
-  @action
-  setContentState(contentState: ContentState) {
-    this.contentState = contentState;
+    if (this.language && this.languages.length) {
+      languageData = this.languages.find(
+        language => language.key === this.language,
+      );
+    }
+
+    return languageData ? languageData.id : NaN;
   }
 
-  @action
-  toggleIsMenuOpened = (): void => {
-    this.isMenuOpened = !this.isMenuOpened;
+  @action setLanguages = (languages: Array<CommonLanguageInterface>) => {
+    this.languages = languages;
   };
+
+  @action loadLanguages = async () => {
+    const languages = await Api.getLanguageList();
+    this.setLanguages(languages);
+  };
+
+  @action setLanguage = (language: string) => {
+    this.language = language.substring(0, 2).toLowerCase() || null;
+  };
+
+  @action setContentState(contentState: ContentState) {
+    this.contentState = contentState;
+  }
 }
 
 const uiStore = new UiStore();

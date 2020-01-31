@@ -1,8 +1,7 @@
 import Content from 'components/Content/Content';
 import ItemPageStore from 'utils/store/itemPageStore';
 import { ItemDetails } from 'components/ItemDetails/ItemDetails';
-import ReactModalStore from 'utils/store/reactModalStore';
-import ItemPopupStore from 'utils/store/itemPopupStore';
+import ItemModalStore, { ModalState } from 'utils/store/itemModalStore';
 import { ItemModal } from 'components/ItemModal/ItemModal';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -18,22 +17,43 @@ export interface Props
 class ItemPage extends React.Component<Props> {
   itemPageStore = new ItemPageStore(true);
 
-  itemPopupStore = new ItemPopupStore();
-
-  reactModalStore = new ReactModalStore({
+  itemModalStore = new ItemModalStore({
     isOpen: false,
     onRequestClose: () => this._closePopup(),
   });
 
   private _openPopup = async (popupItemId: number) => {
-    this.reactModalStore.openModal();
-    await this.itemPopupStore.load(popupItemId);
-    this.reactModalStore.setModalContent(this.itemPopupStore.title);
+    this.itemModalStore.setModalState(ModalState.NOT_LOADED);
+    this.itemModalStore.openModal();
+
+    if (
+      this.itemModalStore.item.itemData === null ||
+      this.itemModalStore.item.itemId !== popupItemId
+    )
+      try {
+        this.itemModalStore.setModalState(ModalState.LOADING);
+        await this.itemModalStore.item.loadItemData(popupItemId);
+      } catch (e) {
+        this.itemModalStore.setModalState(ModalState.ERROR);
+        return;
+      }
+
+    this.itemModalStore.item.itemData === null
+      ? this.itemModalStore.setModalState(ModalState.NOT_FOUND)
+      : this.itemModalStore.setModalState(ModalState.LOADED);
   };
 
   private _closePopup = () => {
-    this.reactModalStore.closeModal();
-    this.props.history.push(this.props.location.pathname);
+    this.itemModalStore.closeModal();
+
+    const search = this.itemModalStore.removeIdFromQS(
+      this.props.location.search,
+    );
+
+    this.props.history.push({
+      pathname: this.props.location.pathname,
+      search: search,
+    });
   };
 
   async componentDidMount(): Promise<void> {
@@ -45,7 +65,7 @@ class ItemPage extends React.Component<Props> {
 
     await this.itemPageStore.loadData(Number.parseInt(id));
 
-    const popupItemId = this.itemPopupStore.getIdFromQS(
+    const popupItemId = this.itemModalStore.getIdFromQS(
       this.props.location.search,
     );
 
@@ -57,19 +77,27 @@ class ItemPage extends React.Component<Props> {
       this.itemPageStore.setTReady(this.props.tReady);
     }
 
-    const previousPopupItemId = this.itemPopupStore.getIdFromQS(
-      prevProps.location.search,
-    );
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      await this.itemPageStore.loadData(
+        Number.parseInt(this.props.match.params.id),
+      );
+    }
 
-    const currentPopupItemId = this.itemPopupStore.getIdFromQS(
-      this.props.location.search,
-    );
+    if (prevProps.location.search !== this.props.location.search) {
+      const previousPopupItemId = this.itemModalStore.getIdFromQS(
+        prevProps.location.search,
+      );
 
-    if (
-      currentPopupItemId !== previousPopupItemId &&
-      !isNaN(currentPopupItemId)
-    ) {
-      this._openPopup(currentPopupItemId);
+      const currentPopupItemId = this.itemModalStore.getIdFromQS(
+        this.props.location.search,
+      );
+
+      if (
+        currentPopupItemId !== previousPopupItemId &&
+        !isNaN(currentPopupItemId)
+      ) {
+        this._openPopup(currentPopupItemId);
+      }
     }
   }
 
@@ -86,11 +114,9 @@ class ItemPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Item')}</title>
         </Helmet>
         <Content>
-          <ItemDetails itemPageStore={this.itemPageStore} />
+          <ItemDetails itemStore={this.itemPageStore.itemData} />
         </Content>
-        <ItemModal props={this.reactModalStore.props}>
-          {this.reactModalStore.content}
-        </ItemModal>
+        <ItemModal store={this.itemModalStore} />
       </>
     );
   }

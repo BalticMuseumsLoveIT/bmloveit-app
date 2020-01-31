@@ -22,24 +22,21 @@ export const SurveyForm = ({ survey, onSubmit }: SurveyFormProps) => {
   const validationSchema = extractValidationSchema(survey.questions_data, t);
 
   return (
-    <>
-      <h2>{survey.name}</h2>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      >
-        <Form id="surveyForm">
-          {survey.questions_data.map(question => (
-            <Field
-              key={question.id}
-              name={`question_${question.id}`}
-              question={question}
-              component={SurveyQuestion}
-            />
-          ))}
-        </Form>
-      </Formik>
-    </>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      onSubmit={onSubmit}
+    >
+      <Form id="surveyForm">
+        {survey.questions_data.map(question => (
+          <Field
+            key={question.id}
+            name={`question_${question.id}`}
+            question={question}
+            component={SurveyQuestion}
+          />
+        ))}
+      </Form>
+    </Formik>
   );
 };

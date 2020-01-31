@@ -1,4 +1,9 @@
 {
+  "button": {
+    "next": {
+      "label": "Next"
+    }
+  },
   "content": {
     "title": "Quiz details"
   },

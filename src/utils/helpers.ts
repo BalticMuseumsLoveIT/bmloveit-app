@@ -1,3 +1,9 @@
+import {
+  CommonApiTranslationInterface,
+  ResourceDataInterface,
+  ResourceTypeName,
+} from 'utils/interfaces';
+import stores from 'utils/store/stores';
 import ISO6391 from 'iso-639-1';
 
 export const getItemFromStorage = (key: string): string => {
@@ -38,3 +44,36 @@ export const toISO6391 = (languageCode: string): string => {
 
   return isLanguageCodeValid ? languageCodeISO6391 : '';
 };
+
+export const getTranslatedString = (
+  fallback: string,
+  translations: Array<CommonApiTranslationInterface>,
+): string => {
+  const {
+    uiStore: { languageId },
+  } = stores;
+
+  if (Number.isNaN(languageId) || translations.length === 0) return fallback;
+
+  const translationData = translations.find(
+    languageData => languageData.language === languageId,
+  );
+
+  return translationData ? translationData.text : fallback;
+};
+
+/**
+ * Get a single resource of spefific type
+ *
+ * @param object Generic object witch resource_data property
+ * @param type Type of resource
+ */
+export function getResource<
+  T extends { resources_data: Array<ResourceDataInterface> }
+>(object: T, type: ResourceTypeName): ResourceDataInterface | null {
+  const resource = object.resources_data.find(
+    resource => resource.type_name === type,
+  );
+
+  return resource ? resource : null;
+}

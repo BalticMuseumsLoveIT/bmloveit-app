@@ -35,7 +35,7 @@ class QuizPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Quiz')}</title>
         </Helmet>
         <Content>
-          <h1>{this.props.t('content.title', 'Quiz details')}</h1>
+          <h1>{this.quizDetailsStore.title}</h1>
           <QuizDetails
             state={this.quizDetailsStore.state}
             store={this.quizDetailsStore}

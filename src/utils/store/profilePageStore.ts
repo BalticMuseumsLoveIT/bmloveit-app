@@ -1,15 +1,7 @@
-import {
-  CommonLanguageInterface,
-  ItemInterface,
-  ResourceTypeName,
-  UserProfileInterface,
-  TeamInterface,
-} from 'utils/interfaces';
+import { TeamInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
-import Api from 'utils/api';
-import { action, autorun, computed, observable, when } from 'mobx';
-import ISO6391 from 'iso-639-1';
+import { action, autorun, observable, computed, when } from 'mobx';
 import { i18n } from 'i18next';
 import { FormikValues } from 'formik';
 
@@ -25,8 +17,6 @@ export default class ProfilePageStore {
   private readonly _manageContentState: boolean;
 
   @observable state: PageState = PageState.NOT_LOADED;
-  @observable userProfileData: UserProfileInterface | null = null;
-  @observable languageList: Array<CommonLanguageInterface> = [];
   @observable team: TeamInterface | null = null;
   @observable tReady?: boolean;
 
@@ -50,31 +40,6 @@ export default class ProfilePageStore {
     if (manageContentState) {
       autorun(this._handleContentState);
     }
-  }
-
-  @computed get userAvatar(): ItemInterface | null {
-    return this.userProfileData !== null ? this.userProfileData.avatar : null;
-  }
-
-  @computed get userAvatarImageURL(): string {
-    if (!this.userAvatar || !this.userAvatar.resources_data.length) return '';
-
-    const resource = this.userAvatar.resources_data.find(
-      resource => resource.type_name === ResourceTypeName.Image,
-    );
-
-    return resource ? resource.file_url : '';
-  }
-
-  @computed get userName(): string {
-    if (this.userProfileData === null) return '';
-
-    const profile = this.userProfileData;
-
-    if (profile.first_name.length && profile.last_name.length)
-      return `${profile.first_name} ${profile.last_name}`;
-
-    return profile.username;
   }
 
   @computed get pointsData(): {
@@ -123,14 +88,6 @@ export default class ProfilePageStore {
     return cards;
   }
 
-  @action setLanguageList = (
-    languageListData: Array<CommonLanguageInterface>,
-  ) => {
-    this.languageList = languageListData.filter(language =>
-      ISO6391.validate(language.key),
-    );
-  };
-
   @action handleSubmit = async (values: FormikValues): Promise<void> => {
     await this._i18n.changeLanguage(values.language);
   };
@@ -139,18 +96,12 @@ export default class ProfilePageStore {
     try {
       this.setState(PageState.LOADING);
 
-      const [userProfileData, languageListData] = await Promise.all([
-        Api.getUserProfile(),
-        Api.getLanguageList(),
-        when(() => this.tReady === true),
-      ]);
+      await Promise.all([when(() => this.tReady === true)]);
 
-      if (userProfileData.team !== null) {
-        this.setTeam(await Api.getTeam(userProfileData.team));
-      }
+      // if (userProfileData.team !== null) {
+      //   this.setTeam(await Api.getTeam(userProfileData.team));
+      // }
 
-      this.setUserProfile(userProfileData);
-      this.setLanguageList(languageListData);
       this.setState(PageState.LOADED);
     } catch (e) {
       this.setState(PageState.ERROR);
@@ -163,10 +114,6 @@ export default class ProfilePageStore {
 
   @action setTReady(tReady?: boolean) {
     this.tReady = tReady;
-  }
-
-  @action setUserProfile(userProfileData: UserProfileInterface) {
-    this.userProfileData = userProfileData;
   }
 
   @action setTeam(team: TeamInterface) {

@@ -9,9 +9,9 @@ export interface RouteInterface {
   areas_data: Array<AreaInterface>;
   locations_data: Array<LocationInterface>;
   items_data: Array<ItemInterface>;
-  name_translation: Array<CommonLanguageInterface>;
-  name_full_translation: Array<CommonLanguageInterface>;
-  description_translation: Array<CommonLanguageInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
   languages: Array<number>;
 }
 
@@ -20,19 +20,20 @@ export interface LocationInterface {
   name: string;
   name_full: string;
   description: string;
-  type_data: TypeDataInterface;
+  type_data: TypeDataInterface | null;
   areas: Array<number>;
-  routes: Array<any>;
-  resources_data: Array<any>;
-  quizzes_data: Array<any>;
+  routes: Array<number>;
+  resources_data: Array<ResourceDataInterface>;
+  quizzes_data: Array<QuizInterface>;
   qr_code: string;
   latitude: number | null;
   longitude: number | null;
-  name_translation: Array<CommonLanguageInterface>;
-  name_full_translation: Array<CommonLanguageInterface>;
-  description_translation: Array<CommonLanguageInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
   x: number | null;
   y: number | null;
+  screen_default: number | null;
   screens: Array<number>;
 }
 
@@ -51,17 +52,12 @@ export interface OAuthLoginArgumentInterface {
   response: any;
 }
 
-export interface TranslationItemInterface {
-  language: number;
-  text: string;
-}
-
 export interface QuizOptionInterface {
   id: number;
   no: number;
   description: string;
   file_url: string;
-  description_translation?: Array<TranslationItemInterface>;
+  description_translation?: Array<CommonApiTranslationInterface>;
   correct?: boolean;
 }
 
@@ -78,7 +74,7 @@ export interface QuizQuestionInterface {
   description: string;
   value_type: string;
   file_url: string;
-  description_translation?: Array<TranslationItemInterface>;
+  description_translation?: Array<CommonApiTranslationInterface>;
   options_data: Array<QuizOptionInterface>;
 }
 
@@ -90,9 +86,9 @@ export interface QuizInterface {
   location: number | null;
   item: number | null;
   language: number;
-  name_translation: Array<TranslationItemInterface>;
-  name_full_translation: Array<TranslationItemInterface>;
-  description_translation: Array<TranslationItemInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
 }
 
 export interface QuizDetailsInterface extends QuizInterface {
@@ -136,9 +132,9 @@ export interface SurveyInterface {
   location: number | null;
   item: number | null;
   language: number;
-  name_translation: Array<TranslationItemInterface>;
-  name_full_translation: Array<TranslationItemInterface>;
-  description_translation: Array<TranslationItemInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
 }
 
 export interface SurveyDetailsInterface {
@@ -147,9 +143,9 @@ export interface SurveyDetailsInterface {
   name_full: string;
   description: string;
   language: number;
-  name_translation: Array<TranslationItemInterface>;
-  name_full_translation: Array<TranslationItemInterface>;
-  description_translation: Array<TranslationItemInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
   questions_data: Array<SurveyQuestionInterface>;
 }
 
@@ -165,7 +161,7 @@ export interface SurveyQuestionInterface {
   type: SurveyQuestionType;
   description: string;
   file_url: string;
-  description_translation: Array<TranslationItemInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
   options_data: Array<SurveyOptionInterface>;
 }
 
@@ -174,7 +170,7 @@ export interface SurveyOptionInterface {
   no: number;
   description: string;
   file_url: string;
-  description_translation: Array<TranslationItemInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
 }
 
 export interface SurveyFulfillmentResponse {
@@ -193,10 +189,33 @@ export interface SurveyAnswerResponse {
 
 // Item ------------------------------------------------------------------------
 
+export enum ItemType {
+  DEFAULT = 'default',
+  AVATAR_CHOICE = 'avatar_choice',
+  AVATAR = 'avatar',
+  SURVEY = 'survey',
+  QUIZ = 'quiz',
+  MAP = 'map',
+  PANORAMA = 'panorama',
+  CARD = 'card',
+  LINK = 'link',
+}
+
+export enum ItemKind {
+  SCREEN = 'screen',
+  POPUP = 'popup',
+  MENU = 'menu',
+}
+
+export enum ItemTag {
+  MAIN = 'main',
+}
+
 export enum ResourceTypeName {
   Image = 'image',
   Video = 'video',
   Audio = 'audio',
+  Icon = 'icon',
 }
 
 export interface ResourceDataInterface {
@@ -208,13 +227,13 @@ export interface ResourceDataInterface {
 
 export interface ItemTypeInterface {
   id: number;
-  name: string;
+  name: ItemType;
   description: string;
 }
 
 export interface ItemKindInterface {
   id: number;
-  name: string;
+  name: ItemKind;
   description: string;
 }
 
@@ -223,29 +242,42 @@ export interface ItemInterface {
   name: string;
   name_full: string;
   description: string;
-  type: number;
-  type_data: ItemTypeInterface;
-  kind: number;
-  kind_data: ItemKindInterface;
+  type: number | null;
+  type_data: ItemTypeInterface | null;
+  kind: number | null;
+  kind_data: ItemKindInterface | null;
   locations: Array<number>;
   resources_data: Array<ResourceDataInterface>;
-  quizzes_data: Array<QuizInterface>;
+  quizz: number | null;
+  survey: number | null;
   child_items_data: Array<ItemInterface>;
   child_items?: Array<number>;
   next_item: number | null;
   qr_code: string;
   latitude: number | null;
   longitude: number | null;
-  name_translation: Array<CommonLanguageInterface>;
-  name_full_translation: Array<CommonLanguageInterface>;
-  description_translation: Array<CommonLanguageInterface>;
-  actions_list: Array<{ id: number; name: string }>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  name_full_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
+  actions_list: Array<CommonActionInterface>;
   routes: Array<number>;
   x: number | null;
   y: number | null;
 }
 
+export interface ItemMapElementInterface {
+  x: number;
+  y: number;
+  link: string;
+  icon: string;
+}
+
 // Site ------------------------------------------------------------------------
+
+export enum SiteTheme {
+  DARK = 'D',
+  LIGHT = 'L',
+}
 
 export interface SiteInterface {
   id: number;
@@ -256,6 +288,9 @@ export interface SiteInterface {
   terms_url: string;
   logo: string;
   image: string;
+  theme: SiteTheme | null;
+  background_color: string | null;
+  primary_color: string | null;
   name_translation: Array<CommonApiTranslationInterface>;
   title_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
@@ -300,6 +335,18 @@ export interface UserProfileInterface {
   team: number | null;
 }
 
+export interface UserProfileCreateInterface {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  confirm_password: string;
+  language: number | null;
+  country: number | null;
+  for_delete: boolean;
+  guest: boolean;
+}
+
 // Auth ------------------------------------------------------------------------
 
 export interface AuthTokenInterface {
@@ -308,6 +355,8 @@ export interface AuthTokenInterface {
   token_type: string;
   scope: string;
   refresh_token: string;
+  expires_date: string;
+  created_date: string;
 }
 
 // Teams -----------------------------------------------------------------------
@@ -352,4 +401,10 @@ export interface CommonLanguageInterface {
 export interface CommonApiTranslationInterface {
   language: number;
   text: string;
+}
+
+export interface CommonActionInterface {
+  id: number;
+  name: string;
+  description: string;
 }

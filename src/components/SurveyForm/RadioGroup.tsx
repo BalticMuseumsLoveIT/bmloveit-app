@@ -1,4 +1,5 @@
 import { SurveyOptionInterface } from 'utils/interfaces';
+import { getTranslatedString } from 'utils/helpers';
 import { Field, FieldProps } from 'formik';
 import React from 'react';
 
@@ -21,7 +22,12 @@ export const RadioGroup = ({ field, options }: RadioGroupProps) => {
               value={optionName}
               checked={isChecked}
             />
-            <label htmlFor={field.name}>{option.description}</label>
+            <label htmlFor={field.name}>
+              {getTranslatedString(
+                option.description,
+                option.description_translation,
+              )}
+            </label>
           </div>
         );
       })}

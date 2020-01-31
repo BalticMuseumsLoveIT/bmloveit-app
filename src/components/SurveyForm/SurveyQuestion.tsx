@@ -2,6 +2,7 @@ import { SurveyQuestionInterface, SurveyQuestionType } from 'utils/interfaces';
 import { CheckboxGroup } from 'components/SurveyForm/CheckboxGroup';
 import { RadioGroup } from 'components/SurveyForm/RadioGroup';
 import { QuestionImage } from 'components/SurveyForm/QuestionImage';
+import { getTranslatedString } from 'utils/helpers';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import React from 'react';
 
@@ -12,7 +13,12 @@ export interface SurveyQuestionProps extends FieldProps {
 export const SurveyQuestion = ({ field, question }: SurveyQuestionProps) => {
   return (
     <fieldset>
-      <legend>{question.description}</legend>
+      <legend>
+        {getTranslatedString(
+          question.description,
+          question.description_translation,
+        )}
+      </legend>
       <QuestionImage path={question.file_url} />
       {(() => {
         switch (question.type) {

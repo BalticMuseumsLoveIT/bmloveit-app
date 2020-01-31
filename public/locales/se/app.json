@@ -1,13 +1,18 @@
 {
+  "button": {
+    "modalClose": {
+      "label": ""
+    }
+  },
   "cookieBar": "",
+  "image": {
+    "museumLogotype": {
+      "alt": ""
+    }
+  },
   "mainMenu": {
-    "areas": "",
-    "home": "",
-    "login": "",
-    "profile": "",
-    "qr": "",
-    "quiz": "",
-    "routes": "",
-    "survey": ""
+    "about": "",
+    "back": "",
+    "login": ""
   }
 }

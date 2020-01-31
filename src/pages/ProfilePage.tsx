@@ -1,8 +1,10 @@
 import Content from 'components/Content/Content';
 import ProfilePageStore, { PageState } from 'utils/store/profilePageStore';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
-import { getPrivateMediaURL, toISO6391 } from 'utils/helpers';
-import { UserStore } from 'utils/store/userStore';
+import { getPrivateMediaURL } from 'utils/helpers';
+import { AuthStore } from 'utils/store/authStore';
+import { UserProfileStore } from 'utils/store/userProfileStore';
+import { UiStore } from 'utils/store/uiStore';
 import BadgesList from 'components/BadgesList/BadgesList';
 import CardsList from 'components/CardsList/CardsList';
 import React from 'react';
@@ -12,13 +14,18 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 import { RouteComponentProps } from 'react-router-dom';
 
 interface Props extends WithTranslation, RouteComponentProps {
-  userStore: UserStore;
+  uiStore: UiStore;
+  authStore: AuthStore;
+  userProfileStore: UserProfileStore;
 }
 
-@inject('userStore')
+@inject('uiStore', 'authStore', 'userProfileStore')
 @observer
 class ProfilePage extends React.Component<Props> {
-  userStore = this.props.userStore;
+  uiStore = this.props.uiStore;
+  authStore = this.props.authStore;
+  userProfileStore = this.props.userProfileStore;
+
   profilePageStore = new ProfilePageStore(this.props.i18n, true);
 
   async componentDidMount(): Promise<void> {
@@ -38,8 +45,8 @@ class ProfilePage extends React.Component<Props> {
   }
 
   logout = () => {
-    this.userStore.signOut();
-    this.props.history.push('/login');
+    this.authStore.signOut();
+    this.props.history.push('/');
   };
 
   render() {
@@ -58,7 +65,7 @@ class ProfilePage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>{this.props.t('content.title', 'User Profile')}</h1>
-          <p>{this.profilePageStore.userName}</p>
+          <p>{this.userProfileStore.userName}</p>
           {this.profilePageStore.team && (
             <h2>You are in group: {this.profilePageStore.team.name}</h2>
           )}
@@ -68,10 +75,10 @@ class ProfilePage extends React.Component<Props> {
             ) : (
               <p>Progress: {pointsValue}</p>
             ))}
-          {this.profilePageStore.userAvatar && (
+          {this.userProfileStore.userHasAvatar && (
             <img
-              src={getPrivateMediaURL(this.profilePageStore.userAvatarImageURL)}
-              alt={this.profilePageStore.userAvatar.name_full}
+              src={getPrivateMediaURL(this.userProfileStore.userAvatarURL)}
+              alt={this.userProfileStore.userAvatarName}
             />
           )}
           {this.profilePageStore.userProfileData!.badges_data.length > 0 && (
@@ -83,8 +90,8 @@ class ProfilePage extends React.Component<Props> {
             <CardsList cards={this.profilePageStore.cards} />
           )}
           <LanguageSwitch
-            list={this.profilePageStore.languageList}
-            userLocale={toISO6391(this.props.i18n.language)}
+            uiLanguages={this.uiStore.languages}
+            userLanguage={this.uiStore.language}
             onSubmit={this.profilePageStore.handleSubmit}
           />
           <p>

@@ -7,6 +7,7 @@ import {
 } from 'utils/interfaces';
 import Api from 'utils/api';
 import { ContentState } from 'components/Content/Content';
+import { getTranslatedString } from 'utils/helpers';
 import { action, autorun, computed, observable } from 'mobx';
 import uiStore from './uiStore';
 
@@ -59,6 +60,24 @@ export default class QuizDetailsStore {
     if (manageContentState) {
       autorun(this._handleContentState);
     }
+  }
+
+  @computed get title(): string {
+    return this.quiz
+      ? getTranslatedString(
+          this.quiz.name_full,
+          this.quiz.name_full_translation,
+        )
+      : '';
+  }
+
+  @computed get description(): string {
+    return this.quiz
+      ? getTranslatedString(
+          this.quiz.description,
+          this.quiz.description_translation,
+        )
+      : '';
   }
 
   @computed get question(): QuizQuestionInterface | null {

@@ -1,22 +1,25 @@
 import UserAvatarImage from 'components/Header/UserAvatar.style';
 import { getPrivateMediaURL } from 'utils/helpers';
-import UserAvatarStore from 'utils/store/userAvatarStore';
+import { UserProfileStore } from 'utils/store/userProfileStore';
 import React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 
+interface InjectedUserAvatarProps {
+  userProfileStore: UserProfileStore;
+}
+
+@inject('userProfileStore')
 @observer
 class UserAvatar extends React.Component {
-  userAvatarStore = new UserAvatarStore();
-
-  async componentDidMount() {
-    await this.userAvatarStore.load();
+  get injected() {
+    return this.props as InjectedUserAvatarProps;
   }
 
   render() {
-    return this.userAvatarStore.userAvatarImageURL ? (
+    return this.injected.userProfileStore.userHasAvatar ? (
       <UserAvatarImage
-        src={getPrivateMediaURL(this.userAvatarStore.userAvatarImageURL)}
-        alt={this.userAvatarStore.userAvatarAlt}
+        src={getPrivateMediaURL(this.injected.userProfileStore.userAvatarURL)}
+        alt={this.injected.userProfileStore.userAvatarName}
       />
     ) : null;
   }
