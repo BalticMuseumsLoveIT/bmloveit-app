@@ -20,11 +20,11 @@ export interface LocationInterface {
   name: string;
   name_full: string;
   description: string;
-  type_data: TypeDataInterface;
+  type_data: TypeDataInterface | null;
   areas: Array<number>;
-  routes: Array<any>;
-  resources_data: Array<any>;
-  quizzes_data: Array<any>;
+  routes: Array<number>;
+  resources_data: Array<ResourceDataInterface>;
+  quizzes_data: Array<QuizInterface>;
   qr_code: string;
   latitude: number | null;
   longitude: number | null;
@@ -33,6 +33,7 @@ export interface LocationInterface {
   description_translation: Array<CommonApiTranslationInterface>;
   x: number | null;
   y: number | null;
+  screen_default: number | null;
   screens: Array<number>;
 }
 
@@ -214,6 +215,7 @@ export enum ResourceTypeName {
   Image = 'image',
   Video = 'video',
   Audio = 'audio',
+  Icon = 'icon',
 }
 
 export interface ResourceDataInterface {
@@ -267,6 +269,7 @@ export interface ItemMapElementInterface {
   x: number;
   y: number;
   link: string;
+  icon: string;
 }
 
 // Site ------------------------------------------------------------------------
@@ -329,6 +332,18 @@ export interface UserProfileInterface {
   avatar: ItemInterface | null;
   badges_data: Array<any>;
   team: number | null;
+}
+
+export interface UserProfileCreateInterface {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  confirm_password: string;
+  language: number | null;
+  country: number | null;
+  for_delete: boolean;
+  guest: boolean;
 }
 
 // Auth ------------------------------------------------------------------------

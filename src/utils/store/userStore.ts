@@ -53,6 +53,7 @@ export class UserStore {
   @computed get axiosInstance() {
     const axiosInstance = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
+      timeout: Number.parseInt(process.env.REACT_APP_API_TIMEOUT || '') || 5000,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -129,6 +130,13 @@ export class UserStore {
   @action
   signIn = async (provider: string, accessToken: string): Promise<void> => {
     const authToken = await Api.signIn(provider, accessToken);
+    this.setAuthToken(authToken);
+  };
+
+  @action
+  signInAsGuest = async () => {
+    const guest = await Api.createGuestProfile();
+    const authToken = await Api.signInAsGuest(guest.username);
     this.setAuthToken(authToken);
   };
 

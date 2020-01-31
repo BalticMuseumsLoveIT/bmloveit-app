@@ -67,17 +67,13 @@ export default class MainMenuStore {
   };
 
   @action loadMenu = async (id: number): Promise<boolean> => {
-    try {
-      const menuItems = await Api.getItem({
-        id: id,
-        kind__name: ItemKind.MENU,
-        type__name: ItemType.DEFAULT,
-      });
+    const menuItems = await Api.getItem({
+      id: id,
+      kind__name: ItemKind.MENU,
+      type__name: ItemType.DEFAULT,
+    });
 
-      return menuItems.length > 0 ? this.setMenu(menuItems[0]) : false;
-    } catch (e) {
-      return false;
-    }
+    return menuItems.length > 0 ? this.setMenu(menuItems[0]) : false;
   };
 
   @action setState = (state: MainMenuState) => {
