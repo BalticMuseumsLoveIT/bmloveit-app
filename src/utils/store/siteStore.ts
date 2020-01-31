@@ -51,6 +51,18 @@ export class SiteStore {
       this.siteData.about_translation,
     );
   }
+
+  @computed get image(): string {
+    if (!this.isDataAvailable()) return '';
+
+    return this.siteData.image;
+  }
+
+  @computed get logo(): string {
+    if (!this.isDataAvailable()) return '';
+
+    return this.siteData.logo;
+  }
 }
 
 const siteStore = new SiteStore();
