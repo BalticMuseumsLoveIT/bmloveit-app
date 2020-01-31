@@ -271,6 +271,11 @@ export interface ItemMapElementInterface {
 
 // Site ------------------------------------------------------------------------
 
+export enum SiteTheme {
+  DARK = 'D',
+  LIGHT = 'L',
+}
+
 export interface SiteInterface {
   id: number;
   name: string;
@@ -280,6 +285,9 @@ export interface SiteInterface {
   terms_url: string;
   logo: string;
   image: string;
+  theme: SiteTheme | null;
+  background_color: string | null;
+  primary_color: string | null;
   name_translation: Array<CommonApiTranslationInterface>;
   title_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
