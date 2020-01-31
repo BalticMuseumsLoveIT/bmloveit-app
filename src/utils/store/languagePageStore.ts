@@ -68,7 +68,6 @@ export default class LanguagePageStore {
         when(() => this.tReady === true),
       ]);
 
-      // this.setLanguageList(languageList);
       this.setSiteData(siteData);
       this.setState(LanguagePageState.LOADED);
     } catch (e) {
