@@ -1,5 +1,6 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
+import { SiteStore } from 'utils/store/siteStore';
 import WelcomePageStore from 'utils/store/welcomePageStore';
 import Footer from 'components/Footer/Footer';
 import { FooterButton } from 'components/Footer/Footer.style';
@@ -11,12 +12,14 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 
 interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
+  siteStore: SiteStore;
 }
 
-@inject('uiStore')
+@inject('uiStore', 'siteStore')
 @observer
 class WelcomePage extends React.Component<Props> {
   welcomePageStore = new WelcomePageStore(true);
+  siteStore = this.props.siteStore;
 
   async componentDidMount(): Promise<void> {
     this.welcomePageStore.setTReady(this.props.tReady);
@@ -44,11 +47,11 @@ class WelcomePage extends React.Component<Props> {
         </Helmet>
         <Content>
           <div>
-            <p>Site Image: {this.welcomePageStore.siteImage}</p>
-            <p>Site Logo: {this.welcomePageStore.siteLogo}</p>
+            <p>Site Image: {this.siteStore.image}</p>
+            <p>Site Logo: {this.siteStore.logo}</p>
           </div>
-          <h1>{this.welcomePageStore.siteTitle}</h1>
-          <div>{this.welcomePageStore.siteDescription}</div>
+          <h1>{this.siteStore.title}</h1>
+          <div>{this.siteStore.description}</div>
           <Footer>
             <FooterButton as={Link} to="/area">
               {this.props.t('buttonStart.label', 'Start sightseeing')}
