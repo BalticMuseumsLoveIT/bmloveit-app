@@ -79,11 +79,16 @@ export const ImageMap = (props: ImageMapProps) => {
               isCustom={point.icon.length}
               key={`${point.x}${point.y}`}
               onClick={() => {
-                if (!point.link) return;
+                /**
+                 * Supported links `?popup=<item_id>` or `/<local_url>`
+                 * Do nothing if link is not specified or is not supported
+                 */
+                if (!point.link || !(point.link.slice(0, 1) in ['/', '?']))
+                  return;
 
-                const isPopupLink = point.link.slice(0, 1) === '?';
+                const isQSLink = point.link.slice(0, 1) === '?';
 
-                const newLocation: LocationDescriptorObject<Location> = isPopupLink
+                const newLocation: LocationDescriptorObject<Location> = isQSLink
                   ? {
                       search: queryString.stringify(
                         {
