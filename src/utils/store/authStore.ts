@@ -10,7 +10,7 @@ enum FetchingRefreshedTokenState {
   RESOLVED,
 }
 
-export class UserStore {
+export class AuthStore {
   private readonly AUTH_TOKEN_KEY = 'authToken';
 
   private fetchingRefreshedTokenState: FetchingRefreshedTokenState =
@@ -153,6 +153,6 @@ export class UserStore {
   };
 }
 
-const userStore = new UserStore();
+const authStore = new AuthStore();
 
-export default userStore;
+export default authStore;

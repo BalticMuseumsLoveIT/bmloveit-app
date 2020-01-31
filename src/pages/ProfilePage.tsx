@@ -2,7 +2,7 @@ import Content from 'components/Content/Content';
 import ProfilePageStore from 'utils/store/profilePageStore';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
 import { getPrivateMediaURL } from 'utils/helpers';
-import { UserStore } from 'utils/store/userStore';
+import { AuthStore } from 'utils/store/authStore';
 import { UserProfileStore } from 'utils/store/userProfileStore';
 import { UiStore } from 'utils/store/uiStore';
 import React from 'react';
@@ -13,15 +13,15 @@ import { RouteComponentProps } from 'react-router-dom';
 
 interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
-  userStore: UserStore;
+  authStore: AuthStore;
   userProfileStore: UserProfileStore;
 }
 
-@inject('uiStore', 'userStore', 'userProfileStore')
+@inject('uiStore', 'authStore', 'userProfileStore')
 @observer
 class ProfilePage extends React.Component<Props> {
   uiStore = this.props.uiStore;
-  userStore = this.props.userStore;
+  authStore = this.props.authStore;
   userProfileStore = this.props.userProfileStore;
 
   profilePageStore = new ProfilePageStore(this.props.i18n, true);
@@ -43,7 +43,7 @@ class ProfilePage extends React.Component<Props> {
   }
 
   logout = () => {
-    this.userStore.signOut();
+    this.authStore.signOut();
     this.props.history.push('/');
   };
 

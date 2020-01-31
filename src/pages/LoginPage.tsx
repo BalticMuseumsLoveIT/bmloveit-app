@@ -1,7 +1,7 @@
 import Content from 'components/Content/Content';
 import GoogleButton from 'components/LoginButtons/GoogleButton/GoogleButton';
 import FacebookButton from 'components/LoginButtons/FacebookButton/FacebookButton';
-import { UserStore } from 'utils/store/userStore';
+import { AuthStore } from 'utils/store/authStore';
 import { OAuthLoginArgumentInterface } from 'utils/interfaces';
 import { GuestButton } from 'components/LoginButtons/GuestButton/GuestButton';
 import { UserProfileStore } from 'utils/store/userProfileStore';
@@ -12,14 +12,14 @@ import { RouteComponentProps, Redirect } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 interface Props extends WithTranslation, RouteComponentProps {
-  userStore: UserStore;
+  authStore: AuthStore;
   userProfileStore: UserProfileStore;
 }
 
-@inject('userStore', 'userProfileStore')
+@inject('authStore', 'userProfileStore')
 @observer
 class LoginPage extends React.Component<Props> {
-  userStore = this.props.userStore;
+  authStore = this.props.authStore;
   userProfileStore = this.props.userProfileStore;
 
   readonly WELCOME_PAGE = '/welcome';
@@ -34,7 +34,7 @@ class LoginPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h2>{this.props.t('content.title', 'Login')}</h2>
-          {!this.userStore.isLoggedIn ? (
+          {!this.authStore.isLoggedIn ? (
             <>
               <FacebookButton onSuccess={this.login} />
               <br />
@@ -60,11 +60,11 @@ class LoginPage extends React.Component<Props> {
     provider,
     response,
   }: OAuthLoginArgumentInterface) => {
-    await this.userStore.signIn(provider, response.accessToken);
+    await this.authStore.signIn(provider, response.accessToken);
   };
 
   private _loginAsGuest = async () => {
-    await this.userStore.signInAsGuest();
+    await this.authStore.signInAsGuest();
   };
 
   private _reloadUserProfile = async () => {
