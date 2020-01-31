@@ -5,6 +5,11 @@
     }
   },
   "cookieBar": "We use cookies. <1>Learn more</1>",
+  "image": {
+    "museumLogotype": {
+      "alt": "Museum logotype"
+    }
+  },
   "mainMenu": {
     "about": "About application",
     "back": "Go back",
