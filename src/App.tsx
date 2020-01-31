@@ -13,6 +13,7 @@ class App extends React.Component {
       await Promise.all([
         stores.uiStore.loadLanguages(),
         stores.userProfileStore.loadUserProfile(),
+        stores.siteStore.loadSiteData(),
       ]);
     } catch (e) {}
   };
