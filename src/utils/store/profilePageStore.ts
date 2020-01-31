@@ -1,7 +1,8 @@
 import { TeamInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
-import { action, autorun, observable, computed, when } from 'mobx';
+// import { action, autorun, observable, computed, when } from 'mobx';
+import { action, autorun, observable, when } from 'mobx';
 import { i18n } from 'i18next';
 import { FormikValues } from 'formik';
 
@@ -42,51 +43,51 @@ export default class ProfilePageStore {
     }
   }
 
-  @computed get pointsData(): {
-    shouldDisplayProgressBar: boolean;
-    value: number;
-  } {
-    let pointsData = {
-      shouldDisplayProgressBar: false,
-      value: 0,
-    };
+  // @computed get pointsData(): {
+  //   shouldDisplayProgressBar: boolean;
+  //   value: number;
+  // } {
+  //   let pointsData = {
+  //     shouldDisplayProgressBar: false,
+  //     value: 0,
+  //   };
+  //
+  //   if (this.userProfileData === null) {
+  //     return pointsData;
+  //   }
+  //
+  //   const userPoints = this.userProfileData.points || 0;
+  //   const levelUpPoints = this.userProfileData.level_up_points || 0;
+  //   const pointsRequiredForCurrentLevel =
+  //     this.userProfileData.level_current_points || 0;
+  //
+  //   pointsData.value = userPoints;
+  //
+  //   if (
+  //     userPoints > 0 &&
+  //     levelUpPoints > 0 &&
+  //     levelUpPoints !== pointsRequiredForCurrentLevel
+  //   ) {
+  //     pointsData = {
+  //       shouldDisplayProgressBar: true,
+  //       value:
+  //         (userPoints - pointsRequiredForCurrentLevel) /
+  //         (levelUpPoints - pointsRequiredForCurrentLevel),
+  //     };
+  //   }
+  //
+  //   return pointsData;
+  // }
 
-    if (this.userProfileData === null) {
-      return pointsData;
-    }
-
-    const userPoints = this.userProfileData.points || 0;
-    const levelUpPoints = this.userProfileData.level_up_points || 0;
-    const pointsRequiredForCurrentLevel =
-      this.userProfileData.level_current_points || 0;
-
-    pointsData.value = userPoints;
-
-    if (
-      userPoints > 0 &&
-      levelUpPoints > 0 &&
-      levelUpPoints !== pointsRequiredForCurrentLevel
-    ) {
-      pointsData = {
-        shouldDisplayProgressBar: true,
-        value:
-          (userPoints - pointsRequiredForCurrentLevel) /
-          (levelUpPoints - pointsRequiredForCurrentLevel),
-      };
-    }
-
-    return pointsData;
-  }
-
-  @computed get cards(): Array<any> {
-    if (this.userProfileData === null) return [];
-
-    const cards = this.userProfileData.owned_items_data.filter(item => {
-      return item.item_data.type_data.name === 'card';
-    });
-
-    return cards;
-  }
+  // @computed get cards(): Array<any> {
+  //   if (this.userProfileData === null) return [];
+  //
+  //   const cards = this.userProfileData.owned_items_data.filter(item => {
+  //     return item.item_data.type_data.name === 'card';
+  //   });
+  //
+  //   return cards;
+  // }
 
   @action handleSubmit = async (values: FormikValues): Promise<void> => {
     await this._i18n.changeLanguage(values.language);

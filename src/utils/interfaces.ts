@@ -329,10 +329,24 @@ export interface UserProfileInterface {
   level_up_points: number | null;
   level_current_points: number | null;
   for_delete: boolean;
-  owned_items_data: Array<any>;
+  owned_items_data: Array<OwnedItemInterface>;
   avatar: ItemInterface | null;
-  badges_data: Array<any>;
+  badges_data: Array<BadgeInterface>;
   team: number | null;
+}
+
+export interface OwnedItemInterface {
+  item_data: ItemInterface;
+  item_counter: number;
+}
+
+export interface BadgeInterface {
+  id: number;
+  name: string;
+  description: string;
+  resources_data: Array<ResourceDataInterface>;
+  name_translation: Array<CommonApiTranslationInterface>;
+  description_translation: Array<CommonApiTranslationInterface>;
 }
 
 export interface UserProfileCreateInterface {

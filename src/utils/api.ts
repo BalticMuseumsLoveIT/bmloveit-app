@@ -340,12 +340,14 @@ abstract class Api {
     return response.data;
   };
 
-  public static getUserProfile = async (): Promise<UserProfileInterface> => {
+  public static getUserProfile = async (): Promise<
+    Array<UserProfileInterface>
+  > => {
     const endpoint = 'api/user_profile/';
 
     const response = await authStore.axiosInstance.get(endpoint);
 
-    return response.data[0];
+    return response.data;
   };
 
   public static createEvent = async (actionId: number) => {
@@ -376,7 +378,7 @@ abstract class Api {
   public static getTeam = async (id: number): Promise<TeamInterface> => {
     const endpoint = `api/team/${id}`;
 
-    const response = await userStore.axiosInstance.get(endpoint);
+    const response = await authStore.axiosInstance.get(endpoint);
 
     return response.data;
   };

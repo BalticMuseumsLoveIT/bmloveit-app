@@ -78,8 +78,8 @@ export default class TeamPageStore {
     return this.isTeamMember ? this.teamListData[0].id : NaN;
   }
 
-  @action setUserProfile(userProfileData: UserProfileInterface) {
-    this.userProfileData = userProfileData !== null ? userProfileData : null;
+  @action setUserProfile(userProfileData: Array<UserProfileInterface>) {
+    this.userProfileData = userProfileData.length ? userProfileData[0] : null;
   }
 
   @action setTeamList(teamListData: Array<TeamInterface>) {

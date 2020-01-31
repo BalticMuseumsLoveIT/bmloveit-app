@@ -5,8 +5,8 @@ import { getPrivateMediaURL } from 'utils/helpers';
 import { AuthStore } from 'utils/store/authStore';
 import { UserProfileStore } from 'utils/store/userProfileStore';
 import { UiStore } from 'utils/store/uiStore';
-import BadgesList from 'components/BadgesList/BadgesList';
-import CardsList from 'components/CardsList/CardsList';
+// import BadgesList from 'components/BadgesList/BadgesList';
+// import CardsList from 'components/CardsList/CardsList';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -53,10 +53,10 @@ class ProfilePage extends React.Component<Props> {
     if (!this.props.tReady || this.profilePageStore.state !== PageState.LOADED)
       return null;
 
-    const {
-      shouldDisplayProgressBar,
-      value: pointsValue,
-    } = this.profilePageStore.pointsData;
+    // const {
+    //   shouldDisplayProgressBar,
+    //   value: pointsValue,
+    // } = this.profilePageStore.pointsData;
 
     return (
       <>
@@ -69,26 +69,30 @@ class ProfilePage extends React.Component<Props> {
           {this.profilePageStore.team && (
             <h2>You are in group: {this.profilePageStore.team.name}</h2>
           )}
-          {pointsValue > 0 &&
-            (shouldDisplayProgressBar === false ? (
-              <p>Punkty: {pointsValue}</p>
-            ) : (
-              <p>Progress: {pointsValue}</p>
-            ))}
+          {/*{pointsValue > 0 &&*/}
+          {/*  (shouldDisplayProgressBar === false ? (*/}
+          {/*    <p>Punkty: {pointsValue}</p>*/}
+          {/*  ) : (*/}
+          {/*    <p>Progress: {pointsValue}</p>*/}
+          {/*  ))}*/}
+
           {this.userProfileStore.userHasAvatar && (
             <img
               src={getPrivateMediaURL(this.userProfileStore.userAvatarURL)}
               alt={this.userProfileStore.userAvatarName}
             />
           )}
-          {this.profilePageStore.userProfileData!.badges_data.length > 0 && (
-            <BadgesList
-              badges={this.profilePageStore.userProfileData!.badges_data}
-            />
-          )}
-          {this.profilePageStore.cards.length > 0 && (
-            <CardsList cards={this.profilePageStore.cards} />
-          )}
+
+          {/*{this.profilePageStore.userProfileData!.badges_data.length > 0 && (*/}
+          {/*  <BadgesList*/}
+          {/*    badges={this.profilePageStore.userProfileData!.badges_data}*/}
+          {/*  />*/}
+          {/*)}*/}
+
+          {/*{this.profilePageStore.cards.length > 0 && (*/}
+          {/*  <CardsList cards={this.profilePageStore.cards} />*/}
+          {/*)}*/}
+
           <LanguageSwitch
             uiLanguages={this.uiStore.languages}
             userLanguage={this.uiStore.language}

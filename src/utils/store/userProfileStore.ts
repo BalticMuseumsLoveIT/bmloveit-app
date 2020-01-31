@@ -1,4 +1,4 @@
-import { UserProfileInterface } from 'utils/interfaces';
+import { TeamInterface, UserProfileInterface } from 'utils/interfaces';
 import Api from 'utils/api';
 import ItemStore from 'utils/store/itemStore';
 import { action, computed, observable } from 'mobx';
@@ -6,6 +6,7 @@ import { action, computed, observable } from 'mobx';
 export class UserProfileStore {
   @observable userProfileData: UserProfileInterface | null = null;
   @observable userAvatarItemStore: ItemStore = new ItemStore();
+  @observable userTeamData: TeamInterface | null = null;
 
   @action setUserProfile = (userProfileData: UserProfileInterface | null) => {
     this.userProfileData = userProfileData;
