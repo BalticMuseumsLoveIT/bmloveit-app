@@ -248,8 +248,8 @@ export interface ItemInterface {
   kind_data: ItemKindInterface | null;
   locations: Array<number>;
   resources_data: Array<ResourceDataInterface>;
-  quizzes_data: Array<QuizInterface>;
-  surveys_data: Array<SurveyInterface>;
+  quizz: number | null;
+  survey: number | null;
   child_items_data: Array<ItemInterface>;
   child_items?: Array<number>;
   next_item: number | null;
@@ -259,7 +259,7 @@ export interface ItemInterface {
   name_translation: Array<CommonApiTranslationInterface>;
   name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
-  actions_list: Array<{ id: number; name: string }>;
+  actions_list: Array<CommonActionInterface>;
   routes: Array<number>;
   x: number | null;
   y: number | null;
@@ -274,6 +274,11 @@ export interface ItemMapElementInterface {
 
 // Site ------------------------------------------------------------------------
 
+export enum SiteTheme {
+  DARK = 'D',
+  LIGHT = 'L',
+}
+
 export interface SiteInterface {
   id: number;
   name: string;
@@ -283,6 +288,9 @@ export interface SiteInterface {
   terms_url: string;
   logo: string;
   image: string;
+  theme: SiteTheme | null;
+  background_color: string | null;
+  primary_color: string | null;
   name_translation: Array<CommonApiTranslationInterface>;
   title_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
@@ -392,4 +400,10 @@ export interface CommonLanguageInterface {
 export interface CommonApiTranslationInterface {
   language: number;
   text: string;
+}
+
+export interface CommonActionInterface {
+  id: number;
+  name: string;
+  description: string;
 }

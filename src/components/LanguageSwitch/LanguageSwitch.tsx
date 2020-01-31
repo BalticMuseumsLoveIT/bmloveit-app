@@ -27,7 +27,7 @@ class AutoSubmit extends React.Component<AutoSubmitProps> {
 
 interface LanguageSwitchProps {
   uiLanguages: Array<CommonLanguageInterface>;
-  userLanguage: string;
+  userLanguage: string | null;
   onSubmit: (values: LanguageSwitchValues) => Promise<void>;
 }
 
@@ -51,19 +51,21 @@ export const LanguageSwitch = ({
 
   let userLocaleMatch = false;
 
-  userLanguage = toISO6391(userLanguage);
+  if (userLanguage !== null) {
+    userLanguage = toISO6391(userLanguage);
 
-  uiLanguages.some(({ key: uiLanguage }) => {
-    uiLanguage = toISO6391(uiLanguage);
+    uiLanguages.some(({ key: uiLanguage }) => {
+      uiLanguage = toISO6391(uiLanguage);
 
-    if (uiLanguage === userLanguage) {
-      initialValues.language = userLanguage;
-      userLocaleMatch = true;
-      return true;
-    }
+      if (uiLanguage === userLanguage) {
+        initialValues.language = userLanguage;
+        userLocaleMatch = true;
+        return true;
+      }
 
-    return false;
-  });
+      return false;
+    });
+  }
 
   if (!ready) return null;
 

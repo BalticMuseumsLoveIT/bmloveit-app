@@ -6,7 +6,7 @@ import SurveyListPage from 'pages/SurveyListPage';
 import SurveyDetailsPage from 'pages/SurveyDetailsPage';
 import LanguagePage from 'pages/LanguagePage';
 import LoginPage from 'pages/LoginPage';
-import userStore from 'utils/store/userStore';
+import authStore from 'utils/store/authStore';
 import QrCodePage from 'pages/QrCodePage';
 import AreaListPage from 'pages/AreaListPage';
 import AreaRoutesPage from 'pages/AreaRoutesPage';
@@ -83,7 +83,7 @@ const PageRoute = ({
 }: PageRouteProps) => {
   if (!Component) return null;
 
-  return !authorization || userStore.isLoggedIn ? (
+  return !authorization || authStore.isLoggedIn ? (
     <Route
       {...routeProps}
       render={props => (

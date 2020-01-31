@@ -1,4 +1,4 @@
-import ItemPageStore from 'utils/store/itemPageStore';
+import ItemStore from 'utils/store/itemStore';
 import { ImageMap } from 'components/ImageMap/ImageMap';
 import { getPrivateMediaURL } from 'utils/helpers';
 import { useTranslation } from 'react-i18next';
@@ -6,26 +6,26 @@ import React from 'react';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 interface ItemPanoramaProps {
-  itemPageStore: ItemPageStore;
+  itemStore: ItemStore;
 }
 
-export const ItemPanorama = ({ itemPageStore }: ItemPanoramaProps) => {
+export const ItemPanorama = ({ itemStore }: ItemPanoramaProps) => {
   const { t, ready } = useTranslation('item-page');
 
   if (!ready) return null;
 
   return (
     <>
-      <h1>{itemPageStore.itemFullName}</h1>
-      {(itemPageStore.itemImage && (
+      <h1>{itemStore.itemNameFull}</h1>
+      {(itemStore.itemImage && (
         <TransformWrapper>
           <TransformComponent>
             <ImageMap
               src={
-                itemPageStore.itemImage &&
-                getPrivateMediaURL(itemPageStore.itemImage.file_url)
+                itemStore.itemImage &&
+                getPrivateMediaURL(itemStore.itemImage.file_url)
               }
-              coordinates={itemPageStore.panoramaMapItems}
+              coordinates={itemStore.panoramaMapItems}
             />
           </TransformComponent>
         </TransformWrapper>

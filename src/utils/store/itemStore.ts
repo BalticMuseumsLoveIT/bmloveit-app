@@ -6,6 +6,7 @@ import {
   ResourceDataInterface,
   ResourceTypeName,
   ItemMapElementInterface,
+  CommonActionInterface,
 } from 'utils/interfaces';
 import Api from 'utils/api';
 import { getTranslatedString } from 'utils/helpers';
@@ -125,15 +126,28 @@ export default class ItemStore {
   }
 
   @computed get surveyId(): number {
-    return this.itemData && this.itemData.surveys_data.length
-      ? this.itemData.surveys_data[0].id
+    return this.itemData && this.itemData.survey !== null
+      ? this.itemData.survey
       : NaN;
   }
 
   @computed get quizId(): number {
-    return this.itemData && this.itemData.quizzes_data.length
-      ? this.itemData.quizzes_data[0].id
+    return this.itemData && this.itemData.quizz !== null
+      ? this.itemData.quizz
       : NaN;
+  }
+
+  @computed get itemAvatars(): Array<ItemInterface> {
+    if (!this.itemData || !this.itemData.child_items_data.length) return [];
+
+    return this.itemData.child_items_data.filter(
+      item =>
+        item.type_data !== null && item.type_data.name === ItemType.AVATAR,
+    );
+  }
+
+  @computed get itemActions(): Array<CommonActionInterface> {
+    return this.itemData ? this.itemData.actions_list : [];
   }
 
   @computed get panoramaMapItems(): Array<ItemMapElementInterface> {

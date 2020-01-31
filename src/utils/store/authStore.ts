@@ -1,6 +1,5 @@
 import Api from 'utils/api';
 import { AuthTokenInterface } from 'utils/interfaces';
-import UserAvatarStore from 'utils/store/userAvatarStore';
 import { history } from 'App';
 import localStorage from 'mobx-localstorage';
 import { action, computed } from 'mobx';
@@ -11,11 +10,12 @@ enum FetchingRefreshedTokenState {
   RESOLVED,
 }
 
-export class UserStore {
+export class AuthStore {
   private readonly AUTH_TOKEN_KEY = 'authToken';
-  readonly userAvatarStore = new UserAvatarStore();
+
   private fetchingRefreshedTokenState: FetchingRefreshedTokenState =
     FetchingRefreshedTokenState.RESOLVED;
+
   private pendingRequests: Array<{
     resolve: { (accessToken: string): void };
   }> = [];
@@ -153,6 +153,6 @@ export class UserStore {
   };
 }
 
-const userStore = new UserStore();
+const authStore = new AuthStore();
 
-export default userStore;
+export default authStore;

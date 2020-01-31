@@ -1,9 +1,6 @@
-import { SiteInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
-import Api from 'utils/api';
-import { getTranslatedString } from 'utils/helpers';
-import { action, autorun, computed, observable, when } from 'mobx';
+import { action, autorun, observable, when } from 'mobx';
 
 export enum PageState {
   NOT_LOADED,
@@ -16,7 +13,6 @@ export default class WelcomePageStore {
   private readonly _manageContentState: boolean;
 
   @observable state: PageState = PageState.NOT_LOADED;
-  @observable siteData: Array<SiteInterface> = [];
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -44,43 +40,13 @@ export default class WelcomePageStore {
     try {
       this.setState(PageState.LOADING);
 
-      const [siteData] = await Promise.all([
-        Api.getSiteData(),
-        when(() => this.tReady === true),
-      ]);
+      await Promise.all([when(() => this.tReady === true)]);
 
-      this.setSiteData(siteData);
       this.setState(PageState.LOADED);
     } catch (e) {
       this.setState(PageState.ERROR);
     }
   };
-
-  @computed get siteTitle(): string {
-    return this.siteData.length
-      ? getTranslatedString(
-          this.siteData[0].title,
-          this.siteData[0].title_translation,
-        )
-      : '';
-  }
-
-  @computed get siteDescription(): string {
-    return this.siteData.length
-      ? getTranslatedString(
-          this.siteData[0].description,
-          this.siteData[0].description_translation,
-        )
-      : '';
-  }
-
-  @computed get siteLogo(): string {
-    return this.siteData.length ? this.siteData[0].logo : '';
-  }
-
-  @computed get siteImage(): string {
-    return this.siteData.length ? this.siteData[0].image : '';
-  }
 
   @action setState = (state: PageState) => {
     this.state = state;
@@ -89,10 +55,6 @@ export default class WelcomePageStore {
   @action setTReady(tReady?: boolean) {
     this.tReady = tReady;
   }
-
-  @action setSiteData = (siteData: Array<SiteInterface>) => {
-    this.siteData = siteData;
-  };
 
   @action unmount = () => {
     if (this._manageContentState) {

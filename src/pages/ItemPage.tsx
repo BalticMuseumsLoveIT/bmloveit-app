@@ -77,19 +77,27 @@ class ItemPage extends React.Component<Props> {
       this.itemPageStore.setTReady(this.props.tReady);
     }
 
-    const previousPopupItemId = this.itemModalStore.getIdFromQS(
-      prevProps.location.search,
-    );
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      await this.itemPageStore.loadData(
+        Number.parseInt(this.props.match.params.id),
+      );
+    }
 
-    const currentPopupItemId = this.itemModalStore.getIdFromQS(
-      this.props.location.search,
-    );
+    if (prevProps.location.search !== this.props.location.search) {
+      const previousPopupItemId = this.itemModalStore.getIdFromQS(
+        prevProps.location.search,
+      );
 
-    if (
-      currentPopupItemId !== previousPopupItemId &&
-      !isNaN(currentPopupItemId)
-    ) {
-      this._openPopup(currentPopupItemId);
+      const currentPopupItemId = this.itemModalStore.getIdFromQS(
+        this.props.location.search,
+      );
+
+      if (
+        currentPopupItemId !== previousPopupItemId &&
+        !isNaN(currentPopupItemId)
+      ) {
+        this._openPopup(currentPopupItemId);
+      }
     }
   }
 
@@ -106,7 +114,7 @@ class ItemPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Item')}</title>
         </Helmet>
         <Content>
-          <ItemDetails itemPageStore={this.itemPageStore} />
+          <ItemDetails itemStore={this.itemPageStore.itemData} />
         </Content>
         <ItemModal store={this.itemModalStore} />
       </>

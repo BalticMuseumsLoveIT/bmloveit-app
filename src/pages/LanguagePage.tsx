@@ -59,8 +59,8 @@ class LanguagePage extends React.Component<Props> {
             alt={this.props.t('logo.alt', 'Museum logotype')}
           />
           <LanguageSwitch
-            uiLanguages={this.languagePageStore.languageList}
-            userLanguage={this.props.i18n.language}
+            uiLanguages={this.uiStore.languages}
+            userLanguage={this.uiStore.language}
             onSubmit={this.handleLanguageSwitch}
           />
           <Footer>

@@ -83,7 +83,7 @@ export const ImageMap = (props: ImageMapProps) => {
                  * Supported links `?popup=<item_id>` or `/<local_url>`
                  * Do nothing if link is not specified or is not supported
                  */
-                if (!point.link || !(point.link.slice(0, 1) in ['/', '?']))
+                if (!point.link || !['/', '?'].includes(point.link.slice(0, 1)))
                   return;
 
                 const isQSLink = point.link.slice(0, 1) === '?';
