@@ -40,7 +40,7 @@ class LoginPage extends React.Component<Props> {
               <br />
               <GoogleButton onSuccess={this.login} />
               <br />
-              <GuestButton onClick={this.login} />
+              <GuestButton loginAsGuest={this.login} />
             </>
           ) : (
             <Redirect to={this.WELCOME_PAGE} />
