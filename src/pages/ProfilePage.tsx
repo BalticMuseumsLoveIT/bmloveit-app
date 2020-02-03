@@ -43,7 +43,7 @@ class ProfilePage extends React.Component<Props> {
     if (
       this.itemModalStore.item.itemData === null ||
       this.itemModalStore.item.itemId !== popupItemId
-    )
+    ) {
       try {
         this.itemModalStore.setModalState(ModalState.LOADING);
         await this.itemModalStore.item.loadItemData(popupItemId);
@@ -51,6 +51,7 @@ class ProfilePage extends React.Component<Props> {
         this.itemModalStore.setModalState(ModalState.ERROR);
         return;
       }
+    }
 
     this.itemModalStore.item.itemData === null
       ? this.itemModalStore.setModalState(ModalState.NOT_FOUND)
