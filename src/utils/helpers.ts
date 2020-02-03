@@ -81,6 +81,7 @@ export function getResource<
 
   if (
     resource &&
+    resource.hasOwnProperty('translation_data') &&
     resource.translation_data.length > 0 &&
     !Number.isNaN(languageId)
   ) {
