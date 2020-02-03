@@ -52,6 +52,7 @@ class AreaRoutesPage extends React.Component<Props> {
 
             return routes.length ? (
               <RoutesGroup
+                key={type.id}
                 type={type}
                 routes={routes}
                 attractions={this.areaRoutesPageStore.attractionsByRoute}

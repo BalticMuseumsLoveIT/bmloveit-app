@@ -20,7 +20,7 @@ export const RoutesGroup = ({
   const { t, ready } = useTranslation('area-routes-page');
 
   return ready ? (
-    <div key={type.id}>
+    <div>
       <h2>{type.description}</h2>
       {routes.map(route => (
         <p key={route.id}>
