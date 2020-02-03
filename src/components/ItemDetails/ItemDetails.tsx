@@ -1,28 +1,28 @@
-import ItemPageStore from 'utils/store/itemPageStore';
 import { ItemType } from 'utils/interfaces';
 import { ItemNotFound } from 'components/ItemDetails/ItemNotFound';
 import { ItemDefault } from 'components/ItemDetails/ItemDefault';
 import { ItemAvatarChoice } from 'components/ItemDetails/ItemAvatarChoice';
 import { ItemPanorama } from 'components/ItemDetails/ItemPanorama';
+import ItemStore from 'utils/store/itemStore';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 interface ItemDetailsProps {
-  itemPageStore: ItemPageStore;
+  itemStore: ItemStore;
 }
 
-export const ItemDetails = ({ itemPageStore }: ItemDetailsProps) => {
-  switch (itemPageStore.itemType) {
+export const ItemDetails = ({ itemStore }: ItemDetailsProps) => {
+  switch (itemStore.itemType) {
     case ItemType.DEFAULT:
-      return <ItemDefault itemPageStore={itemPageStore} />;
+      return <ItemDefault itemStore={itemStore} />;
     case ItemType.AVATAR_CHOICE:
-      return <ItemAvatarChoice itemPageStore={itemPageStore} />;
+      return <ItemAvatarChoice itemStore={itemStore} />;
     case ItemType.PANORAMA:
-      return <ItemPanorama itemPageStore={itemPageStore} />;
+      return <ItemPanorama itemStore={itemStore} />;
     case ItemType.SURVEY:
-      return <Redirect to={`/survey/${itemPageStore.surveyId}`} />;
+      return <Redirect to={`/survey/${itemStore.surveyId}`} />;
     case ItemType.QUIZ:
-      return <Redirect to={`/quiz/${itemPageStore.quizId}`} />;
+      return <Redirect to={`/quiz/${itemStore.quizId}`} />;
     default:
       return <ItemNotFound />;
   }

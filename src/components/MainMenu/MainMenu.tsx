@@ -29,9 +29,7 @@ class MainMenu extends React.Component<Props> {
       item_tags__tag__name: ItemTag.MAIN,
     });
 
-    if (menuItems.length > 0)
-      this.ui.nav.setMenu(menuItems[0]) &&
-        this.ui.nav.pushAncestor(this.ui.nav.menu!.id);
+    if (menuItems.length > 0) this.ui.nav.initMenu(menuItems[0]);
   };
 
   render() {

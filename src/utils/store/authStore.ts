@@ -1,6 +1,5 @@
 import Api from 'utils/api';
 import { AuthTokenInterface } from 'utils/interfaces';
-import UserAvatarStore from 'utils/store/userAvatarStore';
 import { history } from 'App';
 import localStorage from 'mobx-localstorage';
 import { action, computed } from 'mobx';
@@ -11,11 +10,12 @@ enum FetchingRefreshedTokenState {
   RESOLVED,
 }
 
-export class UserStore {
+export class AuthStore {
   private readonly AUTH_TOKEN_KEY = 'authToken';
-  readonly userAvatarStore = new UserAvatarStore();
+
   private fetchingRefreshedTokenState: FetchingRefreshedTokenState =
     FetchingRefreshedTokenState.RESOLVED;
+
   private pendingRequests: Array<{
     resolve: { (accessToken: string): void };
   }> = [];
@@ -53,6 +53,7 @@ export class UserStore {
   @computed get axiosInstance() {
     const axiosInstance = axios.create({
       baseURL: process.env.REACT_APP_API_URL,
+      timeout: Number.parseInt(process.env.REACT_APP_API_TIMEOUT || '') || 5000,
       headers: {
         'Content-Type': 'application/json',
       },
@@ -133,6 +134,13 @@ export class UserStore {
   };
 
   @action
+  signInAsGuest = async () => {
+    const guest = await Api.createGuestProfile();
+    const authToken = await Api.signInAsGuest(guest.username);
+    this.setAuthToken(authToken);
+  };
+
+  @action
   signOut = (): boolean => localStorage.delete(this.AUTH_TOKEN_KEY);
 
   @action
@@ -145,6 +153,6 @@ export class UserStore {
   };
 }
 
-const userStore = new UserStore();
+const authStore = new AuthStore();
 
-export default userStore;
+export default authStore;

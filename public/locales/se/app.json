@@ -5,6 +5,11 @@
     }
   },
   "cookieBar": "",
+  "image": {
+    "museumLogotype": {
+      "alt": ""
+    }
+  },
   "mainMenu": {
     "about": "",
     "back": "",

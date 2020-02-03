@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import React from 'react';
 
 export const StyledWrapper = styled.div`
@@ -12,7 +12,9 @@ export const StyledImage = styled.img`
 
 export const StyledButton = styled(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ({ x, y, width, height, widthSF, heightSF, ...rest }) => <button {...rest} />,
+  ({ x, y, width, height, widthSF, heightSF, isCustom, ...rest }) => (
+    <button {...rest} />
+  ),
 )`
   line-height: 0;
   padding: 0;
@@ -22,4 +24,14 @@ export const StyledButton = styled(
   position: absolute;
   left: ${props => (props.x * 100) / props.width}%;
   top: ${props => (props.y * 100) / props.height}%;
+  ${({ isCustom }) =>
+    isCustom &&
+    css`
+      background: none;
+      border: none;
+    `}
+`;
+
+export const StyledIcon = styled.img`
+  max-width: 100%;
 `;

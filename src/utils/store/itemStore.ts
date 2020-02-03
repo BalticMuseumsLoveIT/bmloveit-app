@@ -6,6 +6,7 @@ import {
   ResourceDataInterface,
   ResourceTypeName,
   ItemMapElementInterface,
+  CommonActionInterface,
 } from 'utils/interfaces';
 import Api from 'utils/api';
 import { getTranslatedString } from 'utils/helpers';
@@ -14,8 +15,13 @@ import { action, computed, observable } from 'mobx';
 export default class ItemStore {
   @observable itemData: ItemInterface | null = null;
 
-  @action setItemData = (itemData: ItemInterface | null) =>
-    (this.itemData = itemData);
+  constructor(itemData: ItemInterface | null = null) {
+    this.setItemData(itemData);
+  }
+
+  @action setItemData = (itemData: ItemInterface | null) => {
+    this.itemData = itemData;
+  };
 
   @action loadItemData = async (itemId: number) => {
     const itemData = await Api.getItem(itemId);
@@ -105,6 +111,10 @@ export default class ItemStore {
     return this._getResource(ResourceTypeName.Video);
   }
 
+  @computed get itemIcon(): ResourceDataInterface | null {
+    return this._getResource(ResourceTypeName.Icon);
+  }
+
   private _getResource(type: ResourceTypeName): ResourceDataInterface | null {
     if (!this.itemData || !this.itemData.resources_data.length) return null;
 
@@ -116,15 +126,28 @@ export default class ItemStore {
   }
 
   @computed get surveyId(): number {
-    return this.itemData && this.itemData.surveys_data.length
-      ? this.itemData.surveys_data[0].id
+    return this.itemData && this.itemData.survey !== null
+      ? this.itemData.survey
       : NaN;
   }
 
   @computed get quizId(): number {
-    return this.itemData && this.itemData.quizzes_data.length
-      ? this.itemData.quizzes_data[0].id
+    return this.itemData && this.itemData.quizz !== null
+      ? this.itemData.quizz
       : NaN;
+  }
+
+  @computed get itemAvatars(): Array<ItemInterface> {
+    if (!this.itemData || !this.itemData.child_items_data.length) return [];
+
+    return this.itemData.child_items_data.filter(
+      item =>
+        item.type_data !== null && item.type_data.name === ItemType.AVATAR,
+    );
+  }
+
+  @computed get itemActions(): Array<CommonActionInterface> {
+    return this.itemData ? this.itemData.actions_list : [];
   }
 
   @computed get panoramaMapItems(): Array<ItemMapElementInterface> {
@@ -142,6 +165,7 @@ export default class ItemStore {
             x: item.x!,
             y: item.y!,
             link: `?popup=${item.id}`,
+            icon: this.itemIcon ? this.itemIcon.file_url : '',
           }))) ||
       []
     );

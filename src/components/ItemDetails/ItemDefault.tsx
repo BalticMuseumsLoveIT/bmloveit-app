@@ -1,6 +1,6 @@
 import { getPrivateMediaURL } from 'utils/helpers';
 import Footer from 'components/Footer/Footer';
-import ItemPageStore from 'utils/store/itemPageStore';
+import ItemStore from 'utils/store/itemStore';
 import { FooterButton } from 'components/Footer/Footer.style';
 import React from 'react';
 import ReactHtmlParser, { processNodes } from 'react-html-parser';
@@ -9,10 +9,10 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 interface ItemDefaultProps {
-  itemPageStore: ItemPageStore;
+  itemStore: ItemStore;
 }
 
-export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
+export const ItemDefault = ({ itemStore }: ItemDefaultProps) => {
   const { t, ready } = useTranslation('item-page');
 
   if (!ready) return null;
@@ -29,48 +29,48 @@ export const ItemDefault = ({ itemPageStore }: ItemDefaultProps) => {
 
   return (
     <>
-      <h1>{itemPageStore.itemFullName}</h1>
+      <h1>{itemStore.itemNameFull}</h1>
       <div>
-        {itemPageStore.itemImage && (
+        {itemStore.itemImage && (
           <div>
-            <p>Private Image: {itemPageStore.itemImage.file_url}</p>
-            {itemPageStore.itemImage.file_url ? (
+            <p>Private Image: {itemStore.itemImage.file_url}</p>
+            {itemStore.itemImage.file_url ? (
               <img
-                src={getPrivateMediaURL(itemPageStore.itemImage.file_url)}
+                src={getPrivateMediaURL(itemStore.itemImage.file_url)}
                 alt=""
               />
             ) : null}
           </div>
         )}
-        {itemPageStore.itemAudio && (
+        {itemStore.itemAudio && (
           <div>
-            <p>Private Audio: {itemPageStore.itemAudio.file_url}</p>
+            <p>Private Audio: {itemStore.itemAudio.file_url}</p>
             <audio controls id="audio_player">
               <source
-                src={getPrivateMediaURL(itemPageStore.itemAudio.file_url)}
+                src={getPrivateMediaURL(itemStore.itemAudio.file_url)}
                 type="audio/mpeg"
               />
             </audio>
           </div>
         )}
-        {itemPageStore.itemVideo && (
+        {itemStore.itemVideo && (
           <div>
-            <p>Private video: {itemPageStore.itemVideo.file_url}</p>
+            <p>Private video: {itemStore.itemVideo.file_url}</p>
             <video
               controls
               id="video_player"
-              src={getPrivateMediaURL(itemPageStore.itemVideo.file_url)}
+              src={getPrivateMediaURL(itemStore.itemVideo.file_url)}
             />
           </div>
         )}
       </div>
       <div>
-        {ReactHtmlParser(itemPageStore.itemDescription, {
+        {ReactHtmlParser(itemStore.itemDescription, {
           transform: transform,
         })}
       </div>
       <Footer>
-        <FooterButton as={Link} to={`/item/${itemPageStore.nextItemId}`}>
+        <FooterButton as={Link} to={`/item/${itemStore.nextItemId}`}>
           {t('button.next.label', 'Next')}
         </FooterButton>
       </Footer>

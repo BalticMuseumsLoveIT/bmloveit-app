@@ -1,8 +1,10 @@
 import Content from 'components/Content/Content';
 import GoogleButton from 'components/LoginButtons/GoogleButton/GoogleButton';
 import FacebookButton from 'components/LoginButtons/FacebookButton/FacebookButton';
-import { UserStore } from 'utils/store/userStore';
+import { AuthStore } from 'utils/store/authStore';
 import { OAuthLoginArgumentInterface } from 'utils/interfaces';
+import { GuestButton } from 'components/LoginButtons/GuestButton/GuestButton';
+import { UserProfileStore } from 'utils/store/userProfileStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -10,13 +12,16 @@ import { RouteComponentProps, Redirect } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
 interface Props extends WithTranslation, RouteComponentProps {
-  userStore: UserStore;
+  authStore: AuthStore;
+  userProfileStore: UserProfileStore;
 }
 
-@inject('userStore')
+@inject('authStore', 'userProfileStore')
 @observer
 class LoginPage extends React.Component<Props> {
-  userStore = this.props.userStore;
+  authStore = this.props.authStore;
+  userProfileStore = this.props.userProfileStore;
+
   readonly WELCOME_PAGE = '/welcome';
 
   render() {
@@ -29,11 +34,13 @@ class LoginPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h2>{this.props.t('content.title', 'Login')}</h2>
-          {!this.userStore.isLoggedIn ? (
+          {!this.authStore.isLoggedIn ? (
             <>
               <FacebookButton onSuccess={this.login} />
               <br />
               <GoogleButton onSuccess={this.login} />
+              <br />
+              <GuestButton loginAsGuest={this.login} />
             </>
           ) : (
             <Redirect to={this.WELCOME_PAGE} />
@@ -43,17 +50,29 @@ class LoginPage extends React.Component<Props> {
     );
   }
 
-  logout = () => {
-    this.userStore.signOut();
+  login = async (params: OAuthLoginArgumentInterface | null = null) => {
+    await (params ? this._loginViaOAuth(params) : this._loginAsGuest());
+    await this._reloadUserProfile();
+    this._redirectToNextPage();
   };
 
-  login = async ({
+  private _loginViaOAuth = async ({
     provider,
     response,
-  }: OAuthLoginArgumentInterface): Promise<void> => {
-    const { location } = this.props;
+  }: OAuthLoginArgumentInterface) => {
+    await this.authStore.signIn(provider, response.accessToken);
+  };
 
-    await this.userStore.signIn(provider, response.accessToken);
+  private _loginAsGuest = async () => {
+    await this.authStore.signInAsGuest();
+  };
+
+  private _reloadUserProfile = async () => {
+    await this.userProfileStore.loadUserProfile();
+  };
+
+  private _redirectToNextPage = () => {
+    const { location } = this.props;
 
     const redirectTo =
       (location.state && location.state.from.pathname) || this.WELCOME_PAGE;

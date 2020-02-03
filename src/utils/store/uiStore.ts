@@ -1,12 +1,13 @@
 import { ContentState } from 'components/Content/Content';
 import { CommonLanguageInterface } from 'utils/interfaces';
 import MainMenuStore from 'utils/store/mainMenuStore';
+import Api from 'utils/api';
 import { action, computed, observable } from 'mobx';
 
 export class UiStore {
   @observable contentState: ContentState;
 
-  @observable nav = new MainMenuStore();
+  @observable nav: MainMenuStore = new MainMenuStore();
 
   /**
    * List of all supported languages provided by a backend server
@@ -41,6 +42,11 @@ export class UiStore {
 
   @action setLanguages = (languages: Array<CommonLanguageInterface>) => {
     this.languages = languages;
+  };
+
+  @action loadLanguages = async () => {
+    const languages = await Api.getLanguageList();
+    this.setLanguages(languages);
   };
 
   @action setLanguage = (language: string) => {

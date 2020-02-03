@@ -21,11 +21,11 @@ export interface LocationInterface {
   name: string;
   name_full: string;
   description: string;
-  type_data: RouteTypeInterface;
+  type_data: RouteTypeInterface | null;
   areas: Array<number>;
-  routes: Array<any>;
-  resources_data: Array<any>;
-  quizzes_data: Array<any>;
+  routes: Array<number>;
+  resources_data: Array<ResourceDataInterface>;
+  quizzes_data: Array<QuizInterface>;
   qr_code: string;
   latitude: number | null;
   longitude: number | null;
@@ -34,6 +34,7 @@ export interface LocationInterface {
   description_translation: Array<CommonApiTranslationInterface>;
   x: number | null;
   y: number | null;
+  screen_default: number | null;
   screens: Array<number>;
 }
 
@@ -215,6 +216,7 @@ export enum ResourceTypeName {
   Image = 'image',
   Video = 'video',
   Audio = 'audio',
+  Icon = 'icon',
 }
 
 export interface ResourceDataInterface {
@@ -247,8 +249,8 @@ export interface ItemInterface {
   kind_data: ItemKindInterface | null;
   locations: Array<number>;
   resources_data: Array<ResourceDataInterface>;
-  quizzes_data: Array<QuizInterface>;
-  surveys_data: Array<SurveyInterface>;
+  quizz: number | null;
+  survey: number | null;
   child_items_data: Array<ItemInterface>;
   child_items?: Array<number>;
   next_item: number | null;
@@ -258,7 +260,7 @@ export interface ItemInterface {
   name_translation: Array<CommonApiTranslationInterface>;
   name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
-  actions_list: Array<{ id: number; name: string }>;
+  actions_list: Array<CommonActionInterface>;
   routes: Array<number>;
   x: number | null;
   y: number | null;
@@ -268,9 +270,15 @@ export interface ItemMapElementInterface {
   x: number;
   y: number;
   link: string;
+  icon: string;
 }
 
 // Site ------------------------------------------------------------------------
+
+export enum SiteTheme {
+  DARK = 'D',
+  LIGHT = 'L',
+}
 
 export interface SiteInterface {
   id: number;
@@ -281,6 +289,9 @@ export interface SiteInterface {
   terms_url: string;
   logo: string;
   image: string;
+  theme: SiteTheme | null;
+  background_color: string | null;
+  primary_color: string | null;
   name_translation: Array<CommonApiTranslationInterface>;
   title_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
@@ -322,6 +333,18 @@ export interface UserProfileInterface {
   avatar: ItemInterface | null;
   badges_data: Array<any>;
   team: number | null;
+}
+
+export interface UserProfileCreateInterface {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  confirm_password: string;
+  language: number | null;
+  country: number | null;
+  for_delete: boolean;
+  guest: boolean;
 }
 
 // Auth ------------------------------------------------------------------------
@@ -378,4 +401,10 @@ export interface CommonLanguageInterface {
 export interface CommonApiTranslationInterface {
   language: number;
   text: string;
+}
+
+export interface CommonActionInterface {
+  id: number;
+  name: string;
+  description: string;
 }

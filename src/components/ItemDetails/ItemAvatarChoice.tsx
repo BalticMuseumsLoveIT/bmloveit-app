@@ -1,32 +1,70 @@
-import ItemPageStore, { PageState } from 'utils/store/itemPageStore';
+import ItemStore from 'utils/store/itemStore';
 import Footer from 'components/Footer/Footer';
 import { FooterButton } from 'components/Footer/Footer.style';
 import {
   AvatarButton,
   AvatarList,
 } from 'components/ItemDetails/ItemAvatarChoice.style';
-import { UserStore } from 'utils/store/userStore';
 import { getTranslatedString } from 'utils/helpers';
+import { UserProfileStore } from 'utils/store/userProfileStore';
+import { ItemInterface } from 'utils/interfaces';
+import Api from 'utils/api';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { inject, useObserver } from 'mobx-react';
+import { inject, useObserver, useLocalStore } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
+import { action } from 'mobx';
 
 interface ItemAvatarChoiceProps {
-  itemPageStore: ItemPageStore;
-  userStore?: UserStore;
+  itemStore: ItemStore;
+  userProfileStore?: UserProfileStore;
 }
 
-export const ItemAvatarChoice = inject('userStore')(
-  ({ itemPageStore, userStore }: ItemAvatarChoiceProps) => {
+export const ItemAvatarChoice = inject('userProfileStore')(
+  ({ itemStore, userProfileStore }: ItemAvatarChoiceProps) => {
     const { t, ready } = useTranslation('item-page');
 
     const history = useHistory();
 
-    const clickHandler = async () => {
-      await itemPageStore.handleAvatarChoice();
-      await userStore!.userAvatarStore.load();
-      history.push(`/item/${itemPageStore.selectedAvatarNextItemId}`);
+    const localStore = useLocalStore(() => ({
+      isSubmitting: false,
+
+      selectedAvatarId: NaN,
+
+      get isAvatarSelected() {
+        return !Number.isNaN(localStore.selectedAvatarId);
+      },
+
+      setAvatar: action((avatar: ItemInterface | null) => {
+        localStore.selectedAvatarId = avatar ? avatar.id : NaN;
+      }),
+
+      setSubmitting: action((isSubmitting: boolean) => {
+        localStore.isSubmitting = isSubmitting;
+      }),
+    }));
+
+    const handleFormSubmit = async () => {
+      if (!localStore.isAvatarSelected) return;
+
+      // Lock submit button
+      localStore.setSubmitting(true);
+
+      // Call createEvent on avatar actions
+      const avatar = new ItemStore();
+      await avatar.loadItemData(localStore.selectedAvatarId);
+      await Promise.all(
+        avatar.itemActions.map(action => Api.createEvent(action.id)),
+      );
+
+      // Reload global user profile
+      userProfileStore && (await userProfileStore.loadUserProfile());
+
+      // Redirect to next item
+      history.push(`/item/${avatar.nextItemId}`);
+
+      // Unlock submit button
+      localStore.setSubmitting(false);
     };
 
     return useObserver(() => {
@@ -34,16 +72,16 @@ export const ItemAvatarChoice = inject('userStore')(
 
       return (
         <>
-          <h1>{itemPageStore.itemFullName}</h1>
-          <div>{itemPageStore.itemDescription}</div>
+          <h1>{itemStore.itemNameFull}</h1>
+          <div>{itemStore.itemDescription}</div>
           <AvatarList>
-            {itemPageStore.itemAvatars.length ? (
+            {itemStore.itemAvatars.length ? (
               <>
-                {itemPageStore.itemAvatars.map(avatar => (
+                {itemStore.itemAvatars.map(avatar => (
                   <AvatarButton
                     key={avatar.id}
-                    isSelected={itemPageStore.isAvatarSelected(avatar.id)}
-                    onClick={() => itemPageStore.setAvatar(avatar)}
+                    isSelected={localStore.selectedAvatarId === avatar.id}
+                    onClick={() => localStore.setAvatar(avatar)}
                   >
                     {getTranslatedString(
                       avatar.name_full,
@@ -64,10 +102,10 @@ export const ItemAvatarChoice = inject('userStore')(
           <Footer>
             <FooterButton
               disabled={
-                itemPageStore.state === PageState.SUBMITTING ||
-                itemPageStore.avatarData === null
+                localStore.isSubmitting ||
+                Number.isNaN(localStore.selectedAvatarId)
               }
-              onClick={clickHandler}
+              onClick={handleFormSubmit}
             >
               {t('button.next.label', 'Next')}
             </FooterButton>

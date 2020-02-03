@@ -1,25 +1,32 @@
+import { SiteStore } from 'utils/store/siteStore';
 import MuseumLogoImage from 'components/Header/MuseumLogo.style';
-import MuseumLogoStore from 'utils/store/musemLogoStore';
 import React from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
+import { withTranslation, WithTranslation } from 'react-i18next';
 
+interface Props extends WithTranslation {}
+
+interface InjectedProps extends Props {
+  siteStore: SiteStore;
+}
+
+@inject('siteStore')
 @observer
-class MuseumLogo extends React.Component {
-  museumLogoStore = new MuseumLogoStore();
-
-  async componentDidMount() {
-    await this.museumLogoStore.load();
+class MuseumLogo extends React.Component<Props> {
+  get injected() {
+    return this.props as InjectedProps;
   }
 
+  siteStore = this.injected.siteStore;
+
   render() {
-    return this.museumLogoStore.siteData &&
-      this.museumLogoStore.siteData.logo ? (
+    return this.props.tReady && this.siteStore.isDataAvailable() ? (
       <MuseumLogoImage
-        src={this.museumLogoStore.siteData.logo}
-        alt={this.museumLogoStore.siteData.name}
+        src={this.siteStore.logo}
+        alt={this.props.t('image.museumLogotype.alt', 'Museum logotype')}
       />
     ) : null;
   }
 }
 
-export default MuseumLogo;
+export default withTranslation('app')(MuseumLogo);

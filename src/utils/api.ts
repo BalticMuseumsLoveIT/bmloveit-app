@@ -1,4 +1,4 @@
-import userStore from 'utils/store/userStore';
+import authStore from 'utils/store/authStore';
 import {
   QuizAnswerResponse,
   QuizDetailsInterface,
@@ -15,6 +15,7 @@ import {
   LocationInterface,
   UserProfileInterface,
   TeamInterface,
+  UserProfileCreateInterface,
   RouteTypeInterface,
 } from 'utils/interfaces';
 
@@ -30,10 +31,29 @@ abstract class Api {
       token: accessToken,
     };
 
-    const response = await userStore.axiosInstance.post(
+    const response = await authStore.axiosInstance.post(
       'auth/convert-token',
       JSON.stringify(body),
     );
+
+    return response.data;
+  };
+
+  public static signInAsGuest = async (
+    username: string,
+  ): Promise<AuthTokenInterface> => {
+    const params = {
+      username: username,
+      password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
+      grant_type: 'password',
+      client_id: process.env.REACT_APP_CLIENT_ID,
+    };
+
+    const jsonParams = JSON.stringify(params);
+
+    const endpoint = 'auth/token';
+
+    const response = await authStore.axiosInstance.post(endpoint, jsonParams);
 
     return response.data;
   };
@@ -47,19 +67,19 @@ abstract class Api {
       refresh_token: refreshToken,
     });
 
-    const response = await userStore.axiosInstance.post('auth/token', body);
+    const response = await authStore.axiosInstance.post('auth/token', body);
 
     return response.data;
   };
 
   public static getRoutes = async (): Promise<Array<RouteInterface>> => {
-    const response = await userStore.axiosInstance.get('api/route/');
+    const response = await authStore.axiosInstance.get('api/route/');
 
     return response.data;
   };
 
   public static getRoute = async (id: number): Promise<RouteInterface> => {
-    const response = await userStore.axiosInstance.get(`api/route/${id}`);
+    const response = await authStore.axiosInstance.get(`api/route/${id}`);
 
     return response.data;
   };
@@ -67,7 +87,7 @@ abstract class Api {
   public static getRouteTypes = async (): Promise<
     Array<RouteTypeInterface>
   > => {
-    const response = await userStore.axiosInstance.get(`api/route-type/`);
+    const response = await authStore.axiosInstance.get(`api/route-type/`);
 
     return response.data;
   };
@@ -79,7 +99,7 @@ abstract class Api {
    * @throws Axios error
    */
   public static async getQuizList(): Promise<Array<QuizInterface>> {
-    const response = await userStore.axiosInstance.get('api/quiz');
+    const response = await authStore.axiosInstance.get('api/quiz');
     return response.data;
   }
 
@@ -95,7 +115,7 @@ abstract class Api {
    * @throws Axios error
    */
   public static async getQuiz(id: number): Promise<QuizDetailsInterface> {
-    const response = await userStore.axiosInstance.get(`api/quiz/${id}`);
+    const response = await authStore.axiosInstance.get(`api/quiz/${id}`);
     return response.data;
   }
 
@@ -111,7 +131,7 @@ abstract class Api {
     const formData = new FormData();
     formData.append('quiz', id.toString());
 
-    const response = await userStore.axiosInstance.post(
+    const response = await authStore.axiosInstance.post(
       'api/quiz-fulfillment/',
       formData,
     );
@@ -136,7 +156,7 @@ abstract class Api {
     formData.append('question', question.toString());
     formData.append('options_data', option.toString());
 
-    const response = await userStore.axiosInstance.post(
+    const response = await authStore.axiosInstance.post(
       'api/quiz-answer/',
       formData,
     );
@@ -160,7 +180,7 @@ abstract class Api {
       item__id:
         typeof item__id !== 'undefined' && isNaN(item__id) ? '' : item__id,
     };
-    const response = await userStore.axiosInstance.get('api/survey', {
+    const response = await authStore.axiosInstance.get('api/survey', {
       params,
     });
     return response.data;
@@ -175,7 +195,7 @@ abstract class Api {
   public static async getSurveyDetails(
     id: number,
   ): Promise<SurveyDetailsInterface> {
-    const response = await userStore.axiosInstance.get(`api/survey/${id}`);
+    const response = await authStore.axiosInstance.get(`api/survey/${id}`);
     return response.data;
   }
 
@@ -191,7 +211,7 @@ abstract class Api {
     const formData = new FormData();
     formData.append('survey', id.toString());
 
-    const response = await userStore.axiosInstance.post(
+    const response = await authStore.axiosInstance.post(
       'api/survey-fulfillment/',
       formData,
     );
@@ -221,7 +241,7 @@ abstract class Api {
       options_data: options_data,
     };
 
-    const response = await userStore.axiosInstance.post(
+    const response = await authStore.axiosInstance.post(
       'api/survey-answer/',
       formData,
     );
@@ -235,7 +255,7 @@ abstract class Api {
   public static getLanguageList = async () => {
     const endpoint = 'api/language/';
 
-    const response = await userStore.axiosInstance.get(endpoint);
+    const response = await authStore.axiosInstance.get(endpoint);
 
     return response.data;
   };
@@ -247,7 +267,7 @@ abstract class Api {
   public static getSiteData = async (): Promise<Array<SiteInterface>> => {
     const endpoint = 'api/site/';
 
-    const response = await userStore.axiosInstance.get(endpoint);
+    const response = await authStore.axiosInstance.get(endpoint);
 
     // Response should be an array with only one site object inside
     return response.data;
@@ -259,7 +279,7 @@ abstract class Api {
   public static getAreaData = async (): Promise<Array<AreaInterface>> => {
     const endpoint = 'api/area/';
 
-    const response = await userStore.axiosInstance.get(endpoint);
+    const response = await authStore.axiosInstance.get(endpoint);
 
     // Response should be an array with only one site object inside
     return response.data;
@@ -268,7 +288,7 @@ abstract class Api {
   public static getItemsList = async (): Promise<Array<ItemInterface>> => {
     const endpoint = 'api/item/';
 
-    const response = await userStore.axiosInstance.get(endpoint);
+    const response = await authStore.axiosInstance.get(endpoint);
 
     return response.data;
   };
@@ -294,7 +314,7 @@ abstract class Api {
     const endpoint = 'api/item/';
 
     if (typeof params === 'number') params = { id: params };
-    const response = await userStore.axiosInstance.get(endpoint, { params });
+    const response = await authStore.axiosInstance.get(endpoint, { params });
 
     return response.data;
   };
@@ -308,7 +328,23 @@ abstract class Api {
 
     const endpoint = 'api/locations/';
 
-    const response = await userStore.axiosInstance.get(endpoint, { params });
+    const response = await authStore.axiosInstance.get(endpoint, { params });
+
+    return response.data;
+  };
+
+  public static createGuestProfile = async (): Promise<
+    UserProfileCreateInterface
+  > => {
+    const formData = {
+      guest: true,
+      password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
+      confirm_password: process.env.REACT_APP_GUEST_PASSWORD || 'password',
+    };
+
+    const endpoint = 'api/user_profile/';
+
+    const response = await authStore.axiosInstance.post(endpoint, formData);
 
     return response.data;
   };
@@ -318,7 +354,7 @@ abstract class Api {
   > => {
     const endpoint = 'api/user_profile/';
 
-    const response = await userStore.axiosInstance.get(endpoint);
+    const response = await authStore.axiosInstance.get(endpoint);
 
     return response.data;
   };
@@ -328,7 +364,7 @@ abstract class Api {
       action: actionId,
     };
 
-    const response = await userStore.axiosInstance.post(
+    const response = await authStore.axiosInstance.post(
       'api/events/',
       formData,
     );
@@ -343,7 +379,7 @@ abstract class Api {
   public static getTeamList = async (): Promise<Array<TeamInterface>> => {
     const endpoint = 'api/team/';
 
-    const response = await userStore.axiosInstance.get(endpoint);
+    const response = await authStore.axiosInstance.get(endpoint);
 
     return response.data;
   };
@@ -353,7 +389,7 @@ abstract class Api {
       name: teamName,
     };
 
-    return await userStore.axiosInstance.post('api/team-create/', formData);
+    return await authStore.axiosInstance.post('api/team-create/', formData);
   };
 
   public static teamJoin = async (teamName: string, teamAccessCode: string) => {
@@ -362,7 +398,7 @@ abstract class Api {
       access_code: teamAccessCode,
     };
 
-    return await userStore.axiosInstance.post('api/team-membership/', formData);
+    return await authStore.axiosInstance.post('api/team-membership/', formData);
   };
 
   public static teamLeave = async (teamName: string) => {
@@ -370,7 +406,7 @@ abstract class Api {
       name: teamName,
     };
 
-    return await userStore.axiosInstance.delete(`api/team-membership/`, {
+    return await authStore.axiosInstance.delete(`api/team-membership/`, {
       data: formData,
     });
   };
