@@ -223,6 +223,7 @@ export interface ResourceDataInterface {
   type: string;
   type_name: ResourceTypeName;
   file_url: string;
+  translation_data: Array<CommonResourceTranslationInterface>;
 }
 
 export interface ItemTypeInterface {
@@ -415,6 +416,11 @@ export interface CommonLanguageInterface {
 export interface CommonApiTranslationInterface {
   language: number;
   text: string;
+}
+
+export interface CommonResourceTranslationInterface {
+  language: number;
+  file_url: string;
 }
 
 export interface CommonActionInterface {
