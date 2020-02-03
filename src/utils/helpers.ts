@@ -63,7 +63,7 @@ export const getTranslatedString = (
 };
 
 /**
- * Get a single resource of spefific type
+ * Get a single resource of specific type
  *
  * @param object Generic object witch resource_data property
  * @param type Type of resource
@@ -71,9 +71,26 @@ export const getTranslatedString = (
 export function getResource<
   T extends { resources_data: Array<ResourceDataInterface> }
 >(object: T, type: ResourceTypeName): ResourceDataInterface | null {
+  const {
+    uiStore: { languageId },
+  } = stores;
+
   const resource = object.resources_data.find(
     resource => resource.type_name === type,
   );
+
+  if (
+    resource &&
+    resource.hasOwnProperty('translation_data') &&
+    resource.translation_data.length > 0 &&
+    !Number.isNaN(languageId)
+  ) {
+    const translatedResource = resource.translation_data.find(
+      resource => resource.language === languageId,
+    );
+
+    if (translatedResource) resource.file_url = translatedResource.file_url;
+  }
 
   return resource ? resource : null;
 }

@@ -1,15 +1,19 @@
 import {
-  ItemType,
-  ItemKind,
-  ItemInterface,
+  CommonActionInterface,
   CommonApiTranslationInterface,
+  ItemInterface,
+  ItemKind,
+  ItemMapElementInterface,
+  ItemType,
   ResourceDataInterface,
   ResourceTypeName,
-  ItemMapElementInterface,
-  CommonActionInterface,
 } from 'utils/interfaces';
 import Api from 'utils/api';
-import { getTranslatedString } from 'utils/helpers';
+import {
+  getPrivateMediaURL,
+  getResource,
+  getTranslatedString,
+} from 'utils/helpers';
 import { action, computed, observable } from 'mobx';
 
 export default class ItemStore {
@@ -118,11 +122,7 @@ export default class ItemStore {
   private _getResource(type: ResourceTypeName): ResourceDataInterface | null {
     if (!this.itemData || !this.itemData.resources_data.length) return null;
 
-    const resource = this.itemData.resources_data.find(
-      resource => resource.type_name === type,
-    );
-
-    return resource ? resource : null;
+    return getResource(this.itemData, type);
   }
 
   @computed get surveyId(): number {
@@ -161,12 +161,16 @@ export default class ItemStore {
               item.x !== null &&
               item.y !== null,
           )
-          .map(item => ({
-            x: item.x!,
-            y: item.y!,
-            link: `?popup=${item.id}`,
-            icon: this.itemIcon ? this.itemIcon.file_url : '',
-          }))) ||
+          .map(item => {
+            const icon = getResource(item, ResourceTypeName.Icon);
+
+            return {
+              x: item.x!,
+              y: item.y!,
+              link: `?popup=${item.id}`,
+              icon: icon ? getPrivateMediaURL(icon.file_url) : '',
+            };
+          })) ||
       []
     );
   }

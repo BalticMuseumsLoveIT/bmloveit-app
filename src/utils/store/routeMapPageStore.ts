@@ -126,16 +126,19 @@ export default class RouteMapPageStore {
     return (
       (this.routeData &&
         this.routeData.locations_data
-          .filter(location => location.x !== null && location.y !== null)
+          .filter(
+            location =>
+              location.x !== null &&
+              location.y !== null &&
+              location.screens.length > 0,
+          )
           .map(location => {
             const icon = getResource(location, ResourceTypeName.Icon);
 
             return {
               x: location.x!,
               y: location.y!,
-              link: location.screens.length
-                ? `/item/${location.screens[0]}`
-                : '',
+              link: `/item/${location.screens[0]}`,
               icon: icon ? getPrivateMediaURL(icon.file_url) : '',
             };
           })) ||
