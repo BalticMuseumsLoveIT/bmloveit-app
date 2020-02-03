@@ -1,15 +1,19 @@
 import {
-  ItemType,
-  ItemKind,
-  ItemInterface,
+  CommonActionInterface,
   CommonApiTranslationInterface,
+  ItemInterface,
+  ItemKind,
+  ItemMapElementInterface,
+  ItemType,
   ResourceDataInterface,
   ResourceTypeName,
-  ItemMapElementInterface,
-  CommonActionInterface,
 } from 'utils/interfaces';
 import Api from 'utils/api';
-import { getResource, getTranslatedString } from 'utils/helpers';
+import {
+  getPrivateMediaURL,
+  getResource,
+  getTranslatedString,
+} from 'utils/helpers';
 import { action, computed, observable } from 'mobx';
 
 export default class ItemStore {
@@ -157,12 +161,16 @@ export default class ItemStore {
               item.x !== null &&
               item.y !== null,
           )
-          .map(item => ({
-            x: item.x!,
-            y: item.y!,
-            link: `?popup=${item.id}`,
-            icon: this.itemIcon ? this.itemIcon.file_url : '',
-          }))) ||
+          .map(item => {
+            const icon = getResource(item, ResourceTypeName.Icon);
+
+            return {
+              x: item.x!,
+              y: item.y!,
+              link: `?popup=${item.id}`,
+              icon: icon ? getPrivateMediaURL(icon.file_url) : '',
+            };
+          })) ||
       []
     );
   }
