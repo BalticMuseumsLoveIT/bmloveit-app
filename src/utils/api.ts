@@ -16,6 +16,7 @@ import {
   UserProfileInterface,
   TeamInterface,
   UserProfileCreateInterface,
+  RouteTypeInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -79,6 +80,14 @@ abstract class Api {
 
   public static getRoute = async (id: number): Promise<RouteInterface> => {
     const response = await authStore.axiosInstance.get(`api/route/${id}`);
+
+    return response.data;
+  };
+
+  public static getRouteTypes = async (): Promise<
+    Array<RouteTypeInterface>
+  > => {
+    const response = await authStore.axiosInstance.get(`api/route-type/`);
 
     return response.data;
   };

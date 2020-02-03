@@ -2,6 +2,7 @@ import {
   CommonLanguageInterface,
   ItemInterface,
   RouteInterface,
+  RouteTypeInterface,
 } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
@@ -21,6 +22,7 @@ export default class AreaRoutesPageStore {
 
   @observable state: PageState = PageState.NOT_LOADED;
   @observable routesData: Array<RouteInterface> = [];
+  @observable routeTypes: Array<RouteTypeInterface> = [];
   @observable languagesData: Array<CommonLanguageInterface> = [];
   @observable itemsData: Array<ItemInterface> = [];
   @observable tReady?: boolean;
@@ -50,14 +52,21 @@ export default class AreaRoutesPageStore {
     try {
       this.setState(PageState.LOADING);
 
-      const [routesData, languagesData, itemsData] = await Promise.all([
+      const [
+        routesData,
+        routeTypes,
+        languagesData,
+        itemsData,
+      ] = await Promise.all([
         Api.getRoutes(),
+        Api.getRouteTypes(),
         Api.getLanguageList(),
         Api.getItemsList(),
         when(() => this.tReady === true),
       ]);
 
       this.setRoutesData(routesData, areaId);
+      this.setRouteTypes(routeTypes);
       this.setLanguagesData(languagesData);
       this.setItemsData(itemsData);
       this.setState(PageState.LOADED);
@@ -68,6 +77,10 @@ export default class AreaRoutesPageStore {
 
   routesByLanguage = createTransformer((languageId: number) =>
     this.routesData.filter(route => route.languages.includes(languageId)),
+  );
+
+  routesByType = createTransformer((typeId: number | null) =>
+    this.routesData.filter(route => route.type === typeId),
   );
 
   locationsByRoute = createTransformer((routeId: number) => {
@@ -104,6 +117,10 @@ export default class AreaRoutesPageStore {
     areaId: number,
   ) => {
     this.routesData = routesData.filter(route => route.areas.includes(areaId));
+  };
+
+  @action setRouteTypes = (routeTypes: Array<RouteTypeInterface>) => {
+    this.routeTypes = routeTypes;
   };
 
   @action setLanguagesData = (
