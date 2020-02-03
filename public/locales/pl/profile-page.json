@@ -1,13 +1,21 @@
 {
+  "badges": {
+    "header": "Odznaki"
+  },
   "button": {
     "logout": {
       "label": "Wyloguj się"
     }
+  },
+  "cards": {
+    "header": "Karty"
   },
   "content": {
     "title": "Profil użytkownika"
   },
   "page": {
     "title": "Profil uzytkownika"
-  }
+  },
+  "teamMembership": "Należysz do drużyny: <1>{{teamName}}</1>",
+  "userProgressPoints": "Punkty: {{ userPoints }}"
 }

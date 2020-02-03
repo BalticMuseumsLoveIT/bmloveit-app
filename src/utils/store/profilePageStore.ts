@@ -2,7 +2,6 @@ import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import { action, autorun, observable, when } from 'mobx';
 import { i18n } from 'i18next';
-import { FormikValues } from 'formik';
 
 export enum PageState {
   NOT_LOADED,
@@ -39,10 +38,6 @@ export default class ProfilePageStore {
       autorun(this._handleContentState);
     }
   }
-
-  @action handleSubmit = async (values: FormikValues): Promise<void> => {
-    await this._i18n.changeLanguage(values.language);
-  };
 
   @action loadData = async () => {
     try {

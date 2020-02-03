@@ -1,8 +1,7 @@
 import { SiteInterface } from 'utils/interfaces';
-import Api from 'utils/api';
 import { ContentState } from 'components/Content/Content';
 import uiStore from 'utils/store/uiStore';
-import { action, autorun, computed, observable, when } from 'mobx';
+import { action, autorun, observable, when } from 'mobx';
 
 export enum LanguagePageState {
   NOT_LOADED,
@@ -39,14 +38,6 @@ export default class LanguagePageStore {
     }
   }
 
-  @computed get logotypeURL(): string {
-    if (Array.isArray(this.siteData) && this.siteData.length) {
-      return this.siteData[0].logo;
-    }
-
-    return '';
-  }
-
   @action setState = (state: LanguagePageState) => {
     this.state = state;
   };
@@ -55,20 +46,12 @@ export default class LanguagePageStore {
     this.tReady = tReady;
   }
 
-  @action setSiteData = (siteData: Array<SiteInterface>) => {
-    this.siteData = siteData;
-  };
-
   @action loadData = async () => {
     try {
       this.setState(LanguagePageState.LOADING);
 
-      const [siteData] = await Promise.all([
-        Api.getSiteData(),
-        when(() => this.tReady === true),
-      ]);
+      await Promise.all([when(() => this.tReady === true)]);
 
-      this.setSiteData(siteData);
       this.setState(LanguagePageState.LOADED);
     } catch (e) {
       this.setState(LanguagePageState.ERROR);
