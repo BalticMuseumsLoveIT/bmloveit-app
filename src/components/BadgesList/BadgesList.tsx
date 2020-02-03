@@ -1,4 +1,10 @@
 import { BadgeInterface } from 'utils/interfaces';
+import {
+  Badge,
+  BadgeIcon,
+  BadgeList,
+  BadgeListItem,
+} from 'components/BadgesList/BadgeList.style';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 
@@ -14,11 +20,18 @@ const BadgesList = ({ badges }: Props) => {
   return userHaveBadges && ready ? (
     <>
       <h3>{t('badges.header', 'Badges')}:</h3>
-      <ul>
-        {badges.map(({ id, description }) => (
-          <li key={id}>{description}</li>
+      <BadgeList>
+        {badges.map(badge => (
+          <BadgeListItem key={badge.id}>
+            <Badge as="span" title={badge.description}>
+              <BadgeIcon
+                src={`/images/badge-icon-placeholder.svg`}
+                alt={badge.description}
+              />
+            </Badge>
+          </BadgeListItem>
         ))}
-      </ul>
+      </BadgeList>
     </>
   ) : null;
 };
