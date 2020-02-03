@@ -81,6 +81,22 @@ export class UserProfileStore {
     return this.userProfileData ? this.userProfileData.badges_data : [];
   }
 
+  @computed get points(): number {
+    return this.userProfileData === null ? 0 : this.userProfileData.points;
+  }
+
+  @computed get currentLevelPoints(): number | null {
+    return this.userProfileData === null
+      ? null
+      : this.userProfileData.level_current_points;
+  }
+
+  @computed get nextLevelPoint(): number | null {
+    return this.userProfileData === null
+      ? null
+      : this.userProfileData.level_up_points;
+  }
+
   @computed get pointsData(): {
     shouldDisplayProgressBar: boolean;
     value: number;

@@ -9,6 +9,7 @@ import BadgesList from 'components/BadgesList/BadgesList';
 import CardsList from 'components/CardsList/CardsList';
 import ItemModalStore, { ModalState } from 'utils/store/itemModalStore';
 import { ItemModal } from 'components/ItemModal/ItemModal';
+import { UserPoints } from 'components/UserPoints/UserPoints';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -117,11 +118,6 @@ class ProfilePage extends React.Component<Props> {
     if (!this.props.tReady || this.profilePageStore.state !== PageState.LOADED)
       return null;
 
-    const {
-      shouldDisplayProgressBar,
-      value: pointsValue,
-    } = this.userProfileStore.pointsData;
-
     return (
       <>
         <Helmet>
@@ -142,19 +138,17 @@ class ProfilePage extends React.Component<Props> {
             </p>
           )}
 
-          {pointsValue > 0 &&
-            (shouldDisplayProgressBar ? (
-              <p>Progress: {pointsValue}</p>
-            ) : (
-              <p>Points: {pointsValue}</p>
-            ))}
-
           {this.userProfileStore.userHasAvatar && (
             <img
               src={getPrivateMediaURL(this.userProfileStore.userAvatarURL)}
               alt={this.userProfileStore.userAvatarName}
             />
           )}
+
+          <UserPoints
+            points={this.userProfileStore.points}
+            nextLevelStart={this.userProfileStore.nextLevelPoint}
+          />
 
           <BadgesList badges={this.userProfileStore.userBadges} />
 
