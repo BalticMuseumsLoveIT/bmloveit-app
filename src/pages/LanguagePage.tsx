@@ -1,26 +1,26 @@
-import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
-import {
-  LanguageSwitch,
-  LanguageSwitchValues,
-} from 'components/LanguageSwitch/LanguageSwitch';
+import { SiteStore } from 'utils/store/siteStore';
 import LanguagePageStore from 'utils/store/languagePageStore';
+import Content from 'components/Content/Content';
+import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
 import Footer from 'components/Footer/Footer';
 import { FooterButton } from 'components/Footer/Footer.style';
+import { WithTranslation, withTranslation } from 'react-i18next';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
-import React from 'react';
 import Helmet from 'react-helmet';
-import { WithTranslation, withTranslation } from 'react-i18next';
+import React from 'react';
 
 export interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
+  siteStore: SiteStore;
 }
 
-@inject('uiStore')
+@inject('uiStore', 'siteStore')
 @observer
 class LanguagePage extends React.Component<Props> {
   uiStore = this.props.uiStore;
+  siteStore = this.props.siteStore;
   languagePageStore = new LanguagePageStore(true);
 
   async componentDidMount(): Promise<void> {
@@ -39,12 +39,6 @@ class LanguagePage extends React.Component<Props> {
     this.languagePageStore.unmount();
   }
 
-  handleLanguageSwitch = async (
-    values: LanguageSwitchValues,
-  ): Promise<void> => {
-    await this.props.i18n.changeLanguage(values.language);
-  };
-
   render() {
     if (!this.props.tReady) return null;
 
@@ -55,13 +49,12 @@ class LanguagePage extends React.Component<Props> {
         </Helmet>
         <Content>
           <img
-            src={this.languagePageStore.logotypeURL}
+            src={this.siteStore.logo}
             alt={this.props.t('logo.alt', 'Museum logotype')}
           />
           <LanguageSwitch
             uiLanguages={this.uiStore.languages}
             userLanguage={this.uiStore.language}
-            onSubmit={this.handleLanguageSwitch}
           />
           <Footer>
             <FooterButton as={Link} to="/login">

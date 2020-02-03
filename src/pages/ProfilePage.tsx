@@ -5,13 +5,13 @@ import { getPrivateMediaURL } from 'utils/helpers';
 import { AuthStore } from 'utils/store/authStore';
 import { UserProfileStore } from 'utils/store/userProfileStore';
 import { UiStore } from 'utils/store/uiStore';
-// import BadgesList from 'components/BadgesList/BadgesList';
-// import CardsList from 'components/CardsList/CardsList';
+import BadgesList from 'components/BadgesList/BadgesList';
+import CardsList from 'components/CardsList/CardsList';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { withTranslation, WithTranslation } from 'react-i18next';
-import { RouteComponentProps } from 'react-router-dom';
+import { Trans, withTranslation, WithTranslation } from 'react-i18next';
+import { Link, RouteComponentProps } from 'react-router-dom';
 
 interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
@@ -53,10 +53,10 @@ class ProfilePage extends React.Component<Props> {
     if (!this.props.tReady || this.profilePageStore.state !== PageState.LOADED)
       return null;
 
-    // const {
-    //   shouldDisplayProgressBar,
-    //   value: pointsValue,
-    // } = this.profilePageStore.pointsData;
+    const {
+      shouldDisplayProgressBar,
+      value: pointsValue,
+    } = this.userProfileStore.pointsData;
 
     return (
       <>
@@ -66,15 +66,24 @@ class ProfilePage extends React.Component<Props> {
         <Content>
           <h1>{this.props.t('content.title', 'User Profile')}</h1>
           <p>{this.userProfileStore.userName}</p>
-          {this.profilePageStore.team && (
-            <h2>You are in group: {this.profilePageStore.team.name}</h2>
+
+          {this.userProfileStore.userIsTeamMember && (
+            <p>
+              <Trans i18nKey="teamMembership" ns="profile-page">
+                You are in group:
+                <Link to="/team">
+                  {{ teamName: this.userProfileStore.userTeamStore.teamName }}
+                </Link>
+              </Trans>
+            </p>
           )}
-          {/*{pointsValue > 0 &&*/}
-          {/*  (shouldDisplayProgressBar === false ? (*/}
-          {/*    <p>Punkty: {pointsValue}</p>*/}
-          {/*  ) : (*/}
-          {/*    <p>Progress: {pointsValue}</p>*/}
-          {/*  ))}*/}
+
+          {pointsValue > 0 &&
+            (shouldDisplayProgressBar ? (
+              <p>Progress: {pointsValue}</p>
+            ) : (
+              <p>Points: {pointsValue}</p>
+            ))}
 
           {this.userProfileStore.userHasAvatar && (
             <img
@@ -83,21 +92,15 @@ class ProfilePage extends React.Component<Props> {
             />
           )}
 
-          {/*{this.profilePageStore.userProfileData!.badges_data.length > 0 && (*/}
-          {/*  <BadgesList*/}
-          {/*    badges={this.profilePageStore.userProfileData!.badges_data}*/}
-          {/*  />*/}
-          {/*)}*/}
+          <BadgesList badges={this.userProfileStore.userBadges} />
 
-          {/*{this.profilePageStore.cards.length > 0 && (*/}
-          {/*  <CardsList cards={this.profilePageStore.cards} />*/}
-          {/*)}*/}
+          <CardsList cards={this.userProfileStore.userCards} />
 
           <LanguageSwitch
             uiLanguages={this.uiStore.languages}
             userLanguage={this.uiStore.language}
-            onSubmit={this.profilePageStore.handleSubmit}
           />
+
           <p>
             <button onClick={this.logout}>
               {this.props.t('button.logout.label', 'Logout')}

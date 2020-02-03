@@ -1,23 +1,26 @@
-import React from 'react';
+import ItemStore from 'utils/store/itemStore';
 import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 export interface Props {
-  cards: Array<any>;
+  cards: Array<ItemStore>;
 }
 
 const CardsList = ({ cards }: Props) => {
-  const { t } = useTranslation('profile-page');
+  const { t, ready } = useTranslation('profile-page');
 
-  return (
+  const userHaveCards = cards.length > 0;
+
+  return userHaveCards && ready ? (
     <>
       <h3>{t('cards.header', 'Cards')}:</h3>
       <ul>
-        {cards.map(({ item_data: { id, name_full } }) => (
-          <li key={id}>{name_full}</li>
+        {cards.map(card => (
+          <li key={card.itemId}>{card.itemNameFull}</li>
         ))}
       </ul>
     </>
-  );
+  ) : null;
 };
 
 export default CardsList;

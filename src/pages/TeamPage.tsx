@@ -4,19 +4,24 @@ import { TeamJoinForm } from 'components/TeamJoin/TeamJoin';
 import { TeamCreateForm } from 'components/TeamCreate/TeamCreate';
 import Footer from 'components/Footer/Footer';
 import { FooterButton } from 'components/Footer/Footer.style';
+import { UserProfileStore } from 'utils/store/userProfileStore';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-interface Props extends WithTranslation {}
+interface Props extends WithTranslation {
+  userProfileStore: UserProfileStore;
+}
 
+@inject('userProfileStore')
 @observer
 class TeamPage extends React.Component<Props> {
+  userProfileStore = this.props.userProfileStore;
   groupPageStore = new TeamPageStore(true);
 
-  async componentDidMount(): Promise<void> {
+  async componentDidMount() {
     this.groupPageStore.setTReady(this.props.tReady);
     await this.groupPageStore.loadData();
   }
@@ -27,7 +32,7 @@ class TeamPage extends React.Component<Props> {
     }
   }
 
-  componentWillUnmount(): void {
+  componentWillUnmount() {
     this.groupPageStore.unmount();
   }
 
@@ -40,21 +45,21 @@ class TeamPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Team')}</title>
         </Helmet>
         <Content>
-          {this.groupPageStore.isTeamMember ? (
+          {this.userProfileStore.userIsTeamMember ? (
             <>
               <h2>{this.props.t('content.title.teamDetails', 'Your Team')}</h2>
               <h3>{this.props.t('content.subtitle.teamName', 'Team name')}</h3>
-              <p>{this.groupPageStore.teamName}</p>
+              <p>{this.userProfileStore.userTeamStore.teamName}</p>
               <h3>
                 {this.props.t(
                   'content.subtitle.teamAccessCode',
                   'Team access code',
                 )}
               </h3>
-              <p>{this.groupPageStore.teamAccessCode}</p>
+              <p>{this.userProfileStore.userTeamStore.teamAccessCode}</p>
               <Footer>
                 <FooterButton
-                  onClick={() => this.groupPageStore.handleLeaveTeam()}
+                  onClick={() => this.userProfileStore.handleLeaveTeam()}
                 >
                   {this.props.t('button.leaveTeam', 'Leave team')}
                 </FooterButton>
@@ -66,10 +71,12 @@ class TeamPage extends React.Component<Props> {
           ) : (
             <>
               <h2>{this.props.t('content.title.joinTeam', 'Join team')}</h2>
-              <TeamJoinForm onSubmit={this.groupPageStore.handleJoinTeam} />
+              <TeamJoinForm onSubmit={this.userProfileStore.handleJoinTeam} />
 
               <h2>{this.props.t('content.title.createTeam', 'Create team')}</h2>
-              <TeamCreateForm onSubmit={this.groupPageStore.handleCreateTeam} />
+              <TeamCreateForm
+                onSubmit={this.userProfileStore.handleCreateTeam}
+              />
             </>
           )}
         </Content>

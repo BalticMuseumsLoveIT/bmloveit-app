@@ -28,15 +28,13 @@ class AutoSubmit extends React.Component<AutoSubmitProps> {
 interface LanguageSwitchProps {
   uiLanguages: Array<CommonLanguageInterface>;
   userLanguage: string | null;
-  onSubmit: (values: LanguageSwitchValues) => Promise<void>;
 }
 
 export const LanguageSwitch = ({
   uiLanguages,
   userLanguage,
-  onSubmit,
 }: LanguageSwitchProps) => {
-  const { t, ready } = useTranslation('language-page');
+  const { t, i18n, ready } = useTranslation('language-page');
 
   const initialValues: LanguageSwitchValues = { language: '' };
 
@@ -48,6 +46,10 @@ export const LanguageSwitch = ({
       ),
     ),
   });
+
+  const onSubmit = async (values: LanguageSwitchValues) => {
+    await i18n.changeLanguage(values.language);
+  };
 
   let userLocaleMatch = false;
 

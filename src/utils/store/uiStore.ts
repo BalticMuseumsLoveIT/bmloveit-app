@@ -4,7 +4,15 @@ import MainMenuStore from 'utils/store/mainMenuStore';
 import Api from 'utils/api';
 import { action, computed, observable } from 'mobx';
 
+export enum AppState {
+  LOADING,
+  READY,
+  ERROR,
+}
+
 export class UiStore {
+  @observable appState: AppState;
+
   @observable contentState: ContentState;
 
   @observable nav: MainMenuStore = new MainMenuStore();
@@ -26,6 +34,7 @@ export class UiStore {
 
   constructor() {
     this.contentState = ContentState.AVAILABLE;
+    this.appState = AppState.LOADING;
   }
 
   @computed get languageId(): number {
@@ -38,6 +47,14 @@ export class UiStore {
     }
 
     return languageData ? languageData.id : NaN;
+  }
+
+  @computed get isAppLoading(): boolean {
+    return this.appState === AppState.LOADING;
+  }
+
+  @computed get isAppReady(): boolean {
+    return this.appState === AppState.READY;
   }
 
   @action setLanguages = (languages: Array<CommonLanguageInterface>) => {
@@ -53,9 +70,13 @@ export class UiStore {
     this.language = language.substring(0, 2).toLowerCase() || null;
   };
 
-  @action setContentState(contentState: ContentState) {
+  @action setContentState = (contentState: ContentState) => {
     this.contentState = contentState;
-  }
+  };
+
+  @action setAppState = (appState: AppState) => {
+    this.appState = appState;
+  };
 }
 
 const uiStore = new UiStore();

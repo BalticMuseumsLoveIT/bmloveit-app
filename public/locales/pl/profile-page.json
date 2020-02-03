@@ -15,5 +15,6 @@
   },
   "page": {
     "title": "Profil uzytkownika"
-  }
+  },
+  "teamMembership": "Należysz do drużyny: <1>{{teamName}}</1>"
 }

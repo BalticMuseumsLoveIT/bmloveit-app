@@ -1,3 +1,4 @@
+import i18n from 'i18n';
 import React from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -9,10 +10,7 @@ export interface TeamJoinFormValues {
 }
 
 export interface TeamJoinProps {
-  onSubmit: (
-    values: TeamJoinFormValues,
-    formikBag: FormikHelpers<TeamJoinFormValues>,
-  ) => Promise<void>;
+  onSubmit: (teamName: string, teamAccessCode: string) => Promise<void>;
 }
 
 export const TeamJoinForm = ({ onSubmit }: TeamJoinProps) => {
@@ -34,11 +32,61 @@ export const TeamJoinForm = ({ onSubmit }: TeamJoinProps) => {
     ),
   });
 
+  const handleSubmit = async (
+    values: TeamJoinFormValues,
+    formik: FormikHelpers<TeamJoinFormValues>,
+  ) => {
+    try {
+      await onSubmit(values.teamName, values.teamAccessCode);
+    } catch (e) {
+      if (e.response) {
+        switch (e.response.status) {
+          case 404:
+            return formik.setStatus(() =>
+              i18n.t('teamJoinForm.error.notFound', {
+                defaultValue: 'Name "{{teamName}}" was not found',
+                teamName: values.teamName,
+                ns: 'team-page',
+              }),
+            );
+          case 461:
+            return formik.setStatus(() =>
+              i18n.t('teamJoinForm.error.invalidCredentials', {
+                defaultValue: 'Provided credentials are invalid',
+                ns: 'team-page',
+              }),
+            );
+          case 462:
+            return formik.setStatus(() =>
+              i18n.t('teamJoinForm.error.alreadyMember', {
+                defaultValue: 'You are already a member',
+                ns: 'team-page',
+              }),
+            );
+          case 464:
+            return formik.setStatus(() =>
+              i18n.t('teamJoinForm.error.alreadyMemberOfAnotherTeam', {
+                defaultValue: 'You are already a member of another team',
+                ns: 'team-page',
+              }),
+            );
+        }
+
+        return formik.setStatus(() =>
+          i18n.t('teamJoinForm.error.unknownError', {
+            defaultValue: 'Team could not be joined due to unknown error',
+            ns: 'team-page',
+          }),
+        );
+      }
+    }
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
     >
       {({ status }) => (
         <Form id="teamJoinForm">

@@ -1,14 +1,17 @@
-import React from 'react';
+import { BadgeInterface } from 'utils/interfaces';
 import { useTranslation } from 'react-i18next';
+import React from 'react';
 
 export interface Props {
-  badges: Array<any>;
+  badges: Array<BadgeInterface>;
 }
 
 const BadgesList = ({ badges }: Props) => {
-  const { t } = useTranslation('profile-page');
+  const { t, ready } = useTranslation('profile-page');
 
-  return (
+  const userHaveBadges = badges.length;
+
+  return userHaveBadges && ready ? (
     <>
       <h3>{t('badges.header', 'Badges')}:</h3>
       <ul>
@@ -17,7 +20,7 @@ const BadgesList = ({ badges }: Props) => {
         ))}
       </ul>
     </>
-  );
+  ) : null;
 };
 
 export default BadgesList;
