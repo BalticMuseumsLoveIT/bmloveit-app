@@ -1,7 +1,13 @@
 import ItemStore from 'utils/store/itemStore';
+import {
+  Card,
+  CardIcon,
+  CardList,
+  CardListItem,
+} from 'components/CardsList/CardList.style';
+import { getPrivateMediaURL } from 'utils/helpers';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export interface Props {
   cards: Array<ItemStore>;
@@ -15,13 +21,22 @@ const CardsList = ({ cards }: Props) => {
   return userHaveCards && ready ? (
     <>
       <h3>{t('cards.header', 'Cards')}:</h3>
-      <ul>
+      <CardList>
         {cards.map(card => (
-          <li key={card.itemId}>
-            <Link to={`?popup=${card.itemId}`}>{card.itemNameFull}</Link>
-          </li>
+          <CardListItem key={card.itemId}>
+            <Card to={`?popup=${card.itemId}`} title={card.itemNameFull}>
+              <CardIcon
+                src={
+                  card.itemIcon
+                    ? getPrivateMediaURL(card.itemIcon.file_url)
+                    : '/images/card-icon-placeholder.svg'
+                }
+                alt={card.itemNameFull}
+              />
+            </Card>
+          </CardListItem>
         ))}
-      </ul>
+      </CardList>
     </>
   ) : null;
 };
