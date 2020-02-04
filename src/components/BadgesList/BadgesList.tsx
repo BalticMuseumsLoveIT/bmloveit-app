@@ -5,6 +5,8 @@ import {
   BadgeList,
   BadgeListItem,
 } from 'components/BadgesList/BadgeList.style';
+import Tooltip from 'rc-tooltip';
+import 'rc-tooltip/assets/bootstrap.css';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 
@@ -23,12 +25,18 @@ const BadgesList = ({ badges }: Props) => {
       <BadgeList>
         {badges.map(badge => (
           <BadgeListItem key={badge.id}>
-            <Badge title={badge.description}>
-              <BadgeIcon
-                src={`/images/badge-icon-placeholder.svg`}
-                alt={badge.description}
-              />
-            </Badge>
+            <Tooltip
+              overlay={badge.description}
+              placement="top"
+              trigger="click"
+            >
+              <Badge title={badge.description}>
+                <BadgeIcon
+                  src={`/images/badge-icon-placeholder.svg`}
+                  alt={badge.description}
+                />
+              </Badge>
+            </Tooltip>
           </BadgeListItem>
         ))}
       </BadgeList>
