@@ -4,6 +4,7 @@ import { SiteStore } from 'utils/store/siteStore';
 import WelcomePageStore from 'utils/store/welcomePageStore';
 import Footer from 'components/Footer/Footer';
 import { FooterButton } from 'components/Footer/Footer.style';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -51,7 +52,7 @@ class WelcomePage extends React.Component<Props> {
             <p>Site Logo: {this.siteStore.logo}</p>
           </div>
           <h1>{this.siteStore.title}</h1>
-          <div>{this.siteStore.description}</div>
+          <ItemHtmlParser html={this.siteStore.description} />
           <Footer>
             <FooterButton as={Link} to="/area">
               {this.props.t('buttonStart.label', 'Start sightseeing')}
