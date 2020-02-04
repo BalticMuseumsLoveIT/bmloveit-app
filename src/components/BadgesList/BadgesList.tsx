@@ -23,7 +23,7 @@ const BadgesList = ({ badges }: Props) => {
       <BadgeList>
         {badges.map(badge => (
           <BadgeListItem key={badge.id}>
-            <Badge as="span" title={badge.description}>
+            <Badge title={badge.description}>
               <BadgeIcon
                 src={`/images/badge-icon-placeholder.svg`}
                 alt={badge.description}
