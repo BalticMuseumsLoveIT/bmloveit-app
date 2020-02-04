@@ -1,8 +1,7 @@
 import Content from 'components/Content/Content';
 import ItemPageStore from 'utils/store/itemPageStore';
 import { ItemDetails } from 'components/ItemDetails/ItemDetails';
-import ItemModalStore, { ModalState } from 'utils/store/itemModalStore';
-import { ItemModal } from 'components/ItemModal/ItemModal';
+import ItemModal from 'components/ItemModal/ItemModal';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
@@ -17,45 +16,6 @@ export interface Props
 class ItemPage extends React.Component<Props> {
   itemPageStore = new ItemPageStore(true);
 
-  itemModalStore = new ItemModalStore({
-    isOpen: false,
-    onRequestClose: () => this._closePopup(),
-  });
-
-  private _openPopup = async (popupItemId: number) => {
-    this.itemModalStore.setModalState(ModalState.NOT_LOADED);
-    this.itemModalStore.openModal();
-
-    if (
-      this.itemModalStore.item.itemData === null ||
-      this.itemModalStore.item.itemId !== popupItemId
-    )
-      try {
-        this.itemModalStore.setModalState(ModalState.LOADING);
-        await this.itemModalStore.item.loadItemData(popupItemId);
-      } catch (e) {
-        this.itemModalStore.setModalState(ModalState.ERROR);
-        return;
-      }
-
-    this.itemModalStore.item.itemData === null
-      ? this.itemModalStore.setModalState(ModalState.NOT_FOUND)
-      : this.itemModalStore.setModalState(ModalState.LOADED);
-  };
-
-  /**
-   * Close modal window and update history
-   *
-   * @param {boolean} shouldGoBack - Flag that determines if history should be
-   *   reverted do previous state. Set to false only when modal window was
-   *   closed by pressing "back button".
-   */
-  private _closePopup = (shouldGoBack = true) => {
-    this.itemModalStore.closeModal();
-
-    shouldGoBack && this.props.history.goBack();
-  };
-
   async componentDidMount(): Promise<void> {
     const {
       params: { id },
@@ -64,12 +24,6 @@ class ItemPage extends React.Component<Props> {
     this.itemPageStore.setTReady(this.props.tReady);
 
     await this.itemPageStore.loadData(Number.parseInt(id));
-
-    const popupItemId = this.itemModalStore.getIdFromQS(
-      this.props.location.search,
-    );
-
-    if (!isNaN(popupItemId)) this._openPopup(popupItemId);
   }
 
   async componentDidUpdate(prevProps: Props) {
@@ -81,28 +35,6 @@ class ItemPage extends React.Component<Props> {
       await this.itemPageStore.loadData(
         Number.parseInt(this.props.match.params.id),
       );
-    }
-
-    if (prevProps.location.search !== this.props.location.search) {
-      const previousPopupItemId = this.itemModalStore.getIdFromQS(
-        prevProps.location.search,
-      );
-
-      const currentPopupItemId = this.itemModalStore.getIdFromQS(
-        this.props.location.search,
-      );
-
-      const popupIsAvailable = !Number.isNaN(currentPopupItemId);
-
-      if (currentPopupItemId !== previousPopupItemId) {
-        if (popupIsAvailable && this.itemModalStore.isClosed) {
-          this._openPopup(currentPopupItemId);
-        } else if (!popupIsAvailable && this.itemModalStore.isOpened) {
-          // User pressed back button - close popup manually.
-          // Prevent double history update by passing false to _closePopup
-          this._closePopup(false);
-        }
-      }
     }
   }
 
@@ -121,7 +53,7 @@ class ItemPage extends React.Component<Props> {
         <Content>
           <ItemDetails itemStore={this.itemPageStore.itemData} />
         </Content>
-        <ItemModal store={this.itemModalStore} />
+        <ItemModal />
       </>
     );
   }
