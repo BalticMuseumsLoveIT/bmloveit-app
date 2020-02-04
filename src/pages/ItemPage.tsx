@@ -43,17 +43,17 @@ class ItemPage extends React.Component<Props> {
       : this.itemModalStore.setModalState(ModalState.LOADED);
   };
 
-  private _closePopup = () => {
+  /**
+   * Close modal window and update history
+   *
+   * @param {boolean} shouldGoBack - Flag that determines if history should be
+   *   reverted do previous state. Set to false only when modal window was
+   *   closed by pressing "back button".
+   */
+  private _closePopup = (shouldGoBack = true) => {
     this.itemModalStore.closeModal();
 
-    const search = this.itemModalStore.removeIdFromQS(
-      this.props.location.search,
-    );
-
-    this.props.history.push({
-      pathname: this.props.location.pathname,
-      search: search,
-    });
+    shouldGoBack && this.props.history.goBack();
   };
 
   async componentDidMount(): Promise<void> {
@@ -92,11 +92,16 @@ class ItemPage extends React.Component<Props> {
         this.props.location.search,
       );
 
-      if (
-        currentPopupItemId !== previousPopupItemId &&
-        !isNaN(currentPopupItemId)
-      ) {
-        this._openPopup(currentPopupItemId);
+      const popupIsAvailable = !Number.isNaN(currentPopupItemId);
+
+      if (currentPopupItemId !== previousPopupItemId) {
+        if (popupIsAvailable && this.itemModalStore.isClosed) {
+          this._openPopup(currentPopupItemId);
+        } else if (!popupIsAvailable && this.itemModalStore.isOpened) {
+          // User pressed back button - close popup manually.
+          // Prevent double history update by passing false to _closePopup
+          this._closePopup(false);
+        }
       }
     }
   }

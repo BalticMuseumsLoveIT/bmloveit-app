@@ -1,5 +1,5 @@
 import ItemStore from 'utils/store/itemStore';
-import { action, observable } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import queryString from 'query-string';
 import { Props as ReactModalProps } from 'react-modal';
 
@@ -18,6 +18,14 @@ export default class ItemModalStore {
 
   constructor(modalProps: ReactModalProps | undefined = undefined) {
     this.setModalProps(modalProps || {});
+  }
+
+  @computed get isOpened(): boolean {
+    return this.modalProps.isOpen;
+  }
+
+  @computed get isClosed(): boolean {
+    return !this.modalProps.isOpen;
   }
 
   @action openModal = () => {
