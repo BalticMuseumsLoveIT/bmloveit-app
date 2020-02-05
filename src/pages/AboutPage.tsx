@@ -1,15 +1,21 @@
 import Content from 'components/Content/Content';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import AboutPageStore from 'utils/store/aboutPageStore';
+import { SiteStore } from 'utils/store/siteStore';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface AboutPageProps extends WithTranslation {}
+interface AboutPageProps extends WithTranslation {
+  siteStore: SiteStore;
+}
 
+@inject('siteStore')
 @observer
 class HomePage extends React.Component<AboutPageProps> {
   aboutPageStore = new AboutPageStore(true);
+  siteStore = this.props.siteStore;
 
   async componentDidMount(): Promise<void> {
     this.aboutPageStore.setTReady(this.props.tReady);
@@ -37,7 +43,7 @@ class HomePage extends React.Component<AboutPageProps> {
         </Helmet>
         <Content>
           <h1>{this.props.t('content.title', 'About')}</h1>
-          <div>{this.aboutPageStore.aboutContent}</div>
+          <ItemHtmlParser html={this.siteStore.about} />
         </Content>
       </>
     );

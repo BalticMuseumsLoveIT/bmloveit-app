@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 export const BadgeList = styled.ul`
   display: flex;
@@ -13,7 +12,7 @@ export const BadgeListItem = styled.li`
   margin-right: 0.25em;
 `;
 
-export const Badge = styled(Link)`
+export const Badge = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
