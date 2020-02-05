@@ -94,3 +94,9 @@ export function getResource<
 
   return resource ? resource : null;
 }
+
+export const isColorValid = (colorCode: string): boolean => {
+  const regex = RegExp('^#(?:[0-9a-fA-F]{3}){1,2}$');
+
+  return regex.test(colorCode);
+};

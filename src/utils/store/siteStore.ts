@@ -1,6 +1,6 @@
-import { SiteInterface } from 'utils/interfaces';
+import { SiteInterface, SiteTheme } from 'utils/interfaces';
 import Api from 'utils/api';
-import { getTranslatedString } from 'utils/helpers';
+import { getTranslatedString, isColorValid } from 'utils/helpers';
 import { action, computed, observable } from 'mobx';
 
 export class SiteStore {
@@ -68,6 +68,27 @@ export class SiteStore {
     if (!this.isDataAvailable()) return '';
 
     return this.siteData.terms_url;
+  }
+
+  @computed get theme(): SiteTheme {
+    if (!this.isDataAvailable() || this.siteData.theme === null)
+      return SiteTheme.LIGHT;
+
+    return this.siteData.theme;
+  }
+
+  @computed get backgroundColor(): string | null {
+    if (!this.isDataAvailable()) return null;
+
+    const color = this.siteData.background_color || '';
+    return isColorValid(color) ? color : null;
+  }
+
+  @computed get primaryColor(): string | null {
+    if (!this.isDataAvailable()) return null;
+
+    const color = this.siteData.primary_color || '';
+    return isColorValid(color) ? color : null;
   }
 }
 
