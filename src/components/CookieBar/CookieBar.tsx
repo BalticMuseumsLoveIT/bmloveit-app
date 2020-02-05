@@ -4,6 +4,7 @@ import {
   InfoMessage,
 } from 'components/CookieBar/CookieBar.style';
 import { CookieBarStore } from 'utils/store/cookieBarStore';
+import { SiteStore } from 'utils/store/siteStore';
 import React from 'react';
 import { Trans, WithTranslation, withTranslation } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
@@ -12,9 +13,10 @@ interface Props extends WithTranslation {}
 
 interface InjectedProps extends Props {
   cookieBarStore: CookieBarStore;
+  siteStore: SiteStore;
 }
 
-@inject('cookieBarStore')
+@inject('cookieBarStore', 'siteStore')
 @observer
 class CookieBar extends React.Component<Props> {
   get injected() {
@@ -22,15 +24,10 @@ class CookieBar extends React.Component<Props> {
   }
 
   cookieBarStore = this.injected.cookieBarStore;
-
-  componentDidMount = async () => {
-    await this.cookieBarStore.loadData();
-  };
+  siteStore = this.injected.siteStore;
 
   render() {
     if (!this.props.tReady) return null;
-
-    if (!this.cookieBarStore.isSiteDataLoaded) return null;
 
     if (this.cookieBarStore.isAccepted) return null;
 
@@ -39,7 +36,7 @@ class CookieBar extends React.Component<Props> {
         <InfoMessage>
           <Trans i18nKey="cookieBar">
             We use cookies.
-            <a href={this.cookieBarStore.termsURL}>Learn more</a>
+            <a href={this.siteStore.termsURL}>Learn more</a>
           </Trans>
         </InfoMessage>
         <CloseButton type="button" onClick={this.cookieBarStore.clickHandler}>

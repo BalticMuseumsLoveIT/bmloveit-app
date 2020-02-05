@@ -63,6 +63,12 @@ export class SiteStore {
 
     return this.siteData.logo;
   }
+
+  @computed get termsURL(): string {
+    if (!this.isDataAvailable()) return '';
+
+    return this.siteData.terms_url;
+  }
 }
 
 const siteStore = new SiteStore();
