@@ -1,44 +1,41 @@
-import theme from 'utils/theme';
 import Header from 'components/Header/Header';
 import CookieBar from 'components/CookieBar/CookieBar';
+import { SiteStore } from 'utils/store/siteStore';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
+import { observer, inject } from 'mobx-react';
 import StyledWrapper, { GlobalStyle } from './Layout.style';
 
-export interface LayoutProps {
+interface Props {
   children?: React.ReactNode;
   displayHeader?: boolean;
 }
 
-export default class Layout extends React.Component<LayoutProps> {
+interface InjectedProps extends Props {
+  siteStore: SiteStore;
+}
+
+@inject('siteStore')
+@observer
+export default class Layout extends React.Component<Props> {
+  get injected() {
+    return this.props as InjectedProps;
+  }
+
+  siteStore = this.injected.siteStore;
+
   render() {
     const { displayHeader, children } = this.props;
 
     return (
-      <ThemeProvider theme={theme}>
-        <>
-          <GlobalStyle />
-          <StyledWrapper>
-            <CookieBar />
-            {displayHeader && <Header />}
-            {children}
-          </StyledWrapper>
-        </>
+      <ThemeProvider theme={this.siteStore.theme}>
+        <GlobalStyle />
+        <StyledWrapper>
+          <CookieBar />
+          {displayHeader && <Header />}
+          {children}
+        </StyledWrapper>
       </ThemeProvider>
     );
   }
 }
-
-export const withLayout = <P extends object>(
-  Component: React.ComponentType<P>,
-  displayHeader = true,
-) =>
-  class WithLayout extends React.Component<P> {
-    render() {
-      return (
-        <Layout displayHeader={displayHeader}>
-          <Component {...this.props} />
-        </Layout>
-      );
-    }
-  };

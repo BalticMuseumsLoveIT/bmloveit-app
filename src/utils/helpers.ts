@@ -100,3 +100,7 @@ export const isColorValid = (colorCode: string): boolean => {
 
   return regex.test(colorCode);
 };
+
+export type RecursivePartial<T> = {
+  [P in keyof T]?: RecursivePartial<T[P]>;
+};

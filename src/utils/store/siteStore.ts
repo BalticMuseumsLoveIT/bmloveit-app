@@ -1,7 +1,13 @@
-import { SiteInterface, SiteTheme } from 'utils/interfaces';
+import { SiteInterface, ThemeType, ThemeInterface } from 'utils/interfaces';
+import { defaultTheme, darkPartial, lightPartial } from 'utils/theme';
 import Api from 'utils/api';
-import { getTranslatedString, isColorValid } from 'utils/helpers';
+import {
+  getTranslatedString,
+  isColorValid,
+  RecursivePartial,
+} from 'utils/helpers';
 import { action, computed, observable } from 'mobx';
+import merge from 'deepmerge';
 
 export class SiteStore {
   @observable siteData: SiteInterface | null = null;
@@ -70,9 +76,8 @@ export class SiteStore {
     return this.siteData.terms_url;
   }
 
-  @computed get theme(): SiteTheme {
-    if (!this.isDataAvailable() || this.siteData.theme === null)
-      return SiteTheme.LIGHT;
+  @computed get themeType(): ThemeType | null {
+    if (!this.isDataAvailable() || this.siteData.theme === null) return null;
 
     return this.siteData.theme;
   }
@@ -89,6 +94,34 @@ export class SiteStore {
 
     const color = this.siteData.primary_color || '';
     return isColorValid(color) ? color : null;
+  }
+
+  @computed get theme(): ThemeInterface {
+    let typePartial: RecursivePartial<ThemeInterface> = {};
+
+    switch (this.themeType) {
+      case ThemeType.DARK:
+        typePartial = darkPartial;
+        typePartial.type = ThemeType.DARK;
+        break;
+      case ThemeType.LIGHT:
+        typePartial = lightPartial;
+        typePartial.type = ThemeType.LIGHT;
+    }
+
+    const colorPartial: RecursivePartial<ThemeInterface> = {
+      colors: { background: {} },
+    };
+
+    if (this.backgroundColor)
+      colorPartial.colors!.background!.app = this.backgroundColor;
+
+    if (this.primaryColor)
+      colorPartial.colors!.background!.alternative = this.primaryColor;
+
+    const theme = merge.all([defaultTheme, typePartial, colorPartial]);
+
+    return theme as ThemeInterface;
   }
 }
 

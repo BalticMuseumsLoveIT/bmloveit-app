@@ -276,9 +276,44 @@ export interface ItemMapElementInterface {
 
 // Site ------------------------------------------------------------------------
 
-export enum SiteTheme {
+export enum ThemeType {
   DARK = 'D',
   LIGHT = 'L',
+}
+
+export interface FontInterface {
+  fontFamily: string;
+  fontWeight: string;
+}
+
+export interface ThemeFontsInterface {
+  header: FontInterface;
+  subheader: FontInterface;
+  paragraph: FontInterface;
+}
+
+export interface ThemeColorsInterface {
+  background: {
+    app: string;
+    default: string;
+    alternative: string;
+  };
+  text: {
+    header: string;
+    paragraph: string;
+    alternative: string;
+  };
+}
+
+export interface ThemeInterface {
+  type: ThemeType;
+  fonts: ThemeFontsInterface;
+  colors: ThemeColorsInterface;
+
+  // Old properties
+
+  color?: any;
+  media?: any;
 }
 
 export interface SiteInterface {
@@ -290,7 +325,7 @@ export interface SiteInterface {
   terms_url: string;
   logo: string;
   image: string;
-  theme: SiteTheme | null;
+  theme: ThemeType | null;
   background_color: string | null;
   primary_color: string | null;
   name_translation: Array<CommonApiTranslationInterface>;
