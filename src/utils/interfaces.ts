@@ -305,17 +305,6 @@ export interface ThemeColorsInterface {
   };
 }
 
-export interface ThemeInterface {
-  type: ThemeType;
-  fonts: ThemeFontsInterface;
-  colors: ThemeColorsInterface;
-
-  // Old properties
-
-  color?: any;
-  media?: any;
-}
-
 export interface SiteInterface {
   id: number;
   name: string;

@@ -1,4 +1,4 @@
-import { SiteInterface, ThemeType, ThemeInterface } from 'utils/interfaces';
+import { SiteInterface, ThemeType } from 'utils/interfaces';
 import { defaultTheme, darkPartial, lightPartial } from 'utils/theme';
 import Api from 'utils/api';
 import {
@@ -8,6 +8,7 @@ import {
 } from 'utils/helpers';
 import { action, computed, observable } from 'mobx';
 import merge from 'deepmerge';
+import { DefaultTheme } from 'styled-components';
 
 export class SiteStore {
   @observable siteData: SiteInterface | null = null;
@@ -96,8 +97,8 @@ export class SiteStore {
     return isColorValid(color) ? color : null;
   }
 
-  @computed get theme(): ThemeInterface {
-    let typePartial: RecursivePartial<ThemeInterface> = {};
+  @computed get theme(): DefaultTheme {
+    let typePartial: RecursivePartial<DefaultTheme> = {};
 
     switch (this.themeType) {
       case ThemeType.DARK:
@@ -109,7 +110,7 @@ export class SiteStore {
         typePartial.type = ThemeType.LIGHT;
     }
 
-    const colorPartial: RecursivePartial<ThemeInterface> = {
+    const colorPartial: RecursivePartial<DefaultTheme> = {
       colors: { background: {} },
     };
 
@@ -121,7 +122,7 @@ export class SiteStore {
 
     const theme = merge.all([defaultTheme, typePartial, colorPartial]);
 
-    return theme as ThemeInterface;
+    return theme as DefaultTheme;
   }
 }
 

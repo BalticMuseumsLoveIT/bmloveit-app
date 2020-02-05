@@ -1,5 +1,6 @@
-import { ThemeType, ThemeInterface } from 'utils/interfaces';
+import { ThemeType } from 'utils/interfaces';
 import { RecursivePartial } from 'utils/helpers';
+import { DefaultTheme } from 'styled-components';
 
 const defaultType = ThemeType.LIGHT;
 
@@ -31,7 +32,7 @@ const defaultColors = {
   },
 };
 
-export const defaultTheme: ThemeInterface = {
+export const defaultTheme: DefaultTheme = {
   type: defaultType,
   fonts: defaultFonts,
   colors: defaultColors,
@@ -66,7 +67,7 @@ export const defaultTheme: ThemeInterface = {
   },
 };
 
-export const lightPartial: RecursivePartial<ThemeInterface> = {
+export const lightPartial: RecursivePartial<DefaultTheme> = {
   colors: {
     text: {
       paragraph: '#7A7D92',
@@ -81,7 +82,7 @@ export const lightPartial: RecursivePartial<ThemeInterface> = {
   },
 };
 
-export const darkPartial: RecursivePartial<ThemeInterface> = {
+export const darkPartial: RecursivePartial<DefaultTheme> = {
   colors: {
     text: {
       paragraph: '#D2D6DE',

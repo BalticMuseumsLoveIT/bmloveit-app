@@ -1,10 +1,10 @@
 import Header from 'components/Header/Header';
 import CookieBar from 'components/CookieBar/CookieBar';
 import { SiteStore } from 'utils/store/siteStore';
+import StyledWrapper, { GlobalStyle } from 'components/Layout/Layout.style';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { observer, inject } from 'mobx-react';
-import StyledWrapper, { GlobalStyle } from './Layout.style';
 
 interface Props {
   children?: React.ReactNode;
