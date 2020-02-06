@@ -4,7 +4,7 @@ import { ItemKind, ItemTag } from 'utils/interfaces';
 import { StaticLinks } from 'components/MainMenu/Links';
 import StyledWrapper from 'components/MainMenu/MainMenu.style';
 import { Items } from 'components/MainMenu/Items';
-import { Logotype } from 'components/MainMenu/Logotype';
+import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
@@ -43,7 +43,7 @@ class MainMenu extends React.Component<Props> {
           openSubMenu={this.ui.nav.openSubMenu}
         />
         <StaticLinks links={this.ui.nav.links} closeMenu={this.ui.nav.close} />
-        <Logotype />
+        <SponsorLogotype />
       </StyledWrapper>
     );
   }
