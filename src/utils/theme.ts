@@ -1,4 +1,50 @@
-const theme = {
+import { ThemeType } from 'utils/interfaces';
+import { RecursivePartial } from 'utils/helpers';
+import { DefaultTheme } from 'styled-components';
+
+const defaultType = ThemeType.LIGHT;
+
+const defaultFonts = {
+  header: {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: '700',
+  },
+  subheader: {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: '600',
+  },
+  paragraph: {
+    fontFamily: '"Source Sans Pro", sans-serif',
+    fontWeight: '400',
+  },
+};
+
+const defaultColors = {
+  text: {
+    paragraph: '#7A7D92',
+    header: '#2A2C3E',
+    alternative: '#F8FAFD',
+    anchor: {
+      link: '#2A2C3E',
+      hover: '#F85705',
+      active: '#2A2C3E',
+      visited: '#2A2C3E',
+    },
+  },
+  background: {
+    app: '#EAEEF6',
+    default: '#F8FAFD',
+    alternative: '#F85705',
+  },
+};
+
+export const defaultTheme: DefaultTheme = {
+  type: defaultType,
+  fonts: defaultFonts,
+  colors: defaultColors,
+
+  // Old properties left for backward compatibility
+
   color: {
     basic: '#D3D3D3',
     primary: '#3EC2E9',
@@ -27,4 +73,44 @@ const theme = {
   },
 };
 
-export default theme;
+export const lightPartial: RecursivePartial<DefaultTheme> = {
+  colors: {
+    text: {
+      paragraph: '#7A7D92',
+      header: '#2A2C3E',
+      alternative: '#F8FAFD',
+      anchor: {
+        link: '#2A2C3E',
+        hover: '#F85705',
+        active: '#2A2C3E',
+        visited: '#2A2C3E',
+      },
+    },
+    background: {
+      app: '#EAEEF6',
+      default: '#F8FAFD',
+      alternative: '#F85705',
+    },
+  },
+};
+
+export const darkPartial: RecursivePartial<DefaultTheme> = {
+  colors: {
+    text: {
+      paragraph: '#7A7D92',
+      header: '#F8FAFD',
+      alternative: '#FFFFFF',
+      anchor: {
+        link: '#F8FAFD',
+        hover: '#FFFFFF',
+        active: '#F8FAFD',
+        visited: '#F8FAFD',
+      },
+    },
+    background: {
+      app: '#2A2E37',
+      default: '#464856',
+      alternative: '#73BFCA',
+    },
+  },
+};

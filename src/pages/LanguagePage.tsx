@@ -5,6 +5,8 @@ import Content from 'components/Content/Content';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
 import Footer from 'components/Footer/Footer';
 import { FooterButton } from 'components/Footer/Footer.style';
+import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
+import { MuseumLogoImageType } from 'components/MuseumLogo/MuseumLogo.style';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
@@ -48,10 +50,7 @@ class LanguagePage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Language')}</title>
         </Helmet>
         <Content>
-          <img
-            src={this.siteStore.logo}
-            alt={this.props.t('logo.alt', 'Museum logotype')}
-          />
+          <MuseumLogo type={MuseumLogoImageType.WELCOME} />
           <LanguageSwitch
             uiLanguages={this.uiStore.languages}
             userLanguage={this.uiStore.language}

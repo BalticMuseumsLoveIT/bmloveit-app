@@ -16,4 +16,9 @@ export const BackButton = styled.button`
   grid-column-end: span 1;
 `;
 
+export const MuseumLogoWrapper = styled.div`
+  grid-column-start: 2;
+  grid-column-end: span 1;
+`;
+
 export default AppHeader;

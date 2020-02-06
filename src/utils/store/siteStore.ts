@@ -1,7 +1,14 @@
-import { SiteInterface } from 'utils/interfaces';
+import { SiteInterface, ThemeType } from 'utils/interfaces';
+import { defaultTheme, darkPartial, lightPartial } from 'utils/theme';
 import Api from 'utils/api';
-import { getTranslatedString } from 'utils/helpers';
+import {
+  getTranslatedString,
+  isColorValid,
+  RecursivePartial,
+} from 'utils/helpers';
 import { action, computed, observable } from 'mobx';
+import merge from 'deepmerge';
+import { DefaultTheme } from 'styled-components';
 
 export class SiteStore {
   @observable siteData: SiteInterface | null = null;
@@ -62,6 +69,60 @@ export class SiteStore {
     if (!this.isDataAvailable()) return '';
 
     return this.siteData.logo;
+  }
+
+  @computed get termsURL(): string {
+    if (!this.isDataAvailable()) return '';
+
+    return this.siteData.terms_url;
+  }
+
+  @computed get themeType(): ThemeType | null {
+    if (!this.isDataAvailable() || this.siteData.theme === null) return null;
+
+    return this.siteData.theme;
+  }
+
+  @computed get backgroundColor(): string | null {
+    if (!this.isDataAvailable()) return null;
+
+    const color = this.siteData.background_color || '';
+    return isColorValid(color) ? color : null;
+  }
+
+  @computed get primaryColor(): string | null {
+    if (!this.isDataAvailable()) return null;
+
+    const color = this.siteData.primary_color || '';
+    return isColorValid(color) ? color : null;
+  }
+
+  @computed get theme(): DefaultTheme {
+    let typePartial: RecursivePartial<DefaultTheme> = {};
+
+    switch (this.themeType) {
+      case ThemeType.DARK:
+        typePartial = darkPartial;
+        typePartial.type = ThemeType.DARK;
+        break;
+      case ThemeType.LIGHT:
+        typePartial = lightPartial;
+        typePartial.type = ThemeType.LIGHT;
+    }
+
+    const colorPartial: RecursivePartial<DefaultTheme> = {
+      colors: { background: {} },
+    };
+
+    if (this.backgroundColor)
+      colorPartial.colors!.background!.app = this.backgroundColor;
+
+    if (this.primaryColor)
+      colorPartial.colors!.background!.alternative = this.primaryColor;
+
+    const theme = merge.all([defaultTheme, typePartial, colorPartial]);
+
+    return theme as DefaultTheme;
   }
 }
 

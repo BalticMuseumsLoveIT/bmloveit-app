@@ -44,7 +44,7 @@ class App extends React.Component {
                 </Router>
               </Provider>
             )}
-            <AppLoader customLoading={uiStore.isAppLoading} />;
+            <AppLoader customLoading={uiStore.isAppLoading} />
           </>
         );
       case AppState.ERROR:

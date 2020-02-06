@@ -1,10 +1,12 @@
 import { SiteStore } from 'utils/store/siteStore';
-import MuseumLogoImage from 'components/Header/MuseumLogo.style';
+import MuseumLogoImage, {
+  MuseumLogoImageProps,
+} from 'components/MuseumLogo/MuseumLogo.style';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface Props extends WithTranslation {}
+interface Props extends MuseumLogoImageProps, WithTranslation {}
 
 interface InjectedProps extends Props {
   siteStore: SiteStore;
@@ -24,6 +26,7 @@ class MuseumLogo extends React.Component<Props> {
       <MuseumLogoImage
         src={this.siteStore.logo}
         alt={this.props.t('image.museumLogotype.alt', 'Museum logotype')}
+        type={this.props.type}
       />
     ) : null;
   }

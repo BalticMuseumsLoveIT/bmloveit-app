@@ -25,7 +25,13 @@ export class AuthStore {
   }
 
   @computed get isLoggedIn(): boolean {
-    return !!(this.authToken && this.authToken.access_token.length);
+    if (this.authToken === null || this.authToken.access_token.length === 0) {
+      return false;
+    }
+
+    return !(
+      Number.isNaN(this.expirationDate) || Date.now() > this.expirationDate
+    );
   }
 
   @computed get accessToken(): string {
