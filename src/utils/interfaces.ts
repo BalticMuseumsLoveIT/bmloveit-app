@@ -286,6 +286,13 @@ export interface FontInterface {
   fontWeight: string;
 }
 
+export interface AnchorInterface {
+  link: string;
+  hover: string;
+  active: string;
+  visited: string;
+}
+
 export interface ThemeFontsInterface {
   header: FontInterface;
   subheader: FontInterface;
@@ -302,6 +309,7 @@ export interface ThemeColorsInterface {
     header: string;
     paragraph: string;
     alternative: string;
+    anchor: AnchorInterface;
   };
 }
 

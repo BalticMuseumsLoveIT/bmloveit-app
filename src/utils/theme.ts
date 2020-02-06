@@ -24,6 +24,12 @@ const defaultColors = {
     paragraph: '#7A7D92',
     header: '#2A2C3E',
     alternative: '#F8FAFD',
+    anchor: {
+      link: '#2A2C3E',
+      hover: '#F85705',
+      active: '#2A2C3E',
+      visited: '#2A2C3E',
+    },
   },
   background: {
     app: '#EAEEF6',
@@ -37,7 +43,7 @@ export const defaultTheme: DefaultTheme = {
   fonts: defaultFonts,
   colors: defaultColors,
 
-  // Old properties
+  // Old properties left for backward compatibility
 
   color: {
     basic: '#D3D3D3',
@@ -73,6 +79,12 @@ export const lightPartial: RecursivePartial<DefaultTheme> = {
       paragraph: '#7A7D92',
       header: '#2A2C3E',
       alternative: '#F8FAFD',
+      anchor: {
+        link: '#2A2C3E',
+        hover: '#F85705',
+        active: '#2A2C3E',
+        visited: '#2A2C3E',
+      },
     },
     background: {
       app: '#EAEEF6',
@@ -85,13 +97,19 @@ export const lightPartial: RecursivePartial<DefaultTheme> = {
 export const darkPartial: RecursivePartial<DefaultTheme> = {
   colors: {
     text: {
-      paragraph: '#D2D6DE',
-      header: '#FFFFFF',
+      paragraph: '#7A7D92',
+      header: '#F8FAFD',
       alternative: '#FFFFFF',
+      anchor: {
+        link: '#F8FAFD',
+        hover: '#FFFFFF',
+        active: '#F8FAFD',
+        visited: '#F8FAFD',
+      },
     },
     background: {
-      app: '#2B2E37',
-      default: '#D2D6DE',
+      app: '#2A2E37',
+      default: '#464856',
       alternative: '#73BFCA',
     },
   },
