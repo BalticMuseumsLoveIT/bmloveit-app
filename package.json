@@ -27,6 +27,7 @@
     "mobx-utils": "^5.5.2",
     "query-string": "^6.9.0",
     "rc-progress": "^2.5.2",
+    "rc-tooltip": "^4.0.0-alpha.3",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-facebook-login": "^4.1.1",

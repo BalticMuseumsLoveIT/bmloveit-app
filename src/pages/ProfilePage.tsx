@@ -7,8 +7,7 @@ import { UserProfileStore } from 'utils/store/userProfileStore';
 import { UiStore } from 'utils/store/uiStore';
 import BadgesList from 'components/BadgesList/BadgesList';
 import CardsList from 'components/CardsList/CardsList';
-import ItemModalStore, { ModalState } from 'utils/store/itemModalStore';
-import { ItemModal } from 'components/ItemModal/ItemModal';
+import ItemModal from 'components/ItemModal/ItemModal';
 import { UserPoints } from 'components/UserPoints/UserPoints';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -31,78 +30,15 @@ class ProfilePage extends React.Component<Props> {
 
   profilePageStore = new ProfilePageStore(this.props.i18n, true);
 
-  itemModalStore = new ItemModalStore({
-    isOpen: false,
-    onRequestClose: () => this._closePopup(),
-  });
-
-  private _openPopup = async (popupItemId: number) => {
-    this.itemModalStore.setModalState(ModalState.NOT_LOADED);
-    this.itemModalStore.openModal();
-
-    if (
-      this.itemModalStore.item.itemData === null ||
-      this.itemModalStore.item.itemId !== popupItemId
-    ) {
-      try {
-        this.itemModalStore.setModalState(ModalState.LOADING);
-        await this.itemModalStore.item.loadItemData(popupItemId);
-      } catch (e) {
-        this.itemModalStore.setModalState(ModalState.ERROR);
-        return;
-      }
-    }
-
-    this.itemModalStore.item.itemData === null
-      ? this.itemModalStore.setModalState(ModalState.NOT_FOUND)
-      : this.itemModalStore.setModalState(ModalState.LOADED);
-  };
-
-  private _closePopup = () => {
-    this.itemModalStore.closeModal();
-
-    const search = this.itemModalStore.removeIdFromQS(
-      this.props.location.search,
-    );
-
-    this.props.history.push({
-      pathname: this.props.location.pathname,
-      search: search,
-    });
-  };
-
   async componentDidMount(): Promise<void> {
     this.profilePageStore.setTReady(this.props.tReady);
 
     await this.profilePageStore.loadData();
-
-    const popupItemId = this.itemModalStore.getIdFromQS(
-      this.props.location.search,
-    );
-
-    if (!isNaN(popupItemId)) this._openPopup(popupItemId);
   }
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps.tReady !== this.props.tReady) {
       this.profilePageStore.setTReady(this.props.tReady);
-    }
-
-    if (prevProps.location.search !== this.props.location.search) {
-      const previousPopupItemId = this.itemModalStore.getIdFromQS(
-        prevProps.location.search,
-      );
-
-      const currentPopupItemId = this.itemModalStore.getIdFromQS(
-        this.props.location.search,
-      );
-
-      if (
-        currentPopupItemId !== previousPopupItemId &&
-        !isNaN(currentPopupItemId)
-      ) {
-        this._openPopup(currentPopupItemId);
-      }
     }
   }
 
@@ -166,7 +102,7 @@ class ProfilePage extends React.Component<Props> {
             </button>
           </p>
 
-          <ItemModal store={this.itemModalStore} />
+          <ItemModal />
         </Content>
       </>
     );
