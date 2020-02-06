@@ -9,6 +9,15 @@
   },
   "cookieBar": "We use cookies. <1>Learn more</1>",
   "image": {
+    "logoBaltic": {
+      "alt": "Baltic"
+    },
+    "logoCircle": {
+      "alt": "Circle"
+    },
+    "logoInterreg": {
+      "alt": "Interreg"
+    },
     "museumLogotype": {
       "alt": "Museum logotype"
     }
