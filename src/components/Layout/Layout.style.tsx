@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle, css } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 * { box-sizing: border-box }
@@ -29,8 +29,14 @@ export const LayoutGridHeader = styled.div`
   grid-row: 2 / span 1;
 `;
 
-export const LayoutGridContent = styled.div`
+export interface LayoutGridContentProps {
+  backgroundImage?: string;
+}
+
+export const LayoutGridContent = styled.div<LayoutGridContentProps>`
   grid-row: 3 / span 1;
+
+  ${props => props.backgroundImage && css``}
 `;
 
 export const LayoutGridFooter = styled.div`
