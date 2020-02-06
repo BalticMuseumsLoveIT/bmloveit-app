@@ -26,8 +26,7 @@ class MuseumLogo extends React.Component<Props> {
       <MuseumLogoImage
         src={this.siteStore.logo}
         alt={this.props.t('image.museumLogotype.alt', 'Museum logotype')}
-        maxWidth={this.props.maxWidth || '100%'}
-        isElevated={this.props.isElevated || false}
+        type={this.props.type}
       />
     ) : null;
   }

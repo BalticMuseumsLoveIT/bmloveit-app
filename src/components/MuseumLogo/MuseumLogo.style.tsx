@@ -1,23 +1,33 @@
 import styled, { css } from 'styled-components';
 
+export enum MuseumLogoImageType {
+  WELCOME,
+  HEADER,
+}
 export interface MuseumLogoImageProps {
-  maxWidth?: string;
-  isElevated?: boolean;
+  type?: MuseumLogoImageType;
 }
 
 const MuseumLogoImage = styled.img<MuseumLogoImageProps>`
-  font-size: 1em;
   display: block;
-  width: 100%;
-  height: 100%;
-  max-width: ${props => props.maxWidth};
+  font-size: 1em;
+  max-width: 100%;
   border-radius: 50%;
-  margin: 0.5em;
-  ${props =>
-    props.isElevated &&
-    css`
-      box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
-    `};
+
+  ${props => {
+    switch (props.type) {
+      case MuseumLogoImageType.WELCOME:
+        return css`
+          width: 35%;
+          box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
+          margin: 2em auto;
+        `;
+      case MuseumLogoImageType.HEADER:
+        return css`
+          width: 2em;
+        `;
+    }
+  }}
 `;
 
 export default MuseumLogoImage;

@@ -1,8 +1,8 @@
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import { UiStore } from 'utils/store/uiStore';
+import { LayoutGridContent } from 'components/Layout/Layout.style';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import StyledWrapper from './Content.style';
 
 export enum ContentState {
   PROCESSING,
@@ -39,9 +39,9 @@ class Content extends React.Component<Props> {
     }
 
     return (
-      <ErrorBoundary>
-        <StyledWrapper>{this.node}</StyledWrapper>
-      </ErrorBoundary>
+      <LayoutGridContent>
+        <ErrorBoundary>{this.node}</ErrorBoundary>
+      </LayoutGridContent>
     );
   }
 }
