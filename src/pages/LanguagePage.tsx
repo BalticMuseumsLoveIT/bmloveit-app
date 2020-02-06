@@ -51,7 +51,7 @@ class LanguagePage extends React.Component<Props> {
         <Helmet>
           <title>{this.props.t('page.title', 'Language')}</title>
         </Helmet>
-        <Content>
+        <Content backgroundImage={this.siteStore.image || undefined}>
           <MuseumLogo type={MuseumLogoImageType.WELCOME} />
           <LanguageSwitch
             uiLanguages={this.uiStore.languages}

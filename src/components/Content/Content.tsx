@@ -1,6 +1,9 @@
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 import { UiStore } from 'utils/store/uiStore';
-import { LayoutGridContent } from 'components/Layout/Layout.style';
+import {
+  LayoutGridContent,
+  LayoutGridContentProps,
+} from 'components/Layout/Layout.style';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
@@ -9,7 +12,7 @@ export enum ContentState {
   AVAILABLE,
 }
 
-interface Props {
+interface Props extends LayoutGridContentProps {
   children: React.ReactNode;
 }
 
@@ -28,6 +31,8 @@ class Content extends React.Component<Props> {
   uiStore = this.injected.uiStore;
 
   render() {
+    const { backgroundImage } = this.props;
+
     switch (this.uiStore.contentState) {
       case ContentState.PROCESSING:
         this.node = <h1>Processing</h1>;
@@ -39,7 +44,7 @@ class Content extends React.Component<Props> {
     }
 
     return (
-      <LayoutGridContent>
+      <LayoutGridContent backgroundImage={backgroundImage || undefined}>
         <ErrorBoundary>{this.node}</ErrorBoundary>
       </LayoutGridContent>
     );

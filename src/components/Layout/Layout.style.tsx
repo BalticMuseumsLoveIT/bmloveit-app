@@ -36,7 +36,12 @@ export interface LayoutGridContentProps {
 export const LayoutGridContent = styled.div<LayoutGridContentProps>`
   grid-row: 3 / span 1;
 
-  ${props => props.backgroundImage && css``}
+  ${props =>
+    props.backgroundImage &&
+    css`
+      background: transparent url(${props.backgroundImage}) 50% 50% no-repeat;
+      background-size: cover;
+    `}
 `;
 
 export const LayoutGridFooter = styled.div`
