@@ -23,10 +23,12 @@ export const InfoMessage = styled.p`
 `;
 
 export const CloseButton = styled.button`
-  padding: 0;
   outline: none;
-  margin: 1em;
-  font-size: 1em;
-  width: 2em;
-  height: 2em;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  padding: 15px;
+  width: 24px;
+  height: 24px;
+  background: center center url('/images/close-24px.svg');
 `;

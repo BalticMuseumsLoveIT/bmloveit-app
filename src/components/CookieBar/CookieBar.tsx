@@ -41,9 +41,10 @@ class CookieBar extends React.Component<Props> {
               <a href={this.siteStore.termsURL}>Learn more</a>
             </Trans>
           </InfoMessage>
-          <CloseButton type="button" onClick={this.cookieBarStore.clickHandler}>
-            <span>&times;</span>
-          </CloseButton>
+          <CloseButton
+            type="button"
+            onClick={this.cookieBarStore.clickHandler}
+          />
         </StyledWrapper>
       </LayoutGridCookie>
     );
