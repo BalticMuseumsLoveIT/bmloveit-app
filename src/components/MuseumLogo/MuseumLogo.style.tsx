@@ -1,33 +1,41 @@
 import styled, { css } from 'styled-components';
 
-export enum MuseumLogoImageType {
+export enum LogoType {
   WELCOME,
   HEADER,
 }
-export interface MuseumLogoImageProps {
-  type?: MuseumLogoImageType;
+export interface LogoProps {
+  type?: LogoType;
+  usePlaceholder?: boolean;
 }
 
-const MuseumLogoImage = styled.img<MuseumLogoImageProps>`
+export const Logo = styled.div<LogoProps>`
   display: block;
-  font-size: 1em;
-  max-width: 100%;
+  overflow: hidden;
   border-radius: 50%;
+  background: ${props => props.theme.colors.background.default};
 
   ${props => {
     switch (props.type) {
-      case MuseumLogoImageType.WELCOME:
-        return css`
-          width: 35%;
-          box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
-          margin: 2em auto;
-        `;
-      case MuseumLogoImageType.HEADER:
+      case LogoType.HEADER:
         return css`
           width: 2em;
+          padding: ${props.usePlaceholder ? '0.4em' : 0};
+        `;
+      case LogoType.WELCOME:
+        return css`
+          width: 35%;
+          padding: ${props.usePlaceholder ? '10%' : 0};
+          box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
+          margin: 2em auto;
         `;
     }
   }}
 `;
 
-export default MuseumLogoImage;
+export const Image = styled.img`
+  font-size: 1em;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+`;

@@ -26,14 +26,14 @@ class Avatar extends React.Component<Props> {
   }
 
   render() {
-    const shouldDisplayPlaceholder =
+    const shouldUsePlaceholder =
       this.injected.userProfileStore.userAvatarURL.length === 0;
 
     const shouldLinkToProfile =
       this.props.type === UserAvatarType.HEADER &&
       this.props.location.pathname !== '/profile';
 
-    const avatarImageSrc = shouldDisplayPlaceholder
+    const avatarImageSrc = shouldUsePlaceholder
       ? '/images/avatar-placeholder.svg'
       : getPrivateMediaURL(this.injected.userProfileStore.userAvatarURL);
 
@@ -47,7 +47,7 @@ class Avatar extends React.Component<Props> {
     return this.injected.userProfileStore.userHasAvatar ? (
       <UserAvatar
         type={this.props.type}
-        usePlaceholder={shouldDisplayPlaceholder}
+        usePlaceholder={shouldUsePlaceholder}
       >
         {shouldLinkToProfile ? <Link to="/profile">{image}</Link> : image}
       </UserAvatar>

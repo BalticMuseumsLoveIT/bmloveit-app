@@ -4,7 +4,7 @@ import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
 import UserAvatar from 'components/Avatar/Avatar';
 import { UserAvatarType } from 'components/Avatar/Avatar.style';
 import { LayoutGridHeader } from 'components/Layout/Layout.style';
-import { MuseumLogoImageType } from 'components/MuseumLogo/MuseumLogo.style';
+import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import React from 'react';
 import AppHeader, {
@@ -30,7 +30,7 @@ class Header extends React.Component<HeaderProps> {
             <BackButton onClick={this.props.history.goBack}>&larr;</BackButton>
           </BackButtonCell>
           <MuseumLogoCell>
-            <MuseumLogo type={MuseumLogoImageType.HEADER} />
+            <MuseumLogo type={LogoType.HEADER} />
           </MuseumLogoCell>
           <UserAvatarCell>
             <UserAvatar type={UserAvatarType.HEADER} />
