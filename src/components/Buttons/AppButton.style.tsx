@@ -13,12 +13,12 @@ export const AppButton = styled.button<AppButtonProps>`
   padding: 26px;
   background-color: ${({ theme, isDisabled }) =>
     isDisabled
-      ? theme.colors.background.disabled
-      : theme.colors.background.alternative};
+      ? theme.colors.background.button.disabled
+      : theme.colors.background.button.default};
   color: ${({ theme, isDisabled }) =>
     isDisabled
-      ? theme.colors.text.anchor.disabled
-      : theme.colors.text.alternative};
+      ? theme.colors.text.button.disabled
+      : theme.colors.text.button.default};
   border-radius: 8px;
   margin-left: auto;
   margin-right: auto;
@@ -26,4 +26,12 @@ export const AppButton = styled.button<AppButtonProps>`
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
   text-decoration: none;
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.background.button.hover};
+  }
+
+  &:focus {
+    background-color: ${({ theme }) => theme.colors.background.button.focus};
+  }
 `;

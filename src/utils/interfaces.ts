@@ -291,7 +291,6 @@ export interface AnchorInterface {
   hover: string;
   active: string;
   visited: string;
-  disabled: string;
 }
 
 export interface ThemeFontsInterface {
@@ -305,13 +304,22 @@ export interface ThemeColorsInterface {
     app: string;
     default: string;
     alternative: string;
-    disabled: string;
+    button: {
+      default: string;
+      hover: string;
+      focus: string;
+      disabled: string;
+    };
   };
   text: {
     header: string;
     paragraph: string;
     alternative: string;
     anchor: AnchorInterface;
+    button: {
+      default: string;
+      disabled: string;
+    };
   };
 }
 
