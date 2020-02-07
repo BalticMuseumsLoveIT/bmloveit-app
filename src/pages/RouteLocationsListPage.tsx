@@ -2,7 +2,7 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import RouteLocationsListPageStore from 'utils/store/routeLocationsListPageStore';
 import Footer from 'components/Footer/Footer';
-import { FooterButton } from 'components/Footer/Footer.style';
+import { AppButton } from 'components/Buttons/AppButton.style';
 import { getTranslatedString } from 'utils/helpers';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -81,21 +81,21 @@ class RouteLocationsListPage extends React.Component<Props> {
             );
           })}
           <Footer>
-            <FooterButton
+            <AppButton
               as={Link}
               to={`/area/${this.routeLocationsListPageStore.areaId}/routes`}
             >
               {this.props.t('button.changeRoute.label', 'Change route')}
-            </FooterButton>
-            <FooterButton
+            </AppButton>
+            <AppButton
               as={Link}
               to={`/route/${this.routeLocationsListPageStore.routeId}/map`}
             >
               {this.props.t('button.viewMap.label', 'View map')}
-            </FooterButton>
-            <FooterButton as={Link} to={`/qrcode`}>
+            </AppButton>
+            <AppButton as={Link} to={`/qrcode`}>
               {this.props.t('button.scanQR.label', 'Scan QR')}
-            </FooterButton>
+            </AppButton>
           </Footer>
         </Content>
       </>

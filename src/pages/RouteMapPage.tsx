@@ -2,7 +2,7 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import RouteMapPageStore from 'utils/store/routeMapPageStore';
 import Footer from 'components/Footer/Footer';
-import { FooterButton } from 'components/Footer/Footer.style';
+import { AppButton } from 'components/Buttons/AppButton.style';
 import { ImageMap } from 'components/ImageMap/ImageMap';
 import { getPrivateMediaURL } from 'utils/helpers';
 import React from 'react';
@@ -68,21 +68,21 @@ class RouteMapPage extends React.Component<Props> {
               this.props.t('error.noMap', 'No map was found')}
           </div>
           <Footer>
-            <FooterButton
+            <AppButton
               as={Link}
               to={`/area/${this.routeMapPageStore.routeAreaId}/routes`}
             >
               {this.props.t('button.changeRoute.label', 'Change route')}
-            </FooterButton>
-            <FooterButton
+            </AppButton>
+            <AppButton
               as={Link}
               to={`/route/${this.routeMapPageStore.routeId}/locations`}
             >
               {this.props.t('button.viewList.label', 'View list')}
-            </FooterButton>
-            <FooterButton as={Link} to={`/qrcode`}>
+            </AppButton>
+            <AppButton as={Link} to={`/qrcode`}>
               {this.props.t('button.scanQR.label', 'Scan QR')}
-            </FooterButton>
+            </AppButton>
           </Footer>
         </Content>
       </>
