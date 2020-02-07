@@ -1,14 +1,18 @@
 import {
-  UserAvatarImage,
-  UserAvatarLink,
+  Image,
+  UserAvatar,
+  UserAvatarProps,
+  UserAvatarType,
 } from 'components/Avatar/Avatar.style';
 import { getPrivateMediaURL } from 'utils/helpers';
 import { UserProfileStore } from 'utils/store/userProfileStore';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
-interface Props extends RouteComponentProps {}
+interface Props
+  extends Omit<UserAvatarProps, 'usePlaceholder'>,
+    RouteComponentProps {}
 
 interface InjectedProps extends Props {
   userProfileStore: UserProfileStore;
@@ -22,13 +26,31 @@ class Avatar extends React.Component<Props> {
   }
 
   render() {
+    const shouldDisplayPlaceholder =
+      this.injected.userProfileStore.userAvatarURL.length === 0;
+
+    const shouldLinkToProfile =
+      this.props.type === UserAvatarType.HEADER &&
+      this.props.location.pathname !== '/profile';
+
+    const avatarImageSrc = shouldDisplayPlaceholder
+      ? '/images/avatar-placeholder.svg'
+      : getPrivateMediaURL(this.injected.userProfileStore.userAvatarURL);
+
+    const image = (
+      <Image
+        src={avatarImageSrc}
+        alt={this.injected.userProfileStore.userAvatarName}
+      />
+    );
+
     return this.injected.userProfileStore.userHasAvatar ? (
-      <UserAvatarLink to="/profile">
-        <UserAvatarImage
-          src={getPrivateMediaURL(this.injected.userProfileStore.userAvatarURL)}
-          alt={this.injected.userProfileStore.userAvatarName}
-        />
-      </UserAvatarLink>
+      <UserAvatar
+        type={this.props.type}
+        usePlaceholder={shouldDisplayPlaceholder}
+      >
+        {shouldLinkToProfile ? <Link to="/profile">{image}</Link> : image}
+      </UserAvatar>
     ) : null;
   }
 }

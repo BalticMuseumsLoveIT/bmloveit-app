@@ -1,17 +1,40 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled, { css } from 'styled-components';
 
-export const UserAvatarLink = styled(Link)`
+export enum UserAvatarType {
+  HEADER,
+  PROFILE,
+}
+
+export interface UserAvatarProps {
+  type?: UserAvatarType;
+  usePlaceholder?: boolean;
+}
+
+export const UserAvatar = styled.div<UserAvatarProps>`
   display: block;
-  grid-column-start: 4;
-  grid-column-end: span 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: ${props => props.theme.colors.background.default};
+
+  ${props => {
+    switch (props.type) {
+      case UserAvatarType.HEADER:
+        return css`
+          width: 2em;
+          padding: ${props.usePlaceholder ? '0.6em' : 0};
+        `;
+      case UserAvatarType.PROFILE:
+        return css`
+          width: 35%;
+          padding: ${props.usePlaceholder ? '10%' : 0};
+        `;
+    }
+  }}
 `;
 
-export const UserAvatarImage = styled.img`
+export const Image = styled.img`
   font-size: 1em;
+  width: 100%;
+  max-width: 100%;
   display: block;
-  width: 2em;
-  height: 2em;
-  border-radius: 50%;
-  margin: 0.5em;
 `;
