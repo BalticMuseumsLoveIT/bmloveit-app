@@ -41,10 +41,8 @@ class LoginPage extends React.Component<Props> {
           <h2>{this.props.t('content.title', 'Login')}</h2>
           {!this.authStore.isLoggedIn ? (
             <>
-              <FacebookButton onSuccess={this.login} />
-              <br />
               <GoogleButton onSuccess={this.login} />
-              <br />
+              <FacebookButton onSuccess={this.login} />
               <GuestButton loginAsGuest={this.login} />
             </>
           ) : (
