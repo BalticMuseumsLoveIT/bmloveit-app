@@ -5,6 +5,9 @@ import { AuthStore } from 'utils/store/authStore';
 import { OAuthLoginArgumentInterface } from 'utils/interfaces';
 import { GuestButton } from 'components/LoginButtons/GuestButton/GuestButton';
 import { UserProfileStore } from 'utils/store/userProfileStore';
+import { LayoutGridFooter } from 'components/Layout/Layout.style';
+import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
+import { SiteStore } from 'utils/store/siteStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -14,13 +17,15 @@ import { withTranslation, WithTranslation } from 'react-i18next';
 interface Props extends WithTranslation, RouteComponentProps {
   authStore: AuthStore;
   userProfileStore: UserProfileStore;
+  siteStore: SiteStore;
 }
 
-@inject('authStore', 'userProfileStore')
+@inject('authStore', 'userProfileStore', 'siteStore')
 @observer
 class LoginPage extends React.Component<Props> {
   authStore = this.props.authStore;
   userProfileStore = this.props.userProfileStore;
+  siteStore = this.props.siteStore;
 
   readonly WELCOME_PAGE = '/welcome';
 
@@ -32,7 +37,7 @@ class LoginPage extends React.Component<Props> {
         <Helmet>
           <title>{this.props.t('page.title', 'Login')}</title>
         </Helmet>
-        <Content>
+        <Content backgroundImage={this.siteStore.image || undefined}>
           <h2>{this.props.t('content.title', 'Login')}</h2>
           {!this.authStore.isLoggedIn ? (
             <>
@@ -46,6 +51,9 @@ class LoginPage extends React.Component<Props> {
             <Redirect to={this.WELCOME_PAGE} />
           )}
         </Content>
+        <LayoutGridFooter>
+          <SponsorLogotype />
+        </LayoutGridFooter>
       </>
     );
   }
