@@ -1,5 +1,3 @@
-import chevronRight from 'utils/assets/chevron_right-24px.svg';
-import unfoldMore from 'utils/assets/unfold_more-24px.svg';
 import styled from 'styled-components';
 
 // props for LanguageSwitcher
@@ -52,8 +50,8 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
   &:after {
     content: ${({ isMenuOpened, isActive }) =>
       !isMenuOpened && isActive
-        ? `url(${unfoldMore})`
-        : `url(${chevronRight})`};
+        ? `url('/images/unfold_more-24px.svg')`
+        : `url('/images/chevron_right-24px.svg')`};
     display: block;
     width: 24px;
     height: 24px;

@@ -9,6 +9,7 @@ public/images/*
 
 # misc
 .idea
+.vscode
 .DS_Store
 .env
 
