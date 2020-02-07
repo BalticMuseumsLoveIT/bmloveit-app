@@ -21,6 +21,7 @@ const LoginButton = styled.button<LoginButtonProps>`
   margin-left: auto;
   margin-right: auto;
   cursor: ${({ isDisabled }) => (isDisabled ? `default` : 'pointer')};
+  box-shadow: 0 3px 6px #2a2c3e33;
 
   &:before {
     content: ${({ iconUrl }) => (iconUrl ? `url(${iconUrl})` : '')};
