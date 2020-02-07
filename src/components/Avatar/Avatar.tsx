@@ -1,7 +1,7 @@
 import {
   UserAvatarImage,
   UserAvatarLink,
-} from 'components/Header/UserAvatar.style';
+} from 'components/Avatar/Avatar.style';
 import { getPrivateMediaURL } from 'utils/helpers';
 import { UserProfileStore } from 'utils/store/userProfileStore';
 import React from 'react';
@@ -16,7 +16,7 @@ interface InjectedProps extends Props {
 
 @inject('userProfileStore')
 @observer
-class UserAvatar extends React.Component<Props> {
+class Avatar extends React.Component<Props> {
   get injected() {
     return this.props as InjectedProps;
   }
@@ -33,4 +33,4 @@ class UserAvatar extends React.Component<Props> {
   }
 }
 
-export default withRouter(UserAvatar);
+export default withRouter(Avatar);

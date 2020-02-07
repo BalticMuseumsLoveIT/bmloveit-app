@@ -1,7 +1,7 @@
 import { Switch as MainMenuToggleSwitch } from 'components/MainMenu/Switch';
 import MainMenu from 'components/MainMenu/MainMenu';
 import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
-import UserAvatar from 'components/Header/UserAvatar';
+import UserAvatar from 'components/Avatar/Avatar';
 import { LayoutGridHeader } from 'components/Layout/Layout.style';
 import { MuseumLogoImageType } from 'components/MuseumLogo/MuseumLogo.style';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
