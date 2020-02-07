@@ -21,20 +21,32 @@ export const UserAvatar = styled.div<UserAvatarProps>`
       case UserAvatarType.HEADER:
         return css`
           width: 2em;
-          padding: ${props.usePlaceholder ? '0.6em' : 0};
         `;
       case UserAvatarType.PROFILE:
         return css`
           width: 35%;
-          padding: ${props.usePlaceholder ? '10%' : 0};
         `;
     }
   }}
-`;
 
-export const Image = styled.img`
-  font-size: 1em;
-  width: 100%;
-  max-width: 100%;
-  display: block;
+  img {
+    box-sizing: border-box;
+    font-size: 1em;
+    width: 100%;
+    max-width: 100%;
+    display: block;
+
+    ${props => {
+      switch (props.type) {
+        case UserAvatarType.HEADER:
+          return css`
+            padding: ${props.usePlaceholder ? '0.5em' : 0};
+          `;
+        case UserAvatarType.PROFILE:
+          return css`
+            padding: ${props.usePlaceholder ? '25%' : 0};
+          `;
+      }
+    }}
+  }
 `;

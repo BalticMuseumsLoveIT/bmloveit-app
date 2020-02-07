@@ -1,5 +1,4 @@
 import {
-  Image,
   UserAvatar,
   UserAvatarProps,
   UserAvatarType,
@@ -38,17 +37,14 @@ class Avatar extends React.Component<Props> {
       : getPrivateMediaURL(this.injected.userProfileStore.userAvatarURL);
 
     const image = (
-      <Image
+      <img
         src={avatarImageSrc}
         alt={this.injected.userProfileStore.userAvatarName}
       />
     );
 
     return this.injected.userProfileStore.userHasAvatar ? (
-      <UserAvatar
-        type={this.props.type}
-        usePlaceholder={shouldUsePlaceholder}
-      >
+      <UserAvatar type={this.props.type} usePlaceholder={shouldUsePlaceholder}>
         {shouldLinkToProfile ? <Link to="/profile">{image}</Link> : image}
       </UserAvatar>
     ) : null;

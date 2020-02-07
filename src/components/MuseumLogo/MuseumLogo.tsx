@@ -1,5 +1,5 @@
 import { SiteStore } from 'utils/store/siteStore';
-import { Logo, Image, LogoProps } from 'components/MuseumLogo/MuseumLogo.style';
+import { Logo, LogoProps } from 'components/MuseumLogo/MuseumLogo.style';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ class MuseumLogo extends React.Component<Props> {
 
     return this.props.tReady && this.siteStore.isDataAvailable() ? (
       <Logo type={this.props.type} usePlaceholder={shouldUsePlaceholder}>
-        <Image
+        <img
           src={avatarImageSrc}
           alt={this.props.t('image.museumLogotype.alt', 'Museum logotype')}
         />
