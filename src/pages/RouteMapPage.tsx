@@ -1,10 +1,12 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import RouteMapPageStore from 'utils/store/routeMapPageStore';
-import Footer from 'components/Footer/Footer';
-import { AppButton } from 'components/Buttons/AppButton.style';
 import { ImageMap } from 'components/ImageMap/ImageMap';
 import { getPrivateMediaURL } from 'utils/helpers';
+import {
+  FooterButtonsContainer,
+  FooterButton,
+} from 'components/Buttons/FooterButtons/FooterButtons.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -67,23 +69,23 @@ class RouteMapPage extends React.Component<Props> {
             )) ||
               this.props.t('error.noMap', 'No map was found')}
           </div>
-          <Footer>
-            <AppButton
+          <FooterButtonsContainer>
+            <FooterButton
               as={Link}
               to={`/area/${this.routeMapPageStore.routeAreaId}/routes`}
             >
               {this.props.t('button.changeRoute.label', 'Change route')}
-            </AppButton>
-            <AppButton
+            </FooterButton>
+            <FooterButton
               as={Link}
               to={`/route/${this.routeMapPageStore.routeId}/locations`}
             >
               {this.props.t('button.viewList.label', 'View list')}
-            </AppButton>
-            <AppButton as={Link} to={`/qrcode`}>
+            </FooterButton>
+            <FooterButton as={Link} to={`/qrcode`}>
               {this.props.t('button.scanQR.label', 'Scan QR')}
-            </AppButton>
-          </Footer>
+            </FooterButton>
+          </FooterButtonsContainer>
         </Content>
       </>
     );
