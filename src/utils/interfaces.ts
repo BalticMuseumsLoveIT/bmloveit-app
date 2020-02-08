@@ -300,17 +300,6 @@ export interface ThemeFontsInterface {
 }
 
 export interface ThemeColorsInterface {
-  background: {
-    app: string;
-    default: string;
-    alternative: string;
-    button: {
-      default: string;
-      hover: string;
-      focus: string;
-      disabled: string;
-    };
-  };
   text: {
     header: string;
     paragraph: string;
@@ -318,6 +307,18 @@ export interface ThemeColorsInterface {
     anchor: AnchorInterface;
     button: {
       default: string;
+      disabled: string;
+    };
+  };
+  background: {
+    app: string;
+    default: string;
+    alternative: string;
+    button: {
+      default: string;
+      hover: string;
+      hover2: string;
+      focus: string;
       disabled: string;
     };
   };

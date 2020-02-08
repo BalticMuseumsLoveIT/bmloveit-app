@@ -42,6 +42,7 @@ const defaultColors = {
     button: {
       default: '#F85705',
       hover: '#DB4F08',
+      hover2: '#F8F8F8',
       focus: '#C34100',
       disabled: '#DCE2ED',
     },
@@ -107,6 +108,7 @@ export const lightPartial: RecursivePartial<DefaultTheme> = {
       button: {
         default: '#F85705',
         hover: '#DB4F08',
+        hover2: '#F8F8F8',
         focus: '#C34100',
         disabled: '#DCE2ED',
       },
@@ -138,6 +140,7 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
       button: {
         default: '#F85705',
         hover: '#DB4F08',
+        hover2: '#F8F8F8',
         focus: '#C34100',
         disabled: '#DCE2ED',
       },
