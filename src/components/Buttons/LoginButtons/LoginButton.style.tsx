@@ -32,6 +32,12 @@ const LoginButton = styled.button<LoginButtonProps>`
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.background.default};
+    color: ${({ theme }) => theme.colors.text.anchor.hover};
+  }
+
+  &:focus {
+    background-color: ${({ theme }) => theme.colors.background.button.hover2};
+    color: ${({ theme }) => theme.colors.background.button.focus};
   }
 `;
 
