@@ -471,3 +471,7 @@ export interface CommonActionInterface {
   name: string;
   description: string;
 }
+
+export interface ButtonProps {
+  isDisabled?: boolean;
+}

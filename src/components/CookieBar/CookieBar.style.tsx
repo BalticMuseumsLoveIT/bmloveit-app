@@ -1,3 +1,4 @@
+import { ButtonProps } from 'utils/interfaces';
 import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
@@ -22,13 +23,30 @@ export const InfoMessage = styled.p`
   }
 `;
 
-export const CloseButton = styled.button`
+export const CloseButton = styled.button<ButtonProps>`
   outline: none;
   border: none;
   cursor: pointer;
-  margin: 10px;
-  padding: 15px;
-  width: 24px;
-  height: 24px;
-  background: center center url('/images/close-24px.svg');
+  margin: 0 15px;
+  padding: 10px;
+  background: transparent;
+
+  svg .a {
+    fill: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.text.button.disabled
+        : theme.colors.text.paragraph};
+  }
+
+  &:hover {
+    svg .a {
+      fill: ${({ theme }) => theme.colors.background.button.default};
+    }
+  }
+
+  &:focus {
+    svg .a {
+      fill: ${({ theme }) => theme.colors.background.button.focus};
+    }
+  }
 `;

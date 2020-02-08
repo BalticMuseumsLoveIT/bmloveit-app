@@ -1,8 +1,8 @@
+import { ButtonProps } from 'utils/interfaces';
 import styled from 'styled-components';
 
-interface LoginButtonProps {
+interface LoginButtonProps extends ButtonProps {
   iconUrl: string;
-  isDisabled?: boolean;
 }
 
 const LoginButton = styled.button<LoginButtonProps>`

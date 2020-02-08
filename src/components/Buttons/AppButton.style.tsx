@@ -1,10 +1,7 @@
+import { ButtonProps } from 'utils/interfaces';
 import styled from 'styled-components';
 
-interface AppButtonProps {
-  isDisabled?: boolean;
-}
-
-export const AppButton = styled.button<AppButtonProps>`
+export const AppButton = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;

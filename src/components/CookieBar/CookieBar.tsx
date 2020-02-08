@@ -9,6 +9,7 @@ import { LayoutGridCookie } from 'components/Layout/Layout.style';
 import React from 'react';
 import { Trans, WithTranslation, withTranslation } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
+import SVG from 'react-inlinesvg';
 
 interface Props extends WithTranslation {}
 
@@ -41,10 +42,9 @@ class CookieBar extends React.Component<Props> {
               <a href={this.siteStore.termsURL}>Learn more</a>
             </Trans>
           </InfoMessage>
-          <CloseButton
-            type="button"
-            onClick={this.cookieBarStore.clickHandler}
-          />
+          <CloseButton type="button" onClick={this.cookieBarStore.clickHandler}>
+            <SVG src="/images/close-24px.svg" />
+          </CloseButton>
         </StyledWrapper>
       </LayoutGridCookie>
     );

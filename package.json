@@ -35,6 +35,7 @@
     "react-helmet": "^5.2.1",
     "react-html-parser": "^2.0.2",
     "react-i18next": "^11.2.7",
+    "react-inlinesvg": "^1.2.0",
     "react-modal": "^3.11.1",
     "react-preloaders": "^3.0.3",
     "react-qr-reader": "^2.2.1",
