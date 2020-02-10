@@ -57,6 +57,23 @@ export class UiStore {
     return this.appState === AppState.READY;
   }
 
+  @computed get isUserLocaleMatch(): boolean {
+    if (this.languages.length === 0 || this.language === null) {
+      return false;
+    }
+
+    // toISO6391(this.language) causes problems:
+    // "TypeError: Cannot read property 'appState' of undefined"
+    const userLanguage = this.language.toLowerCase().slice(0, 2);
+
+    const isUserLocaleMatch = this.languages.some(({ key: language }) => {
+      const uiLanguage = language.toLowerCase().slice(0, 2);
+      return uiLanguage === userLanguage;
+    });
+
+    return isUserLocaleMatch;
+  }
+
   @action setLanguages = (languages: Array<CommonLanguageInterface>) => {
     this.languages = languages;
   };

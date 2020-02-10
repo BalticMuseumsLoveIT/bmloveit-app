@@ -46,6 +46,13 @@ class LanguagePage extends React.Component<Props> {
   render() {
     if (!this.props.tReady) return null;
 
+    if (
+      this.uiStore.languages.length > 0 &&
+      this.uiStore.isUserLocaleMatch === false
+    ) {
+      this.uiStore.setLanguage(this.uiStore.languages[0].key);
+    }
+
     return (
       <>
         <Helmet>
