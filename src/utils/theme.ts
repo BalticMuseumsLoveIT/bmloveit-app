@@ -37,8 +37,9 @@ const defaultColors = {
   },
   background: {
     app: '#EAEEF6',
-    default: '#F8FAFD',
+    default: '#FFFFFF',
     alternative: '#F85705',
+    menu: '#F8FAFD',
     button: {
       default: '#F85705',
       hover: '#DB4F08',
@@ -103,8 +104,9 @@ export const lightPartial: RecursivePartial<DefaultTheme> = {
     },
     background: {
       app: '#EAEEF6',
-      default: '#F8FAFD',
+      default: '#FFFFFF',
       alternative: '#F85705',
+      menu: '#F8FAFD',
       button: {
         default: '#F85705',
         hover: '#DB4F08',

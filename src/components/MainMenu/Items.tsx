@@ -19,17 +19,19 @@ export const Items = observer(
 
     if (!ready || items.length === 0) return null;
 
+    const isSubmenu = ancestors.length > 1;
+
     return (
-      <List>
+      <List isSubmenu={isSubmenu}>
         {ancestors.length > 1 && (
-          <ListItem>
+          <ListItem isSubmenu={isSubmenu}>
             <button onClick={openParentMenu}>
-              {t('mainMenu.back', 'Go back')}
+              <span>{t('mainMenu.back', 'Go back')}</span>
             </button>
           </ListItem>
         )}
         {items.map((item: ItemInterface) => (
-          <ListItem key={item.id}>
+          <ListItem isSubmenu={isSubmenu} key={item.id}>
             <Item item={item} openSubMenu={openSubMenu} closeMenu={closeMenu} />
           </ListItem>
         ))}

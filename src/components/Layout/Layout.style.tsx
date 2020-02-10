@@ -12,7 +12,8 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const LayoutGrid = styled.div`
-  max-width: 960px;
+  width: 100%;
+  max-width: 45em;
   min-height: 100%;
   margin: auto;
   display: grid;

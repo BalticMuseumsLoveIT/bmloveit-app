@@ -314,6 +314,7 @@ export interface ThemeColorsInterface {
     app: string;
     default: string;
     alternative: string;
+    menu: string;
     button: {
       default: string;
       hover: string;

@@ -4,7 +4,7 @@ interface StyledWrapperProps {
   isOpened: boolean;
 }
 
-const StyledWrapper = styled.nav<StyledWrapperProps>`
+export const Wrapper = styled.nav<StyledWrapperProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,10 +14,13 @@ const StyledWrapper = styled.nav<StyledWrapperProps>`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: ${({ theme }) => theme.color.primary};
+  background-color: ${({ theme }) => theme.colors.background.menu};
   transform: translateX(${({ isOpened }) => (isOpened ? '0' : '-100%')});
   transition: transform 0.25s ease;
-  z-index: 2;
+  z-index: 1;
 `;
 
-export default StyledWrapper;
+export const Content = styled.div`
+  width: 100%;
+  max-width: 25em;
+`;
