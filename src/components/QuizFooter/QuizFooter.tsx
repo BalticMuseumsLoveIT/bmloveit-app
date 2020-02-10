@@ -1,6 +1,6 @@
 import { QuizDetailsState } from 'utils/store/quizDetailsStore';
 import Footer from 'components/Footer/Footer';
-import { FooterButton } from 'components/Footer/Footer.style';
+import { AppButton } from 'components/Buttons/AppButton.style';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -24,17 +24,17 @@ export const QuizFooter = function({
     case QuizDetailsState.LOADED:
       return (
         <Footer>
-          <FooterButton type="submit" form="quizForm" disabled={isSubmitting}>
+          <AppButton type="submit" form="quizForm" disabled={isSubmitting}>
             {t('form.button.submit.label', 'Submit')}
-          </FooterButton>
+          </AppButton>
         </Footer>
       );
     case QuizDetailsState.SUBMITTED:
       return (
         <Footer>
-          <FooterButton as={Link} to={`/item/${nextItemId}`}>
+          <AppButton as={Link} to={`/item/${nextItemId}`}>
             {t('button.next.label', 'Next')}
-          </FooterButton>
+          </AppButton>
         </Footer>
       );
     default:

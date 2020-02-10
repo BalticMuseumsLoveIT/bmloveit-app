@@ -1,9 +1,11 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import RouteLocationsListPageStore from 'utils/store/routeLocationsListPageStore';
-import Footer from 'components/Footer/Footer';
-import { FooterButton } from 'components/Footer/Footer.style';
 import { getTranslatedString } from 'utils/helpers';
+import {
+  FooterButtonsContainer,
+  FooterButton,
+} from 'components/Buttons/FooterButtons/FooterButtons.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -80,7 +82,7 @@ class RouteLocationsListPage extends React.Component<Props> {
               </p>
             );
           })}
-          <Footer>
+          <FooterButtonsContainer>
             <FooterButton
               as={Link}
               to={`/area/${this.routeLocationsListPageStore.areaId}/routes`}
@@ -96,7 +98,7 @@ class RouteLocationsListPage extends React.Component<Props> {
             <FooterButton as={Link} to={`/qrcode`}>
               {this.props.t('button.scanQR.label', 'Scan QR')}
             </FooterButton>
-          </Footer>
+          </FooterButtonsContainer>
         </Content>
       </>
     );

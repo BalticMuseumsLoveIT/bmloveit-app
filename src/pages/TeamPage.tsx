@@ -3,7 +3,7 @@ import TeamPageStore from 'utils/store/teamPageStore';
 import { TeamJoinForm } from 'components/TeamJoin/TeamJoin';
 import { TeamCreateForm } from 'components/TeamCreate/TeamCreate';
 import Footer from 'components/Footer/Footer';
-import { FooterButton } from 'components/Footer/Footer.style';
+import { AppButton } from 'components/Buttons/AppButton.style';
 import { UserProfileStore } from 'utils/store/userProfileStore';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -58,14 +58,14 @@ class TeamPage extends React.Component<Props> {
               </h3>
               <p>{this.userProfileStore.userTeamStore.teamAccessCode}</p>
               <Footer>
-                <FooterButton
+                <AppButton
                   onClick={() => this.userProfileStore.handleLeaveTeam()}
                 >
                   {this.props.t('button.leaveTeam', 'Leave team')}
-                </FooterButton>
-                <FooterButton as={Link} to="/area">
+                </AppButton>
+                <AppButton as={Link} to="/area">
                   {this.props.t('footerLink.continue', 'Continue')}
-                </FooterButton>
+                </AppButton>
               </Footer>
             </>
           ) : (
