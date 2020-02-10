@@ -1,7 +1,6 @@
 import Content from 'components/Content/Content';
 import ProfilePageStore, { PageState } from 'utils/store/profilePageStore';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
-import { getPrivateMediaURL } from 'utils/helpers';
 import { AuthStore } from 'utils/store/authStore';
 import { UserProfileStore } from 'utils/store/userProfileStore';
 import { UiStore } from 'utils/store/uiStore';
@@ -9,6 +8,8 @@ import BadgesList from 'components/BadgesList/BadgesList';
 import CardsList from 'components/CardsList/CardsList';
 import ItemModal from 'components/ItemModal/ItemModal';
 import { UserPoints } from 'components/UserPoints/UserPoints';
+import UserAvatar from 'components/Avatar/Avatar';
+import { UserAvatarType } from 'components/Avatar/Avatar.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -75,12 +76,7 @@ class ProfilePage extends React.Component<Props> {
             </p>
           )}
 
-          {this.userProfileStore.userHasAvatar && (
-            <img
-              src={getPrivateMediaURL(this.userProfileStore.userAvatarURL)}
-              alt={this.userProfileStore.userAvatarName}
-            />
-          )}
+          <UserAvatar type={UserAvatarType.PROFILE} />
 
           <UserPoints
             points={this.userProfileStore.points}

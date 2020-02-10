@@ -6,7 +6,7 @@ import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
 import Footer from 'components/Footer/Footer';
 import { FooterButton } from 'components/Footer/Footer.style';
 import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
-import { MuseumLogoImageType } from 'components/MuseumLogo/MuseumLogo.style';
+import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import { LayoutGridFooter } from 'components/Layout/Layout.style';
 import { WithTranslation, withTranslation } from 'react-i18next';
@@ -52,7 +52,7 @@ class LanguagePage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Language')}</title>
         </Helmet>
         <Content backgroundImage={this.siteStore.image || undefined}>
-          <MuseumLogo type={MuseumLogoImageType.WELCOME} />
+          <MuseumLogo type={LogoType.WELCOME} />
           <LanguageSwitch
             uiLanguages={this.uiStore.languages}
             userLanguage={this.uiStore.language}
