@@ -1,6 +1,6 @@
+import LoginButton from 'components/Buttons/LoginButtons/LoginButton.style';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import LoginButton from '../LoginButton.style';
 
 interface GuestButtonProps {
   loginAsGuest: () => Promise<void>;

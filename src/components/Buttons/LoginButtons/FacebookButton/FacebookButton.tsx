@@ -1,8 +1,8 @@
 import { LoginButtonPropsInterface } from 'utils/interfaces';
+import LoginButton from 'components/Buttons/LoginButtons/LoginButton.style';
 import React from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { useTranslation } from 'react-i18next';
-import LoginButton from '../LoginButton.style';
 
 const FacebookButton = ({ onSuccess }: LoginButtonPropsInterface) => {
   const { t, ready } = useTranslation('app');
