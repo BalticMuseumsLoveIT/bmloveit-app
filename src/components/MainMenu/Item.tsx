@@ -17,11 +17,15 @@ export const Item = observer(({ item, closeMenu, openSubMenu }: Props) => {
 
   switch (item.type_data.name) {
     case ItemType.DEFAULT:
-      return <button onClick={e => openSubMenu(e, item.id)}>{label}</button>;
+      return (
+        <button onClick={e => openSubMenu(e, item.id)}>
+          <span>{label}</span>
+        </button>
+      );
     case ItemType.LINK:
       return (
         <Link to={item.description} onClick={closeMenu}>
-          {label}
+          <span>{label}</span>
         </Link>
       );
     default:

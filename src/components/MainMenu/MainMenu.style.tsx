@@ -4,7 +4,7 @@ interface StyledWrapperProps {
   isOpened: boolean;
 }
 
-const StyledWrapper = styled.nav<StyledWrapperProps>`
+export const Wrapper = styled.nav<StyledWrapperProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,4 +20,7 @@ const StyledWrapper = styled.nav<StyledWrapperProps>`
   z-index: 2;
 `;
 
-export default StyledWrapper;
+export const Content = styled.div`
+  width: 100%;
+  max-width: 20em;
+`;
