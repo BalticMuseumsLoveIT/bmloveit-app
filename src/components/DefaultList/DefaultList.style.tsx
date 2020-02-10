@@ -25,7 +25,7 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
   padding: 0;
   background-color: #ffffff;
   width: 88%;
-  max-width: 326px;
+  max-width: 360px;
   height: 72px;
   font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
