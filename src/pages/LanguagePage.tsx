@@ -4,7 +4,7 @@ import LanguagePageStore from 'utils/store/languagePageStore';
 import Content from 'components/Content/Content';
 import { LanguageSwitch } from 'components/LanguageSwitch/LanguageSwitch';
 import Footer from 'components/Footer/Footer';
-import { FooterButton } from 'components/Footer/Footer.style';
+import { AppButton } from 'components/Buttons/AppButton.style';
 import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
 import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
@@ -58,9 +58,9 @@ class LanguagePage extends React.Component<Props> {
             userLanguage={this.uiStore.language}
           />
           <Footer>
-            <FooterButton as={Link} to="/login">
+            <AppButton as={Link} to="/login">
               {this.props.t('form.button.submit.label', 'Next')}
-            </FooterButton>
+            </AppButton>
           </Footer>
         </Content>
         <LayoutGridFooter>

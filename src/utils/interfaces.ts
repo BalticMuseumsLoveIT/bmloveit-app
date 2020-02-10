@@ -300,17 +300,28 @@ export interface ThemeFontsInterface {
 }
 
 export interface ThemeColorsInterface {
-  background: {
-    app: string;
-    default: string;
-    alternative: string;
-    menu: string;
-  };
   text: {
     header: string;
     paragraph: string;
     alternative: string;
     anchor: AnchorInterface;
+    button: {
+      default: string;
+      disabled: string;
+    };
+  };
+  background: {
+    app: string;
+    default: string;
+    alternative: string;
+    menu: string;
+    button: {
+      default: string;
+      hover: string;
+      hover2: string;
+      focus: string;
+      disabled: string;
+    };
   };
 }
 
@@ -461,4 +472,8 @@ export interface CommonActionInterface {
   id: number;
   name: string;
   description: string;
+}
+
+export interface ButtonProps {
+  isDisabled?: boolean;
 }

@@ -1,6 +1,6 @@
 import ItemStore from 'utils/store/itemStore';
 import Footer from 'components/Footer/Footer';
-import { FooterButton } from 'components/Footer/Footer.style';
+import { AppButton } from 'components/Buttons/AppButton.style';
 import {
   AvatarButton,
   AvatarList,
@@ -100,7 +100,7 @@ export const ItemAvatarChoice = inject('userProfileStore')(
             )}
           </AvatarList>
           <Footer>
-            <FooterButton
+            <AppButton
               disabled={
                 localStore.isSubmitting ||
                 Number.isNaN(localStore.selectedAvatarId)
@@ -108,7 +108,7 @@ export const ItemAvatarChoice = inject('userProfileStore')(
               onClick={handleFormSubmit}
             >
               {t('button.next.label', 'Next')}
-            </FooterButton>
+            </AppButton>
           </Footer>
         </>
       );

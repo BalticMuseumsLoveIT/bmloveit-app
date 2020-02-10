@@ -1,3 +1,4 @@
+import LoginButton from 'components/Buttons/LoginButtons/LoginButton.style';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,8 +18,8 @@ export const GuestButton = ({ loginAsGuest }: GuestButtonProps) => {
   };
 
   return ready ? (
-    <button onClick={handleClick}>
+    <LoginButton onClick={handleClick} iconUrl={'/images/person-24px.svg'}>
       {t('button.signInAsGuest.label', 'Sign in as Guest')}
-    </button>
+    </LoginButton>
   ) : null;
 };

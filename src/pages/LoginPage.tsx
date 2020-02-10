@@ -1,9 +1,9 @@
 import Content from 'components/Content/Content';
-import GoogleButton from 'components/LoginButtons/GoogleButton/GoogleButton';
-import FacebookButton from 'components/LoginButtons/FacebookButton/FacebookButton';
+import GoogleButton from 'components/Buttons/LoginButtons/GoogleButton/GoogleButton';
+import FacebookButton from 'components/Buttons/LoginButtons/FacebookButton/FacebookButton';
 import { AuthStore } from 'utils/store/authStore';
 import { OAuthLoginArgumentInterface } from 'utils/interfaces';
-import { GuestButton } from 'components/LoginButtons/GuestButton/GuestButton';
+import { GuestButton } from 'components/Buttons/LoginButtons/GuestButton/GuestButton';
 import { UserProfileStore } from 'utils/store/userProfileStore';
 import { LayoutGridFooter } from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
@@ -41,10 +41,8 @@ class LoginPage extends React.Component<Props> {
           <h2>{this.props.t('content.title', 'Login')}</h2>
           {!this.authStore.isLoggedIn ? (
             <>
-              <FacebookButton onSuccess={this.login} />
-              <br />
               <GoogleButton onSuccess={this.login} />
-              <br />
+              <FacebookButton onSuccess={this.login} />
               <GuestButton loginAsGuest={this.login} />
             </>
           ) : (

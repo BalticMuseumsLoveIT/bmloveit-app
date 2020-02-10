@@ -1,7 +1,7 @@
 import { getPrivateMediaURL } from 'utils/helpers';
 import Footer from 'components/Footer/Footer';
 import ItemStore from 'utils/store/itemStore';
-import { FooterButton } from 'components/Footer/Footer.style';
+import { AppButton } from 'components/Buttons/AppButton.style';
 import React from 'react';
 import ReactHtmlParser, { processNodes } from 'react-html-parser';
 import { DomElement } from 'htmlparser2';
@@ -70,9 +70,9 @@ export const ItemDefault = ({ itemStore }: ItemDefaultProps) => {
         })}
       </div>
       <Footer>
-        <FooterButton as={Link} to={`/item/${itemStore.nextItemId}`}>
+        <AppButton as={Link} to={`/item/${itemStore.nextItemId}`}>
           {t('button.next.label', 'Next')}
-        </FooterButton>
+        </AppButton>
       </Footer>
     </>
   );
