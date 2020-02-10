@@ -6,7 +6,7 @@ export const FooterButtonsContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 8px;
   width: 94%;
-  max-width: 353px;
+  max-width: 480px;
   margin-left: auto;
   margin-right: auto;
 `;

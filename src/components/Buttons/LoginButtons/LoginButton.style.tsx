@@ -10,7 +10,7 @@ const LoginButton = styled.button<LoginButtonProps>`
   align-items: center;
   justify-content: flex-start;
   width: 88%;
-  max-width: 326px;
+  max-width: 360px;
   padding: 24px;
   background-color: #ffffff;
   color: ${({ theme }) => theme.colors.text.paragraph};

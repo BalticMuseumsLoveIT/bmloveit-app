@@ -6,7 +6,7 @@ export const AppButton = styled.button<ButtonProps>`
   align-items: center;
   justify-content: center;
   width: 88%;
-  max-width: 326px;
+  max-width: 360px;
   padding: 26px;
   background-color: ${({ theme, isDisabled }) =>
     isDisabled
