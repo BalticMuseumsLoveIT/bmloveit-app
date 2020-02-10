@@ -55,6 +55,13 @@ class ProfilePage extends React.Component<Props> {
     if (!this.props.tReady || this.profilePageStore.state !== PageState.LOADED)
       return null;
 
+    if (
+      this.uiStore.languages.length > 0 &&
+      this.uiStore.isUserLocaleMatch === false
+    ) {
+      this.uiStore.setLanguage(this.uiStore.languages[0].key);
+    }
+
     return (
       <>
         <Helmet>
