@@ -1,4 +1,5 @@
 import { ButtonProps } from 'utils/interfaces';
+import { em } from 'polished';
 import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
@@ -9,7 +10,8 @@ export const StyledWrapper = styled.div`
 `;
 
 export const InfoMessage = styled.p`
-  margin: 1em;
+  font-size: ${em(15)};
+  margin: ${em(16, 15)};
   flex-grow: 1;
   font-family: ${props => props.theme.fonts.paragraph.fontFamily};
   font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
@@ -29,6 +31,7 @@ export const CloseButton = styled.button<ButtonProps>`
   cursor: pointer;
   margin: 0;
   background: transparent;
+  display: block;
 
   font-size: 1em;
   padding: 0.875em;

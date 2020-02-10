@@ -1,3 +1,4 @@
+import { em } from 'polished';
 import styled, { css } from 'styled-components';
 
 export enum UserAvatarType {
@@ -20,7 +21,7 @@ export const UserAvatar = styled.div<UserAvatarProps>`
     switch (props.type) {
       case UserAvatarType.HEADER:
         return css`
-          width: 2em;
+          width: ${em(36)};
         `;
       case UserAvatarType.PROFILE:
         return css`

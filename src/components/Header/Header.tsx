@@ -7,6 +7,7 @@ import { LayoutGridHeader } from 'components/Layout/Layout.style';
 import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import React from 'react';
+import SVG from 'react-inlinesvg';
 import AppHeader, {
   BackButton,
   BackButtonCell,
@@ -27,7 +28,9 @@ class Header extends React.Component<HeaderProps> {
       <LayoutGridHeader>
         <AppHeader>
           <BackButtonCell>
-            <BackButton onClick={this.props.history.goBack}>&larr;</BackButton>
+            <BackButton onClick={this.props.history.goBack}>
+              <SVG src="/images/arrow_back-24px.svg" />
+            </BackButton>
           </BackButtonCell>
           <MuseumLogoCell>
             <MuseumLogo type={LogoType.HEADER} />
