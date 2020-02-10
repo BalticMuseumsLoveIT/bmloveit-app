@@ -60,13 +60,13 @@ export class SiteStore {
   }
 
   @computed get image(): string {
-    if (!this.isDataAvailable()) return '';
+    if (!this.isDataAvailable() || this.siteData.image === null) return '';
 
     return this.siteData.image;
   }
 
   @computed get logo(): string {
-    if (!this.isDataAvailable()) return '';
+    if (!this.isDataAvailable() || this.siteData.logo === null) return '';
 
     return this.siteData.logo;
   }

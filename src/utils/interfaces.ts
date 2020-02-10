@@ -321,8 +321,8 @@ export interface SiteInterface {
   description: string;
   about: string;
   terms_url: string;
-  logo: string;
-  image: string;
+  logo: string | null;
+  image: string | null;
   theme: ThemeType | null;
   background_color: string | null;
   primary_color: string | null;

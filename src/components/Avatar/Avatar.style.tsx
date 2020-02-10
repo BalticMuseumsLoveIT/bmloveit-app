@@ -1,15 +1,16 @@
 import styled, { css } from 'styled-components';
 
-export enum LogoType {
-  WELCOME,
+export enum UserAvatarType {
   HEADER,
+  PROFILE,
 }
-export interface LogoProps {
-  type?: LogoType;
+
+export interface UserAvatarProps {
+  type?: UserAvatarType;
   usePlaceholder?: boolean;
 }
 
-export const Logo = styled.div<LogoProps>`
+export const UserAvatar = styled.div<UserAvatarProps>`
   display: block;
   overflow: hidden;
   border-radius: 50%;
@@ -17,15 +18,13 @@ export const Logo = styled.div<LogoProps>`
 
   ${props => {
     switch (props.type) {
-      case LogoType.HEADER:
+      case UserAvatarType.HEADER:
         return css`
           width: 2em;
         `;
-      case LogoType.WELCOME:
+      case UserAvatarType.PROFILE:
         return css`
           width: 35%;
-          box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
-          margin: 2em auto;
         `;
     }
   }}
@@ -39,13 +38,13 @@ export const Logo = styled.div<LogoProps>`
 
     ${props => {
       switch (props.type) {
-        case LogoType.HEADER:
+        case UserAvatarType.HEADER:
           return css`
-            padding: ${props.usePlaceholder ? '0.3em' : 0};
+            padding: ${props.usePlaceholder ? '0.5em' : 0};
           `;
-        case LogoType.WELCOME:
+        case UserAvatarType.PROFILE:
           return css`
-            padding: ${props.usePlaceholder ? '20%' : 0};
+            padding: ${props.usePlaceholder ? '25%' : 0};
           `;
       }
     }}

@@ -1,12 +1,10 @@
 import { SiteStore } from 'utils/store/siteStore';
-import MuseumLogoImage, {
-  MuseumLogoImageProps,
-} from 'components/MuseumLogo/MuseumLogo.style';
+import { Logo, LogoProps } from 'components/MuseumLogo/MuseumLogo.style';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface Props extends MuseumLogoImageProps, WithTranslation {}
+interface Props extends LogoProps, WithTranslation {}
 
 interface InjectedProps extends Props {
   siteStore: SiteStore;
@@ -22,12 +20,19 @@ class MuseumLogo extends React.Component<Props> {
   siteStore = this.injected.siteStore;
 
   render() {
+    const shouldUsePlaceholder = this.siteStore.logo.length === 0;
+
+    const avatarImageSrc = shouldUsePlaceholder
+      ? '/images/museum-logo-placeholder.svg'
+      : this.siteStore.logo;
+
     return this.props.tReady && this.siteStore.isDataAvailable() ? (
-      <MuseumLogoImage
-        src={this.siteStore.logo}
-        alt={this.props.t('image.museumLogotype.alt', 'Museum logotype')}
-        type={this.props.type}
-      />
+      <Logo type={this.props.type} usePlaceholder={shouldUsePlaceholder}>
+        <img
+          src={avatarImageSrc}
+          alt={this.props.t('image.museumLogotype.alt', 'Museum logotype')}
+        />
+      </Logo>
     ) : null;
   }
 }
