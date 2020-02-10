@@ -43,14 +43,14 @@ export const CloseButton = styled.button<ButtonProps>`
         isDisabled
           ? theme.colors.text.button.disabled
           : theme.colors.text.paragraph};
-
-      &:hover {
-        fill: ${({ theme }) => theme.colors.background.button.default};
-      }
-
-      &:focus {
-        fill: ${({ theme }) => theme.colors.background.button.focus};
-      }
     }
+  }
+
+  &:hover svg .a {
+    fill: ${({ theme }) => theme.colors.background.button.default};
+  }
+
+  &:focus svg .a {
+    fill: ${({ theme }) => theme.colors.background.button.focus};
   }
 `;
