@@ -304,6 +304,7 @@ export interface ThemeColorsInterface {
     app: string;
     default: string;
     alternative: string;
+    menu: string;
   };
   text: {
     header: string;

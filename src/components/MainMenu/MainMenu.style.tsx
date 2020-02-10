@@ -14,7 +14,7 @@ const StyledWrapper = styled.nav<StyledWrapperProps>`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: ${({ theme }) => theme.color.primary};
+  background-color: ${({ theme }) => theme.colors.background.menu};
   transform: translateX(${({ isOpened }) => (isOpened ? '0' : '-100%')});
   transition: transform 0.25s ease;
   z-index: 2;

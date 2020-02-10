@@ -35,6 +35,7 @@ const defaultColors = {
     app: '#EAEEF6',
     default: '#F8FAFD',
     alternative: '#F85705',
+    menu: '#F8FAFD',
   },
 };
 
