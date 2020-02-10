@@ -17,10 +17,10 @@ export const Wrapper = styled.nav<StyledWrapperProps>`
   background-color: ${({ theme }) => theme.colors.background.menu};
   transform: translateX(${({ isOpened }) => (isOpened ? '0' : '-100%')});
   transition: transform 0.25s ease;
-  z-index: 2;
+  z-index: 1;
 `;
 
 export const Content = styled.div`
   width: 100%;
-  max-width: 20em;
+  max-width: 25em;
 `;
