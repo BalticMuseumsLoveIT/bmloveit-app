@@ -3,8 +3,10 @@ import {
   DefaultList,
   DefaultListItem,
 } from 'components/DefaultList/DefaultList.style';
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocalStore, useObserver } from 'mobx-react';
+import { action } from 'mobx';
 
 interface LanguageSwitchProps {
   uiLanguages: Array<CommonLanguageInterface>;
@@ -15,29 +17,34 @@ export const LanguageSwitch = ({
   uiLanguages,
   userLanguage,
 }: LanguageSwitchProps) => {
-  const [isMenuOpened, setisMenuOpened] = useState(false);
-
   const { i18n, ready } = useTranslation('language-page');
 
+  const localStore = useLocalStore(() => ({
+    isMenuOpened: false,
+
+    toggleMenu: action(() => {
+      localStore.isMenuOpened = !localStore.isMenuOpened;
+    }),
+  }));
+
   const handleClick = async (lang: string) => {
-    if (isMenuOpened === false) {
-      setisMenuOpened(true);
-    } else {
+    if (localStore.isMenuOpened === true) {
       await i18n.changeLanguage(lang);
-      setisMenuOpened(false);
     }
+
+    localStore.toggleMenu();
   };
 
-  if (!ready) return null;
+  return useObserver(() => {
+    if (!ready) return null;
 
-  return (
-    <>
+    return (
       <DefaultList>
         {uiLanguages.map(language => {
           return (
             <DefaultListItem
               key={language.id}
-              isMenuOpened={isMenuOpened}
+              isMenuOpened={localStore.isMenuOpened}
               isActive={language.key === userLanguage}
               onClick={() => handleClick(language.key)}
             >
@@ -46,6 +53,6 @@ export const LanguageSwitch = ({
           );
         })}
       </DefaultList>
-    </>
-  );
+    );
+  });
 };
