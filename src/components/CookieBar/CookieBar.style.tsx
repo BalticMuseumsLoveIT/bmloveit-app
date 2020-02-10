@@ -27,26 +27,30 @@ export const CloseButton = styled.button<ButtonProps>`
   outline: none;
   border: none;
   cursor: pointer;
-  margin: 0 15px;
-  padding: 10px;
+  margin: 0;
   background: transparent;
 
-  svg .a {
-    fill: ${({ theme, isDisabled }) =>
-      isDisabled
-        ? theme.colors.text.button.disabled
-        : theme.colors.text.paragraph};
-  }
+  font-size: 1em;
+  padding: 0.875em;
 
-  &:hover {
-    svg .a {
-      fill: ${({ theme }) => theme.colors.background.button.default};
-    }
-  }
+  svg {
+    display: block;
+    width: 1.5em;
+    height: 1.5em;
 
-  &:focus {
-    svg .a {
-      fill: ${({ theme }) => theme.colors.background.button.focus};
+    .a {
+      fill: ${({ theme, isDisabled }) =>
+        isDisabled
+          ? theme.colors.text.button.disabled
+          : theme.colors.text.paragraph};
+
+      &:hover {
+        fill: ${({ theme }) => theme.colors.background.button.default};
+      }
+
+      &:focus {
+        fill: ${({ theme }) => theme.colors.background.button.focus};
+      }
     }
   }
 `;
