@@ -23,7 +23,7 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
   justify-content: center;
   list-style: none;
   padding: 0;
-  background-color: #ffffff;
+  background-color: ${({ theme }) => theme.colors.background.default};
   width: 88%;
   max-width: 360px;
   height: 72px;
