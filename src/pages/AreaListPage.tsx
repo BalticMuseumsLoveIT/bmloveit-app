@@ -7,7 +7,6 @@ import {
   DefaultList,
   DefaultListItemInfo,
 } from 'components/DefaultList/DefaultList.style';
-import { StepsContainer } from 'components/Steps/Steps.style';
 import Steps from 'components/Steps/Steps';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -59,7 +58,7 @@ class AreaListPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>{this.props.t('content.title', 'Area list')}</h1>
-          <Steps />
+          <Steps currentStepNumber={0} />
           <DefaultList>
             {this.areaListPageStore.areaData.map(area => (
               <DefaultListItem
