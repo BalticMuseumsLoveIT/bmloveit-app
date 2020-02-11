@@ -1,5 +1,6 @@
 import { ButtonProps } from 'utils/interfaces';
-import { em } from 'polished';
+import { DefaultFontSize, LinkStyle } from 'components/Page/Page.style';
+import SVG from 'react-inlinesvg';
 import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
@@ -7,21 +8,20 @@ export const StyledWrapper = styled.div`
   color: ${({ theme }) => theme.colors.text.header};
   display: flex;
   align-items: center;
+
+  ${DefaultFontSize}
 `;
 
 export const InfoMessage = styled.p`
-  font-size: ${em(15)};
-  margin: ${em(16, 15)};
+  font-size: 1em;
+  line-height: 150%;
+  margin: 1em;
   flex-grow: 1;
   font-family: ${props => props.theme.fonts.paragraph.fontFamily};
   font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
 
   a {
-    color: ${({ theme }) => theme.colors.text.anchor.link};
-  }
-
-  a:hover {
-    color: ${({ theme }) => theme.colors.text.anchor.hover};
+    ${LinkStyle}
   }
 `;
 
@@ -34,26 +34,21 @@ export const CloseButton = styled.button<ButtonProps>`
   display: block;
 
   font-size: 1em;
-  padding: 0.875em;
+  padding: 1em;
+`;
 
-  svg {
-    display: block;
-    width: 1.5em;
-    height: 1.5em;
+export const CloseButtonIcon = styled(SVG)`
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
 
-    .a {
-      fill: ${({ theme, isDisabled }) =>
-        isDisabled
-          ? theme.colors.text.button.disabled
-          : theme.colors.text.paragraph};
+  path {
+    transition: fill 0.25s ease;
+
+    fill: ${({ theme }) => theme.colors.icon.normal};
+
+    ${CloseButton}:hover & {
+      fill: ${({ theme }) => theme.colors.icon.hover};
     }
-  }
-
-  &:hover svg .a {
-    fill: ${({ theme }) => theme.colors.background.button.default};
-  }
-
-  &:focus svg .a {
-    fill: ${({ theme }) => theme.colors.background.button.focus};
   }
 `;

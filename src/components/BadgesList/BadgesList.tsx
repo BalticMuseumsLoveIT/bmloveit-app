@@ -42,7 +42,7 @@ const BadgesList = ({ badges }: Props) => {
                 placement="top"
                 trigger="click"
               >
-                <Badge title={badge.description}>
+                <Badge>
                   <BadgeIcon src={icon} alt={badge.description} />
                 </Badge>
               </Tooltip>

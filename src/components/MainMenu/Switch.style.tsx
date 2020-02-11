@@ -2,19 +2,21 @@ import styled from 'styled-components';
 import { em } from 'polished';
 
 export const Button = styled.button`
-  border: none;
-  background: none;
-  padding: 0;
   outline: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  padding: 1em;
+  background: transparent;
   display: block;
+  box-sizing: content-box;
+
+  font-size: 1em;
+
   width: ${em(24)};
   height: ${em(24)};
-  font-size: 1em;
-  line-height: 0;
+
   z-index: 3;
-  grid-column-start: 5;
-  grid-column-end: span 1;
-  cursor: pointer;
 `;
 
 interface SwitchInnerProps {
@@ -27,7 +29,7 @@ export const Hamburger = styled.div<SwitchInnerProps>`
   width: ${em(20)};
   height: ${em(2)};
   background-color: ${({ theme, isOpened }) =>
-    isOpened ? 'transparent' : theme.colors.text.paragraph};
+    isOpened ? 'transparent' : theme.colors.icon.normal};
   transition: background-color 0.25s ease;
 
   ::before,
@@ -36,9 +38,9 @@ export const Hamburger = styled.div<SwitchInnerProps>`
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: ${({ theme }) => theme.colors.text.paragraph};
+    background-color: ${({ theme }) => theme.colors.icon.normal};
     left: 0;
-    transition: transform 0.25s ease;
+    transition: transform 0.25s ease, background-color 0.25s ease;
   }
 
   ::before {
@@ -55,11 +57,11 @@ export const Hamburger = styled.div<SwitchInnerProps>`
 
   ${Button}:hover & {
     background-color: ${({ theme, isOpened }) =>
-      isOpened ? 'transparent' : theme.colors.background.alternative};
+      isOpened ? 'transparent' : theme.colors.icon.hover};
 
     ::before,
     ::after {
-      background-color: ${({ theme }) => theme.colors.background.alternative};
+      background-color: ${({ theme }) => theme.colors.icon.hover};
     }
   }
 `;

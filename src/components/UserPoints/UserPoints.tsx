@@ -6,7 +6,6 @@ import { Line as ProgressBar } from 'rc-progress';
 import { useTranslation } from 'react-i18next';
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
-import { darken, desaturate } from 'polished';
 
 interface Props {
   points: number;
@@ -36,10 +35,7 @@ export const UserPoints = ({ points, nextLevelStart }: Props) => {
         <ProgressBar
           percent={progress}
           strokeColor={themeContext.colors.background.alternative}
-          trailColor={desaturate(
-            0.2,
-            darken(0.1, themeContext.colors.background.app),
-          )}
+          trailColor={themeContext.colors.background.placeholder}
           strokeWidth={2}
           trailWidth={2}
         />

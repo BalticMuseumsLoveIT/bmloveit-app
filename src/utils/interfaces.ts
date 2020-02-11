@@ -316,6 +316,7 @@ export interface ThemeColorsInterface {
     default: string;
     alternative: string;
     menu: string;
+    placeholder: string;
     button: {
       default: string;
       hover: string;
@@ -323,6 +324,12 @@ export interface ThemeColorsInterface {
       focus: string;
       disabled: string;
     };
+  };
+  icon: {
+    normal: string;
+    hover: string;
+    pressed: string;
+    inactive:  string;
   };
 }
 

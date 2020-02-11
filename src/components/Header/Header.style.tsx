@@ -1,3 +1,5 @@
+import { DefaultFontSize } from 'components/Page/Page.style';
+import SVG from 'react-inlinesvg';
 import styled from 'styled-components';
 
 const AppHeader = styled.header`
@@ -5,18 +7,7 @@ const AppHeader = styled.header`
   grid-template-columns: auto auto 1fr auto auto;
   align-items: center;
 
-  & > div {
-    box-sizing: border-box;
-    padding: 0.5em;
-
-    &:first-child {
-      padding-left: 0;
-    }
-
-    &:last-child {
-      padding-right: 0;
-    }
-  }
+  ${DefaultFontSize}
 `;
 
 export const BackButtonCell = styled.div`
@@ -49,20 +40,22 @@ export const BackButton = styled.button`
   display: block;
 
   font-size: 1em;
-  padding: 0;
+  padding: 1em;
+`;
 
-  svg {
-    display: block;
-    width: 1.5em;
-    height: 1.5em;
+export const BackButtonIcon = styled(SVG)`
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
 
-    .b {
-      fill: ${({ theme }) => theme.colors.text.paragraph};
+  path {
+    transition: fill 0.25s ease;
+
+    fill: ${({ theme }) => theme.colors.icon.normal};
+
+    ${BackButton}:hover & {
+      fill: ${({ theme }) => theme.colors.icon.hover};
     }
-  }
-
-  &:hover svg .b {
-    fill: ${({ theme }) => theme.colors.background.alternative};
   }
 `;
 

@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { darken, desaturate, em } from 'polished';
+import { em } from 'polished';
+import { PlaceholderBackground } from 'components/Page/Page.style';
 
 export const TooltipStyle = createGlobalStyle`
   .badge-tooltip {
@@ -51,8 +52,10 @@ export const Badge = styled.span`
   align-items: center;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   border-radius: 50%;
-  background: ${({ theme }) => desaturate(0.1, darken(0.04, theme.colors.background.app))};
+  
+  ${PlaceholderBackground}
 `;
 
 export const BadgeIcon = styled.img`

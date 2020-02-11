@@ -1,5 +1,5 @@
+import { PlaceholderBackground } from 'components/Page/Page.style';
 import styled from 'styled-components';
-import { darken, desaturate } from 'polished';
 import { Link } from 'react-router-dom';
 
 export const CardList = styled.ul`
@@ -31,10 +31,10 @@ export const Card = styled(Link)`
   align-items: center;
   width: 100%;
   height: 100%;
-  border-radius: 10%;
   overflow: hidden;
-  background: ${({ theme }) =>
-    desaturate(0.1, darken(0.04, theme.colors.background.app))};
+  border-radius: 10%;
+
+  ${PlaceholderBackground}
 `;
 
 export const CardIcon = styled.img`

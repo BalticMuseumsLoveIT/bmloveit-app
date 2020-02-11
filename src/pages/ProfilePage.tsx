@@ -10,13 +10,13 @@ import ItemModal from 'components/ItemModal/ItemModal';
 import { UserPoints } from 'components/UserPoints/UserPoints';
 import UserAvatar from 'components/Avatar/Avatar';
 import { UserAvatarType } from 'components/Avatar/Avatar.style';
-import { Subtitle, Title } from 'components/Page/Page.style';
+import { StyledLink, Subtitle, Title } from 'components/Page/Page.style';
 import { LogoutButton } from 'pages/ProfilePage.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { Trans, withTranslation, WithTranslation } from 'react-i18next';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 
 interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
@@ -79,9 +79,9 @@ class ProfilePage extends React.Component<Props> {
             <Subtitle>
               <Trans i18nKey="teamMembership" ns="profile-page">
                 You are in group:
-                <Link to="/team">
+                <StyledLink to="/team">
                   {{ teamName: this.userProfileStore.userTeamStore.teamName }}
-                </Link>
+                </StyledLink>
               </Trans>
             </Subtitle>
           )}

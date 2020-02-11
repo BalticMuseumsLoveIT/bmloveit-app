@@ -7,10 +7,10 @@ import { LayoutGridHeader } from 'components/Layout/Layout.style';
 import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import React from 'react';
-import SVG from 'react-inlinesvg';
 import AppHeader, {
   BackButton,
   BackButtonCell,
+  BackButtonIcon,
   MuseumLogoCell,
   ToggleSwitchCell,
   UserAvatarCell,
@@ -29,7 +29,7 @@ class Header extends React.Component<HeaderProps> {
         <AppHeader>
           <BackButtonCell>
             <BackButton onClick={this.props.history.goBack}>
-              <SVG src="/images/arrow_back-24px.svg" />
+              <BackButtonIcon src="/images/arrow_back-24px.svg" />
             </BackButton>
           </BackButtonCell>
           <MuseumLogoCell>
