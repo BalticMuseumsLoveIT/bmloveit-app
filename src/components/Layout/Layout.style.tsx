@@ -26,6 +26,7 @@ export const LayoutGridCookie = styled.div`
 
 export const LayoutGridHeader = styled.div`
   grid-row: 2 / span 1;
+  padding: 0 1em;
 `;
 
 export interface LayoutGridContentProps {
@@ -34,6 +35,7 @@ export interface LayoutGridContentProps {
 
 export const LayoutGridContent = styled.div<LayoutGridContentProps>`
   grid-row: 3 / span 1;
+  padding: 0 1em;
 
   ${props =>
     props.backgroundImage &&
