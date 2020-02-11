@@ -6,6 +6,7 @@ interface LoginButtonProps extends ButtonProps {
 }
 
 const LoginButton = styled.button<LoginButtonProps>`
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: flex-start;

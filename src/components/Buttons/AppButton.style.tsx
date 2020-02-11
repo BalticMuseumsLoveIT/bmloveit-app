@@ -2,6 +2,7 @@ import { ButtonProps } from 'utils/interfaces';
 import styled from 'styled-components';
 
 export const AppButton = styled.button<ButtonProps>`
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;

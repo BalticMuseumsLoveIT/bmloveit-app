@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-// props for LanguageSwitcher
 export interface DefaultListItemProps {
   isVisibleWhenCollapsed?: boolean;
   isMenuOpened?: boolean;
@@ -19,7 +18,6 @@ export const DefaultList = styled.ul`
 
 export const DefaultListItem = styled.li<DefaultListItemProps>`
   box-sizing: border-box;
-  /* display: flex; */
   display: ${({ isMenuOpened, isVisibleWhenCollapsed }) =>
     isMenuOpened !== false || isVisibleWhenCollapsed ? 'flex' : 'none'};
   border-radius: ${({ isMenuOpened, isVisibleWhenCollapsed }) =>
