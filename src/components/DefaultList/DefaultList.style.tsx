@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 // props for LanguageSwitcher
-interface DefaultListItemProps {
+export interface DefaultListItemProps {
+  isVisibleWhenCollapsed?: boolean;
   isMenuOpened?: boolean;
   isActive?: boolean;
 }
@@ -17,21 +18,32 @@ export const DefaultList = styled.ul`
 `;
 
 export const DefaultListItem = styled.li<DefaultListItemProps>`
-  display: ${({ isMenuOpened, isActive }) =>
-    isMenuOpened || isActive ? 'flex' : 'none'};
-  align-items: center;
+  box-sizing: border-box;
+  /* display: flex; */
+  display: ${({ isMenuOpened, isVisibleWhenCollapsed }) =>
+    isMenuOpened !== false || isVisibleWhenCollapsed ? 'flex' : 'none'};
+  border-radius: ${({ isMenuOpened, isVisibleWhenCollapsed }) =>
+    !isMenuOpened && isVisibleWhenCollapsed && '8px'};
+  align-items: flex-start;
   justify-content: center;
+  flex-direction: column;
   list-style: none;
-  padding: 0;
-  background-color: ${({ theme }) => theme.colors.background.default};
+  padding: 20px 16px 16px 16px;
+  background-color: ${({ theme, isVisibleWhenCollapsed }) =>
+    isVisibleWhenCollapsed
+      ? theme.colors.background.menu
+      : theme.colors.background.default};
+  color: ${({ theme }) => theme.colors.text.anchor.link};
   width: 88%;
   max-width: 360px;
-  height: 72px;
+  min-height: 72px;
   font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
   border-bottom: ${({ theme }) => `1px solid ${theme.colors.background.app}`};
   position: relative;
-  border-radius: ${({ isMenuOpened }) => !isMenuOpened && '8px'};
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
 
   &:first-of-type {
     border-top-left-radius: 8px;
@@ -43,14 +55,23 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
     border-bottom-right-radius: 8px;
   }
 
+  &:hover,
+  &:focus,
+  &:visited {
+    color: inherit;
+  }
+
   &:hover {
-    cursor: pointer;
+    background-color: ${({ theme }) => theme.colors.background.menu};
   }
 
   &:after {
-    content: ${({ isMenuOpened, isActive }) =>
-      !isMenuOpened && isActive
-        ? `url('/images/unfold_more-24px.svg')`
+    content: url('/images/chevron_right-24px.svg');
+    content: ${({ isMenuOpened, isVisibleWhenCollapsed }) =>
+      isVisibleWhenCollapsed
+        ? isMenuOpened
+          ? `url('/images/expand_less-24px.svg')`
+          : `url('/images/expand_more-24px.svg')`
         : `url('/images/chevron_right-24px.svg')`};
     display: block;
     width: 24px;
@@ -58,4 +79,12 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
     position: absolute;
     right: 18px;
   }
+`;
+
+export const DefaultListItemInfo = styled.span`
+  padding-top: 6px;
+  font-size: 12px;
+  color: ${({ theme }) => theme.colors.text.paragraph};
+  font-family: ${({ theme }) => theme.fonts.paragraph.fontFamily};
+  font-weight: ${({ theme }) => theme.fonts.paragraph.fontWeight};
 `;

@@ -56,7 +56,6 @@ class AreaRoutesPage extends React.Component<Props> {
                 type={type}
                 routes={routes}
                 attractions={this.areaRoutesPageStore.attractionsByRoute}
-                locations={this.areaRoutesPageStore.locationsByRoute}
               />
             ) : null;
           })}

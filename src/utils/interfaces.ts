@@ -42,6 +42,7 @@ export interface RouteTypeInterface {
   id: number;
   name: string;
   description: string;
+  description_translation: Array<CommonApiTranslationInterface>;
 }
 
 export interface LoginButtonPropsInterface {

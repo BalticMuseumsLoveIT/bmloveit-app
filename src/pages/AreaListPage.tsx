@@ -2,6 +2,11 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import AreaPageStore from 'utils/store/areaListPageStore';
 import { getTranslatedString } from 'utils/helpers';
+import {
+  DefaultListItem,
+  DefaultList,
+  DefaultListItemInfo,
+} from 'components/DefaultList/DefaultList.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -52,26 +57,25 @@ class AreaListPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>{this.props.t('content.title', 'Area list')}</h1>
-          {this.areaListPageStore.areaData.map(area => {
-            return (
-              <p key={area.id}>
-                <Link to={`/area/${area.id}/routes`}>
-                  {getTranslatedString(
-                    area.name_full,
-                    area.name_full_translation,
-                  )}
-                </Link>
-                <br />
-                {this.props.t('counter.routes', 'Routes: {{routes}}', {
-                  routes: this.areaListPageStore.routesAmount(area.id),
-                })}
-                <br />
-                {this.props.t('counter.languages', 'Languages: {{languages}}', {
-                  languages: this.areaListPageStore.languagesAmount(area.id),
-                })}
-              </p>
-            );
-          })}
+          <DefaultList>
+            {this.areaListPageStore.areaData.map(area => (
+              <DefaultListItem
+                as={Link}
+                key={area.id}
+                to={`/area/${area.id}/routes`}
+              >
+                {getTranslatedString(
+                  area.name_full,
+                  area.name_full_translation,
+                )}
+                <DefaultListItemInfo>
+                  {this.props.t('counter.routes', 'Routes: {{routes}}', {
+                    routes: this.areaListPageStore.routesAmount(area.id),
+                  })}
+                </DefaultListItemInfo>
+              </DefaultListItem>
+            ))}
+          </DefaultList>
         </Content>
       </>
     );

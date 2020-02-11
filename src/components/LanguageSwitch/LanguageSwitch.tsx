@@ -1,12 +1,10 @@
 import { CommonLanguageInterface } from 'utils/interfaces';
-import {
-  DefaultList,
-  DefaultListItem,
-} from 'components/DefaultList/DefaultList.style';
+import { DefaultList } from 'components/DefaultList/DefaultList.style';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalStore, useObserver } from 'mobx-react';
 import { action } from 'mobx';
+import { LanguageSwitchItem } from './LanguageSwitch.style';
 
 interface LanguageSwitchProps {
   uiLanguages: Array<CommonLanguageInterface>;
@@ -42,14 +40,14 @@ export const LanguageSwitch = ({
       <DefaultList>
         {uiLanguages.map(language => {
           return (
-            <DefaultListItem
+            <LanguageSwitchItem
               key={language.id}
               isMenuOpened={localStore.isMenuOpened}
-              isActive={language.key === userLanguage}
+              isVisibleWhenCollapsed={language.key === userLanguage}
               onClick={() => handleClick(language.key)}
             >
               {language.value}
-            </DefaultListItem>
+            </LanguageSwitchItem>
           );
         })}
       </DefaultList>
