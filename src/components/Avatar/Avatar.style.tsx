@@ -26,6 +26,7 @@ export const UserAvatar = styled.div<UserAvatarProps>`
       case UserAvatarType.PROFILE:
         return css`
           width: 35%;
+          margin: 2em auto;
         `;
     }
   }}

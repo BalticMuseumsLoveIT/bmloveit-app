@@ -13,6 +13,10 @@ const defaultFonts = {
     fontFamily: 'Montserrat, sans-serif',
     fontWeight: '600',
   },
+  alternative: {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: '400',
+  },
   paragraph: {
     fontFamily: '"Source Sans Pro", sans-serif',
     fontWeight: '400',

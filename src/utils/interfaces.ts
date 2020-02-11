@@ -296,6 +296,7 @@ export interface AnchorInterface {
 export interface ThemeFontsInterface {
   header: FontInterface;
   subheader: FontInterface;
+  alternative: FontInterface;
   paragraph: FontInterface;
 }
 

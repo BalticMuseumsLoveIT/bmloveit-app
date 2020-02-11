@@ -10,6 +10,8 @@ import ItemModal from 'components/ItemModal/ItemModal';
 import { UserPoints } from 'components/UserPoints/UserPoints';
 import UserAvatar from 'components/Avatar/Avatar';
 import { UserAvatarType } from 'components/Avatar/Avatar.style';
+import { Subtitle, Title } from 'components/Page/Page.style';
+import { LogoutButton } from 'pages/ProfilePage.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -69,21 +71,20 @@ class ProfilePage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'User profile')}</title>
         </Helmet>
         <Content>
-          <h1>{this.props.t('content.title', 'User Profile')}</h1>
-          <p>{this.userProfileStore.userName}</p>
+          <UserAvatar type={UserAvatarType.PROFILE} />
+
+          <Title>{this.userProfileStore.userName}</Title>
 
           {this.userProfileStore.userIsTeamMember && (
-            <p>
+            <Subtitle>
               <Trans i18nKey="teamMembership" ns="profile-page">
                 You are in group:
                 <Link to="/team">
                   {{ teamName: this.userProfileStore.userTeamStore.teamName }}
                 </Link>
               </Trans>
-            </p>
+            </Subtitle>
           )}
-
-          <UserAvatar type={UserAvatarType.PROFILE} />
 
           <UserPoints
             points={this.userProfileStore.points}
@@ -99,11 +100,9 @@ class ProfilePage extends React.Component<Props> {
             userLanguage={this.uiStore.language}
           />
 
-          <p>
-            <button onClick={this.logout}>
-              {this.props.t('button.logout.label', 'Logout')}
-            </button>
-          </p>
+          <LogoutButton onClick={this.logout}>
+            {this.props.t('button.logout.label', 'Logout')}
+          </LogoutButton>
 
           <ItemModal />
         </Content>
