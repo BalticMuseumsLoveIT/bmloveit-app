@@ -1,11 +1,16 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import RouteLocationsListPageStore from 'utils/store/routeLocationsListPageStore';
-import { getTranslatedString } from 'utils/helpers';
+import { getTranslatedString, getPrivateMediaURL } from 'utils/helpers';
 import {
   FooterButtonsContainer,
   FooterButton,
 } from 'components/Buttons/FooterButtons/FooterButtons.style';
+import {
+  DefaultListItem,
+  DefaultList,
+  DefaultListItemInfo,
+} from 'components/DefaultList/DefaultList.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -44,6 +49,9 @@ class RouteLocationsListPage extends React.Component<Props> {
   render() {
     if (!this.props.tReady) return null;
 
+    const doesAnyLocationContainImage = this.routeLocationsListPageStore
+      .doesAnyLocationContainImage;
+
     return (
       <>
         <Helmet>
@@ -51,37 +59,45 @@ class RouteLocationsListPage extends React.Component<Props> {
         </Helmet>
         <Content>
           <h1>{this.props.t('content.title', 'Locations list')}</h1>
-          {this.routeLocationsListPageStore.locationsData.map(location => {
-            const attractions = this.routeLocationsListPageStore.screensAmount(
-              location.id,
-            );
+          <DefaultList>
+            {this.routeLocationsListPageStore.locationsData.map(location => {
+              const attractions = this.routeLocationsListPageStore.screensAmount(
+                location.id,
+              );
 
-            const firstScreenId = this.routeLocationsListPageStore.firstScreenId(
-              location.id,
-            );
+              const firstScreenId = this.routeLocationsListPageStore.firstScreenId(
+                location.id,
+              );
 
-            return (
-              <p key={location.id}>
-                {isNaN(firstScreenId) ? (
-                  <span>
-                    {getTranslatedString(
-                      location.name_full,
-                      location.name_full_translation,
+              const imageUrl = doesAnyLocationContainImage
+                ? location.resources_data.length
+                  ? getPrivateMediaURL(location.resources_data[0].file_url)
+                  : '/images/Group 46.svg'
+                : undefined;
+
+              return (
+                <DefaultListItem
+                  as={Link}
+                  key={location.id}
+                  to={isNaN(firstScreenId) ? '#' : `/item/${firstScreenId}`}
+                  isDisabled={isNaN(firstScreenId)}
+                  imageUrl={imageUrl}
+                >
+                  {getTranslatedString(
+                    location.name_full,
+                    location.name_full_translation,
+                  )}
+                  <DefaultListItemInfo>
+                    {this.props.t(
+                      'counter.attractions',
+                      'Attractions: {{attractions}}',
+                      { attractions },
                     )}
-                  </span>
-                ) : (
-                  <Link to={`/item/${firstScreenId}`}>
-                    {getTranslatedString(
-                      location.name_full,
-                      location.name_full_translation,
-                    )}
-                  </Link>
-                )}
-                <br />
-                Attractions: {attractions}
-              </p>
-            );
-          })}
+                  </DefaultListItemInfo>
+                </DefaultListItem>
+              );
+            })}
+          </DefaultList>
           <FooterButtonsContainer>
             <FooterButton
               as={Link}

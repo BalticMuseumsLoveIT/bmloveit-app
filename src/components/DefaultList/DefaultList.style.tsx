@@ -1,9 +1,11 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export interface DefaultListItemProps {
   isVisibleWhenCollapsed?: boolean;
   isMenuOpened?: boolean;
   isActive?: boolean;
+  isDisabled?: boolean;
+  imageUrl?: string;
 }
 
 export const DefaultList = styled.ul`
@@ -26,7 +28,7 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
   justify-content: center;
   flex-direction: column;
   list-style: none;
-  padding: 20px 16px 16px 16px;
+  padding: 20px 56px 16px 16px;
   background-color: ${({ theme, isVisibleWhenCollapsed }) =>
     isVisibleWhenCollapsed
       ? theme.colors.background.menu
@@ -41,7 +43,7 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
   position: relative;
   text-decoration: none;
   font-size: 16px;
-  cursor: pointer;
+  cursor: ${({ isDisabled }) => (isDisabled === true ? 'default' : 'pointer')};
 
   &:first-of-type {
     border-top-left-radius: 8px;
@@ -60,13 +62,15 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
   }
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.background.menu};
+    background-color: ${({ isDisabled, theme }) =>
+      isDisabled !== true && theme.colors.background.menu};
   }
 
   &:after {
-    content: url('/images/chevron_right-24px.svg');
-    content: ${({ isMenuOpened, isVisibleWhenCollapsed }) =>
-      isVisibleWhenCollapsed
+    content: ${({ isDisabled, isMenuOpened, isVisibleWhenCollapsed }) =>
+      isDisabled === true
+        ? ''
+        : isVisibleWhenCollapsed
         ? isMenuOpened
           ? `url('/images/expand_less-24px.svg')`
           : `url('/images/expand_more-24px.svg')`
@@ -77,6 +81,25 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
     position: absolute;
     right: 18px;
   }
+
+  ${({ imageUrl }) => {
+    if (imageUrl) {
+      return css`
+        padding-left: 76px;
+
+        &:before {
+          content: '';
+          background: url('${imageUrl}') center center no-repeat;
+          background-size: cover;
+          width: 40px;
+          height: 40px;
+          position: absolute;
+          left: 18px;
+          border-radius: 4px;
+        }
+      `;
+    }
+  }}
 `;
 
 export const DefaultListItemInfo = styled.span`
