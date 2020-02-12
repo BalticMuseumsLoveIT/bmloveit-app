@@ -2,6 +2,7 @@ import {
   StyledWrapper,
   CloseButton,
   InfoMessage,
+  CloseButtonIcon,
 } from 'components/CookieBar/CookieBar.style';
 import { CookieBarStore } from 'utils/store/cookieBarStore';
 import { SiteStore } from 'utils/store/siteStore';
@@ -9,7 +10,6 @@ import { LayoutGridCookie } from 'components/Layout/Layout.style';
 import React from 'react';
 import { Trans, WithTranslation, withTranslation } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
-import SVG from 'react-inlinesvg';
 
 interface Props extends WithTranslation {}
 
@@ -43,7 +43,7 @@ class CookieBar extends React.Component<Props> {
             </Trans>
           </InfoMessage>
           <CloseButton type="button" onClick={this.cookieBarStore.clickHandler}>
-            <SVG src="/images/close-24px.svg" />
+            <CloseButtonIcon src="/images/close-24px.svg" />
           </CloseButton>
         </StyledWrapper>
       </LayoutGridCookie>

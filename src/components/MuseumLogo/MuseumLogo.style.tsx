@@ -1,3 +1,4 @@
+import { em } from 'polished';
 import styled, { css } from 'styled-components';
 
 export enum LogoType {
@@ -19,7 +20,7 @@ export const Logo = styled.div<LogoProps>`
     switch (props.type) {
       case LogoType.HEADER:
         return css`
-          width: 2em;
+          width: ${em(36)};
         `;
       case LogoType.WELCOME:
         return css`

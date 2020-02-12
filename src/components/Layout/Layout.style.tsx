@@ -1,3 +1,4 @@
+import { DefaultGridPadding } from 'components/Page/Page.style';
 import styled, { createGlobalStyle, css } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
@@ -34,6 +35,7 @@ export interface LayoutGridContentProps {
 
 export const LayoutGridContent = styled.div<LayoutGridContentProps>`
   grid-row: 3 / span 1;
+  ${DefaultGridPadding}
 
   ${props =>
     props.backgroundImage &&

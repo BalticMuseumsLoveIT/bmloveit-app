@@ -1,6 +1,7 @@
 import { ThemeType } from 'utils/interfaces';
 import { RecursivePartial } from 'utils/helpers';
 import { DefaultTheme } from 'styled-components';
+import { darken, desaturate, lighten } from 'polished';
 
 const defaultType = ThemeType.LIGHT;
 
@@ -12,6 +13,10 @@ const defaultFonts = {
   subheader: {
     fontFamily: 'Montserrat, sans-serif',
     fontWeight: '600',
+  },
+  alternative: {
+    fontFamily: 'Montserrat, sans-serif',
+    fontWeight: '400',
   },
   paragraph: {
     fontFamily: '"Source Sans Pro", sans-serif',
@@ -27,8 +32,8 @@ const defaultColors = {
     anchor: {
       link: '#2A2C3E',
       hover: '#F85705',
-      active: '#2A2C3E',
-      visited: '#2A2C3E',
+      active: '#ED4200',
+      visited: '#ED4200',
     },
     button: {
       default: '#FFFFFF',
@@ -40,6 +45,7 @@ const defaultColors = {
     default: '#FFFFFF',
     alternative: '#F85705',
     menu: '#F8FAFD',
+    placeholder: desaturate(0.1, darken(0.04, '#EAEEF6')),
     button: {
       default: '#F85705',
       hover: '#DB4F08',
@@ -47,6 +53,12 @@ const defaultColors = {
       focus: '#C34100',
       disabled: '#DCE2ED',
     },
+  },
+  icon: {
+    normal: '#7B7D92',
+    hover: '#ED591D',
+    pressed: '#BB4312',
+    inactive: '#BBBFCD',
   },
 };
 
@@ -85,38 +97,7 @@ export const defaultTheme: DefaultTheme = {
   },
 };
 
-export const lightPartial: RecursivePartial<DefaultTheme> = {
-  colors: {
-    text: {
-      paragraph: '#7A7D92',
-      header: '#2A2C3E',
-      alternative: '#F8FAFD',
-      anchor: {
-        link: '#2A2C3E',
-        hover: '#F85705',
-        active: '#2A2C3E',
-        visited: '#2A2C3E',
-      },
-      button: {
-        default: '#FFFFFF',
-        disabled: '#BABFCD',
-      },
-    },
-    background: {
-      app: '#EAEEF6',
-      default: '#FFFFFF',
-      alternative: '#F85705',
-      menu: '#F8FAFD',
-      button: {
-        default: '#F85705',
-        hover: '#DB4F08',
-        hover2: '#F8F8F8',
-        focus: '#C34100',
-        disabled: '#DCE2ED',
-      },
-    },
-  },
-};
+export const lightPartial: RecursivePartial<DefaultTheme> = {};
 
 export const darkPartial: RecursivePartial<DefaultTheme> = {
   colors: {
@@ -126,9 +107,9 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
       alternative: '#FFFFFF',
       anchor: {
         link: '#F8FAFD',
-        hover: '#FFFFFF',
-        active: '#F8FAFD',
-        visited: '#F8FAFD',
+        hover: '#65BFCB',
+        active: '#3C96A2',
+        visited: '#3C96A2',
       },
       button: {
         default: '#FFFFFF',
@@ -139,6 +120,8 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
       app: '#2A2E37',
       default: '#464856',
       alternative: '#73BFCA',
+      menu: '#464856',
+      placeholder: desaturate(0.0, lighten(0.05, '#2A2E37')),
       button: {
         default: '#F85705',
         hover: '#DB4F08',
@@ -146,6 +129,12 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
         focus: '#C34100',
         disabled: '#DCE2ED',
       },
+    },
+    icon: {
+      normal: '#EAEEF6',
+      hover: '#73BFCA',
+      pressed: '#73BFCA',
+      inactive: '#7B7D92',
     },
   },
 };

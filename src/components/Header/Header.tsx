@@ -10,6 +10,7 @@ import React from 'react';
 import AppHeader, {
   BackButton,
   BackButtonCell,
+  BackButtonIcon,
   MuseumLogoCell,
   ToggleSwitchCell,
   UserAvatarCell,
@@ -27,7 +28,9 @@ class Header extends React.Component<HeaderProps> {
       <LayoutGridHeader>
         <AppHeader>
           <BackButtonCell>
-            <BackButton onClick={this.props.history.goBack}>&larr;</BackButton>
+            <BackButton onClick={this.props.history.goBack}>
+              <BackButtonIcon src="/images/arrow_back-24px.svg" />
+            </BackButton>
           </BackButtonCell>
           <MuseumLogoCell>
             <MuseumLogo type={LogoType.HEADER} />
