@@ -11,12 +11,12 @@ export const AppButton = styled.button<ButtonProps>`
   padding: 26px;
   background-color: ${({ theme, isDisabled }) =>
     isDisabled
-      ? theme.colors.background.button.disabled
-      : theme.colors.background.button.default};
+      ? theme.colors.button.primary.disabled.background
+      : theme.colors.button.primary.default.background};
   color: ${({ theme, isDisabled }) =>
     isDisabled
-      ? theme.colors.text.button.disabled
-      : theme.colors.text.button.default};
+      ? theme.colors.button.primary.disabled.text
+      : theme.colors.button.primary.default.text};
   border-radius: 8px;
   margin-left: auto;
   margin-right: auto;
@@ -26,10 +26,24 @@ export const AppButton = styled.button<ButtonProps>`
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.background.button.hover};
+    background-color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.primary.disabled.background
+        : theme.colors.button.primary.hover.background};
+    color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.primary.disabled.text
+        : theme.colors.button.primary.hover.text};
   }
 
   &:focus {
-    background-color: ${({ theme }) => theme.colors.background.button.focus};
+    background-color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.primary.disabled.background
+        : theme.colors.button.primary.focus.background};
+    color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.primary.disabled.text
+        : theme.colors.button.primary.focus.text};
   }
 `;

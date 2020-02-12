@@ -34,19 +34,25 @@ export const CloseButton = styled.button<ButtonProps>`
   svg .a {
     fill: ${({ theme, isDisabled }) =>
       isDisabled
-        ? theme.colors.text.button.disabled
-        : theme.colors.text.paragraph};
+        ? theme.colors.button.outline.disabled.text
+        : theme.colors.button.outline.default.text};
   }
 
   &:hover {
     svg .a {
-      fill: ${({ theme }) => theme.colors.background.button.default};
+      fill: ${({ theme, isDisabled }) =>
+        isDisabled
+          ? theme.colors.button.outline.disabled.text
+          : theme.colors.button.outline.hover.text};
     }
   }
 
   &:focus {
     svg .a {
-      fill: ${({ theme }) => theme.colors.background.button.focus};
+      fill: ${({ theme, isDisabled }) =>
+        isDisabled
+          ? theme.colors.button.outline.disabled.text
+          : theme.colors.button.outline.focus.text};
     }
   }
 `;

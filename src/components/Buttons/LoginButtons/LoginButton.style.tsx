@@ -13,7 +13,14 @@ const LoginButton = styled.button<LoginButtonProps>`
   width: 88%;
   max-width: 360px;
   padding: 24px;
-  background-color: #ffffff;
+  background-color: ${({ theme, isDisabled }) =>
+    isDisabled
+      ? theme.colors.button.secondary.disabled.background
+      : theme.colors.button.secondary.hover.background};
+  color: ${({ theme, isDisabled }) =>
+    isDisabled
+      ? theme.colors.button.secondary.disabled.text
+      : theme.colors.button.secondary.hover.text};
   color: ${({ theme }) => theme.colors.text.paragraph};
   font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
@@ -32,13 +39,25 @@ const LoginButton = styled.button<LoginButtonProps>`
   }
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.background.default};
-    color: ${({ theme }) => theme.colors.text.anchor.hover};
+    background-color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.secondary.disabled.background
+        : theme.colors.button.secondary.hover.background};
+    color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.secondary.disabled.text
+        : theme.colors.button.secondary.hover.text};
   }
 
   &:focus {
-    background-color: ${({ theme }) => theme.colors.background.button.hover2};
-    color: ${({ theme }) => theme.colors.background.button.focus};
+    background-color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.secondary.disabled.background
+        : theme.colors.button.secondary.focus.background};
+    color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.secondary.disabled.text
+        : theme.colors.button.secondary.focus.text};
   }
 `;
 

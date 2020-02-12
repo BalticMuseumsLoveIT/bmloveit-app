@@ -300,29 +300,35 @@ export interface ThemeFontsInterface {
   paragraph: FontInterface;
 }
 
+interface ThemeButtonColorsInterface {
+  text: string;
+  background: string;
+}
+
+interface ThemeColorEffectOnMouseEventInterface {
+  default: ThemeButtonColorsInterface;
+  hover: ThemeButtonColorsInterface;
+  focus: ThemeButtonColorsInterface;
+  disabled: ThemeButtonColorsInterface;
+}
+
 export interface ThemeColorsInterface {
   text: {
     header: string;
     paragraph: string;
     alternative: string;
     anchor: AnchorInterface;
-    button: {
-      default: string;
-      disabled: string;
-    };
   };
   background: {
     app: string;
     default: string;
     alternative: string;
     menu: string;
-    button: {
-      default: string;
-      hover: string;
-      hover2: string;
-      focus: string;
-      disabled: string;
-    };
+  };
+  button: {
+    primary: ThemeColorEffectOnMouseEventInterface;
+    secondary: ThemeColorEffectOnMouseEventInterface;
+    outline: ThemeColorEffectOnMouseEventInterface;
   };
 }
 

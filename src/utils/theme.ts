@@ -30,22 +30,67 @@ const defaultColors = {
       active: '#2A2C3E',
       visited: '#2A2C3E',
     },
-    button: {
-      default: '#FFFFFF',
-      disabled: '#BABFCD',
-    },
   },
   background: {
     app: '#EAEEF6',
     default: '#FFFFFF',
     alternative: '#F85705',
     menu: '#F8FAFD',
-    button: {
-      default: '#F85705',
-      hover: '#DB4F08',
-      hover2: '#F8F8F8',
-      focus: '#C34100',
-      disabled: '#DCE2ED',
+  },
+  button: {
+    primary: {
+      default: {
+        text: '#FFFFFF',
+        background: '#F85705',
+      },
+      hover: {
+        text: '#FFFFFF',
+        background: '#DB4F08',
+      },
+      focus: {
+        text: '#FFFFFF',
+        background: '#C34100',
+      },
+      disabled: {
+        text: '#BABFCD',
+        background: '#DCE2ED',
+      },
+    },
+    secondary: {
+      default: {
+        text: '#7A7D92',
+        background: '#FFFFFF',
+      },
+      hover: {
+        text: '#DB4F08',
+        background: '#F8F8F8',
+      },
+      focus: {
+        text: '#C34100',
+        background: '#F8F8F8',
+      },
+      disabled: {
+        text: '#BABFCD',
+        background: '#DCE2ED',
+      },
+    },
+    outline: {
+      default: {
+        text: '#7A7D92',
+        background: 'transparent',
+      },
+      hover: {
+        text: '#FFFFFF',
+        background: 'transparent',
+      },
+      focus: {
+        text: '#FFFFFF',
+        background: 'transparent',
+      },
+      disabled: {
+        text: '#BABFCD',
+        background: 'transparent',
+      },
     },
   },
 };
@@ -97,22 +142,67 @@ export const lightPartial: RecursivePartial<DefaultTheme> = {
         active: '#2A2C3E',
         visited: '#2A2C3E',
       },
-      button: {
-        default: '#FFFFFF',
-        disabled: '#BABFCD',
-      },
     },
     background: {
       app: '#EAEEF6',
       default: '#FFFFFF',
       alternative: '#F85705',
       menu: '#F8FAFD',
-      button: {
-        default: '#F85705',
-        hover: '#DB4F08',
-        hover2: '#F8F8F8',
-        focus: '#C34100',
-        disabled: '#DCE2ED',
+    },
+    button: {
+      primary: {
+        default: {
+          text: '#FFFFFF',
+          background: '#F85705',
+        },
+        hover: {
+          text: '#FFFFFF',
+          background: '#DB4F08',
+        },
+        focus: {
+          text: '#FFFFFF',
+          background: '#C34100',
+        },
+        disabled: {
+          text: '#BABFCD',
+          background: '#DCE2ED',
+        },
+      },
+      secondary: {
+        default: {
+          text: '#7A7D92',
+          background: '#FFFFFF',
+        },
+        hover: {
+          text: '#DB4F08',
+          background: '#F8F8F8',
+        },
+        focus: {
+          text: '#C34100',
+          background: '#F8F8F8',
+        },
+        disabled: {
+          text: '#BABFCD',
+          background: '#DCE2ED',
+        },
+      },
+      outline: {
+        default: {
+          text: '#7A7D92',
+          background: 'transparent',
+        },
+        hover: {
+          text: '#FFFFFF',
+          background: 'transparent',
+        },
+        focus: {
+          text: '#FFFFFF',
+          background: 'transparent',
+        },
+        disabled: {
+          text: '#BABFCD',
+          background: 'transparent',
+        },
       },
     },
   },
@@ -130,21 +220,66 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
         active: '#F8FAFD',
         visited: '#F8FAFD',
       },
-      button: {
-        default: '#FFFFFF',
-        disabled: '#BABFCD',
-      },
     },
     background: {
       app: '#2A2E37',
       default: '#464856',
       alternative: '#73BFCA',
-      button: {
-        default: '#F85705',
-        hover: '#DB4F08',
-        hover2: '#F8F8F8',
-        focus: '#C34100',
-        disabled: '#DCE2ED',
+    },
+    button: {
+      primary: {
+        default: {
+          text: '#FFFFFF',
+          background: '#F85705',
+        },
+        hover: {
+          text: '#FFFFFF',
+          background: '#DB4F08',
+        },
+        focus: {
+          text: '#FFFFFF',
+          background: '#C34100',
+        },
+        disabled: {
+          text: '#BABFCD',
+          background: '#DCE2ED',
+        },
+      },
+      secondary: {
+        default: {
+          text: '#7A7D92',
+          background: '#FFFFFF',
+        },
+        hover: {
+          text: '#DB4F08',
+          background: '#F8F8F8',
+        },
+        focus: {
+          text: '#C34100',
+          background: '#F8F8F8',
+        },
+        disabled: {
+          text: '#BABFCD',
+          background: '#DCE2ED',
+        },
+      },
+      outline: {
+        default: {
+          text: '#7A7D92',
+          background: 'transparent',
+        },
+        hover: {
+          text: '#FFFFFF',
+          background: 'transparent',
+        },
+        focus: {
+          text: '#FFFFFF',
+          background: 'transparent',
+        },
+        disabled: {
+          text: '#BABFCD',
+          background: 'transparent',
+        },
       },
     },
   },
