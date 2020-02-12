@@ -297,6 +297,7 @@ export interface AnchorInterface {
 export interface ThemeFontsInterface {
   header: FontInterface;
   subheader: FontInterface;
+  alternative: FontInterface;
   paragraph: FontInterface;
 }
 
@@ -330,6 +331,7 @@ export interface ThemeColorsInterface {
     default: string;
     alternative: string;
     menu: string;
+    placeholder: string;
   };
   button: {
     primary: ThemeButtonColorEffectOnMouseEventInterface;
@@ -341,6 +343,12 @@ export interface ThemeColorsInterface {
     header: ThemeListColorEffectOnMouseEventInterface;
     item: ThemeListColorEffectOnMouseEventInterface;
     info: string;
+  };
+  icon: {
+    normal: string;
+    hover: string;
+    pressed: string;
+    inactive:  string;
   };
 }
 

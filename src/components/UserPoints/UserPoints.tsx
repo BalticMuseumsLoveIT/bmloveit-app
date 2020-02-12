@@ -1,6 +1,11 @@
+import {
+  ProgressBarContainer,
+  ProgressBarSummary,
+} from 'pages/ProfilePage.style';
 import { Line as ProgressBar } from 'rc-progress';
 import { useTranslation } from 'react-i18next';
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 
 interface Props {
   points: number;
@@ -9,6 +14,8 @@ interface Props {
 
 export const UserPoints = ({ points, nextLevelStart }: Props) => {
   const { t, ready } = useTranslation('profile-page');
+
+  const themeContext = useContext(ThemeContext);
 
   if (!ready || points <= 0) return null;
 
@@ -23,13 +30,21 @@ export const UserPoints = ({ points, nextLevelStart }: Props) => {
     : `${points}`;
 
   return (
-    <>
-      {haveNextLevel && <ProgressBar percent={progress} />}
-      <p>
+    <ProgressBarContainer>
+      {haveNextLevel && (
+        <ProgressBar
+          percent={progress}
+          strokeColor={themeContext.colors.background.alternative}
+          trailColor={themeContext.colors.background.placeholder}
+          strokeWidth={2}
+          trailWidth={2}
+        />
+      )}
+      <ProgressBarSummary>
         {t('userProgressPoints', 'Points: {{ userPoints }}', {
           userPoints: userPoints,
         })}
-      </p>
-    </>
+      </ProgressBarSummary>
+    </ProgressBarContainer>
   );
 };

@@ -5,6 +5,12 @@
     },
     "signInAsGuest": {
       "label": ""
+    },
+    "signInWithFacebook": {
+      "label": ""
+    },
+    "signInWithGoogle": {
+      "label": ""
     }
   },
   "cookieBar": "",

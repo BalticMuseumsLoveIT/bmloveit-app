@@ -1,5 +1,5 @@
 import { SiteInterface, ThemeType } from 'utils/interfaces';
-import { defaultTheme, darkPartial, lightPartial } from 'utils/theme';
+import { darkPartial, defaultTheme, lightPartial } from 'utils/theme';
 import Api from 'utils/api';
 import {
   getTranslatedString,

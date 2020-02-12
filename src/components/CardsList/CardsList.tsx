@@ -8,6 +8,7 @@ import {
 import { getPrivateMediaURL } from 'utils/helpers';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
+import { Subtitle } from 'components/Page/Page.style';
 
 export interface Props {
   cards: Array<ItemStore>;
@@ -20,7 +21,7 @@ const CardsList = ({ cards }: Props) => {
 
   return userHaveCards && ready ? (
     <>
-      <h3>{t('cards.header', 'Cards')}:</h3>
+      <Subtitle>{t('cards.header', 'Cards')}:</Subtitle>
       <CardList>
         {cards.map(card => (
           <CardListItem key={card.itemId}>

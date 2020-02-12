@@ -4,7 +4,13 @@
       "label": "Zamknij"
     },
     "signInAsGuest": {
-      "label": ""
+      "label": "Zaloguj się jako gość"
+    },
+    "signInWithFacebook": {
+      "label": "Zaloguj się przez Facebook"
+    },
+    "signInWithGoogle": {
+      "label": "Zaloguj się przez Google"
     }
   },
   "cookieBar": "Używamy plików cookie. <1>Dowiedz się więcej</1>",
