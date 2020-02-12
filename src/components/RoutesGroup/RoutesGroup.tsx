@@ -1,10 +1,10 @@
 import { RouteInterface, RouteTypeInterface } from 'utils/interfaces';
 import { getTranslatedString } from 'utils/helpers';
 import {
-  DefaultListItem,
   DefaultList,
   DefaultListItemInfo,
 } from 'components/DefaultList/DefaultList.style';
+import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { action } from 'mobx';

@@ -3,11 +3,12 @@ import { UiStore } from 'utils/store/uiStore';
 import AreaPageStore from 'utils/store/areaListPageStore';
 import { getTranslatedString } from 'utils/helpers';
 import {
-  DefaultListItem,
+  DefaultListItemWrapper,
   DefaultList,
   DefaultListItemInfo,
 } from 'components/DefaultList/DefaultList.style';
 import Steps from 'components/Steps/Steps';
+import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';

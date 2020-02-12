@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export interface DefaultListItemProps {
+export interface DefaultListItemWrapperProps {
   isVisibleWhenCollapsed?: boolean;
   isMenuOpened?: boolean;
   isActive?: boolean;
@@ -18,7 +18,7 @@ export const DefaultList = styled.ul`
   flex-direction: column;
 `;
 
-export const DefaultListItem = styled.li<DefaultListItemProps>`
+export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   box-sizing: border-box;
   display: ${({ isMenuOpened, isVisibleWhenCollapsed }) =>
     isMenuOpened !== false || isVisibleWhenCollapsed ? 'flex' : 'none'};
@@ -73,22 +73,21 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
       isVisibleWhenCollapsed
         ? theme.colors.list.header.hover.text
         : theme.colors.list.item.hover.text};
+
+    svg {
+      path {
+        fill: ${({ theme }) => theme.colors.list.item.hover.text};
+      }
+    }
   }
 
-  &:after {
-    content: ${({ isDisabled, isMenuOpened, isVisibleWhenCollapsed }) =>
-      isDisabled === true
-        ? ''
-        : isVisibleWhenCollapsed
-        ? isMenuOpened
-          ? `url('/images/expand_less-24px.svg')`
-          : `url('/images/expand_more-24px.svg')`
-        : `url('/images/chevron_right-24px.svg')`};
+  svg {
     display: block;
     width: 24px;
     height: 24px;
     position: absolute;
     right: 18px;
+    fill: ${({ theme }) => theme.colors.list.item.default.text};
   }
 
   & > a {

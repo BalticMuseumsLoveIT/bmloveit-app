@@ -7,10 +7,10 @@ import {
   FooterButton,
 } from 'components/Buttons/FooterButtons/FooterButtons.style';
 import {
-  DefaultListItem,
   DefaultList,
   DefaultListItemInfo,
 } from 'components/DefaultList/DefaultList.style';
+import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
