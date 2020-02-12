@@ -47,6 +47,10 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   text-decoration: none;
   font-size: 16px;
   cursor: ${({ isDisabled }) => (isDisabled === true ? 'default' : 'pointer')};
+  box-shadow: ${({ isVisibleWhenCollapsed, isMenuOpened }) =>
+    isVisibleWhenCollapsed === true &&
+    isMenuOpened === false &&
+    '0 3px 6px #2a2c3e33'};
 
   &:first-of-type {
     border-top-left-radius: 8px;
@@ -56,6 +60,7 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   &:last-of-type {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
+    box-shadow: 0 3px 6px #2a2c3e33;
   }
 
   &:hover,

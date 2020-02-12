@@ -24,6 +24,7 @@ export const AppButton = styled.button<ButtonProps>`
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
   text-decoration: none;
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
+  box-shadow: 0 3px 6px #2a2c3e33;
 
   &:hover {
     background-color: ${({ theme, isDisabled }) =>
