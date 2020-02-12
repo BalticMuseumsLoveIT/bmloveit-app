@@ -19,6 +19,37 @@ export const DefaultFontSize = css`
   )}
 `;
 
+export const HeaderFontSize = css`
+  ${fluidRange(
+    {
+      prop: 'font-size',
+      fromSize: em(18),
+      toSize: em(24),
+    },
+    ...Object.values(fluidRangeMinMax),
+  )}
+`;
+
+export const TitleFontStyle = css`
+  font-family: ${props => props.theme.fonts.header.fontFamily};
+  font-weight: ${props => props.theme.fonts.header.fontWeight};
+`;
+
+export const SubtitleFontStyle = css`
+  font-family: ${props => props.theme.fonts.subheader.fontFamily};
+  font-weight: ${props => props.theme.fonts.subheader.fontWeight};
+`;
+
+export const AlternativeFontStyle = css`
+  font-family: ${props => props.theme.fonts.alternative.fontFamily};
+  font-weight: ${props => props.theme.fonts.alternative.fontWeight};
+`;
+
+export const ParagraphFontStyle = css`
+  font-family: ${props => props.theme.fonts.paragraph.fontFamily};
+  font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
+`;
+
 export const DefaultGridPaddingRage = {
   fromSize: em(12),
   toSize: em(16),
@@ -62,33 +93,22 @@ export const NegativeGridPadding = css`
 `;
 
 export const Title = styled.h1`
-  font-family: ${props => props.theme.fonts.header.fontFamily};
-  font-weight: ${props => props.theme.fonts.header.fontWeight};
+  ${TitleFontStyle}
   color: ${props => props.theme.colors.text.header};
   text-align: center;
   margin: 1em 0;
-
-  ${fluidRange(
-    {
-      prop: 'font-size',
-      fromSize: em(18),
-      toSize: em(24),
-    },
-    ...Object.values(fluidRangeMinMax),
-  )}
+  ${HeaderFontSize}
 `;
 
 export const Subtitle = styled.h2`
-  font-family: ${props => props.theme.fonts.subheader.fontFamily};
-  font-weight: ${props => props.theme.fonts.subheader.fontWeight};
+  ${SubtitleFontStyle}
   color: ${props => props.theme.colors.text.header};
   text-align: center;
   ${DefaultFontSize}
 `;
 
 export const Emphasize = styled.div`
-  font-family: ${props => props.theme.fonts.alternative.fontFamily};
-  font-weight: ${props => props.theme.fonts.alternative.fontWeight};
+  ${AlternativeFontStyle}
   color: ${props => props.theme.colors.text.header};
   text-align: center;
 
@@ -96,8 +116,7 @@ export const Emphasize = styled.div`
 `;
 
 export const Description = styled.div`
-  font-family: ${props => props.theme.fonts.paragraph.fontFamily};
-  font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
+  ${ParagraphFontStyle}
   color: ${props => props.theme.colors.text.paragraph};
 
   line-height: 1.4;

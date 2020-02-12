@@ -9,15 +9,19 @@ import { LayoutGridFooter } from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import { Description } from 'components/Page/Page.style';
 import { WelcomeHeaderImage, WelcomeTitle } from 'pages/WelcomePage.style';
+import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
+import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
-import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
+import { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
 
-interface Props extends WithTranslation, RouteComponentProps {
+interface Props
+  extends WithTranslation,
+    ThemeProps<DefaultTheme>,
+    RouteComponentProps {
   uiStore: UiStore;
   siteStore: SiteStore;
 }
@@ -52,7 +56,7 @@ class WelcomePage extends React.Component<Props> {
         <Helmet>
           <title>{this.props.t('page.title', 'Homepage')}</title>
         </Helmet>
-        <Content>
+        <Content backgroundColor={this.props.theme.colors.background.default}>
           <WelcomeHeaderImage image={this.siteStore.image}>
             <MuseumLogo type={LogoType.WELCOME_HEADER} />
           </WelcomeHeaderImage>
@@ -74,4 +78,4 @@ class WelcomePage extends React.Component<Props> {
   }
 }
 
-export default withTranslation('welcome-page')(WelcomePage);
+export default withTranslation('welcome-page')(withTheme(WelcomePage));

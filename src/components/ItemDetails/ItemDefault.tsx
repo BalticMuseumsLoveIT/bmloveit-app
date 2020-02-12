@@ -2,9 +2,10 @@ import { getPrivateMediaURL } from 'utils/helpers';
 import Footer from 'components/Footer/Footer';
 import ItemStore from 'utils/store/itemStore';
 import { AppButton } from 'components/Buttons/AppButton.style';
+import { AudioPlayer, ItemTitle, VideoPlayer } from 'pages/ItemPage.style';
+import { Description, HeaderImage } from 'components/Page/Page.style';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import React from 'react';
-import ReactHtmlParser, { processNodes } from 'react-html-parser';
-import { DomElement } from 'htmlparser2';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
@@ -17,58 +18,39 @@ export const ItemDefault = ({ itemStore }: ItemDefaultProps) => {
 
   if (!ready) return null;
 
-  const transform = (node: DomElement) => {
-    if (node.type === 'tag' && node.name === 'a') {
-      return (
-        <Link to={(node.attribs && node.attribs.href) || ''}>
-          {processNodes(node.children || [], transform)}
-        </Link>
-      );
-    }
-  };
-
   return (
     <>
-      <h1>{itemStore.itemNameFull}</h1>
-      <div>
-        {itemStore.itemImage && (
-          <div>
-            <p>Private Image: {itemStore.itemImage.file_url}</p>
-            {itemStore.itemImage.file_url ? (
-              <img
-                src={getPrivateMediaURL(itemStore.itemImage.file_url)}
-                alt=""
-              />
-            ) : null}
-          </div>
-        )}
-        {itemStore.itemAudio && (
-          <div>
-            <p>Private Audio: {itemStore.itemAudio.file_url}</p>
-            <audio controls id="audio_player">
-              <source
-                src={getPrivateMediaURL(itemStore.itemAudio.file_url)}
-                type="audio/mpeg"
-              />
-            </audio>
-          </div>
-        )}
-        {itemStore.itemVideo && (
-          <div>
-            <p>Private video: {itemStore.itemVideo.file_url}</p>
-            <video
-              controls
-              id="video_player"
-              src={getPrivateMediaURL(itemStore.itemVideo.file_url)}
-            />
-          </div>
-        )}
-      </div>
-      <div>
-        {ReactHtmlParser(itemStore.itemDescription, {
-          transform: transform,
-        })}
-      </div>
+      {itemStore.itemImage && itemStore.itemImage.file_url && (
+        <HeaderImage image={getPrivateMediaURL(itemStore.itemImage.file_url)} />
+      )}
+
+      {itemStore.itemNameFull && (
+        <ItemTitle>{itemStore.itemNameFull}</ItemTitle>
+      )}
+
+      {itemStore.itemAudio && (
+        <AudioPlayer controls id="audio_player">
+          <source
+            src={getPrivateMediaURL(itemStore.itemAudio.file_url)}
+            type="audio/mpeg"
+          />
+        </AudioPlayer>
+      )}
+
+      {itemStore.itemVideo && (
+        <VideoPlayer
+          controls
+          id="video_player"
+          src={getPrivateMediaURL(itemStore.itemVideo.file_url)}
+        />
+      )}
+
+      {itemStore.itemDescription && (
+        <Description>
+          <ItemHtmlParser html={itemStore.itemDescription} />
+        </Description>
+      )}
+
       <Footer>
         <AppButton as={Link} to={`/item/${itemStore.nextItemId}`}>
           {t('button.next.label', 'Next')}
