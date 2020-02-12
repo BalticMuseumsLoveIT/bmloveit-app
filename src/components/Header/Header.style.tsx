@@ -28,7 +28,7 @@ export const UserAvatarCell = styled.div`
 export const ToggleSwitchCell = styled.div`
   grid-column-start: 5;
   grid-column-end: span 1;
-  z-index: 3;
+  z-index: 11;
 `;
 
 export const BackButton = styled.button`
