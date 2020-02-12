@@ -37,7 +37,7 @@ export const RoutesGroup = ({
       <DefaultList>
         <DefaultListItem
           isMenuOpened={localStore.isMenuOpened}
-          isVisibleWhenCollapsed={true}
+          isHeader={true}
           onClick={localStore.toggleMenu}
         >
           {getTranslatedString(

@@ -16,12 +16,12 @@ export const DefaultListItem = ({
   customHeaderImageSrc,
   isDisabled,
   isMenuOpened,
-  isVisibleWhenCollapsed,
+  isHeader,
   ...rest
 }: DefaultListItemProps) => {
   const imageSrc = isDisabled
     ? ''
-    : isVisibleWhenCollapsed
+    : isHeader
     ? isMenuOpened
       ? '/images/expand_less-24px.svg'
       : customHeaderImageSrc || '/images/expand_more-24px.svg'
@@ -30,7 +30,7 @@ export const DefaultListItem = ({
   return (
     <DefaultListItemWrapper
       isMenuOpened={isMenuOpened}
-      isVisibleWhenCollapsed={isVisibleWhenCollapsed}
+      isHeader={isHeader}
       {...rest}
     >
       {children}

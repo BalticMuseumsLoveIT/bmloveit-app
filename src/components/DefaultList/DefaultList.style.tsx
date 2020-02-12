@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export interface DefaultListItemWrapperProps {
-  isVisibleWhenCollapsed?: boolean;
+  isHeader?: boolean;
   isMenuOpened?: boolean;
   isActive?: boolean;
   isDisabled?: boolean;
@@ -20,22 +20,21 @@ export const DefaultList = styled.ul`
 
 export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   box-sizing: border-box;
-  display: ${({ isMenuOpened, isVisibleWhenCollapsed }) =>
-    isMenuOpened !== false || isVisibleWhenCollapsed ? 'flex' : 'none'};
-  border-radius: ${({ isMenuOpened, isVisibleWhenCollapsed }) =>
-    !isMenuOpened && isVisibleWhenCollapsed && '8px'};
+  display: ${({ isMenuOpened, isHeader }) =>
+    isMenuOpened !== false || isHeader ? 'flex' : 'none'};
+  border-radius: ${({ isMenuOpened, isHeader }) =>
+    !isMenuOpened && isHeader && '8px'};
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
   list-style: none;
-  padding: ${({ isVisibleWhenCollapsed }) =>
-    isVisibleWhenCollapsed === true && '0 16px'};
-  background-color: ${({ theme, isVisibleWhenCollapsed }) =>
-    isVisibleWhenCollapsed
+  padding: ${({ isHeader }) => isHeader === true && '0 16px'};
+  background-color: ${({ theme, isHeader }) =>
+    isHeader
       ? theme.colors.list.header.default.background
       : theme.colors.list.item.default.background};
-  color: ${({ theme, isVisibleWhenCollapsed }) =>
-    isVisibleWhenCollapsed
+  color: ${({ theme, isHeader }) =>
+    isHeader
       ? theme.colors.list.header.default.text
       : theme.colors.list.item.default.text};
   width: 88%;
@@ -48,10 +47,8 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   text-decoration: none;
   font-size: 16px;
   cursor: ${({ isDisabled }) => (isDisabled === true ? 'default' : 'pointer')};
-  box-shadow: ${({ isVisibleWhenCollapsed, isMenuOpened }) =>
-    isVisibleWhenCollapsed === true &&
-    isMenuOpened === false &&
-    '0 3px 6px #2a2c3e33'};
+  box-shadow: ${({ isHeader, isMenuOpened }) =>
+    isHeader === true && isMenuOpened === false && '0 3px 6px #2a2c3e33'};
 
   &:first-of-type {
     border-top-left-radius: 8px;
@@ -71,12 +68,12 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   }
 
   &:hover {
-    background-color: ${({ theme, isVisibleWhenCollapsed }) =>
-      isVisibleWhenCollapsed
+    background-color: ${({ theme, isHeader }) =>
+      isHeader
         ? theme.colors.list.header.hover.background
         : theme.colors.list.item.hover.background};
-    color: ${({ theme, isVisibleWhenCollapsed }) =>
-      isVisibleWhenCollapsed
+    color: ${({ theme, isHeader }) =>
+      isHeader
         ? theme.colors.list.header.hover.text
         : theme.colors.list.item.hover.text};
 
@@ -106,8 +103,8 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
     align-items: inherit;
     justify-content: inherit;
     flex-direction: inherit;
-    color: ${({ theme, isVisibleWhenCollapsed }) =>
-      isVisibleWhenCollapsed
+    color: ${({ theme, isHeader }) =>
+      isHeader
         ? theme.colors.list.header.default.text
         : theme.colors.list.item.default.text};
 

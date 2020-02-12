@@ -43,7 +43,7 @@ export const LanguageSwitch = ({
             <LanguageSwitchItem
               key={language.id}
               isMenuOpened={localStore.isMenuOpened}
-              isVisibleWhenCollapsed={
+              isHeader={
                 localStore.isMenuOpened === false &&
                 language.key === userLanguage
               }
