@@ -7,5 +7,5 @@
     "title": "Area"
   },
   "routeAttractions": "Attractions: {{attractions}}",
-  "routeLocations": "Locations: {{locations}}","$schema":
+  "routeLocations": "Locations: {{locations}}",
 }
