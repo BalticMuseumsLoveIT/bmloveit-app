@@ -42,6 +42,8 @@ export const Title = styled.h1`
   font-weight: ${props => props.theme.fonts.header.fontWeight};
   color: ${props => props.theme.colors.text.header};
   text-align: center;
+  margin: 1em 0;
+  
   ${fluidRange(
     {
       prop: 'font-size',
@@ -71,7 +73,11 @@ export const Emphasize = styled.div`
 `;
 
 export const Description = styled.div`
+  font-family: ${props => props.theme.fonts.paragraph.fontFamily};
+  font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
   color: ${props => props.theme.colors.text.paragraph};
+
+  line-height: 1.4;
 
   ${DefaultFontSize}
 `;

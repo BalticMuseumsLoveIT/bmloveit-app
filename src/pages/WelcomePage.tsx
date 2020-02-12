@@ -5,6 +5,10 @@ import WelcomePageStore from 'utils/store/welcomePageStore';
 import Footer from 'components/Footer/Footer';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
+import { LayoutGridFooter } from 'components/Layout/Layout.style';
+import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
+import { Description, Title } from 'components/Page/Page.style';
+import { WelcomeTitle } from 'pages/WelcomePage.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -47,18 +51,19 @@ class WelcomePage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Homepage')}</title>
         </Helmet>
         <Content>
-          <div>
-            <p>Site Image: {this.siteStore.image}</p>
-            <p>Site Logo: {this.siteStore.logo}</p>
-          </div>
-          <h1>{this.siteStore.title}</h1>
-          <ItemHtmlParser html={this.siteStore.description} />
+          <WelcomeTitle>{this.siteStore.title}</WelcomeTitle>
+          <Description>
+            <ItemHtmlParser html={this.siteStore.description} />
+          </Description>
           <Footer>
             <AppButton as={Link} to="/area">
               {this.props.t('buttonStart.label', 'Start sightseeing')}
             </AppButton>
           </Footer>
         </Content>
+        <LayoutGridFooter>
+          <SponsorLogotype />
+        </LayoutGridFooter>
       </>
     );
   }

@@ -39,7 +39,12 @@ const Routes = () => {
         authorization={false}
         component={LoginPage}
       />
-      <PageRoute exact path="/welcome" component={HomePage} />
+      <PageRoute
+        exact
+        path="/welcome"
+        component={HomePage}
+        displayHeader={false}
+      />
       <PageRoute exact path="/about" component={AboutPage} />
       <PageRoute exact path="/area" component={AreaListPage} />
       <Redirect exact from="/area/:id" to="/area/:id/routes" />
