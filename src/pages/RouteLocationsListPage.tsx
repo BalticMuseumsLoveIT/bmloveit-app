@@ -11,6 +11,9 @@ import {
   DefaultListItemInfo,
 } from 'components/DefaultList/DefaultList.style';
 import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
+import { Title, Subtitle } from 'components/Page/Page.style';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
+import Footer from 'components/Footer/Footer';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -58,7 +61,15 @@ class RouteLocationsListPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Route locations')}</title>
         </Helmet>
         <Content>
-          <h1>{this.props.t('content.title', 'Locations list')}</h1>
+          <Title>{this.props.t('content.title', 'Locations list')}</Title>
+          <Subtitle>
+            <ItemHtmlParser
+              html={this.props.t(
+                'content.description',
+                'Short information about what we choose and why. Info about locations',
+              )}
+            />
+          </Subtitle>
           <DefaultList>
             {this.routeLocationsListPageStore.locationsData.map(location => {
               const attractions = this.routeLocationsListPageStore.screensAmount(
@@ -100,23 +111,25 @@ class RouteLocationsListPage extends React.Component<Props> {
               );
             })}
           </DefaultList>
-          <FooterButtonsContainer>
-            <FooterButton
-              as={Link}
-              to={`/area/${this.routeLocationsListPageStore.areaId}/routes`}
-            >
-              {this.props.t('button.changeRoute.label', 'Change route')}
-            </FooterButton>
-            <FooterButton
-              as={Link}
-              to={`/route/${this.routeLocationsListPageStore.routeId}/map`}
-            >
-              {this.props.t('button.viewMap.label', 'View map')}
-            </FooterButton>
-            <FooterButton as={Link} to={`/qrcode`}>
-              {this.props.t('button.scanQR.label', 'Scan QR')}
-            </FooterButton>
-          </FooterButtonsContainer>
+          <Footer>
+            <FooterButtonsContainer>
+              <FooterButton
+                as={Link}
+                to={`/area/${this.routeLocationsListPageStore.areaId}/routes`}
+              >
+                {this.props.t('button.changeRoute.label', 'Change route')}
+              </FooterButton>
+              <FooterButton
+                as={Link}
+                to={`/route/${this.routeLocationsListPageStore.routeId}/map`}
+              >
+                {this.props.t('button.viewMap.label', 'View map')}
+              </FooterButton>
+              <FooterButton as={Link} to={`/qrcode`}>
+                {this.props.t('button.scanQR.label', 'Scan QR')}
+              </FooterButton>
+            </FooterButtonsContainer>
+          </Footer>
         </Content>
       </>
     );

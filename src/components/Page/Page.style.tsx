@@ -71,8 +71,8 @@ export const Title = styled.h1`
   ${fluidRange(
     {
       prop: 'font-size',
-      fromSize: em(18),
-      toSize: em(24),
+      fromSize: em(22),
+      toSize: em(28),
     },
     ...Object.values(fluidRangeMinMax),
   )}
@@ -83,7 +83,18 @@ export const Subtitle = styled.h2`
   font-weight: ${props => props.theme.fonts.subheader.fontWeight};
   color: ${props => props.theme.colors.text.header};
   text-align: center;
-  ${DefaultFontSize}
+  width: 88%;
+  margin-left: auto;
+  margin-right: auto;
+
+  ${fluidRange(
+    {
+      prop: 'font-size',
+      fromSize: em(13),
+      toSize: em(18),
+    },
+    ...Object.values(fluidRangeMinMax),
+  )}
 `;
 
 export const Emphasize = styled.div`

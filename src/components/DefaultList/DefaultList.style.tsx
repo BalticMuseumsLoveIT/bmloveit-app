@@ -11,11 +11,11 @@ export interface DefaultListItemWrapperProps {
 export const DefaultList = styled.ul`
   list-style: none;
   padding: 0;
-  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin: 25px auto;
 `;
 
 export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`

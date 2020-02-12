@@ -2,7 +2,6 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import { SiteStore } from 'utils/store/siteStore';
 import WelcomePageStore from 'utils/store/welcomePageStore';
-import Footer from 'components/Footer/Footer';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { LayoutGridFooter } from 'components/Layout/Layout.style';
@@ -60,11 +59,9 @@ class WelcomePage extends React.Component<Props> {
           <Description>
             <ItemHtmlParser html={this.siteStore.description} />
           </Description>
-          <Footer>
-            <AppButton as={Link} to="/area">
-              {this.props.t('buttonStart.label', 'Start sightseeing')}
-            </AppButton>
-          </Footer>
+          <AppButton as={Link} to="/area">
+            {this.props.t('buttonStart.label', 'Start sightseeing')}
+          </AppButton>
         </Content>
         <LayoutGridFooter>
           <SponsorLogotype />

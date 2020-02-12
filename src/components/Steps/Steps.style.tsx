@@ -19,12 +19,10 @@ export const StepsContainer = styled.div`
   counter-reset: step;
   width: 70%;
   max-width: 205px;
-  margin-left: auto;
-  margin-right: auto;
   display: flex;
   align-items: space-between;
   justify-content: space-between;
-  margin-bottom: 75px;
+  margin: 50px auto;
 `;
 
 export const Step = styled.div<StepProps>`

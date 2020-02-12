@@ -3,12 +3,13 @@ import { UiStore } from 'utils/store/uiStore';
 import AreaPageStore from 'utils/store/areaListPageStore';
 import { getTranslatedString } from 'utils/helpers';
 import {
-  DefaultListItemWrapper,
   DefaultList,
   DefaultListItemInfo,
 } from 'components/DefaultList/DefaultList.style';
 import Steps from 'components/Steps/Steps';
 import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
+import { Title, Subtitle } from 'components/Page/Page.style';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -58,7 +59,15 @@ class AreaListPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Area')}</title>
         </Helmet>
         <Content>
-          <h1>{this.props.t('content.title', 'Area list')}</h1>
+          <Title>{this.props.t('content.title', 'Area list')}</Title>
+          <Subtitle>
+            <ItemHtmlParser
+              html={this.props.t(
+                'content.description',
+                'Short information about what we choose and why. Info about places',
+              )}
+            />
+          </Subtitle>
           <Steps currentStepNumber={0} />
           <DefaultList>
             {this.areaListPageStore.areaData.map(area => (

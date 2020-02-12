@@ -1,6 +1,7 @@
 {
   "content": {
-    "title": "Area list"
+    "title": "Area list",
+    "description": "Short information about what we choose and why. Info about places"
   },
   "counter": {
     "languages": "Languages: {{languages}}",
