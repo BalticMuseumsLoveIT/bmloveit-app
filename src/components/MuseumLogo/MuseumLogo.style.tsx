@@ -1,10 +1,17 @@
+import {
+  DefaultGridPaddingRage,
+  fluidRangeMinMax,
+} from 'components/Page/Page.style';
 import { em } from 'polished';
 import styled, { css } from 'styled-components';
+import fluidRange from 'polished/lib/mixins/fluidRange';
 
 export enum LogoType {
   WELCOME,
   HEADER,
+  WELCOME_HEADER,
 }
+
 export interface LogoProps {
   type?: LogoType;
   usePlaceholder?: boolean;
@@ -27,6 +34,25 @@ export const Logo = styled.div<LogoProps>`
           width: 35%;
           box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
           margin: 2em auto;
+        `;
+      case LogoType.WELCOME_HEADER:
+        return css`
+          width: 20%;
+          min-width: ${em(64)};
+          position: absolute;
+          ${fluidRange(
+            [
+              {
+                prop: 'left',
+                ...DefaultGridPaddingRage,
+              },
+              {
+                prop: 'bottom',
+                ...DefaultGridPaddingRage,
+              },
+            ],
+            ...Object.values(fluidRangeMinMax),
+          )}
         `;
     }
   }}

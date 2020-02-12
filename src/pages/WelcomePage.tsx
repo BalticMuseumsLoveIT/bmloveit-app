@@ -7,13 +7,15 @@ import { AppButton } from 'components/Buttons/AppButton.style';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { LayoutGridFooter } from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
-import { Description, Title } from 'components/Page/Page.style';
-import { WelcomeTitle } from 'pages/WelcomePage.style';
+import { Description } from 'components/Page/Page.style';
+import { WelcomeHeaderImage, WelcomeTitle } from 'pages/WelcomePage.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
+import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 
 interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
@@ -51,6 +53,9 @@ class WelcomePage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Homepage')}</title>
         </Helmet>
         <Content>
+          <WelcomeHeaderImage image={this.siteStore.image}>
+            <MuseumLogo type={LogoType.WELCOME_HEADER} />
+          </WelcomeHeaderImage>
           <WelcomeTitle>{this.siteStore.title}</WelcomeTitle>
           <Description>
             <ItemHtmlParser html={this.siteStore.description} />
