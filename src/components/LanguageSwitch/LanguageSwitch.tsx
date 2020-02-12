@@ -43,7 +43,10 @@ export const LanguageSwitch = ({
             <LanguageSwitchItem
               key={language.id}
               isMenuOpened={localStore.isMenuOpened}
-              isVisibleWhenCollapsed={language.key === userLanguage}
+              isVisibleWhenCollapsed={
+                localStore.isMenuOpened === false &&
+                language.key === userLanguage
+              }
               onClick={() => handleClick(language.key)}
               customHeaderImageSrc="/images/unfold_more-24px.svg"
             >

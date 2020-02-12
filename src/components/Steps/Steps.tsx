@@ -5,15 +5,21 @@ import {
   StepLine,
 } from 'components/Steps/Steps.style';
 import React from 'react';
-
-const steps = [{ description: 'Select place' }, { description: 'Select tour' }];
+import { useTranslation } from 'react-i18next';
 
 interface StepsProps {
   currentStepNumber: number;
 }
 
 const Steps = ({ currentStepNumber }: StepsProps) => {
-  return (
+  const { t, ready } = useTranslation('app');
+
+  const steps = [
+    { description: t('step.first', 'Select place') },
+    { description: t('step.second', 'Select tour') },
+  ];
+
+  return ready ? (
     <StepsContainer>
       {steps.map((step, index) => {
         const stepState =
@@ -33,7 +39,7 @@ const Steps = ({ currentStepNumber }: StepsProps) => {
         );
       })}
     </StepsContainer>
-  );
+  ) : null;
 };
 
 export default Steps;

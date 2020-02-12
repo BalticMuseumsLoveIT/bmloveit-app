@@ -74,12 +74,10 @@ export const Step = styled.div<StepProps>`
   &:after {
     content: '${({ description }) => description}';
     position: absolute;
-    width: 95px;
     top: 100%;
     margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: calc(205px / 2);
+    text-align: center;
     color: ${({ state, theme }) =>
       state !== StepState.DEFAULT
         ? theme.colors.background.alternative

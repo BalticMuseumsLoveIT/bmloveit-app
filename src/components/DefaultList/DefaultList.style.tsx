@@ -28,7 +28,8 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   justify-content: center;
   flex-direction: column;
   list-style: none;
-  padding: 20px 56px 16px 16px;
+  padding: ${({ isVisibleWhenCollapsed }) =>
+    isVisibleWhenCollapsed === true && '0 16px'};
   background-color: ${({ theme, isVisibleWhenCollapsed }) =>
     isVisibleWhenCollapsed
       ? theme.colors.list.header.default.background
@@ -97,43 +98,44 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
 
   & > a {
     box-sizing: inherit;
-    position: absolute;
-    left: 0;
-    top: 0;
+    z-index: 1;
     width: 100%;
-    height: 100%;
-    padding: inherit;
+    padding: 20px 56px 16px 16px;
     text-decoration: inherit;
     display: inherit;
     align-items: inherit;
     justify-content: inherit;
     flex-direction: inherit;
+    color: ${({ theme, isVisibleWhenCollapsed }) =>
+      isVisibleWhenCollapsed
+        ? theme.colors.list.header.default.text
+        : theme.colors.list.item.default.text};
 
     &:hover,
     &:focus,
     &:visited {
       color: inherit;
     }
-  }
 
-  ${({ imageUrl }) => {
-    if (imageUrl) {
-      return css`
-        padding-left: 76px;
+    ${({ imageUrl }) => {
+      if (imageUrl) {
+        return css`
+          padding-left: calc(18px + 40px + 5%);
 
-        &:before {
-          content: '';
-          background: url('${imageUrl}') center center no-repeat;
-          background-size: cover;
-          width: 40px;
-          height: 40px;
-          position: absolute;
-          left: 18px;
-          border-radius: 4px;
-        }
+          &:before {
+            content: '';
+            background: url('${imageUrl}') center center no-repeat;
+            background-size: cover;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 18px;
+            border-radius: 4px;
+          }
       `;
-    }
-  }}
+      }
+    }}
+  }
 `;
 
 export const DefaultListItemInfo = styled.span`

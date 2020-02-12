@@ -83,7 +83,7 @@ class RouteLocationsListPage extends React.Component<Props> {
               const imageUrl = doesAnyLocationContainImage
                 ? location.resources_data.length
                   ? getPrivateMediaURL(location.resources_data[0].file_url)
-                  : '/images/Group 46.svg'
+                  : '/images/Group-46.svg'
                 : undefined;
 
               return (
