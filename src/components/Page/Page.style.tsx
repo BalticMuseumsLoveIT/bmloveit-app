@@ -1,7 +1,12 @@
+import { ThemeType } from 'utils/interfaces';
 import styled, { css } from 'styled-components';
 import { darken, em, fluidRange, lighten } from 'polished';
 import { Link } from 'react-router-dom';
-import { ThemeType } from 'utils/interfaces';
+
+export const fluidRangeMinMax = {
+  minScreen: em(320),
+  maxScreen: em(640),
+};
 
 export const DefaultFontSize = css`
   ${fluidRange(
@@ -10,30 +15,49 @@ export const DefaultFontSize = css`
       fromSize: em(12),
       toSize: em(16),
     },
-    em(320),
-    em(640),
+    ...Object.values(fluidRangeMinMax),
   )}
 `;
 
+export const DefaultGridPaddingRage = {
+  fromSize: em(12),
+  toSize: em(16),
+};
+
 export const DefaultGridPadding = css`
   ${fluidRange(
-    {
-      prop: 'padding-left',
-      fromSize: em(12),
-      toSize: em(16),
-    },
-    em(320),
-    em(640),
+    [
+      {
+        prop: 'padding-left',
+        ...DefaultGridPaddingRage,
+      },
+      {
+        prop: 'padding-right',
+        ...DefaultGridPaddingRage,
+      },
+    ],
+    ...Object.values(fluidRangeMinMax),
   )}
+`;
 
+export const NegativeGridPaddingRange = {
+  fromSize: `-${DefaultGridPaddingRage.fromSize}`,
+  toSize: `-${DefaultGridPaddingRage.toSize}`,
+};
+
+export const NegativeGridPadding = css`
   ${fluidRange(
-    {
-      prop: 'padding-right',
-      fromSize: em(12),
-      toSize: em(16),
-    },
-    em(320),
-    em(640),
+    [
+      {
+        prop: 'margin-left',
+        ...NegativeGridPaddingRange,
+      },
+      {
+        prop: 'margin-right',
+        ...NegativeGridPaddingRange,
+      },
+    ],
+    ...Object.values(fluidRangeMinMax),
   )}
 `;
 
@@ -42,14 +66,15 @@ export const Title = styled.h1`
   font-weight: ${props => props.theme.fonts.header.fontWeight};
   color: ${props => props.theme.colors.text.header};
   text-align: center;
+  margin: 1em 0;
+
   ${fluidRange(
     {
       prop: 'font-size',
       fromSize: em(18),
       toSize: em(24),
     },
-    em(320),
-    em(640),
+    ...Object.values(fluidRangeMinMax),
   )}
 `;
 
@@ -71,7 +96,11 @@ export const Emphasize = styled.div`
 `;
 
 export const Description = styled.div`
+  font-family: ${props => props.theme.fonts.paragraph.fontFamily};
+  font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
   color: ${props => props.theme.colors.text.paragraph};
+
+  line-height: 1.4;
 
   ${DefaultFontSize}
 `;
@@ -125,4 +154,24 @@ export const PlaceholderBackground = css`
       }
     }};
   }
+`;
+
+export interface HeaderImageProps {
+  image?: string;
+}
+
+export const HeaderImage = styled.div<HeaderImageProps>`
+  ${NegativeGridPadding};
+
+  min-height: ${em(240)};
+
+  ${({ image, theme }) =>
+    image
+      ? css`
+          background-image: url(${image});
+          background-size: cover;
+        `
+      : css`
+          background-color: ${theme.colors.background.placeholder};
+        `}
 `;
