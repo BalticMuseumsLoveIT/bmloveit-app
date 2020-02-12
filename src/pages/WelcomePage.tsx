@@ -9,13 +9,13 @@ import { LayoutGridFooter } from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import { Description } from 'components/Page/Page.style';
 import { WelcomeHeaderImage, WelcomeTitle } from 'pages/WelcomePage.style';
+import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
+import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
-import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 
 interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;

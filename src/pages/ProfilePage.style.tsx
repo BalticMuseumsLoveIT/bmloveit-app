@@ -1,4 +1,8 @@
-import { ButtonLink, DefaultFontSize, Emphasize } from 'components/Page/Page.style';
+import {
+  ButtonLink,
+  DefaultFontSize,
+  Emphasize,
+} from 'components/Page/Page.style';
 import styled from 'styled-components';
 
 export const ProgressBarContainer = styled.div`

@@ -348,7 +348,7 @@ export interface ThemeColorsInterface {
     normal: string;
     hover: string;
     pressed: string;
-    inactive:  string;
+    inactive: string;
   };
 }
 
