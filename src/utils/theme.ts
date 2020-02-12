@@ -93,6 +93,38 @@ const defaultColors = {
       },
     },
   },
+  list: {
+    border: '#EAEEF6',
+    header: {
+      default: {
+        text: '#2A2C3E',
+        background: '#F8FAFD',
+      },
+      hover: {
+        text: '#2A2C3E',
+        background: '#F8FAFD',
+      },
+      focus: {
+        text: '#F85705',
+        background: '#F8FAFD',
+      },
+    },
+    item: {
+      default: {
+        text: '#2A2C3E',
+        background: '#FFFFFF',
+      },
+      hover: {
+        text: '#2A2C3E',
+        background: '#F8FAFD',
+      },
+      focus: {
+        text: '#F85705',
+        background: '#F8FAFD',
+      },
+    },
+    info: '#7A7D92',
+  },
 };
 
 export const defaultTheme: DefaultTheme = {
@@ -205,6 +237,38 @@ export const lightPartial: RecursivePartial<DefaultTheme> = {
         },
       },
     },
+    list: {
+      border: '#EAEEF6',
+      header: {
+        default: {
+          text: '#2A2C3E',
+          background: '#F8FAFD',
+        },
+        hover: {
+          text: '#2A2C3E',
+          background: '#F8FAFD',
+        },
+        focus: {
+          text: '#F85705',
+          background: '#F8FAFD',
+        },
+      },
+      item: {
+        default: {
+          text: '#2A2C3E',
+          background: '#FFFFFF',
+        },
+        hover: {
+          text: '#2A2C3E',
+          background: '#F8FAFD',
+        },
+        focus: {
+          text: '#F85705',
+          background: '#F8FAFD',
+        },
+      },
+      info: '#7A7D92',
+    },
   },
 };
 
@@ -230,19 +294,19 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
       primary: {
         default: {
           text: '#FFFFFF',
-          background: '#F85705',
+          background: '#65BFCB',
         },
         hover: {
           text: '#FFFFFF',
-          background: '#DB4F08',
+          background: '#3C96A2',
         },
         focus: {
           text: '#FFFFFF',
-          background: '#C34100',
+          background: '#007B8B',
         },
         disabled: {
-          text: '#BABFCD',
-          background: '#DCE2ED',
+          text: '#646672',
+          background: '#454856',
         },
       },
       secondary: {
@@ -251,36 +315,68 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
           background: '#FFFFFF',
         },
         hover: {
-          text: '#DB4F08',
+          text: '#3C96A2',
           background: '#F8F8F8',
         },
         focus: {
-          text: '#C34100',
+          text: '#007B8B',
           background: '#F8F8F8',
         },
         disabled: {
-          text: '#BABFCD',
-          background: '#DCE2ED',
+          text: '#646672',
+          background: '#454856',
         },
       },
       outline: {
         default: {
-          text: '#7A7D92',
+          text: '#F8FAFD',
           background: 'transparent',
         },
         hover: {
-          text: '#FFFFFF',
+          text: '#65BFCB',
           background: 'transparent',
         },
         focus: {
-          text: '#FFFFFF',
+          text: '#007B8B',
           background: 'transparent',
         },
         disabled: {
-          text: '#BABFCD',
+          text: '#646672',
           background: 'transparent',
         },
       },
+    },
+    list: {
+      border: '#2A2C3E',
+      header: {
+        default: {
+          text: '#F8FAFD',
+          background: '#7A7D92',
+        },
+        hover: {
+          text: '#F8FAFD',
+          background: '#7A7D92',
+        },
+        focus: {
+          text: '#F8FAFD',
+          background: '#7A7D92',
+        },
+      },
+      item: {
+        default: {
+          text: '#F8FAFD',
+          background: '#454856',
+        },
+        hover: {
+          text: '#F8FAFD',
+          background: '#7A7D92',
+        },
+        focus: {
+          text: '#65BFCB',
+          background: '#505265',
+        },
+      },
+      info: '#C8C9D5',
     },
   },
 };

@@ -31,9 +31,12 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
   padding: 20px 56px 16px 16px;
   background-color: ${({ theme, isVisibleWhenCollapsed }) =>
     isVisibleWhenCollapsed
-      ? theme.colors.background.menu
-      : theme.colors.background.default};
-  color: ${({ theme }) => theme.colors.text.anchor.link};
+      ? theme.colors.list.header.default.background
+      : theme.colors.list.item.default.background};
+  color: ${({ theme, isVisibleWhenCollapsed }) =>
+    isVisibleWhenCollapsed
+      ? theme.colors.list.header.default.text
+      : theme.colors.list.item.default.text};
   width: 88%;
   max-width: 360px;
   min-height: 72px;
@@ -62,8 +65,14 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
   }
 
   &:hover {
-    background-color: ${({ isDisabled, theme }) =>
-      isDisabled !== true && theme.colors.background.menu};
+    background-color: ${({ theme, isVisibleWhenCollapsed }) =>
+      isVisibleWhenCollapsed
+        ? theme.colors.list.header.hover.background
+        : theme.colors.list.item.hover.background};
+    color: ${({ theme, isVisibleWhenCollapsed }) =>
+      isVisibleWhenCollapsed
+        ? theme.colors.list.header.hover.text
+        : theme.colors.list.item.hover.text};
   }
 
   &:after {
@@ -126,7 +135,7 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
 export const DefaultListItemInfo = styled.span`
   padding-top: 6px;
   font-size: 12px;
-  color: ${({ theme }) => theme.colors.text.paragraph};
+  color: ${({ theme }) => theme.colors.list.info};
   font-family: ${({ theme }) => theme.fonts.paragraph.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.paragraph.fontWeight};
 `;

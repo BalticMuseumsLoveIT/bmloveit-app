@@ -305,11 +305,17 @@ interface ThemeButtonColorsInterface {
   background: string;
 }
 
-interface ThemeColorEffectOnMouseEventInterface {
+interface ThemeButtonColorEffectOnMouseEventInterface {
   default: ThemeButtonColorsInterface;
   hover: ThemeButtonColorsInterface;
   focus: ThemeButtonColorsInterface;
   disabled: ThemeButtonColorsInterface;
+}
+
+interface ThemeListColorEffectOnMouseEventInterface {
+  default: ThemeButtonColorsInterface;
+  hover: ThemeButtonColorsInterface;
+  focus: ThemeButtonColorsInterface;
 }
 
 export interface ThemeColorsInterface {
@@ -326,9 +332,15 @@ export interface ThemeColorsInterface {
     menu: string;
   };
   button: {
-    primary: ThemeColorEffectOnMouseEventInterface;
-    secondary: ThemeColorEffectOnMouseEventInterface;
-    outline: ThemeColorEffectOnMouseEventInterface;
+    primary: ThemeButtonColorEffectOnMouseEventInterface;
+    secondary: ThemeButtonColorEffectOnMouseEventInterface;
+    outline: ThemeButtonColorEffectOnMouseEventInterface;
+  };
+  list: {
+    border: string;
+    header: ThemeListColorEffectOnMouseEventInterface;
+    item: ThemeListColorEffectOnMouseEventInterface;
+    info: string;
   };
 }
 
