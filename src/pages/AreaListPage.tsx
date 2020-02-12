@@ -61,20 +61,18 @@ class AreaListPage extends React.Component<Props> {
           <Steps currentStepNumber={0} />
           <DefaultList>
             {this.areaListPageStore.areaData.map(area => (
-              <DefaultListItem
-                as={Link}
-                key={area.id}
-                to={`/area/${area.id}/routes`}
-              >
-                {getTranslatedString(
-                  area.name_full,
-                  area.name_full_translation,
-                )}
-                <DefaultListItemInfo>
-                  {this.props.t('counter.routes', 'Routes: {{routes}}', {
-                    routes: this.areaListPageStore.routesAmount(area.id),
-                  })}
-                </DefaultListItemInfo>
+              <DefaultListItem key={area.id}>
+                <Link to={`/area/${area.id}/routes`}>
+                  {getTranslatedString(
+                    area.name_full,
+                    area.name_full_translation,
+                  )}
+                  <DefaultListItemInfo>
+                    {this.props.t('counter.routes', 'Routes: {{routes}}', {
+                      routes: this.areaListPageStore.routesAmount(area.id),
+                    })}
+                  </DefaultListItemInfo>
+                </Link>
               </DefaultListItem>
             ))}
           </DefaultList>

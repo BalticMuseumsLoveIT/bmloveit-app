@@ -82,6 +82,27 @@ export const DefaultListItem = styled.li<DefaultListItemProps>`
     right: 18px;
   }
 
+  & > a {
+    box-sizing: inherit;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: inherit;
+    text-decoration: inherit;
+    display: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+    flex-direction: inherit;
+
+    &:hover,
+    &:focus,
+    &:visited {
+      color: inherit;
+    }
+  }
+
   ${({ imageUrl }) => {
     if (imageUrl) {
       return css`

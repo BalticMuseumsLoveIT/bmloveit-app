@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 import { action } from 'mobx';
 import { useTranslation } from 'react-i18next';
-import { useLocalStore } from 'mobx-react';
+import { useLocalStore, useObserver } from 'mobx-react';
 
 interface RoutesGroupProps {
   type: RouteTypeInterface;
@@ -32,35 +32,38 @@ export const RoutesGroup = ({
     }),
   }));
 
-  return ready ? (
-    <DefaultList>
-      <DefaultListItem
-        isMenuOpened={localStore.isMenuOpened}
-        isVisibleWhenCollapsed={true}
-        as={Link}
-        to={'#'}
-        onClick={localStore.toggleMenu}
-      >
-        {getTranslatedString(
-          type.description,
-          type.description_translation || [],
-        )}
-      </DefaultListItem>
-      {routes.map(route => (
+  return useObserver(() => {
+    return ready ? (
+      <DefaultList>
         <DefaultListItem
-          as={Link}
-          key={route.id}
-          to={`/route/${route.id}/map`}
           isMenuOpened={localStore.isMenuOpened}
+          isVisibleWhenCollapsed={true}
+          onClick={localStore.toggleMenu}
         >
-          {getTranslatedString(route.name_full, route.name_full_translation)}
-          <DefaultListItemInfo>
-            {t('routeAttractions', 'Attractions: {{attractions}}', {
-              attractions: attractions(route.id),
-            })}
-          </DefaultListItemInfo>
+          {getTranslatedString(
+            type.description,
+            type.description_translation || [],
+          )}
         </DefaultListItem>
-      ))}
-    </DefaultList>
-  ) : null;
+        {routes.map(route => (
+          <DefaultListItem
+            key={route.id}
+            isMenuOpened={localStore.isMenuOpened}
+          >
+            <Link to={`/route/${route.id}/map`}>
+              {getTranslatedString(
+                route.name_full,
+                route.name_full_translation,
+              )}
+              <DefaultListItemInfo>
+                {t('routeAttractions', 'Attractions: {{attractions}}', {
+                  attractions: attractions(route.id),
+                })}
+              </DefaultListItemInfo>
+            </Link>
+          </DefaultListItem>
+        ))}
+      </DefaultList>
+    ) : null;
+  });
 };

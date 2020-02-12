@@ -77,23 +77,25 @@ class RouteLocationsListPage extends React.Component<Props> {
 
               return (
                 <DefaultListItem
-                  as={Link}
                   key={location.id}
-                  to={isNaN(firstScreenId) ? '#' : `/item/${firstScreenId}`}
                   isDisabled={isNaN(firstScreenId)}
                   imageUrl={imageUrl}
                 >
-                  {getTranslatedString(
-                    location.name_full,
-                    location.name_full_translation,
-                  )}
-                  <DefaultListItemInfo>
-                    {this.props.t(
-                      'counter.attractions',
-                      'Attractions: {{attractions}}',
-                      { attractions },
+                  <Link
+                    to={isNaN(firstScreenId) ? '#' : `/item/${firstScreenId}`}
+                  >
+                    {getTranslatedString(
+                      location.name_full,
+                      location.name_full_translation,
                     )}
-                  </DefaultListItemInfo>
+                    <DefaultListItemInfo>
+                      {this.props.t(
+                        'counter.attractions',
+                        'Attractions: {{attractions}}',
+                        { attractions },
+                      )}
+                    </DefaultListItemInfo>
+                  </Link>
                 </DefaultListItem>
               );
             })}
