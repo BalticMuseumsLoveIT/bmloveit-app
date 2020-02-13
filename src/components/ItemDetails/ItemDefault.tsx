@@ -1,5 +1,4 @@
 import { getPrivateMediaURL } from 'utils/helpers';
-import Footer from 'components/Footer/Footer';
 import ItemStore from 'utils/store/itemStore';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import { AudioPlayer, ItemTitle, VideoPlayer } from 'pages/ItemPage.style';
@@ -51,11 +50,9 @@ export const ItemDefault = ({ itemStore }: ItemDefaultProps) => {
         </Description>
       )}
 
-      <Footer>
-        <AppButton as={Link} to={`/item/${itemStore.nextItemId}`}>
-          {t('button.next.label', 'Next')}
-        </AppButton>
-      </Footer>
+      <AppButton as={Link} to={`/item/${itemStore.nextItemId}`}>
+        {t('button.next.label', 'Next')}
+      </AppButton>
     </>
   );
 };

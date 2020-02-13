@@ -1,5 +1,4 @@
 import { SurveyDetailsState } from 'utils/store/surveyDetailsStore';
-import Footer from 'components/Footer/Footer';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -24,19 +23,15 @@ export const SurveyFooter = function({
     case SurveyDetailsState.LOADED:
     case SurveyDetailsState.SUBMITTING:
       return (
-        <Footer>
-          <AppButton type="submit" form="surveyForm" disabled={isSubmitting}>
-            {t('form.button.submit.label', 'Submit')}
-          </AppButton>
-        </Footer>
+        <AppButton type="submit" form="surveyForm" disabled={isSubmitting}>
+          {t('form.button.submit.label', 'Submit')}
+        </AppButton>
       );
     case SurveyDetailsState.SUBMITTED:
       return (
-        <Footer>
-          <AppButton as={Link} to={`/item/${nextItemId}`}>
-            {t('button.next.label', 'Next')}
-          </AppButton>
-        </Footer>
+        <AppButton as={Link} to={`/item/${nextItemId}`}>
+          {t('button.next.label', 'Next')}
+        </AppButton>
       );
     default:
       return null;

@@ -11,7 +11,8 @@
     }
   },
   "content": {
-    "title": "Locations list"
+    "title": "Locations list",
+    "description": "Short information about what we choose and why. Info about locations"
   },
   "page": {
     "title": "Route locations"

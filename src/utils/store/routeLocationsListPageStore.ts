@@ -80,6 +80,18 @@ export default class RouteLocationsListPageStore {
       : '';
   }
 
+  @computed get doesAnyLocationContainImage(): boolean {
+    if (this.locationsData.length === 0) {
+      return false;
+    }
+
+    const isPassed = this.locationsData.some(locationData => {
+      return locationData.resources_data.length > 0;
+    });
+
+    return isPassed;
+  }
+
   screensAmount = createTransformer((locationId: number) => {
     const location = this.locationsData.find(
       location => location.id === locationId,

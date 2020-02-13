@@ -1,11 +1,19 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import RouteLocationsListPageStore from 'utils/store/routeLocationsListPageStore';
-import { getTranslatedString } from 'utils/helpers';
+import { getTranslatedString, getPrivateMediaURL } from 'utils/helpers';
 import {
   FooterButtonsContainer,
   FooterButton,
 } from 'components/Buttons/FooterButtons/FooterButtons.style';
+import {
+  DefaultList,
+  DefaultListItemInfo,
+} from 'components/DefaultList/DefaultList.style';
+import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
+import { Title, Subtitle } from 'components/Page/Page.style';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
+import Footer from 'components/Footer/Footer';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -44,61 +52,84 @@ class RouteLocationsListPage extends React.Component<Props> {
   render() {
     if (!this.props.tReady) return null;
 
+    const doesAnyLocationContainImage = this.routeLocationsListPageStore
+      .doesAnyLocationContainImage;
+
     return (
       <>
         <Helmet>
           <title>{this.props.t('page.title', 'Route locations')}</title>
         </Helmet>
         <Content>
-          <h1>{this.props.t('content.title', 'Locations list')}</h1>
-          {this.routeLocationsListPageStore.locationsData.map(location => {
-            const attractions = this.routeLocationsListPageStore.screensAmount(
-              location.id,
-            );
+          <Title>{this.props.t('content.title', 'Locations list')}</Title>
+          <Subtitle>
+            <ItemHtmlParser
+              html={this.props.t(
+                'content.description',
+                'Short information about what we choose and why. Info about locations',
+              )}
+            />
+          </Subtitle>
+          <DefaultList>
+            {this.routeLocationsListPageStore.locationsData.map(location => {
+              const attractions = this.routeLocationsListPageStore.screensAmount(
+                location.id,
+              );
 
-            const firstScreenId = this.routeLocationsListPageStore.firstScreenId(
-              location.id,
-            );
+              const firstScreenId = this.routeLocationsListPageStore.firstScreenId(
+                location.id,
+              );
 
-            return (
-              <p key={location.id}>
-                {isNaN(firstScreenId) ? (
-                  <span>
+              const imageUrl = doesAnyLocationContainImage
+                ? location.resources_data.length
+                  ? getPrivateMediaURL(location.resources_data[0].file_url)
+                  : '/images/Group-46.svg'
+                : undefined;
+
+              return (
+                <DefaultListItem
+                  key={location.id}
+                  isDisabled={isNaN(firstScreenId)}
+                  imageUrl={imageUrl}
+                >
+                  <Link
+                    to={isNaN(firstScreenId) ? '#' : `/item/${firstScreenId}`}
+                  >
                     {getTranslatedString(
                       location.name_full,
                       location.name_full_translation,
                     )}
-                  </span>
-                ) : (
-                  <Link to={`/item/${firstScreenId}`}>
-                    {getTranslatedString(
-                      location.name_full,
-                      location.name_full_translation,
-                    )}
+                    <DefaultListItemInfo>
+                      {this.props.t(
+                        'counter.attractions',
+                        'Attractions: {{attractions}}',
+                        { attractions },
+                      )}
+                    </DefaultListItemInfo>
                   </Link>
-                )}
-                <br />
-                Attractions: {attractions}
-              </p>
-            );
-          })}
-          <FooterButtonsContainer>
-            <FooterButton
-              as={Link}
-              to={`/area/${this.routeLocationsListPageStore.areaId}/routes`}
-            >
-              {this.props.t('button.changeRoute.label', 'Change route')}
-            </FooterButton>
-            <FooterButton
-              as={Link}
-              to={`/route/${this.routeLocationsListPageStore.routeId}/map`}
-            >
-              {this.props.t('button.viewMap.label', 'View map')}
-            </FooterButton>
-            <FooterButton as={Link} to={`/qrcode`}>
-              {this.props.t('button.scanQR.label', 'Scan QR')}
-            </FooterButton>
-          </FooterButtonsContainer>
+                </DefaultListItem>
+              );
+            })}
+          </DefaultList>
+          <Footer>
+            <FooterButtonsContainer>
+              <FooterButton
+                as={Link}
+                to={`/area/${this.routeLocationsListPageStore.areaId}/routes`}
+              >
+                {this.props.t('button.changeRoute.label', 'Change route')}
+              </FooterButton>
+              <FooterButton
+                as={Link}
+                to={`/route/${this.routeLocationsListPageStore.routeId}/map`}
+              >
+                {this.props.t('button.viewMap.label', 'View map')}
+              </FooterButton>
+              <FooterButton as={Link} to={`/qrcode`}>
+                {this.props.t('button.scanQR.label', 'Scan QR')}
+              </FooterButton>
+            </FooterButtonsContainer>
+          </Footer>
         </Content>
       </>
     );

@@ -17,7 +17,7 @@ export const Wrapper = styled.nav<StyledWrapperProps>`
   background-color: ${({ theme }) => theme.colors.background.menu};
   transform: translateX(${({ isOpened }) => (isOpened ? '0' : '-100%')});
   transition: transform 0.25s ease;
-  z-index: 1;
+  z-index: 10;
 `;
 
 export const Content = styled.div`

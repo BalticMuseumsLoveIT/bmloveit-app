@@ -1,3 +1,4 @@
+import { defaultBoxShadow } from 'components/Page/Page.style';
 import styled, { css } from 'styled-components';
 
 interface ListProps {
@@ -75,7 +76,7 @@ export const ListItem = styled.li<ListItemProps>`
       : css`
           text-align: center;
           border-radius: 0.5em;
-          box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: ${defaultBoxShadow};
         `}
 
   a,

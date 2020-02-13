@@ -9,6 +9,8 @@ export const fluidRangeMinMax = {
   maxScreen: em(640),
 };
 
+export const defaultBoxShadow = '0 3px 6px #2a2c3e33';
+
 export const DefaultFontSize = css`
   ${fluidRange(
     {
@@ -101,6 +103,23 @@ export const Title = styled.h1`
   ${HeaderFontSize}
 `;
 
+export const TitleWithUnderline = styled(Title)`
+  text-align: left;
+  padding-bottom: 1em;
+  position: relative;
+
+  &::after {
+    display: block;
+    content: '';
+    background: ${({ theme }) => theme.colors.background.alternative};
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 1em;
+    height: ${em(2)};
+  }
+`;
+
 export const Subtitle = styled.h2`
   color: ${props => props.theme.colors.text.header};
   text-align: center;
@@ -181,10 +200,10 @@ export interface HeaderImageProps {
 }
 
 export const HeaderImage = styled.div<HeaderImageProps>`
-  ${NegativeGridPadding};
-
   min-height: ${em(240)};
 
+  ${NegativeGridPadding}
+  
   ${({ image, theme }) =>
     image
       ? css`
@@ -194,6 +213,7 @@ export const HeaderImage = styled.div<HeaderImageProps>`
       : css`
           background-color: ${theme.colors.background.placeholder};
         `}
+
 `;
 
 export const CloseButton = styled.button<ButtonProps>`

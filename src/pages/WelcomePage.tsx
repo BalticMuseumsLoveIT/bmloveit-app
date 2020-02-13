@@ -2,13 +2,12 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import { SiteStore } from 'utils/store/siteStore';
 import WelcomePageStore from 'utils/store/welcomePageStore';
-import Footer from 'components/Footer/Footer';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { LayoutGridFooter } from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
-import { Description } from 'components/Page/Page.style';
-import { WelcomeHeaderImage, WelcomeTitle } from 'pages/WelcomePage.style';
+import { TitleWithUnderline, Description } from 'components/Page/Page.style';
+import { WelcomeHeaderImage } from 'pages/WelcomePage.style';
 import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
 import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import React from 'react';
@@ -60,15 +59,13 @@ class WelcomePage extends React.Component<Props> {
           <WelcomeHeaderImage image={this.siteStore.image}>
             <MuseumLogo type={LogoType.WELCOME_HEADER} />
           </WelcomeHeaderImage>
-          <WelcomeTitle>{this.siteStore.title}</WelcomeTitle>
+          <TitleWithUnderline>{this.siteStore.title}</TitleWithUnderline>
           <Description>
             <ItemHtmlParser html={this.siteStore.description} />
           </Description>
-          <Footer>
-            <AppButton as={Link} to="/area">
-              {this.props.t('buttonStart.label', 'Start sightseeing')}
-            </AppButton>
-          </Footer>
+          <AppButton as={Link} to="/area">
+            {this.props.t('buttonStart.label', 'Start sightseeing')}
+          </AppButton>
         </Content>
         <LayoutGridFooter>
           <SponsorLogotype />

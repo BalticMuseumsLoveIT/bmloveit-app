@@ -1,42 +1,69 @@
 import { RouteInterface, RouteTypeInterface } from 'utils/interfaces';
 import { getTranslatedString } from 'utils/helpers';
+import {
+  DefaultList,
+  DefaultListItemInfo,
+} from 'components/DefaultList/DefaultList.style';
+import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
 import { Link } from 'react-router-dom';
 import React from 'react';
+import { action } from 'mobx';
 import { useTranslation } from 'react-i18next';
+import { useLocalStore, useObserver } from 'mobx-react';
 
 interface RoutesGroupProps {
   type: RouteTypeInterface;
   routes: Array<RouteInterface>;
   attractions: (routeId: number) => number;
-  locations: (routeId: number) => number;
 }
 
 export const RoutesGroup = ({
   type,
   routes,
   attractions,
-  locations,
 }: RoutesGroupProps) => {
   const { t, ready } = useTranslation('area-routes-page');
 
-  return ready ? (
-    <div>
-      <h2>{type.description}</h2>
-      {routes.map(route => (
-        <p key={route.id}>
-          <Link to={`/route/${route.id}/map`}>
-            {getTranslatedString(route.name_full, route.name_full_translation)}
-          </Link>
-          <br />
-          {t('routeLocations', 'Locations: {{locations}}', {
-            locations: locations(route.id),
-          })}
-          <br />
-          {t('routeAttractions', 'Attractions: {{attractions}}', {
-            attractions: attractions(route.id),
-          })}
-        </p>
-      ))}
-    </div>
-  ) : null;
+  const localStore = useLocalStore(() => ({
+    isMenuOpened: true,
+
+    toggleMenu: action(() => {
+      localStore.isMenuOpened = !localStore.isMenuOpened;
+    }),
+  }));
+
+  return useObserver(() => {
+    return ready ? (
+      <DefaultList>
+        <DefaultListItem
+          isMenuOpened={localStore.isMenuOpened}
+          isHeader={true}
+          onClick={localStore.toggleMenu}
+        >
+          {getTranslatedString(
+            type.description,
+            type.description_translation || [],
+          )}
+        </DefaultListItem>
+        {routes.map(route => (
+          <DefaultListItem
+            key={route.id}
+            isMenuOpened={localStore.isMenuOpened}
+          >
+            <Link to={`/route/${route.id}/map`}>
+              {getTranslatedString(
+                route.name_full,
+                route.name_full_translation,
+              )}
+              <DefaultListItemInfo>
+                {t('routeAttractions', 'Attractions: {{attractions}}', {
+                  attractions: attractions(route.id),
+                })}
+              </DefaultListItemInfo>
+            </Link>
+          </DefaultListItem>
+        ))}
+      </DefaultList>
+    ) : null;
+  });
 };
