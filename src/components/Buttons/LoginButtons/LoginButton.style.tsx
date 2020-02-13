@@ -1,4 +1,5 @@
 import { ButtonProps } from 'utils/interfaces';
+import { defaultBoxShadow } from 'components/Page/Page.style';
 import styled from 'styled-components';
 
 interface LoginButtonProps extends ButtonProps {
@@ -29,7 +30,7 @@ const LoginButton = styled.button<LoginButtonProps>`
   margin-left: auto;
   margin-right: auto;
   cursor: ${({ isDisabled }) => (isDisabled ? `default` : 'pointer')};
-  box-shadow: 0 3px 6px #2a2c3e33;
+  box-shadow: ${defaultBoxShadow};
 
   &:before {
     content: ${({ iconUrl }) => (iconUrl ? `url(${iconUrl})` : '')};

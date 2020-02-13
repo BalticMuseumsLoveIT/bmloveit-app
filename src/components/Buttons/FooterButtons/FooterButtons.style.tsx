@@ -1,4 +1,5 @@
 import { ButtonProps } from 'utils/interfaces';
+import { defaultBoxShadow } from 'components/Page/Page.style';
 import styled from 'styled-components';
 
 export const FooterButtonsContainer = styled.div`
@@ -32,7 +33,7 @@ export const FooterButton = styled.button<ButtonProps>`
   text-decoration: none;
   text-align: center;
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
-  box-shadow: 0 3px 6px #2a2c3e33;
+  box-shadow: ${defaultBoxShadow};
 
   &:hover {
     background-color: ${({ theme, isDisabled }) =>

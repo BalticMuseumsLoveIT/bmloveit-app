@@ -8,6 +8,8 @@ export const fluidRangeMinMax = {
   maxScreen: em(640),
 };
 
+export const defaultBoxShadow = '0 3px 6px #2a2c3e33';
+
 export const DefaultFontSize = css`
   ${fluidRange(
     {

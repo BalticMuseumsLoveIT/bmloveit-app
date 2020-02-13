@@ -1,3 +1,4 @@
+import { defaultBoxShadow } from 'components/Page/Page.style';
 import styled, { css } from 'styled-components';
 
 export interface DefaultListItemWrapperProps {
@@ -48,7 +49,7 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   font-size: 16px;
   cursor: ${({ isDisabled }) => (isDisabled === true ? 'default' : 'pointer')};
   box-shadow: ${({ isHeader, isMenuOpened }) =>
-    isHeader === true && isMenuOpened === false && '0 3px 6px #2a2c3e33'};
+    isHeader === true && isMenuOpened === false && defaultBoxShadow};
 
   &:first-of-type {
     border-top-left-radius: 8px;
@@ -58,7 +59,7 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   &:last-of-type {
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
-    box-shadow: 0 3px 6px #2a2c3e33;
+    box-shadow: ${defaultBoxShadow};
   }
 
   &:hover,

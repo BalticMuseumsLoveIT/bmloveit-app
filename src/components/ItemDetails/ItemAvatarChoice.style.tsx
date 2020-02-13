@@ -1,3 +1,4 @@
+import { defaultBoxShadow } from 'components/Page/Page.style';
 import styled from 'styled-components';
 import React from 'react';
 
@@ -18,7 +19,7 @@ export const AvatarButton = styled(({ isSelected, ...rest }) => (
   background: ${props => (props.isSelected ? 'royalblue' : 'cornflowerblue')};
   color: white;
   border-radius: 3px;
-  ${props => props.isSelected && `box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.2)`};
+  ${props => props.isSelected && `box-shadow: ${defaultBoxShadow}`};
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 

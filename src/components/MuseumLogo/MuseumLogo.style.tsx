@@ -1,6 +1,7 @@
 import {
   DefaultGridPaddingRage,
   fluidRangeMinMax,
+  defaultBoxShadow,
 } from 'components/Page/Page.style';
 import { em } from 'polished';
 import styled, { css } from 'styled-components';
@@ -32,7 +33,7 @@ export const Logo = styled.div<LogoProps>`
       case LogoType.WELCOME:
         return css`
           width: 35%;
-          box-shadow: 2px 2px 5px 0 rgba(0, 0, 0, 0.2);
+          box-shadow: ${defaultBoxShadow};
           margin: 2em auto;
         `;
       case LogoType.WELCOME_HEADER:
