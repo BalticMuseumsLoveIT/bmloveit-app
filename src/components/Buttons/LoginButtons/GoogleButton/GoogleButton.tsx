@@ -4,7 +4,7 @@ import GoogleLogin from 'react-google-login';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-const GoogleButton = ({ onSuccess }: LoginButtonPropsInterface) => {
+const GoogleButton = ({ onSuccess, onFailed }: LoginButtonPropsInterface) => {
   const { t, ready } = useTranslation('app');
 
   const handleSuccessResponse = (response: any) => {
@@ -14,11 +14,15 @@ const GoogleButton = ({ onSuccess }: LoginButtonPropsInterface) => {
     });
   };
 
+  const handleErrorResponse = (response: any) => {
+    return onFailed();
+  };
+
   return ready ? (
     <GoogleLogin
       clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ''}
       onSuccess={handleSuccessResponse}
-      onFailure={() => undefined}
+      onFailure={handleErrorResponse}
       cookiePolicy="single_host_origin"
       render={renderProps => (
         <LoginButton

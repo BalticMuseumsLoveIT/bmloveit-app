@@ -31,12 +31,17 @@ const LoginButton = styled.button<LoginButtonProps>`
   margin-right: auto;
   cursor: ${({ isDisabled }) => (isDisabled ? `default` : 'pointer')};
   box-shadow: ${defaultBoxShadow};
+  margin-top: 16px;
 
   &:before {
     content: ${({ iconUrl }) => (iconUrl ? `url(${iconUrl})` : '')};
     width: 24px;
     height: 24px;
     margin-right: 24px;
+  }
+
+  &:last-of-type {
+    margin-bottom: 16px;
   }
 
   &:hover {

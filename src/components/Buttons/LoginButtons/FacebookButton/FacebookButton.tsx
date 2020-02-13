@@ -4,7 +4,7 @@ import React from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { useTranslation } from 'react-i18next';
 
-const FacebookButton = ({ onSuccess }: LoginButtonPropsInterface) => {
+const FacebookButton = ({ onSuccess, onFailed }: LoginButtonPropsInterface) => {
   const { t, ready } = useTranslation('app');
 
   const handleSuccessResponse = (response: any) => {
@@ -14,12 +14,17 @@ const FacebookButton = ({ onSuccess }: LoginButtonPropsInterface) => {
     });
   };
 
+  const handleErrorResponse = (response: any) => {
+    return onFailed();
+  };
+
   return ready ? (
     <FacebookLogin
       appId={process.env.REACT_APP_FACEBOOK_APP_ID || ''}
       autoLoad={false}
       fields="name,email,picture"
       callback={handleSuccessResponse}
+      onFailure={handleErrorResponse}
       render={(renderProps: any) => (
         <LoginButton
           iconUrl={'/images/F_icon.svg'}

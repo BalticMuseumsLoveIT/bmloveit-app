@@ -1,10 +1,9 @@
 import Content from 'components/Content/Content';
-import { Title } from 'components/Page/Page.style';
+import { Title, Message } from 'components/Page/Page.style';
 import { OutlineButton } from 'components/Buttons/OutlineButton.style';
 import {
   QRCodeModule,
   QRCodeModulePlaceholder,
-  QRCodeMessage,
   QRCodeScanButton,
 } from 'components/QRCodeModule/QRCodeModule.style';
 import React from 'react';
@@ -74,14 +73,14 @@ const QrCodePage = () => {
               alt={t('content.image', 'QR code')}
             />
           )}
-          <QRCodeMessage isError={localStore.isFailed}>
+          <Message isError={localStore.isFailed}>
             {localStore.isFailed === true
               ? t('content.message.error', 'Invalid code!')
               : t(
                   'content.message.initial',
                   'Click on the button and scan the code',
                 )}
-          </QRCodeMessage>
+          </Message>
           <QRCodeScanButton
             isThin={true}
             onClick={localStore.startScanning}
