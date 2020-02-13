@@ -38,7 +38,7 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
     isHeader
       ? theme.colors.list.header.default.text
       : theme.colors.list.item.default.text};
-  width: 88%;
+  width: 93%;
   max-width: 360px;
   min-height: 72px;
   font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};

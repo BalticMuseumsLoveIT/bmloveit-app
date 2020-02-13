@@ -503,4 +503,5 @@ export interface CommonActionInterface {
 
 export interface ButtonProps {
   isDisabled?: boolean;
+  isThin?: boolean;
 }

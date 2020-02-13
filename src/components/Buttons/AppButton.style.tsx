@@ -7,9 +7,9 @@ export const AppButton = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 88%;
+  width: 93%;
   max-width: 360px;
-  padding: 26px;
+  padding: ${({ isThin }) => (isThin === true ? '17px' : '26px')};
   margin: 16px auto;
   background-color: ${({ theme, isDisabled }) =>
     isDisabled
@@ -25,6 +25,7 @@ export const AppButton = styled.button<ButtonProps>`
   text-decoration: none;
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   box-shadow: ${defaultBoxShadow};
+  font-size: 16px;
 
   &:hover {
     background-color: ${({ theme, isDisabled }) =>

@@ -86,11 +86,11 @@ const defaultColors = {
         background: 'transparent',
       },
       hover: {
-        text: '#FFFFFF',
+        text: '#DB4F08',
         background: 'transparent',
       },
       focus: {
-        text: '#FFFFFF',
+        text: '#C34100',
         background: 'transparent',
       },
       disabled: {

@@ -1,39 +1,97 @@
 import Content from 'components/Content/Content';
-import QrCodeStore from 'utils/store/qrCodeStore';
+import { Title } from 'components/Page/Page.style';
+import { OutlineButton } from 'components/Buttons/OutlineButton.style';
+import {
+  QRCodeModule,
+  QRCodeModulePlaceholder,
+  QRCodeMessage,
+  QRCodeScanButton,
+} from 'components/QRCodeModule/QRCodeModule.style';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { observer } from 'mobx-react';
-import { RouteComponentProps } from 'react-router-dom';
-import QrReader from 'react-qr-reader';
-import { withTranslation, WithTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useObserver, useLocalStore } from 'mobx-react';
+import { action } from 'mobx';
+import SVG from 'react-inlinesvg';
 
-interface Props extends WithTranslation, RouteComponentProps {}
+const QrCodePage = () => {
+  const { t, ready } = useTranslation('qr-code-page');
+  const history = useHistory();
 
-@observer
-class QrCodePage extends React.Component<Props> {
-  qrCodeStore = new QrCodeStore();
+  const localStore = useLocalStore(() => ({
+    isFailed: false,
+    isScanning: false,
 
-  render() {
-    if (!this.props.tReady) return null;
+    startScanning: action(() => {
+      localStore.isScanning = true;
+      localStore.isFailed = false;
+    }),
+
+    stopScanning: action((isFailed: any = false) => {
+      localStore.isScanning = false;
+      localStore.isFailed = isFailed;
+    }),
+  }));
+
+  const handleScan = (data: string | null): void => {
+    if (data !== null) {
+      try {
+        const url = new URL(data);
+        const appDomain = process.env.REACT_APP_DOMAIN || '';
+
+        if (appDomain !== '' && url.host === appDomain) {
+          history.push(url.pathname + url.search);
+        } else {
+          localStore.stopScanning(true);
+        }
+      } catch {
+        localStore.stopScanning(true);
+      }
+    }
+  };
+
+  return useObserver(() => {
+    if (!ready) return null;
 
     return (
       <>
         <Helmet>
-          <title>{this.props.t('page.title', 'QR Code')}</title>
+          <title>{t('page.title', 'Scan QR')}</title>
         </Helmet>
         <Content>
-          QrCodePage
-          <QrReader
-            delay={300}
-            onError={() => undefined}
-            onScan={this.qrCodeStore.handleScan}
-            style={{ width: '100%' }}
-          />
-          {this.qrCodeStore.qrCodeData}
+          <Title>{t('content.title', 'Scan QR')}</Title>
+
+          {localStore.isScanning === true ? (
+            <QRCodeModule
+              delay={300}
+              onError={() => localStore.stopScanning(true)}
+              onScan={handleScan}
+            />
+          ) : (
+            <QRCodeModulePlaceholder
+              src={'/images/qr-code.png'}
+              alt={t('content.image', 'QR code')}
+            />
+          )}
+          <QRCodeMessage isError={localStore.isFailed}>
+            {localStore.isFailed === true
+              ? t('content.message.error', 'Invalid code!')
+              : t('content.message.initial', 'Point camera at the code')}
+          </QRCodeMessage>
+          <QRCodeScanButton isThin={true} onClick={localStore.startScanning}>
+            <SVG src="/images/camera-24px.svg" />
+            {localStore.isFailed !== true
+              ? t('button.scan.initial', 'Take a picture')
+              : t('button.scan.error', 'Try again')}
+          </QRCodeScanButton>
+          <OutlineButton isThin={true} onClick={history.goBack}>
+            {t('button.cancel', 'Cancel')}
+          </OutlineButton>
         </Content>
       </>
     );
-  }
-}
+  });
+};
 
-export default withTranslation('qr-code-page')(QrCodePage);
+export default QrCodePage;
