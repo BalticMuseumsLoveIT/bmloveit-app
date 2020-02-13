@@ -2,6 +2,14 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import AreaPageStore from 'utils/store/areaListPageStore';
 import { getTranslatedString } from 'utils/helpers';
+import {
+  DefaultList,
+  DefaultListItemInfo,
+} from 'components/DefaultList/DefaultList.style';
+import Steps from 'components/Steps/Steps';
+import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
+import { Title, Subtitle } from 'components/Page/Page.style';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -51,27 +59,33 @@ class AreaListPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Area')}</title>
         </Helmet>
         <Content>
-          <h1>{this.props.t('content.title', 'Area list')}</h1>
-          {this.areaListPageStore.areaData.map(area => {
-            return (
-              <p key={area.id}>
+          <Title>{this.props.t('content.title', 'Area list')}</Title>
+          <Subtitle>
+            <ItemHtmlParser
+              html={this.props.t(
+                'content.description',
+                'Short information about what we choose and why. Info about places',
+              )}
+            />
+          </Subtitle>
+          <Steps currentStepNumber={0} />
+          <DefaultList>
+            {this.areaListPageStore.areaData.map(area => (
+              <DefaultListItem key={area.id}>
                 <Link to={`/area/${area.id}/routes`}>
                   {getTranslatedString(
                     area.name_full,
                     area.name_full_translation,
                   )}
+                  <DefaultListItemInfo>
+                    {this.props.t('counter.routes', 'Routes: {{routes}}', {
+                      routes: this.areaListPageStore.routesAmount(area.id),
+                    })}
+                  </DefaultListItemInfo>
                 </Link>
-                <br />
-                {this.props.t('counter.routes', 'Routes: {{routes}}', {
-                  routes: this.areaListPageStore.routesAmount(area.id),
-                })}
-                <br />
-                {this.props.t('counter.languages', 'Languages: {{languages}}', {
-                  languages: this.areaListPageStore.languagesAmount(area.id),
-                })}
-              </p>
-            );
-          })}
+              </DefaultListItem>
+            ))}
+          </DefaultList>
         </Content>
       </>
     );

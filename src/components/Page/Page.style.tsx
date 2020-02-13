@@ -8,6 +8,8 @@ export const fluidRangeMinMax = {
   maxScreen: em(640),
 };
 
+export const defaultBoxShadow = '0 3px 6px #2a2c3e33';
+
 export const DefaultFontSize = css`
   ${fluidRange(
     {
@@ -83,6 +85,10 @@ export const Subtitle = styled.h2`
   font-weight: ${props => props.theme.fonts.subheader.fontWeight};
   color: ${props => props.theme.colors.text.header};
   text-align: center;
+  width: 88%;
+  margin-left: auto;
+  margin-right: auto;
+
   ${DefaultFontSize}
 `;
 

@@ -1,6 +1,6 @@
+import { PlaceholderBackground } from 'components/Page/Page.style';
 import styled, { createGlobalStyle } from 'styled-components';
 import { em } from 'polished';
-import { PlaceholderBackground } from 'components/Page/Page.style';
 
 export const TooltipStyle = createGlobalStyle`
   .badge-tooltip {
@@ -54,7 +54,7 @@ export const Badge = styled.span`
   height: 100%;
   overflow: hidden;
   border-radius: 50%;
-  
+
   ${PlaceholderBackground}
 `;
 

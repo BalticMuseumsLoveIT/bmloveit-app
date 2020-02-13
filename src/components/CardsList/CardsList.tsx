@@ -6,9 +6,9 @@ import {
   CardListItem,
 } from 'components/CardsList/CardList.style';
 import { getPrivateMediaURL } from 'utils/helpers';
+import { Subtitle } from 'components/Page/Page.style';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
-import { Subtitle } from 'components/Page/Page.style';
 
 export interface Props {
   cards: Array<ItemStore>;

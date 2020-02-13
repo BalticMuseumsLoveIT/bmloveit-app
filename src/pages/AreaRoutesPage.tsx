@@ -2,6 +2,9 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import AreaRoutesPageStore from 'utils/store/areaRoutesPageStore';
 import { RoutesGroup } from 'components/RoutesGroup/RoutesGroup';
+import Steps from 'components/Steps/Steps';
+import { Title, Subtitle } from 'components/Page/Page.style';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -46,7 +49,16 @@ class AreaRoutesPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Routes')}</title>
         </Helmet>
         <Content>
-          <h1>{this.props.t('content.title', 'Routes list')}</h1>
+          <Title>{this.props.t('content.title', 'Routes list')}</Title>
+          <Subtitle>
+            <ItemHtmlParser
+              html={this.props.t(
+                'content.description',
+                'Short information about what we choose and why. Info about routes',
+              )}
+            />
+          </Subtitle>
+          <Steps currentStepNumber={1} />
           {this.areaRoutesPageStore.routeTypes.map(type => {
             const routes = this.areaRoutesPageStore.routesByType(type.id);
 
@@ -56,7 +68,6 @@ class AreaRoutesPage extends React.Component<Props> {
                 type={type}
                 routes={routes}
                 attractions={this.areaRoutesPageStore.attractionsByRoute}
-                locations={this.areaRoutesPageStore.locationsByRoute}
               />
             ) : null;
           })}

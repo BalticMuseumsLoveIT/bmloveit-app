@@ -1,10 +1,11 @@
 {
   "content": {
-    "title": "Area list"
+    "title": "Area list",
+    "description": "Short information about what we choose and why. Info about routes"
   },
   "page": {
     "title": "Area"
   },
   "routeAttractions": "Attractions: {{attractions}}",
-  "routeLocations": "Locations: {{locations}}"
+  "routeLocations": "Locations: {{locations}}",
 }

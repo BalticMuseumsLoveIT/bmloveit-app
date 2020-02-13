@@ -10,13 +10,10 @@ export const Button = styled.button`
   background: transparent;
   display: block;
   box-sizing: content-box;
-
   font-size: 1em;
-
   width: ${em(24)};
   height: ${em(24)};
-
-  z-index: 3;
+  z-index: 11;
 `;
 
 interface SwitchInnerProps {

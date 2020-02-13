@@ -2,20 +2,19 @@ import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import { SiteStore } from 'utils/store/siteStore';
 import WelcomePageStore from 'utils/store/welcomePageStore';
-import Footer from 'components/Footer/Footer';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { LayoutGridFooter } from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import { Description } from 'components/Page/Page.style';
 import { WelcomeHeaderImage, WelcomeTitle } from 'pages/WelcomePage.style';
+import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
+import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
-import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 
 interface Props extends WithTranslation, RouteComponentProps {
   uiStore: UiStore;
@@ -60,11 +59,9 @@ class WelcomePage extends React.Component<Props> {
           <Description>
             <ItemHtmlParser html={this.siteStore.description} />
           </Description>
-          <Footer>
-            <AppButton as={Link} to="/area">
-              {this.props.t('buttonStart.label', 'Start sightseeing')}
-            </AppButton>
-          </Footer>
+          <AppButton as={Link} to="/area">
+            {this.props.t('buttonStart.label', 'Start sightseeing')}
+          </AppButton>
         </Content>
         <LayoutGridFooter>
           <SponsorLogotype />

@@ -1,12 +1,13 @@
 import { ButtonProps } from 'utils/interfaces';
+import { defaultBoxShadow } from 'components/Page/Page.style';
 import styled from 'styled-components';
 
 export const FooterButtonsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 8px;
-  width: 94%;
   max-width: 480px;
+  padding: 11px 0;
   margin-left: auto;
   margin-right: auto;
 `;
@@ -17,11 +18,13 @@ export const FooterButton = styled.button<ButtonProps>`
   justify-content: center;
   padding: 18px 10px;
   background-color: ${({ theme, isDisabled }) =>
-    isDisabled ? theme.colors.background.button.disabled : '#ffffff'};
+    isDisabled
+      ? theme.colors.button.secondary.disabled.background
+      : theme.colors.button.secondary.default.background};
   color: ${({ theme, isDisabled }) =>
     isDisabled
-      ? theme.colors.text.button.disabled
-      : theme.colors.text.paragraph};
+      ? theme.colors.button.secondary.disabled.text
+      : theme.colors.button.secondary.default.text};
   border-radius: 8px;
   font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
@@ -30,14 +33,27 @@ export const FooterButton = styled.button<ButtonProps>`
   text-decoration: none;
   text-align: center;
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
+  box-shadow: ${defaultBoxShadow};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.background.button.hover2};
-    color: ${({ theme }) => theme.colors.text.anchor.hover};
+    background-color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.secondary.disabled.background
+        : theme.colors.button.secondary.hover.background};
+    color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.secondary.disabled.text
+        : theme.colors.button.secondary.hover.text};
   }
 
   &:focus {
-    background-color: ${({ theme }) => theme.colors.background.button.hover2};
-    color: ${({ theme }) => theme.colors.background.button.focus};
+    background-color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.secondary.disabled.background
+        : theme.colors.button.secondary.focus.background};
+    color: ${({ theme, isDisabled }) =>
+      isDisabled
+        ? theme.colors.button.secondary.disabled.text
+        : theme.colors.button.secondary.focus.text};
   }
 `;

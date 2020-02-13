@@ -42,6 +42,7 @@ export interface RouteTypeInterface {
   id: number;
   name: string;
   description: string;
+  description_translation: Array<CommonApiTranslationInterface>;
 }
 
 export interface LoginButtonPropsInterface {
@@ -300,16 +301,30 @@ export interface ThemeFontsInterface {
   paragraph: FontInterface;
 }
 
+interface ThemeButtonColorsInterface {
+  text: string;
+  background: string;
+}
+
+interface ThemeButtonColorEffectOnMouseEventInterface {
+  default: ThemeButtonColorsInterface;
+  hover: ThemeButtonColorsInterface;
+  focus: ThemeButtonColorsInterface;
+  disabled: ThemeButtonColorsInterface;
+}
+
+interface ThemeListColorEffectOnMouseEventInterface {
+  default: ThemeButtonColorsInterface;
+  hover: ThemeButtonColorsInterface;
+  focus: ThemeButtonColorsInterface;
+}
+
 export interface ThemeColorsInterface {
   text: {
     header: string;
     paragraph: string;
     alternative: string;
     anchor: AnchorInterface;
-    button: {
-      default: string;
-      disabled: string;
-    };
   };
   background: {
     app: string;
@@ -317,19 +332,23 @@ export interface ThemeColorsInterface {
     alternative: string;
     menu: string;
     placeholder: string;
-    button: {
-      default: string;
-      hover: string;
-      hover2: string;
-      focus: string;
-      disabled: string;
-    };
+  };
+  button: {
+    primary: ThemeButtonColorEffectOnMouseEventInterface;
+    secondary: ThemeButtonColorEffectOnMouseEventInterface;
+    outline: ThemeButtonColorEffectOnMouseEventInterface;
+  };
+  list: {
+    border: string;
+    header: ThemeListColorEffectOnMouseEventInterface;
+    item: ThemeListColorEffectOnMouseEventInterface;
+    info: string;
   };
   icon: {
     normal: string;
     hover: string;
     pressed: string;
-    inactive:  string;
+    inactive: string;
   };
 }
 

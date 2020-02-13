@@ -1,5 +1,4 @@
 import { QuizDetailsState } from 'utils/store/quizDetailsStore';
-import Footer from 'components/Footer/Footer';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,19 +22,15 @@ export const QuizFooter = function({
   switch (state) {
     case QuizDetailsState.LOADED:
       return (
-        <Footer>
-          <AppButton type="submit" form="quizForm" disabled={isSubmitting}>
-            {t('form.button.submit.label', 'Submit')}
-          </AppButton>
-        </Footer>
+        <AppButton type="submit" form="quizForm" disabled={isSubmitting}>
+          {t('form.button.submit.label', 'Submit')}
+        </AppButton>
       );
     case QuizDetailsState.SUBMITTED:
       return (
-        <Footer>
-          <AppButton as={Link} to={`/item/${nextItemId}`}>
-            {t('button.next.label', 'Next')}
-          </AppButton>
-        </Footer>
+        <AppButton as={Link} to={`/item/${nextItemId}`}>
+          {t('button.next.label', 'Next')}
+        </AppButton>
       );
     default:
       return null;
