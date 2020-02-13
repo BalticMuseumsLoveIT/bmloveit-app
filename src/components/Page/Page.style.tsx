@@ -73,8 +73,8 @@ export const Title = styled.h1`
   ${fluidRange(
     {
       prop: 'font-size',
-      fromSize: em(22),
-      toSize: em(28),
+      fromSize: em(18),
+      toSize: em(24),
     },
     ...Object.values(fluidRangeMinMax),
   )}
@@ -89,14 +89,7 @@ export const Subtitle = styled.h2`
   margin-left: auto;
   margin-right: auto;
 
-  ${fluidRange(
-    {
-      prop: 'font-size',
-      fromSize: em(13),
-      toSize: em(18),
-    },
-    ...Object.values(fluidRangeMinMax),
-  )}
+  ${DefaultFontSize}
 `;
 
 export const Emphasize = styled.div`
