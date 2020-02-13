@@ -77,12 +77,22 @@ const QrCodePage = () => {
           <QRCodeMessage isError={localStore.isFailed}>
             {localStore.isFailed === true
               ? t('content.message.error', 'Invalid code!')
-              : t('content.message.initial', 'Point camera at the code')}
+              : t(
+                  'content.message.initial',
+                  'Click on the button and scan the code',
+                )}
           </QRCodeMessage>
-          <QRCodeScanButton isThin={true} onClick={localStore.startScanning}>
+          <QRCodeScanButton
+            isThin={true}
+            onClick={localStore.startScanning}
+            isDisabled={localStore.isScanning}
+            disabled={localStore.isScanning}
+          >
             <SVG src="/images/camera-24px.svg" />
             {localStore.isFailed !== true
-              ? t('button.scan.initial', 'Take a picture')
+              ? localStore.isScanning === true
+                ? t('button.scan.scanning', 'Scanning')
+                : t('button.scan.initial', 'Start scanning')
               : t('button.scan.error', 'Try again')}
           </QRCodeScanButton>
           <OutlineButton isThin={true} onClick={history.goBack}>
