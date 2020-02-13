@@ -1,7 +1,8 @@
-import { ThemeType } from 'utils/interfaces';
+import { ButtonProps, ThemeType } from 'utils/interfaces';
 import styled, { css } from 'styled-components';
 import { darken, em, fluidRange, lighten } from 'polished';
 import { Link } from 'react-router-dom';
+import SVG from 'react-inlinesvg';
 
 export const fluidRangeMinMax = {
   minScreen: em(320),
@@ -93,34 +94,34 @@ export const NegativeGridPadding = css`
 `;
 
 export const Title = styled.h1`
-  ${TitleFontStyle}
   color: ${props => props.theme.colors.text.header};
   text-align: center;
   margin: 1em 0;
+  ${TitleFontStyle}
   ${HeaderFontSize}
 `;
 
 export const Subtitle = styled.h2`
-  ${SubtitleFontStyle}
   color: ${props => props.theme.colors.text.header};
   text-align: center;
+  ${SubtitleFontStyle}
   ${DefaultFontSize}
 `;
 
 export const Emphasize = styled.div`
-  ${AlternativeFontStyle}
   color: ${props => props.theme.colors.text.header};
   text-align: center;
 
+  ${AlternativeFontStyle}
   ${DefaultFontSize}
 `;
 
 export const Description = styled.div`
-  ${ParagraphFontStyle}
   color: ${props => props.theme.colors.text.paragraph};
 
   line-height: 1.4;
 
+  ${ParagraphFontStyle}
   ${DefaultFontSize}
 `;
 
@@ -193,4 +194,32 @@ export const HeaderImage = styled.div<HeaderImageProps>`
       : css`
           background-color: ${theme.colors.background.placeholder};
         `}
+`;
+
+export const CloseButton = styled.button<ButtonProps>`
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  background: transparent;
+  display: block;
+
+  font-size: 1em;
+  padding: 1em;
+`;
+
+export const CloseButtonIcon = styled(SVG)`
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+
+  path {
+    transition: fill 0.25s ease;
+
+    fill: ${({ theme }) => theme.colors.icon.normal};
+
+    ${CloseButton}:hover & {
+      fill: ${({ theme }) => theme.colors.icon.hover};
+    }
+  }
 `;

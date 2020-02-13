@@ -1,20 +1,51 @@
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { getPrivateMediaURL } from 'utils/helpers';
 import ItemModalStore, { ModalState } from 'utils/store/itemModalStore';
+import { Description, CloseButtonIcon } from 'components/Page/Page.style';
+import { AudioPlayer, ItemTitle, VideoPlayer } from 'pages/ItemPage.style';
+import {
+  ModalCloseButton,
+  ModalLayoutGridHeader,
+  ModalImage,
+} from 'components/ItemModal/ItemModal.style';
+import { LayoutGrid, LayoutGridContent } from 'components/Layout/Layout.style';
 import ReactModal from 'react-modal';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import 'components/ItemModal/ItemModal.css';
 import { observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import React from 'react';
+import { withTheme, ThemeProps, DefaultTheme } from 'styled-components';
+import { em } from 'polished';
 
-interface Props extends WithTranslation, RouteComponentProps {}
+interface Props
+  extends WithTranslation,
+    ThemeProps<DefaultTheme>,
+    RouteComponentProps {}
 
 @observer
 class ItemModal extends React.Component<Props> {
   store = new ItemModalStore({
     isOpen: false,
     onRequestClose: () => this._closePopup(),
+    style: {
+      overlay: {
+        backgroundColor: 'rgba(0, 0, 0, 0.75)',
+        zIndex: 5,
+      },
+      content: {
+        top: '6em',
+        bottom: '1em',
+        left: '1em',
+        right: '1em',
+        padding: '0',
+        border: 'none',
+        borderRadius: em(10),
+        background: this.props.theme.colors.background.default,
+        maxWidth: '43em',
+        margin: '0 auto',
+        boxSizing: 'border-box',
+      },
+    },
   });
 
   private _openPopup = async (popupItemId: number) => {
@@ -85,69 +116,77 @@ class ItemModal extends React.Component<Props> {
     if (!this.props.tReady) return null;
     return (
       <ReactModal {...this.store.modalProps}>
-        <button onClick={this.store.modalProps.onRequestClose}>
-          {this.props.t('button.modalClose.label', 'Close')}
-        </button>
-        {(() => {
-          switch (this.store.modalState) {
-            case ModalState.NOT_LOADED:
-              return null;
-            case ModalState.LOADING:
-              return <h1>Loading...</h1>;
-            case ModalState.NOT_FOUND:
-              return <h1>Not found</h1>;
-            case ModalState.ERROR:
-              return <h1>Error</h1>;
-            case ModalState.LOADED:
-            default:
-              return (
-                <>
-                  {this.store.item.itemNameFull && (
-                    <h1>{this.store.item.itemNameFull}</h1>
-                  )}
-                  {this.store.item.itemDescription && (
-                    <ItemHtmlParser html={this.store.item.itemDescription} />
-                  )}
-                  {this.store.item.itemImage && (
-                    <div>
-                      <img
-                        src={getPrivateMediaURL(
-                          this.store.item.itemImage.file_url,
+        <LayoutGrid>
+          <ModalLayoutGridHeader>
+            <ModalCloseButton onClick={this.store.modalProps.onRequestClose}>
+              <CloseButtonIcon src="/images/close-24px.svg" />
+            </ModalCloseButton>
+          </ModalLayoutGridHeader>
+          <LayoutGridContent>
+            {(() => {
+              switch (this.store.modalState) {
+                case ModalState.NOT_LOADED:
+                  return null;
+                case ModalState.LOADING:
+                  return <h1>Loading...</h1>;
+                case ModalState.NOT_FOUND:
+                  return <h1>Not found</h1>;
+                case ModalState.ERROR:
+                  return <h1>Error</h1>;
+                case ModalState.LOADED:
+                default:
+                  return (
+                    <>
+                      {this.store.item.itemNameFull && (
+                        <ItemTitle>{this.store.item.itemNameFull}</ItemTitle>
+                      )}
+
+                      {this.store.item.itemImage &&
+                        this.store.item.itemImage.file_url && (
+                          <ModalImage
+                            src={getPrivateMediaURL(
+                              this.store.item.itemImage.file_url,
+                            )}
+                          />
                         )}
-                        alt=""
-                      />
-                    </div>
-                  )}
-                  {this.store.item.itemAudio && (
-                    <div>
-                      <audio controls id="audio_player">
-                        <source
+
+                      {this.store.item.itemAudio && (
+                        <AudioPlayer controls id="audio_player">
+                          <source
+                            src={getPrivateMediaURL(
+                              this.store.item.itemAudio.file_url,
+                            )}
+                            type="audio/mpeg"
+                          />
+                        </AudioPlayer>
+                      )}
+
+                      {this.store.item.itemVideo && (
+                        <VideoPlayer
+                          controls
+                          id="video_player"
                           src={getPrivateMediaURL(
-                            this.store.item.itemAudio.file_url,
+                            this.store.item.itemVideo.file_url,
                           )}
-                          type="audio/mpeg"
                         />
-                      </audio>
-                    </div>
-                  )}
-                  {this.store.item.itemVideo && (
-                    <div>
-                      <video
-                        controls
-                        id="video_player"
-                        src={getPrivateMediaURL(
-                          this.store.item.itemVideo.file_url,
-                        )}
-                      />
-                    </div>
-                  )}
-                </>
-              );
-          }
-        })()}
+                      )}
+
+                      {this.store.item.itemDescription && (
+                        <Description>
+                          <ItemHtmlParser
+                            html={this.store.item.itemDescription}
+                          />
+                        </Description>
+                      )}
+                    </>
+                  );
+              }
+            })()}
+          </LayoutGridContent>
+        </LayoutGrid>
       </ReactModal>
     );
   }
 }
 
-export default withTranslation()(withRouter(ItemModal));
+export default withTranslation()(withRouter(withTheme(ItemModal)));

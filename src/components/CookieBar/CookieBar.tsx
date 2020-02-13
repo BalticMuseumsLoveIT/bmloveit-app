@@ -1,12 +1,11 @@
 import {
   StyledWrapper,
-  CloseButton,
   InfoMessage,
-  CloseButtonIcon,
 } from 'components/CookieBar/CookieBar.style';
 import { CookieBarStore } from 'utils/store/cookieBarStore';
 import { SiteStore } from 'utils/store/siteStore';
 import { LayoutGridCookie } from 'components/Layout/Layout.style';
+import { CloseButton, CloseButtonIcon } from 'components/Page/Page.style';
 import React from 'react';
 import { Trans, WithTranslation, withTranslation } from 'react-i18next';
 import { inject, observer } from 'mobx-react';

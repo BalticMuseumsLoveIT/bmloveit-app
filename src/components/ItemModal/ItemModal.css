@@ -1,9 +1,0 @@
-.ReactModalPortal {
-    position: relative;
-    z-index: 100;
-}
-
-.ReactModal__Content {
-    max-width: 960px;
-    margin: 1em auto;
-}
