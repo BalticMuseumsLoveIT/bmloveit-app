@@ -2,6 +2,7 @@ import {
   StyledButton,
   StyledIcon,
   StyledImage,
+  StyledNumber,
   StyledWrapper,
 } from 'components/ImageMap/ImageMap.style';
 import { ItemMapElementInterface } from 'utils/interfaces';
@@ -80,7 +81,7 @@ export const ImageMap = (props: ImageMapProps) => {
     <StyledWrapper>
       <StyledImage alt="" ref={imageRef} src={props.src} />
       {imageStore.loaded &&
-        props.coordinates.map(point => {
+        props.coordinates.map((point, index) => {
           return (
             <StyledButton
               x={point.x}
@@ -115,7 +116,15 @@ export const ImageMap = (props: ImageMapProps) => {
                 history.push(newLocation);
               }}
             >
-              {point.icon && <StyledIcon src={point.icon} alt="" />}
+              {point.icon ? (
+                <StyledIcon src={point.icon} alt="" />
+              ) : (
+                <StyledNumber viewBox=" 0 0 16 16">
+                  <text x="50%" y="50%">
+                    {index + 1}
+                  </text>
+                </StyledNumber>
+              )}
             </StyledButton>
           );
         })}
