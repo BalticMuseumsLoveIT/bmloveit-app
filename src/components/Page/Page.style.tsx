@@ -80,6 +80,23 @@ export const Title = styled.h1`
   )}
 `;
 
+export const TitleWithUnderline = styled(Title)`
+  text-align: left;
+  padding-bottom: 1em;
+  position: relative;
+
+  &::after {
+    display: block;
+    content: '';
+    background: ${({ theme }) => theme.colors.background.alternative};
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 1em;
+    height: ${em(2)};
+  }
+`;
+
 export const Subtitle = styled.h2`
   font-family: ${props => props.theme.fonts.subheader.fontFamily};
   font-weight: ${props => props.theme.fonts.subheader.fontWeight};

@@ -6,8 +6,8 @@ import { AppButton } from 'components/Buttons/AppButton.style';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { LayoutGridFooter } from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
-import { Description } from 'components/Page/Page.style';
-import { WelcomeHeaderImage, WelcomeTitle } from 'pages/WelcomePage.style';
+import { TitleWithUnderline, Description } from 'components/Page/Page.style';
+import { WelcomeHeaderImage } from 'pages/WelcomePage.style';
 import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
 import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import React from 'react';
@@ -55,7 +55,7 @@ class WelcomePage extends React.Component<Props> {
           <WelcomeHeaderImage image={this.siteStore.image}>
             <MuseumLogo type={LogoType.WELCOME_HEADER} />
           </WelcomeHeaderImage>
-          <WelcomeTitle>{this.siteStore.title}</WelcomeTitle>
+          <TitleWithUnderline>{this.siteStore.title}</TitleWithUnderline>
           <Description>
             <ItemHtmlParser html={this.siteStore.description} />
           </Description>

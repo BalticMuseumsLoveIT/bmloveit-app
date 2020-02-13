@@ -2,6 +2,9 @@ import Content from 'components/Content/Content';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import AboutPageStore from 'utils/store/aboutPageStore';
 import { SiteStore } from 'utils/store/siteStore';
+import { TitleWithUnderline, Description } from 'components/Page/Page.style';
+import { LayoutGridFooter } from 'components/Layout/Layout.style';
+import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -42,9 +45,16 @@ class HomePage extends React.Component<AboutPageProps> {
           <title>{this.props.t('page.title', 'About')}</title>
         </Helmet>
         <Content>
-          <h1>{this.props.t('content.title', 'About')}</h1>
-          <ItemHtmlParser html={this.siteStore.about} />
+          <TitleWithUnderline>
+            {this.props.t('content.title', 'About')}
+          </TitleWithUnderline>
+          <Description>
+            <ItemHtmlParser html={this.siteStore.about} />
+          </Description>
         </Content>
+        <LayoutGridFooter>
+          <SponsorLogotype />
+        </LayoutGridFooter>
       </>
     );
   }
