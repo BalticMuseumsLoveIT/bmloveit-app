@@ -15,6 +15,7 @@ export default class ItemModalStore {
   @observable item: ItemStore = new ItemStore();
   @observable modalState: ModalState = ModalState.NOT_LOADED;
   @observable modalProps!: ReactModalProps;
+  @observable timeWhenProcessingStarted = NaN;
 
   constructor(modalProps: ReactModalProps | undefined = undefined) {
     this.setModalProps(modalProps || {});
@@ -28,6 +29,16 @@ export default class ItemModalStore {
     return !this.modalProps.isOpen;
   }
 
+  @computed get shouldDisplayLoader(): boolean {
+    if (isNaN(this.timeWhenProcessingStarted)) {
+      return false;
+    }
+
+    const processingTimeSoFar = Date.now() - this.timeWhenProcessingStarted;
+
+    return processingTimeSoFar > 200;
+  }
+
   @action openModal = () => {
     this.modalProps.isOpen = true;
   };
@@ -37,6 +48,8 @@ export default class ItemModalStore {
   };
 
   @action setModalState = (modalState: ModalState) => {
+    this.timeWhenProcessingStarted =
+      modalState === ModalState.LOADING ? Date.now() : NaN;
     this.modalState = modalState;
   };
 
