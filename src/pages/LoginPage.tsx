@@ -47,16 +47,18 @@ class LoginPage extends React.Component<Props> {
         <Content backgroundImage={this.siteStore.image || undefined}>
           <CenterContent>
             <MuseumLogo type={LogoType.WELCOME} />
-            <Message isError={this.loginPageStore.isOAuthFailed}>
-              {this.loginPageStore.isOAuthFailed === true && (
-                <ItemHtmlParser
-                  html={this.props.t(
-                    'content.message.error',
-                    'Ups, something went wrong.<br>Try again!',
-                  )}
-                />
-              )}
-            </Message>
+            {this.loginPageStore.isOAuthFailed === true && (
+              <Message isError={this.loginPageStore.isOAuthFailed}>
+                {
+                  <ItemHtmlParser
+                    html={this.props.t(
+                      'content.message.error',
+                      'Ups, something went wrong.<br>Try again!',
+                    )}
+                  />
+                }
+              </Message>
+            )}
             {!this.authStore.isLoggedIn ? (
               <>
                 <GoogleButton

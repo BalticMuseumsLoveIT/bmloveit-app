@@ -24,6 +24,7 @@ const GoogleButton = ({ onSuccess, onFailed }: LoginButtonPropsInterface) => {
       onSuccess={handleSuccessResponse}
       onFailure={handleErrorResponse}
       cookiePolicy="single_host_origin"
+      autoLoad={false}
       render={renderProps => (
         <LoginButton
           iconUrl={'/images/Google__G__Logo.svg'}

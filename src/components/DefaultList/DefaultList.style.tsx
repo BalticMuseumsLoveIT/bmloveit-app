@@ -17,6 +17,8 @@ export const DefaultList = styled.ul`
   justify-content: center;
   flex-direction: column;
   margin: 25px auto;
+  width: 93%;
+  max-width: 360px;
 `;
 
 export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
@@ -38,8 +40,7 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
     isHeader
       ? theme.colors.list.header.default.text
       : theme.colors.list.item.default.text};
-  width: 93%;
-  max-width: 360px;
+  width: 100%;
   min-height: 72px;
   font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};

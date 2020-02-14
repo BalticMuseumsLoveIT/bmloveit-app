@@ -26,6 +26,7 @@ export const AppButton = styled.button<ButtonProps>`
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   box-shadow: ${defaultBoxShadow};
   font-size: 16px;
+  outline: none;
 
   &:hover {
     background-color: ${({ theme, isDisabled }) =>
