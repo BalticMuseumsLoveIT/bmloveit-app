@@ -12,12 +12,3 @@ export const ProgressBarContainer = styled.div`
 export const ProgressBarSummary = styled(Emphasize)`
   margin: 1em 0;
 `;
-
-export const LogoutButton = styled(ButtonLink)`
-  font-family: ${props => props.theme.fonts.subheader.fontFamily};
-  font-weight: ${props => props.theme.fonts.subheader.fontWeight};
-  ${DefaultFontSize}
-  display: block;
-  padding: 0.5em;
-  margin: 1em auto;
-`;

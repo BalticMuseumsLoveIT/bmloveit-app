@@ -179,6 +179,15 @@ export const ButtonLink = styled.button`
   ${LinkStyle}
 `;
 
+export const CenteredButtonLink = styled(ButtonLink)`
+  font-family: ${props => props.theme.fonts.subheader.fontFamily};
+  font-weight: ${props => props.theme.fonts.subheader.fontWeight};
+  ${DefaultFontSize}
+  display: block;
+  padding: 0.5em;
+  margin: 1em auto;
+`;
+
 export const PlaceholderBackground = css`
   transition: background-color 0.25s ease;
   background: ${({ theme }) => theme.colors.background.placeholder};
@@ -207,7 +216,7 @@ export const HeaderImage = styled.div<HeaderImageProps>`
   min-height: ${em(240)};
 
   ${NegativeGridPadding}
-  
+
   ${({ image, theme }) =>
     image
       ? css`
@@ -217,7 +226,6 @@ export const HeaderImage = styled.div<HeaderImageProps>`
       : css`
           background-color: ${theme.colors.background.placeholder};
         `}
-
 `;
 
 export const CloseButton = styled.button<ButtonProps>`

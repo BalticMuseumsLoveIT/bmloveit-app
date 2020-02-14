@@ -10,8 +10,12 @@ import ItemModal from 'components/ItemModal/ItemModal';
 import { UserPoints } from 'components/UserPoints/UserPoints';
 import UserAvatar from 'components/Avatar/Avatar';
 import { UserAvatarType } from 'components/Avatar/Avatar.style';
-import { StyledLink, Subtitle, Title } from 'components/Page/Page.style';
-import { LogoutButton } from 'pages/ProfilePage.style';
+import {
+  StyledLink,
+  Subtitle,
+  Title,
+  CenteredButtonLink,
+} from 'components/Page/Page.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -100,9 +104,9 @@ class ProfilePage extends React.Component<Props> {
             userLanguage={this.uiStore.language}
           />
 
-          <LogoutButton onClick={this.logout}>
+          <CenteredButtonLink onClick={this.logout}>
             {this.props.t('button.logout.label', 'Logout')}
-          </LogoutButton>
+          </CenteredButtonLink>
 
           <ItemModal />
         </Content>
