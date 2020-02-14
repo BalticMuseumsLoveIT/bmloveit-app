@@ -98,7 +98,7 @@ export class UiStore {
 
   @action setContentState = (contentState: ContentState) => {
     this.timeWhenProcessingStarted =
-      contentState === ContentState.PROCESSING ? Date.now() : 0;
+      contentState === ContentState.PROCESSING ? Date.now() : NaN;
     this.contentState = contentState;
   };
 
