@@ -25,18 +25,25 @@ const LoginButton = styled.button<LoginButtonProps>`
   color: ${({ theme }) => theme.colors.text.paragraph};
   font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
-  font-size: 16px;
+  font-size: 1em;
+  border: none;
   border-radius: 8px;
   margin-left: auto;
   margin-right: auto;
   cursor: ${({ isDisabled }) => (isDisabled ? `default` : 'pointer')};
   box-shadow: ${defaultBoxShadow};
+  margin-top: 16px;
+  outline: none;
 
   &:before {
     content: ${({ iconUrl }) => (iconUrl ? `url(${iconUrl})` : '')};
     width: 24px;
     height: 24px;
     margin-right: 24px;
+  }
+
+  &:last-of-type {
+    margin-bottom: 16px;
   }
 
   &:hover {

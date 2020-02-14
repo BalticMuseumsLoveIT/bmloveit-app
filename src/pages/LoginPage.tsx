@@ -8,6 +8,11 @@ import { UserProfileStore } from 'utils/store/userProfileStore';
 import { LayoutGridFooter } from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import { SiteStore } from 'utils/store/siteStore';
+import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
+import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
+import { CenterContent, Message } from 'components/Page/Page.style';
+import LoginPageStore from 'utils/store/LoginPageStore';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -27,6 +32,8 @@ class LoginPage extends React.Component<Props> {
   userProfileStore = this.props.userProfileStore;
   siteStore = this.props.siteStore;
 
+  loginPageStore = new LoginPageStore();
+
   readonly WELCOME_PAGE = '/welcome';
 
   render() {
@@ -38,16 +45,36 @@ class LoginPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Login')}</title>
         </Helmet>
         <Content backgroundImage={this.siteStore.image || undefined}>
-          <h2>{this.props.t('content.title', 'Login')}</h2>
-          {!this.authStore.isLoggedIn ? (
-            <>
-              <GoogleButton onSuccess={this.login} />
-              <FacebookButton onSuccess={this.login} />
-              <GuestButton loginAsGuest={this.login} />
-            </>
-          ) : (
-            <Redirect to={this.WELCOME_PAGE} />
-          )}
+          <CenterContent>
+            <MuseumLogo type={LogoType.WELCOME} />
+            {this.loginPageStore.isOAuthFailed === true && (
+              <Message isError={this.loginPageStore.isOAuthFailed}>
+                {
+                  <ItemHtmlParser
+                    html={this.props.t(
+                      'content.message.error',
+                      'Ups, something went wrong.<br>Try again!',
+                    )}
+                  />
+                }
+              </Message>
+            )}
+            {!this.authStore.isLoggedIn ? (
+              <>
+                <GoogleButton
+                  onSuccess={this.login}
+                  onFailed={this._handleError}
+                />
+                <FacebookButton
+                  onSuccess={this.login}
+                  onFailed={this._handleError}
+                />
+                <GuestButton loginAsGuest={this.login} />
+              </>
+            ) : (
+              <Redirect to={this.WELCOME_PAGE} />
+            )}
+          </CenterContent>
         </Content>
         <LayoutGridFooter>
           <SponsorLogotype />
@@ -60,6 +87,10 @@ class LoginPage extends React.Component<Props> {
     await (params ? this._loginViaOAuth(params) : this._loginAsGuest());
     await this._reloadUserProfile();
     this._redirectToNextPage();
+  };
+
+  private _handleError = async () => {
+    this.loginPageStore.setIsOAutoFailed(true);
   };
 
   private _loginViaOAuth = async ({

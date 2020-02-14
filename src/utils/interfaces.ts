@@ -47,6 +47,7 @@ export interface RouteTypeInterface {
 
 export interface LoginButtonPropsInterface {
   onSuccess: (argument: OAuthLoginArgumentInterface) => Promise<void>;
+  onFailed: () => Promise<void>;
 }
 
 export interface OAuthLoginArgumentInterface {
