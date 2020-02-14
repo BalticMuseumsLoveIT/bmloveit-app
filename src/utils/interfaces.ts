@@ -324,6 +324,8 @@ export interface ThemeColorsInterface {
     header: string;
     paragraph: string;
     alternative: string;
+    error: string;
+    success: string;
     anchor: AnchorInterface;
   };
   background: {
