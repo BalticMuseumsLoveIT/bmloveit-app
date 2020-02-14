@@ -30,7 +30,7 @@ class ItemModal extends React.Component<Props> {
     style: {
       overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0.75)',
-        zIndex: 5,
+        zIndex: 30,
       },
       content: {
         top: '6em',
