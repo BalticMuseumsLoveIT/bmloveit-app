@@ -2,18 +2,18 @@ import Content from 'components/Content/Content';
 import SurveyDetailsStore from 'utils/store/surveyDetailsStore';
 import { SurveyDetails } from 'components/SurveyDetails/SurveyDetails';
 import { SurveyFooter } from 'components/SurveyFooter/SurveyFooter';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
+import { Description, Title } from 'components/Page/Page.style';
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface SurveyDetailsProps
-  extends WithTranslation,
-    RouteComponentProps<any> {}
+interface Props extends WithTranslation, RouteComponentProps<any> {}
 
 @observer
-class SurveyDetailsPage extends Component<SurveyDetailsProps> {
+class SurveyDetailsPage extends Component<Props> {
   surveyDetailsStore = new SurveyDetailsStore(true);
 
   async componentDidMount() {
@@ -21,7 +21,19 @@ class SurveyDetailsPage extends Component<SurveyDetailsProps> {
       params: { id },
     } = this.props.match;
 
-    await this.surveyDetailsStore.loadSurvey(parseInt(id));
+    await this.surveyDetailsStore.loadData(parseInt(id));
+  }
+
+  async componentDidUpdate(prevProps: Props) {
+    if (prevProps.tReady !== this.props.tReady) {
+      this.surveyDetailsStore.setTReady(this.props.tReady);
+    }
+
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      await this.surveyDetailsStore.loadData(
+        Number.parseInt(this.props.match.params.id),
+      );
+    }
   }
 
   componentWillUnmount(): void {
@@ -37,12 +49,22 @@ class SurveyDetailsPage extends Component<SurveyDetailsProps> {
           <title>{this.props.t('page.title', 'Survey details')}</title>
         </Helmet>
         <Content>
-          <h1>{this.surveyDetailsStore.title}</h1>
+          {this.surveyDetailsStore.title && (
+            <Title>{this.surveyDetailsStore.title}</Title>
+          )}
+
+          {this.surveyDetailsStore.description && (
+            <Description>
+              <ItemHtmlParser html={this.surveyDetailsStore.description} />
+            </Description>
+          )}
+
           <SurveyDetails
             state={this.surveyDetailsStore.state}
             survey={this.surveyDetailsStore.survey}
             onSubmit={this.surveyDetailsStore.handleSubmit}
           />
+
           <SurveyFooter
             state={this.surveyDetailsStore.state}
             nextItemId={this.surveyDetailsStore.nextItemId}
