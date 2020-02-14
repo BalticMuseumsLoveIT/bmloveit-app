@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { darken, em, fluidRange, lighten } from 'polished';
 import { Link } from 'react-router-dom';
 import SVG from 'react-inlinesvg';
+import { Field } from 'formik';
 
 interface MessageProps {
   isError?: boolean;
@@ -21,6 +22,17 @@ export const DefaultFontSize = css`
       prop: 'font-size',
       fromSize: em(12),
       toSize: em(16),
+    },
+    ...Object.values(fluidRangeMinMax),
+  )}
+`;
+
+export const SmallerFontSize = css`
+  ${fluidRange(
+    {
+      prop: 'font-size',
+      fromSize: em(10),
+      toSize: em(14),
     },
     ...Object.values(fluidRangeMinMax),
   )}
@@ -207,7 +219,7 @@ export const HeaderImage = styled.div<HeaderImageProps>`
   min-height: ${em(240)};
 
   ${NegativeGridPadding}
-  
+
   ${({ image, theme }) =>
     image
       ? css`
@@ -217,7 +229,6 @@ export const HeaderImage = styled.div<HeaderImageProps>`
       : css`
           background-color: ${theme.colors.background.placeholder};
         `}
-
 `;
 
 export const CloseButton = styled.button<ButtonProps>`
@@ -248,6 +259,56 @@ export const CloseButtonIcon = styled(SVG)`
   }
 `;
 
+export const Fieldset = styled.fieldset`
+  border: 0;
+  margin: 0;
+  padding: 0;
+
+  & > *:first-child {
+    margin-top: 0;
+  }
+
+  & > *:last-child {
+    margin-bottom: 0;
+  }
+
+  ${SmallerFontSize}
+`;
+
+export const Legend = styled.p`
+  font-size: 1em;
+  margin: 1em 0;
+
+  ${SubtitleFontStyle}
+`;
+
+export const FormImage = styled.img`
+  display: block;
+  width: 100%;
+  margin: 1em 0;
+  border-radius: ${em(10)};
+`;
+
+export const RadioInput = styled(Field)`
+  display: block;
+  font-size: 1em;
+  margin: 1em;
+`;
+
+export const RadioLabel = styled.label`
+  font-size: 1em;
+  padding: 1em 1em 1em 0;
+  flex-grow: 1;
+
+  ${SubtitleFontStyle}
+`;
+
+export const FormValidation = styled.p`
+  ${SubtitleFontStyle};
+
+  text-align: center;
+`;
+
 export const CenterContent = styled.div`
   display: flex;
   flex-direction: column;
@@ -260,7 +321,7 @@ export const Message = styled.div<MessageProps>`
   font-family: ${({ theme }) => theme.fonts.paragraph.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.paragraph.fontWeight};
   color: ${({ isError, theme }) =>
-    isError === true ? '#B40000' : theme.colors.text.paragraph};
+  isError === true ? '#B40000' : theme.colors.text.paragraph};
   text-align: center;
   line-height: 1.4;
 

@@ -29,6 +29,8 @@ const defaultColors = {
     paragraph: '#7A7D92',
     header: '#2A2C3E',
     alternative: '#F8FAFD',
+    error: '#B40000',
+    success: '#71BF48',
     anchor: {
       link: '#2A2C3E',
       hover: '#F85705',

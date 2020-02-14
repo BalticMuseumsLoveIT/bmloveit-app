@@ -8,7 +8,8 @@ import {
 import Api from 'utils/api';
 import { ContentState } from 'components/Content/Content';
 import { getTranslatedString } from 'utils/helpers';
-import { action, autorun, computed, observable } from 'mobx';
+import ItemStore from 'utils/store/itemStore';
+import { action, autorun, computed, observable, when } from 'mobx';
 import uiStore from './uiStore';
 
 export enum QuizDetailsState {
@@ -27,9 +28,11 @@ export default class QuizDetailsStore {
 
   @observable answer: QuizAnswerResponse | null = null;
 
-  @observable itemData: ItemInterface | null = null;
+  @observable itemData = new ItemStore();
 
   @observable isSubmitting = false;
+
+  @observable tReady?: boolean;
 
   private readonly _manageContentState: boolean;
 
@@ -100,40 +103,45 @@ export default class QuizDetailsStore {
   }
 
   @computed get nextItemId(): number {
-    return this.itemData !== null && this.itemData.next_item !== null
-      ? this.itemData.next_item
-      : NaN;
+    return this.itemData.nextItemId;
   }
 
-  @action setState(state: QuizDetailsState) {
+  @action setState = (state: QuizDetailsState) => {
     this.state = state;
-  }
+  };
 
-  @action setQuiz(quiz: QuizDetailsInterface) {
+  @action setQuiz = (quiz: QuizDetailsInterface) => {
     this.quiz = quiz;
-  }
+  };
 
-  @action setAnswer(answer: QuizAnswerResponse) {
+  @action setAnswer = (answer: QuizAnswerResponse) => {
     this.answer = answer;
-  }
+  };
 
-  @action setItemData(itemData: Array<ItemInterface>) {
-    this.itemData = itemData.length ? itemData[0] : null;
-  }
+  @action setItemData = (itemData: Array<ItemInterface>) => {
+    this.itemData.setItemData(itemData.length ? itemData[0] : null);
+  };
 
-  @action setIsSubmitting(isSubmitting: boolean) {
+  @action setIsSubmitting = (isSubmitting: boolean) => {
     this.isSubmitting = isSubmitting;
-  }
+  };
 
-  @action
-  async loadQuiz(id: number) {
-    this.setState(QuizDetailsState.LOADING);
+  @action setTReady = (tReady?: boolean) => {
+    this.tReady = tReady;
+  };
+
+  @action loadData = async (id: number) => {
     try {
-      this.setQuiz(await Api.getQuiz(id));
+      this.setState(QuizDetailsState.LOADING);
+
+      await Promise.all([
+        this.setQuiz(await Api.getQuiz(id)),
+        when(() => this.tReady === true),
+      ]);
 
       if (this.quiz && this.quiz.item !== null) {
         const item = await Api.getItem(this.quiz.item);
-        if (item.length) this.setItemData(item);
+        this.setItemData(item);
       }
 
       this.setState(QuizDetailsState.LOADED);
@@ -148,7 +156,7 @@ export default class QuizDetailsStore {
         this.setState(QuizDetailsState.ERROR);
       }
     }
-  }
+  };
 
   @action.bound
   async handleSubmit(question: number, option: number) {

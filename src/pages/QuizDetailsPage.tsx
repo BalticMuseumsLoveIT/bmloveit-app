@@ -2,6 +2,8 @@ import QuizDetailsStore from 'utils/store/quizDetailsStore';
 import Content from 'components/Content/Content';
 import { QuizDetails } from 'components/QuizDetails/QuizDetails';
 import { QuizFooter } from 'components/QuizFooter/QuizFooter';
+import { Description, Title } from 'components/Page/Page.style';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
@@ -19,7 +21,21 @@ class QuizPage extends React.Component<Props> {
       params: { id },
     } = this.props.match;
 
-    await this.quizDetailsStore.loadQuiz(id);
+    this.quizDetailsStore.setTReady(this.props.tReady);
+
+    await this.quizDetailsStore.loadData(id);
+  }
+
+  async componentDidUpdate(prevProps: Props) {
+    if (prevProps.tReady !== this.props.tReady) {
+      this.quizDetailsStore.setTReady(this.props.tReady);
+    }
+
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      await this.quizDetailsStore.loadData(
+        Number.parseInt(this.props.match.params.id),
+      );
+    }
   }
 
   componentWillUnmount(): void {
@@ -35,11 +51,21 @@ class QuizPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Quiz')}</title>
         </Helmet>
         <Content>
-          <h1>{this.quizDetailsStore.title}</h1>
+          {this.quizDetailsStore.title && (
+            <Title>{this.quizDetailsStore.title}</Title>
+          )}
+
+          {this.quizDetailsStore.description && (
+            <Description>
+              <ItemHtmlParser html={this.quizDetailsStore.description} />
+            </Description>
+          )}
+
           <QuizDetails
             state={this.quizDetailsStore.state}
             store={this.quizDetailsStore}
           />
+
           <QuizFooter
             state={this.quizDetailsStore.state}
             nextItemId={this.quizDetailsStore.nextItemId}
