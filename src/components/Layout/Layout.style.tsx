@@ -1,5 +1,6 @@
 import { DefaultGridPadding } from 'components/Page/Page.style';
 import styled, { createGlobalStyle, css } from 'styled-components';
+import { em } from 'polished';
 
 export const GlobalStyle = createGlobalStyle`
   html, body, #root {
@@ -9,6 +10,25 @@ export const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     background: ${props => props.theme.colors.background.app};
+  }
+
+  .badge-tooltip {
+    opacity: 1 !important;
+    font-size: 1em !important;
+
+    .rc-tooltip-arrow {
+      border-top-color: ${({ theme }) =>
+        theme.colors.background.alternative} !important;
+    }
+
+    .rc-tooltip-inner {
+      font-size: ${em(15)};
+      font-family: ${props => props.theme.fonts.paragraph.fontFamily};
+      font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
+      color: ${({ theme }) => theme.colors.text.alternative};
+      background-color: ${({ theme }) => theme.colors.background.alternative};
+      min-height: unset;
+    }
   }
 `;
 
@@ -44,7 +64,7 @@ export const LayoutGridContent = styled.div<LayoutGridContentProps>`
       background: transparent url(${props.backgroundImage}) 50% 50% no-repeat;
       background-size: cover;
     `}
-  
+
   ${props =>
     props.backgroundColor &&
     css`
