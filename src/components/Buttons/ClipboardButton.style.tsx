@@ -1,5 +1,4 @@
 import { defaultBoxShadow } from 'components/Page/Page.style';
-import { ButtonProps } from 'utils/interfaces';
 import styled from 'styled-components';
 
 export const ClipboardButton = styled.button`
