@@ -179,9 +179,9 @@ export const lightPartial: RecursivePartial<DefaultTheme> = {};
 export const darkPartial: RecursivePartial<DefaultTheme> = {
   colors: {
     text: {
-      paragraph: '#7A7D92',
+      paragraph: '#F8FAFD',
       header: '#F8FAFD',
-      alternative: '#FFFFFF',
+      alternative: '#65BFCB',
       anchor: {
         link: '#F8FAFD',
         hover: '#65BFCB',

@@ -16,6 +16,6 @@
   "page": {
     "title": "Profile"
   },
-  "teamMembership": "You are in group:<1>{{teamName}}</1>",
+  "teamMembership": "You are in group: <1>{{teamName}}</1>",
   "userProgressPoints": "Points: {{ userPoints }}"
 }

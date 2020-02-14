@@ -1,15 +1,19 @@
 import {
-  ItemInterface,
+  CommonApiTranslationInterface,
   ItemMapElementInterface,
   ItemType,
-  ResourceDataInterface,
   ResourceTypeName,
   RouteInterface,
 } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
-import { getPrivateMediaURL, getResource } from 'utils/helpers';
+import {
+  getPrivateMediaURL,
+  getResource,
+  getTranslatedString,
+} from 'utils/helpers';
+import ItemStore from 'utils/store/itemStore';
 import { action, autorun, computed, observable, when } from 'mobx';
 
 export enum PageState {
@@ -24,7 +28,7 @@ export default class RouteMapPageStore {
 
   @observable state: PageState = PageState.NOT_LOADED;
   @observable routeData: RouteInterface | null = null;
-  @observable routeMapData: ItemInterface | null = null;
+  @observable routeMapData: ItemStore = new ItemStore(null);
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -64,7 +68,7 @@ export default class RouteMapPageStore {
           item => item.type_data && ItemType.MAP === item.type_data.name,
         );
 
-        this.setRouteMapData(routeMapData || null);
+        this.routeMapData.setItemData(routeMapData || null);
       }
 
       this.setState(PageState.LOADED);
@@ -85,10 +89,6 @@ export default class RouteMapPageStore {
     this.routeData = routesData;
   };
 
-  @action setRouteMapData = (routeMapData: ItemInterface | null) => {
-    this.routeMapData = routeMapData;
-  };
-
   @computed get routeId(): string {
     return this.routeData ? this.routeData.id.toString() : '';
   }
@@ -103,22 +103,25 @@ export default class RouteMapPageStore {
     return this.routeData ? this.routeData.name_full : '';
   }
 
-  @computed get routeMapImageResource(): ResourceDataInterface | null {
-    if (
-      this.routeMapData === null ||
-      this.routeMapData.resources_data.length === 0
-    )
-      return null;
-
-    return (
-      this.routeMapData.resources_data.find(
-        resource => ResourceTypeName.Image === resource.type_name,
-      ) || null
+  @computed get routeNameFull(): string {
+    return getTranslatedString(
+      this.routeNameFullFallback,
+      this.routeNameFullTranslations,
     );
   }
 
+  @computed get routeNameFullFallback(): string {
+    return this.routeData ? this.routeData.name_full : '';
+  }
+
+  @computed get routeNameFullTranslations(): Array<
+    CommonApiTranslationInterface
+  > {
+    return this.routeData ? this.routeData.name_full_translation : [];
+  }
+
   @computed get routeMapImageURL(): string {
-    const mapImageResource = this.routeMapImageResource;
+    const mapImageResource = this.routeMapData.itemImage;
     return (mapImageResource && mapImageResource.file_url) || '';
   }
 

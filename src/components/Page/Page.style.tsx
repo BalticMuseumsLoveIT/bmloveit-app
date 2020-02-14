@@ -1,7 +1,8 @@
-import { ThemeType } from 'utils/interfaces';
+import { ButtonProps, ThemeType } from 'utils/interfaces';
 import styled, { css } from 'styled-components';
 import { darken, em, fluidRange, lighten } from 'polished';
 import { Link } from 'react-router-dom';
+import SVG from 'react-inlinesvg';
 
 export const fluidRangeMinMax = {
   minScreen: em(320),
@@ -19,6 +20,37 @@ export const DefaultFontSize = css`
     },
     ...Object.values(fluidRangeMinMax),
   )}
+`;
+
+export const HeaderFontSize = css`
+  ${fluidRange(
+    {
+      prop: 'font-size',
+      fromSize: em(18),
+      toSize: em(24),
+    },
+    ...Object.values(fluidRangeMinMax),
+  )}
+`;
+
+export const TitleFontStyle = css`
+  font-family: ${props => props.theme.fonts.header.fontFamily};
+  font-weight: ${props => props.theme.fonts.header.fontWeight};
+`;
+
+export const SubtitleFontStyle = css`
+  font-family: ${props => props.theme.fonts.subheader.fontFamily};
+  font-weight: ${props => props.theme.fonts.subheader.fontWeight};
+`;
+
+export const AlternativeFontStyle = css`
+  font-family: ${props => props.theme.fonts.alternative.fontFamily};
+  font-weight: ${props => props.theme.fonts.alternative.fontWeight};
+`;
+
+export const ParagraphFontStyle = css`
+  font-family: ${props => props.theme.fonts.paragraph.fontFamily};
+  font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
 `;
 
 export const DefaultGridPaddingRage = {
@@ -64,20 +96,11 @@ export const NegativeGridPadding = css`
 `;
 
 export const Title = styled.h1`
-  font-family: ${props => props.theme.fonts.header.fontFamily};
-  font-weight: ${props => props.theme.fonts.header.fontWeight};
   color: ${props => props.theme.colors.text.header};
   text-align: center;
   margin: 1em 0;
-
-  ${fluidRange(
-    {
-      prop: 'font-size',
-      fromSize: em(18),
-      toSize: em(24),
-    },
-    ...Object.values(fluidRangeMinMax),
-  )}
+  ${TitleFontStyle}
+  ${HeaderFontSize}
 `;
 
 export const TitleWithUnderline = styled(Title)`
@@ -98,33 +121,26 @@ export const TitleWithUnderline = styled(Title)`
 `;
 
 export const Subtitle = styled.h2`
-  font-family: ${props => props.theme.fonts.subheader.fontFamily};
-  font-weight: ${props => props.theme.fonts.subheader.fontWeight};
   color: ${props => props.theme.colors.text.header};
   text-align: center;
-  width: 88%;
-  margin-left: auto;
-  margin-right: auto;
-
+  ${SubtitleFontStyle}
   ${DefaultFontSize}
 `;
 
 export const Emphasize = styled.div`
-  font-family: ${props => props.theme.fonts.alternative.fontFamily};
-  font-weight: ${props => props.theme.fonts.alternative.fontWeight};
   color: ${props => props.theme.colors.text.header};
   text-align: center;
 
+  ${AlternativeFontStyle}
   ${DefaultFontSize}
 `;
 
 export const Description = styled.div`
-  font-family: ${props => props.theme.fonts.paragraph.fontFamily};
-  font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
   color: ${props => props.theme.colors.text.paragraph};
 
   line-height: 1.4;
 
+  ${ParagraphFontStyle}
   ${DefaultFontSize}
 `;
 
@@ -184,10 +200,10 @@ export interface HeaderImageProps {
 }
 
 export const HeaderImage = styled.div<HeaderImageProps>`
-  ${NegativeGridPadding};
-
   min-height: ${em(240)};
 
+  ${NegativeGridPadding}
+  
   ${({ image, theme }) =>
     image
       ? css`
@@ -197,4 +213,33 @@ export const HeaderImage = styled.div<HeaderImageProps>`
       : css`
           background-color: ${theme.colors.background.placeholder};
         `}
+
+`;
+
+export const CloseButton = styled.button<ButtonProps>`
+  outline: none;
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  background: transparent;
+  display: block;
+
+  font-size: 1em;
+  padding: 1em;
+`;
+
+export const CloseButtonIcon = styled(SVG)`
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+
+  path {
+    transition: fill 0.25s ease;
+
+    fill: ${({ theme }) => theme.colors.icon.normal};
+
+    ${CloseButton}:hover & {
+      fill: ${({ theme }) => theme.colors.icon.hover};
+    }
+  }
 `;

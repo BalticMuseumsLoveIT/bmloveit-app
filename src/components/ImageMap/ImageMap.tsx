@@ -1,20 +1,24 @@
 import {
-  StyledWrapper,
-  StyledImage,
   StyledButton,
   StyledIcon,
+  StyledImage,
+  StyledNumber,
+  StyledWrapper,
 } from 'components/ImageMap/ImageMap.style';
 import { ItemMapElementInterface } from 'utils/interfaces';
-import React from 'react';
-import { useObserver, useLocalStore } from 'mobx-react';
+import React, { RefObject } from 'react';
+import { useLocalStore, useObserver } from 'mobx-react';
 import { action } from 'mobx';
 import queryString from 'query-string';
 import { useHistory, useLocation } from 'react-router-dom';
 import { LocationDescriptorObject } from 'history';
+// eslint-disable-next-line import/no-unresolved
+import { StateProvider } from 'react-zoom-pan-pinch/dist/store/StateContext';
 
-interface ImageMapProps {
+interface ImageMapProps extends Pick<StateProvider, 'setScale'> {
   src: string;
   coordinates: Array<ItemMapElementInterface>;
+  gridMapRef: RefObject<HTMLDivElement>;
 }
 
 export const ImageMap = (props: ImageMapProps) => {
@@ -58,6 +62,16 @@ export const ImageMap = (props: ImageMapProps) => {
           imageStore.setWidth(imageRef.current.naturalWidth);
           imageStore.setHeight(imageRef.current.naturalHeight);
           imageStore.setLoaded(true);
+
+          if (props.gridMapRef && props.gridMapRef.current) {
+            const gridMapHeight = props.gridMapRef.current.offsetHeight;
+            const imageHeight = imageRef.current.offsetHeight;
+
+            if (gridMapHeight > 0 && imageHeight > 0) {
+              const scale = (gridMapHeight * 100) / imageHeight / 100;
+              props.setScale(scale);
+            }
+          }
         }
       });
     }
@@ -67,7 +81,7 @@ export const ImageMap = (props: ImageMapProps) => {
     <StyledWrapper>
       <StyledImage alt="" ref={imageRef} src={props.src} />
       {imageStore.loaded &&
-        props.coordinates.map(point => {
+        props.coordinates.map((point, index) => {
           return (
             <StyledButton
               x={point.x}
@@ -76,7 +90,7 @@ export const ImageMap = (props: ImageMapProps) => {
               height={imageStore.dimensions.height}
               widthSF={imageStore.widthScaleFactor}
               heightSF={imageStore.heightScaleFactor}
-              isCustom={point.icon.length}
+              isCustom={point.icon.length > 0}
               key={`${point.x}${point.y}`}
               onClick={() => {
                 /**
@@ -102,7 +116,15 @@ export const ImageMap = (props: ImageMapProps) => {
                 history.push(newLocation);
               }}
             >
-              {point.icon && <StyledIcon src={point.icon} alt="" />}
+              {point.icon ? (
+                <StyledIcon src={point.icon} alt="" />
+              ) : (
+                <StyledNumber viewBox=" 0 0 16 16">
+                  <text x="50%" y="50%">
+                    {index + 1}
+                  </text>
+                </StyledNumber>
+              )}
             </StyledButton>
           );
         })}

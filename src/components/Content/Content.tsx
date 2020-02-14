@@ -31,7 +31,7 @@ class Content extends React.Component<Props> {
   uiStore = this.injected.uiStore;
 
   render() {
-    const { backgroundImage } = this.props;
+    const { backgroundImage, backgroundColor } = this.props;
 
     switch (this.uiStore.contentState) {
       case ContentState.PROCESSING:
@@ -44,7 +44,10 @@ class Content extends React.Component<Props> {
     }
 
     return (
-      <LayoutGridContent backgroundImage={backgroundImage || undefined}>
+      <LayoutGridContent
+        backgroundImage={backgroundImage}
+        backgroundColor={backgroundColor}
+      >
         <ErrorBoundary>{this.node}</ErrorBoundary>
       </LayoutGridContent>
     );

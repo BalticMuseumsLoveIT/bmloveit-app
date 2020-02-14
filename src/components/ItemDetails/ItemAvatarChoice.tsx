@@ -2,15 +2,26 @@ import ItemStore from 'utils/store/itemStore';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import {
   AvatarButton,
+  AvatarButtonImage,
+  AvatarButtonPlaceholderImage,
+  AvatarButtonLabel,
   AvatarList,
+  AvatarButtonPlaceholder,
 } from 'components/ItemDetails/ItemAvatarChoice.style';
-import { getTranslatedString } from 'utils/helpers';
+import {
+  getPrivateMediaURL,
+  getResource,
+  getTranslatedString,
+} from 'utils/helpers';
 import { UserProfileStore } from 'utils/store/userProfileStore';
-import { ItemInterface } from 'utils/interfaces';
+import { ItemInterface, ResourceTypeName } from 'utils/interfaces';
 import Api from 'utils/api';
+import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
+import { AvatarChoiceDescription } from 'pages/ItemPage.style';
+import { Title } from 'components/Page/Page.style';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { inject, useObserver, useLocalStore } from 'mobx-react';
+import { inject, useLocalStore, useObserver } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
 import { action } from 'mobx';
 
@@ -71,31 +82,62 @@ export const ItemAvatarChoice = inject('userProfileStore')(
 
       return (
         <>
-          <h1>{itemStore.itemNameFull}</h1>
-          <div>{itemStore.itemDescription}</div>
+          {itemStore.itemNameFull && <Title>{itemStore.itemNameFull}</Title>}
+
+          {itemStore.itemDescription && (
+            <AvatarChoiceDescription>
+              <ItemHtmlParser html={itemStore.itemDescription} />
+            </AvatarChoiceDescription>
+          )}
+
           <AvatarList>
             {itemStore.itemAvatars.length ? (
               <>
-                {itemStore.itemAvatars.map(avatar => (
-                  <AvatarButton
-                    key={avatar.id}
-                    isSelected={localStore.selectedAvatarId === avatar.id}
-                    onClick={() => localStore.setAvatar(avatar)}
-                  >
-                    {getTranslatedString(
-                      avatar.name_full,
-                      avatar.name_full_translation,
-                    )}
-                  </AvatarButton>
-                ))}
+                {itemStore.itemAvatars.map(avatar => {
+                  const imageResource = getResource(
+                    avatar,
+                    ResourceTypeName.Image,
+                  );
+
+                  const image =
+                    imageResource && imageResource.file_url
+                      ? getPrivateMediaURL(imageResource.file_url)
+                      : undefined;
+
+                  const isSelected = localStore.selectedAvatarId === avatar.id;
+
+                  const name = getTranslatedString(
+                    avatar.name_full,
+                    avatar.name_full_translation,
+                  );
+
+                  return (
+                    <AvatarButton
+                      key={avatar.id}
+                      isSelected={isSelected}
+                      onClick={() => localStore.setAvatar(avatar)}
+                    >
+                      {image ? (
+                        <AvatarButtonImage src={image} alt={name} />
+                      ) : (
+                        <AvatarButtonPlaceholder>
+                          <AvatarButtonPlaceholderImage src="/images/avatar-image-placeholder.svg" />
+                        </AvatarButtonPlaceholder>
+                      )}
+                      <AvatarButtonLabel>{name}</AvatarButtonLabel>
+                    </AvatarButton>
+                  );
+                })}
               </>
             ) : (
-              <p>
-                {t(
-                  'error.noAvatarsFound',
-                  'No avatars was found for an item with a given ID',
-                )}
-              </p>
+              <AvatarChoiceDescription>
+                <p>
+                  {t(
+                    'error.noAvatarsFound',
+                    'No avatars was found for an item with a given ID',
+                  )}
+                </p>
+              </AvatarChoiceDescription>
             )}
           </AvatarList>
           <AppButton

@@ -31,6 +31,7 @@ export const LayoutGridHeader = styled.div`
 
 export interface LayoutGridContentProps {
   backgroundImage?: string;
+  backgroundColor?: string;
 }
 
 export const LayoutGridContent = styled.div<LayoutGridContentProps>`
@@ -42,6 +43,12 @@ export const LayoutGridContent = styled.div<LayoutGridContentProps>`
     css`
       background: transparent url(${props.backgroundImage}) 50% 50% no-repeat;
       background-size: cover;
+    `}
+  
+  ${props =>
+    props.backgroundColor &&
+    css`
+      background-color: ${props.backgroundColor};
     `}
 `;
 
