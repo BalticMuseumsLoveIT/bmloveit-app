@@ -19,13 +19,14 @@ export const AppButton = styled.button<ButtonProps>`
     isDisabled
       ? theme.colors.button.primary.disabled.text
       : theme.colors.button.primary.default.text};
+  border: none;
   border-radius: 8px;
   font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
   text-decoration: none;
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   box-shadow: ${defaultBoxShadow};
-  font-size: 16px;
+  font-size: 1em;
   outline: none;
 
   &:hover {

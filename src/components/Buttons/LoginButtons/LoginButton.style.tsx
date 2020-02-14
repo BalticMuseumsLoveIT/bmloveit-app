@@ -25,7 +25,8 @@ const LoginButton = styled.button<LoginButtonProps>`
   color: ${({ theme }) => theme.colors.text.paragraph};
   font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
-  font-size: 16px;
+  font-size: 1em;
+  border: none;
   border-radius: 8px;
   margin-left: auto;
   margin-right: auto;

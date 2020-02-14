@@ -37,9 +37,8 @@ const QrCodePage = () => {
     if (data !== null) {
       try {
         const url = new URL(data);
-        const appDomain = process.env.REACT_APP_DOMAIN || '';
 
-        if (appDomain !== '' && url.host === appDomain) {
+        if (url.host === window.location.host) {
           history.push(url.pathname + url.search);
         } else {
           localStore.stopScanning(true);
