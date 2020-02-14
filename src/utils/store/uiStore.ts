@@ -12,10 +12,9 @@ export enum AppState {
 
 export class UiStore {
   @observable appState: AppState;
-
   @observable contentState: ContentState;
-
   @observable nav: MainMenuStore = new MainMenuStore();
+  @observable timeWhenProcessingStarted = NaN;
 
   /**
    * List of all supported languages provided by a backend server
@@ -74,6 +73,16 @@ export class UiStore {
     return isUserLocaleMatch;
   }
 
+  @computed get shouldDisplayLoader(): boolean {
+    if (isNaN(this.timeWhenProcessingStarted)) {
+      return false;
+    }
+
+    const processingTimeSoFar = Date.now() - this.timeWhenProcessingStarted;
+
+    return processingTimeSoFar > 200;
+  }
+
   @action setLanguages = (languages: Array<CommonLanguageInterface>) => {
     this.languages = languages;
   };
@@ -88,6 +97,8 @@ export class UiStore {
   };
 
   @action setContentState = (contentState: ContentState) => {
+    this.timeWhenProcessingStarted =
+      contentState === ContentState.PROCESSING ? Date.now() : 0;
     this.contentState = contentState;
   };
 

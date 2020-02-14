@@ -6,13 +6,15 @@ import {
 } from 'components/Layout/Layout.style';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { Circle as AppLoader } from 'react-preloaders';
+import { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
 
 export enum ContentState {
   PROCESSING,
   AVAILABLE,
 }
 
-interface Props extends LayoutGridContentProps {
+interface Props extends LayoutGridContentProps, ThemeProps<DefaultTheme> {
   children: React.ReactNode;
 }
 
@@ -35,7 +37,17 @@ class Content extends React.Component<Props> {
 
     switch (this.uiStore.contentState) {
       case ContentState.PROCESSING:
-        this.node = <h1>Processing</h1>;
+        this.node = (
+          <>
+            {this.props.children}
+            {this.uiStore.shouldDisplayLoader === true && (
+              <AppLoader
+                background={'rgba(0, 0, 0, 0.3);'}
+                color={this.props.theme.colors.background.alternative}
+              />
+            )}
+          </>
+        );
         break;
       case ContentState.AVAILABLE:
       default:
@@ -54,4 +66,4 @@ class Content extends React.Component<Props> {
   }
 }
 
-export default Content;
+export default withTheme(Content);
