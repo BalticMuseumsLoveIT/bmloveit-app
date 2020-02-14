@@ -1,6 +1,5 @@
 import { QuizQuestionInterface } from 'utils/interfaces';
 import { QuestionImage } from 'components/QuizForm/QuestionImage';
-import StyledFormikRadioButton from 'components/QuizForm/QuizForm.style';
 import { getTranslatedString } from 'utils/helpers';
 import {
   Fieldset,
@@ -8,6 +7,7 @@ import {
   Legend,
   RadioInput,
   RadioLabel,
+  RadioWrapper,
 } from 'components/Page/Page.style';
 import { ErrorMessage, useField } from 'formik';
 import React from 'react';
@@ -38,7 +38,7 @@ export const QuizQuestion = function({
         const optionName = `option_${option.id}`;
         const isChecked = field.value === optionName;
         return (
-          <StyledFormikRadioButton
+          <RadioWrapper
             key={option.id}
             isChecked={isChecked}
             isCorrect={option.correct}
@@ -56,7 +56,7 @@ export const QuizQuestion = function({
                 option.description_translation || [],
               )}
             </RadioLabel>
-          </StyledFormikRadioButton>
+          </RadioWrapper>
         );
       })}
       <ErrorMessage component={FormValidation} name={name} />

@@ -53,11 +53,12 @@ class SurveyDetailsPage extends Component<Props> {
             <Title>{this.surveyDetailsStore.title}</Title>
           )}
 
-          {this.surveyDetailsStore.description && (
-            <Description>
-              <ItemHtmlParser html={this.surveyDetailsStore.description} />
-            </Description>
-          )}
+          {this.surveyDetailsStore.description &&
+            !this.surveyDetailsStore.isSubmitted && (
+              <Description>
+                <ItemHtmlParser html={this.surveyDetailsStore.description} />
+              </Description>
+            )}
 
           <SurveyDetails
             state={this.surveyDetailsStore.state}

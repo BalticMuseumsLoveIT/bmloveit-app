@@ -194,7 +194,7 @@ export const ButtonLink = styled.button`
 export const CenteredButtonLink = styled(ButtonLink)`
   font-family: ${props => props.theme.fonts.subheader.fontFamily};
   font-weight: ${props => props.theme.fonts.subheader.fontWeight};
-  ${DefaultFontSize}
+  ${DefaultFontSize};
   display: block;
   padding: 0.5em;
   margin: 1em auto;
@@ -227,7 +227,7 @@ export interface HeaderImageProps {
 export const HeaderImage = styled.div<HeaderImageProps>`
   min-height: ${em(240)};
 
-  ${NegativeGridPadding}
+  ${NegativeGridPadding};
 
   ${({ image, theme }) =>
     image
@@ -270,7 +270,7 @@ export const CloseButtonIcon = styled(SVG)`
 
 export const Fieldset = styled.fieldset`
   border: 0;
-  margin: 0;
+  margin: 1em 0;
   padding: 0;
 
   & > *:first-child {
@@ -298,6 +298,26 @@ export const FormImage = styled.img`
   border-radius: ${em(10)};
 `;
 
+interface RadioWrapperProps {
+  isChecked?: boolean;
+  isCorrect?: boolean;
+}
+
+export const RadioWrapper = styled.div<RadioWrapperProps>`
+  display: flex;
+  align-items: center;
+  margin: ${em(12)} 0;
+  border-radius: 2em;
+  box-sizing: border-box;
+  background-color: ${({ theme }) => theme.colors.background.default};
+  box-shadow: ${({ isChecked, isCorrect, theme }) =>
+    isCorrect === true
+      ? `0 0 3px 1px ${theme.colors.text.success}`
+      : isChecked === true && isCorrect === false
+      ? `0 0 3px 1px ${theme.colors.text.error}`
+      : 'none'};
+`;
+
 export const RadioInput = styled(Field)`
   display: block;
   font-size: 1em;
@@ -310,6 +330,27 @@ export const RadioLabel = styled.label`
   flex-grow: 1;
 
   ${SubtitleFontStyle}
+`;
+
+export const CheckboxWrapper = styled(RadioWrapper)``;
+
+export const CheckboxInput = styled(RadioInput)``;
+
+export const CheckboxLabel = styled(RadioLabel)``;
+
+export const Textarea = styled(Field)`
+  display: block;
+  width: 100%;
+  margin: 1em 0;
+  border-radius: ${em(10)};
+  box-sizing: border-box;
+  height: 10em;
+  outline: none;
+  overflow: auto;
+  border: none;
+  padding: 1em;
+  ${ParagraphFontStyle};
+  ${DefaultFontSize};
 `;
 
 export const FormValidation = styled.p`
@@ -330,7 +371,7 @@ export const Message = styled.div<MessageProps>`
   font-family: ${({ theme }) => theme.fonts.paragraph.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.paragraph.fontWeight};
   color: ${({ isError, theme }) =>
-  isError === true ? '#B40000' : theme.colors.text.paragraph};
+    isError === true ? '#B40000' : theme.colors.text.paragraph};
   text-align: center;
   line-height: 1.4;
 

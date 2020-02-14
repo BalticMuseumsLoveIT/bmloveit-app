@@ -331,11 +331,14 @@ export interface ThemeColorsInterface {
     header: string;
     paragraph: string;
     alternative: string;
+    success: string;
+    error: string;
     anchor: AnchorInterface;
   };
   background: {
     app: string;
     default: string;
+    negative: string;
     alternative: string;
     menu: string;
     placeholder: string;

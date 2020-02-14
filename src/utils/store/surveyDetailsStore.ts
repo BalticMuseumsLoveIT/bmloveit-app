@@ -7,6 +7,7 @@ import {
 import Api from 'utils/api';
 import { ContentState } from 'components/Content/Content';
 import ItemStore from 'utils/store/itemStore';
+import { getTranslatedString } from 'utils/helpers';
 import { action, autorun, computed, observable, when } from 'mobx';
 import { FormikValues } from 'formik';
 import uiStore from './uiStore';
@@ -69,16 +70,30 @@ export default class SurveyDetailsStore {
     return this.state === SurveyDetailsState.SUBMITTING;
   }
 
+  @computed get isSubmitted(): boolean {
+    return this.state === SurveyDetailsState.SUBMITTED;
+  }
+
   @computed get nextItemId(): number {
     return this.itemData.nextItemId;
   }
 
   @computed get title(): string {
-    return this.itemData.itemNameFull;
+    return this.survey
+      ? getTranslatedString(
+          this.survey.name_full,
+          this.survey.name_full_translation,
+        )
+      : '';
   }
 
   @computed get description(): string {
-    return this.itemData.itemDescription;
+    return this.survey
+      ? getTranslatedString(
+          this.survey.description,
+          this.survey.description_translation,
+        )
+      : '';
   }
 
   @action setState(state: SurveyDetailsState) {
