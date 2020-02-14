@@ -19,6 +19,9 @@ export const DefaultList = styled.ul`
   margin: 25px auto;
   width: 93%;
   max-width: 360px;
+  box-shadow: ${defaultBoxShadow};
+  border-radius: 8px;
+  overflow: hidden;
 `;
 
 export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
@@ -49,19 +52,6 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   text-decoration: none;
   font-size: 16px;
   cursor: ${({ isDisabled }) => (isDisabled === true ? 'default' : 'pointer')};
-  box-shadow: ${({ isHeader, isMenuOpened }) =>
-    isHeader === true && isMenuOpened === false && defaultBoxShadow};
-
-  &:first-of-type {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
-
-  &:last-of-type {
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    box-shadow: ${defaultBoxShadow};
-  }
 
   &:hover,
   &:focus,
