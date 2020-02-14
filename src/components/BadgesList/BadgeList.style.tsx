@@ -1,27 +1,5 @@
 import { PlaceholderBackground } from 'components/Page/Page.style';
-import styled, { createGlobalStyle } from 'styled-components';
-import { em } from 'polished';
-
-export const TooltipStyle = createGlobalStyle`
-  .badge-tooltip {
-    opacity: 1 !important;
-    font-size: 1em !important;
-  
-    .rc-tooltip-arrow {
-      border-top-color: ${({ theme }) =>
-        theme.colors.background.alternative} !important;
-    }
-    
-    .rc-tooltip-inner {
-      font-size: ${em(15)};
-      font-family: ${props => props.theme.fonts.paragraph.fontFamily};
-      font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
-      color: ${({ theme }) => theme.colors.text.alternative};
-      background-color: ${({ theme }) => theme.colors.background.alternative};
-      min-height: unset;
-    }
-  } 
-`;
+import styled from 'styled-components';
 
 export const BadgeList = styled.ul`
   display: flex;

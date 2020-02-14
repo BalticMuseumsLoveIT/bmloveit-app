@@ -353,6 +353,17 @@ export interface ThemeColorsInterface {
     pressed: string;
     inactive: string;
   };
+  form: {
+    label: string;
+    background: string;
+    textInput: {
+      default: string;
+      placeholder: string;
+      hover: string;
+      focus: string;
+      error: string;
+    };
+  };
 }
 
 export interface SiteInterface {
