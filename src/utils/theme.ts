@@ -137,6 +137,17 @@ const defaultColors = {
     pressed: '#BB4312',
     inactive: '#BBBFCD',
   },
+  form: {
+    label: '#7A7D92',
+    background: '#FFFFFF',
+    textInput: {
+      default: '#7A7D92',
+      placeholder: '#D6D6D6',
+      hover: '#A9AFBC',
+      focus: '#7A7D92',
+      error: '#B40000',
+    },
+  },
 };
 
 export const defaultTheme: DefaultTheme = {
@@ -289,6 +300,17 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
       hover: '#73BFCA',
       pressed: '#73BFCA',
       inactive: '#7B7D92',
+    },
+    form: {
+      label: '#7A7D92',
+      background: '#454856',
+      textInput: {
+        default: '#EAEEF6',
+        placeholder: '#7A7D92',
+        hover: '#A9AFBC',
+        focus: '#2A2C3E',
+        error: '#F68686',
+      },
     },
   },
 };

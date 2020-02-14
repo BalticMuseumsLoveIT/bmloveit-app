@@ -67,10 +67,7 @@ class TeamPage extends React.Component<Props> {
             </>
           ) : (
             <>
-              <h2>{this.props.t('content.title.joinTeam', 'Join team')}</h2>
               <TeamJoinForm onSubmit={this.userProfileStore.handleJoinTeam} />
-
-              <h2>{this.props.t('content.title.createTeam', 'Create team')}</h2>
               <TeamCreateForm
                 onSubmit={this.userProfileStore.handleCreateTeam}
               />
