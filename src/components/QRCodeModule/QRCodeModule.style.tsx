@@ -1,11 +1,7 @@
-import { defaultBoxShadow, DefaultFontSize } from 'components/Page/Page.style';
+import { defaultBoxShadow } from 'components/Page/Page.style';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import styled from 'styled-components';
 import QrReader from 'react-qr-reader';
-
-interface QRCodeMessageProps {
-  isError: boolean;
-}
 
 export const QRCodeModule = styled(QrReader)`
   width: 70%;
@@ -29,17 +25,6 @@ export const QRCodeModulePlaceholder = styled.img`
   width: 70%;
   max-width: 280px;
   margin: 30px auto;
-`;
-
-export const QRCodeMessage = styled.div<QRCodeMessageProps>`
-  font-family: ${({ theme }) => theme.fonts.paragraph.fontFamily};
-  font-weight: ${({ theme }) => theme.fonts.paragraph.fontWeight};
-  color: ${({ isError, theme }) =>
-    isError === true ? '#B40000' : theme.colors.text.paragraph};
-  text-align: center;
-  line-height: 1.4;
-
-  ${DefaultFontSize}
 `;
 
 export const QRCodeScanButton = styled(AppButton)`

@@ -4,6 +4,10 @@ import { darken, em, fluidRange, lighten } from 'polished';
 import { Link } from 'react-router-dom';
 import SVG from 'react-inlinesvg';
 
+interface MessageProps {
+  isError?: boolean;
+}
+
 export const fluidRangeMinMax = {
   minScreen: em(320),
   maxScreen: em(640),
@@ -242,4 +246,23 @@ export const CloseButtonIcon = styled(SVG)`
       fill: ${({ theme }) => theme.colors.icon.hover};
     }
   }
+`;
+
+export const CenterContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
+export const Message = styled.div<MessageProps>`
+  font-family: ${({ theme }) => theme.fonts.paragraph.fontFamily};
+  font-weight: ${({ theme }) => theme.fonts.paragraph.fontWeight};
+  color: ${({ isError, theme }) =>
+    isError === true ? '#B40000' : theme.colors.text.paragraph};
+  text-align: center;
+  line-height: 1.4;
+
+  ${DefaultFontSize}
 `;
