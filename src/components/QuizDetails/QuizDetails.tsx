@@ -3,6 +3,7 @@ import QuizDetailsStore, {
 } from 'utils/store/quizDetailsStore';
 import QuizForm from 'components/QuizForm/QuizForm';
 import { Description } from 'components/Page/Page.style';
+import { Error404, Error404Context } from 'components/Error404/Error404';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -21,11 +22,7 @@ export const QuizDetails = ({ state, store }: QuizDetailsProps) => {
     case QuizDetailsState.SUBMITTED:
       return <QuizForm store={store} />;
     case QuizDetailsState.NOT_FOUND:
-      return (
-        <Description>
-          <p>{t('error.notFound', 'Quiz with a given ID was not found')}</p>
-        </Description>
-      );
+      return <Error404 context={Error404Context.QUIZ} />;
     case QuizDetailsState.ERROR:
       return (
         <Description>

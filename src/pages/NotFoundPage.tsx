@@ -1,4 +1,5 @@
 import Content from 'components/Content/Content';
+import { Error404 } from 'components/Error404/Error404';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { withTranslation, WithTranslation } from 'react-i18next';
@@ -14,7 +15,9 @@ class NotFoundPage extends React.Component<Props> {
         <Helmet>
           <title>{this.props.t('page.title', 'Not found')}</title>
         </Helmet>
-        <Content>404</Content>
+        <Content>
+          <Error404 />
+        </Content>
       </>
     );
   }

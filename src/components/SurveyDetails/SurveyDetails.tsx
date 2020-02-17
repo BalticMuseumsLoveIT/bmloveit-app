@@ -3,6 +3,7 @@ import { SurveyDetailsInterface } from 'utils/interfaces';
 import { SurveyForm } from 'components/SurveyForm/SurveyForm';
 import { Description, Emphasize } from 'components/Page/Page.style';
 import { AbstractDuck } from 'components/SurveyDetails/SurveyDetails.style';
+import { Error404, Error404Context } from 'components/Error404/Error404';
 import { FormikValues } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -35,11 +36,7 @@ export const SurveyDetails = function({
         </>
       );
     case SurveyDetailsState.NOT_FOUND:
-      return (
-        <Description>
-          {t('error.notFound', 'Survey with a given ID was not found')}
-        </Description>
-      );
+      return <Error404 context={Error404Context.SURVEY} />;
     case SurveyDetailsState.ERROR:
       return (
         <Description>
