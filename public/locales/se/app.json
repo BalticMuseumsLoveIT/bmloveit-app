@@ -18,10 +18,17 @@
       "modal": "",
       "quiz": "",
       "survey": ""
+    },
+    "500": {
+      "generic": "",
+      "global": ""
     }
   },
   "image": {
     "404": {
+      "alt": ""
+    },
+    "500": {
       "alt": ""
     },
     "logoBaltic": {

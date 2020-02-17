@@ -2,10 +2,9 @@ import QuizDetailsStore, {
   QuizDetailsState,
 } from 'utils/store/quizDetailsStore';
 import QuizForm from 'components/QuizForm/QuizForm';
-import { Description } from 'components/Page/Page.style';
 import { Error404, Error404Context } from 'components/Error404/Error404';
+import { Error500 } from 'components/Error500/Error500';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 export interface QuizDetailsProps {
   state: QuizDetailsState;
@@ -13,10 +12,6 @@ export interface QuizDetailsProps {
 }
 
 export const QuizDetails = ({ state, store }: QuizDetailsProps) => {
-  const { t, ready } = useTranslation('quiz-details-page');
-
-  if (!ready) return null;
-
   switch (state) {
     case QuizDetailsState.LOADED:
     case QuizDetailsState.SUBMITTED:
@@ -24,13 +19,7 @@ export const QuizDetails = ({ state, store }: QuizDetailsProps) => {
     case QuizDetailsState.NOT_FOUND:
       return <Error404 context={Error404Context.QUIZ} />;
     case QuizDetailsState.ERROR:
-      return (
-        <Description>
-          <p>
-            {t('error.generic', 'Sorry but quiz cannot be displayed right now')}
-          </p>
-        </Description>
-      );
+      return <Error500 />;
     case QuizDetailsState.NOT_LOADED:
     case QuizDetailsState.LOADING:
     default:

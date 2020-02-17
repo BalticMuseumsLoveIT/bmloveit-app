@@ -11,6 +11,7 @@ import {
 import { LayoutGrid, LayoutGridContent } from 'components/Layout/Layout.style';
 import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
 import { Error404, Error404Context } from 'components/Error404/Error404';
+import { Error500 } from 'components/Error500/Error500';
 import ReactModal from 'react-modal';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { observer } from 'mobx-react';
@@ -135,7 +136,7 @@ class ItemModal extends React.Component<Props> {
                 case ModalState.NOT_FOUND:
                   return <Error404 context={Error404Context.MODAL} />;
                 case ModalState.ERROR:
-                  return <h1>Error</h1>;
+                  return <Error500 />;
                 case ModalState.LOADED:
                 default:
                   return (

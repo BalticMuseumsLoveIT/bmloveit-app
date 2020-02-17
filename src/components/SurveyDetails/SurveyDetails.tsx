@@ -1,9 +1,10 @@
 import { SurveyDetailsState } from 'utils/store/surveyDetailsStore';
 import { SurveyDetailsInterface } from 'utils/interfaces';
 import { SurveyForm } from 'components/SurveyForm/SurveyForm';
-import { Description, Emphasize } from 'components/Page/Page.style';
+import { Emphasize } from 'components/Page/Page.style';
 import { AbstractDuck } from 'components/SurveyDetails/SurveyDetails.style';
 import { Error404, Error404Context } from 'components/Error404/Error404';
+import { Error500 } from 'components/Error500/Error500';
 import { FormikValues } from 'formik';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -38,11 +39,7 @@ export const SurveyDetails = function({
     case SurveyDetailsState.NOT_FOUND:
       return <Error404 context={Error404Context.SURVEY} />;
     case SurveyDetailsState.ERROR:
-      return (
-        <Description>
-          {t('error.generic', 'Sorry but survey cannot be displayed right now')}
-        </Description>
-      );
+      return <Error500 />;
     case SurveyDetailsState.LOADING:
     default:
       return null;

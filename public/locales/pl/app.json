@@ -17,12 +17,19 @@
       "item": "Przepraszamy, o element podanym id nie został odnaleziony",
       "modal": "Przepraszamy, zawartość tego okna nie została odnaleziona",
       "quiz": "Przeprzaszamy, quiz o podanym id nie został odnaleziony",
-      "survey": "Porzepraszamy, ankieta o podanym id nie została odnaleziona"
+      "survey": "Przepraszamy, ankieta o podanym id nie została odnaleziona"
+    },
+    "500": {
+      "generic": "Przepraszamy, wystąpił błąd podczas ładowania treści",
+      "global": "Przepraszamy, wystąpił błąd podczas ładowania aplikacji"
     }
   },
   "image": {
     "404": {
       "alt": "Nie odnaleziono"
+    },
+    "500": {
+      "alt": ""
     },
     "logoBaltic": {
       "alt": "Baltic"
