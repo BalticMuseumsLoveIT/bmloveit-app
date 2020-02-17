@@ -4,9 +4,9 @@ import {
   LayoutGridContent,
   LayoutGridContentProps,
 } from 'components/Layout/Layout.style';
+import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
-import { Circle as AppLoader } from 'react-preloaders';
 import { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
 
 export enum ContentState {
@@ -37,17 +37,7 @@ class Content extends React.Component<Props> {
 
     switch (this.uiStore.contentState) {
       case ContentState.PROCESSING:
-        this.node = (
-          <>
-            {this.props.children}
-            {this.uiStore.shouldDisplayLoader === true && (
-              <AppLoader
-                background={'rgba(0, 0, 0, 0.3);'}
-                color={this.props.theme.colors.background.alternative}
-              />
-            )}
-          </>
-        );
+        this.node = <LinearIndicator />;
         break;
       case ContentState.AVAILABLE:
       default:

@@ -12,9 +12,10 @@ export enum AppState {
 
 export class UiStore {
   @observable appState: AppState;
+
   @observable contentState: ContentState;
+
   @observable nav: MainMenuStore = new MainMenuStore();
-  @observable timeWhenProcessingStarted = NaN;
 
   /**
    * List of all supported languages provided by a backend server
@@ -65,22 +66,10 @@ export class UiStore {
     // "TypeError: Cannot read property 'appState' of undefined"
     const userLanguage = this.language.toLowerCase().slice(0, 2);
 
-    const isUserLocaleMatch = this.languages.some(({ key: language }) => {
+    return this.languages.some(({ key: language }) => {
       const uiLanguage = language.toLowerCase().slice(0, 2);
       return uiLanguage === userLanguage;
     });
-
-    return isUserLocaleMatch;
-  }
-
-  @computed get shouldDisplayLoader(): boolean {
-    if (isNaN(this.timeWhenProcessingStarted)) {
-      return false;
-    }
-
-    const processingTimeSoFar = Date.now() - this.timeWhenProcessingStarted;
-
-    return processingTimeSoFar > 200;
   }
 
   @action setLanguages = (languages: Array<CommonLanguageInterface>) => {
@@ -97,8 +86,6 @@ export class UiStore {
   };
 
   @action setContentState = (contentState: ContentState) => {
-    this.timeWhenProcessingStarted =
-      contentState === ContentState.PROCESSING ? Date.now() : NaN;
     this.contentState = contentState;
   };
 

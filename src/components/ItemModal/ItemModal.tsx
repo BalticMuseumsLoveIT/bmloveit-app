@@ -9,6 +9,7 @@ import {
   ModalImage,
 } from 'components/ItemModal/ItemModal.style';
 import { LayoutGrid, LayoutGridContent } from 'components/Layout/Layout.style';
+import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
 import ReactModal from 'react-modal';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { observer } from 'mobx-react';
@@ -16,7 +17,6 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import React from 'react';
 import { withTheme, ThemeProps, DefaultTheme } from 'styled-components';
 import { em } from 'polished';
-import { Circle as AppLoader } from 'react-preloaders';
 
 interface Props
   extends WithTranslation,
@@ -116,17 +116,6 @@ class ItemModal extends React.Component<Props> {
   render() {
     if (!this.props.tReady) return null;
 
-    if (this.store.modalState === ModalState.LOADING) {
-      if (this.store.shouldDisplayLoader === false) return null;
-
-      return (
-        <AppLoader
-          background={'rgba(0, 0, 0, 0.3);'}
-          color={this.props.theme.colors.background.alternative}
-        />
-      );
-    }
-
     return (
       <ReactModal {...this.store.modalProps}>
         <LayoutGrid>
@@ -138,11 +127,16 @@ class ItemModal extends React.Component<Props> {
           <LayoutGridContent>
             {(() => {
               switch (this.store.modalState) {
+                case ModalState.NOT_LOADED:
+                  return null;
+                case ModalState.LOADING:
+                  return <LinearIndicator />;
                 case ModalState.NOT_FOUND:
                   return <h1>Not found</h1>;
                 case ModalState.ERROR:
                   return <h1>Error</h1>;
                 case ModalState.LOADED:
+                default:
                   return (
                     <>
                       {this.store.item.itemNameFull && (
@@ -188,8 +182,6 @@ class ItemModal extends React.Component<Props> {
                       )}
                     </>
                   );
-                default:
-                  return null;
               }
             })()}
           </LayoutGridContent>
