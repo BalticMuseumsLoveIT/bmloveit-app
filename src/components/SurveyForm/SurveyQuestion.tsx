@@ -3,6 +3,12 @@ import { CheckboxGroup } from 'components/SurveyForm/CheckboxGroup';
 import { RadioGroup } from 'components/SurveyForm/RadioGroup';
 import { QuestionImage } from 'components/SurveyForm/QuestionImage';
 import { getTranslatedString } from 'utils/helpers';
+import {
+  Fieldset,
+  FormValidation,
+  Legend,
+  Textarea,
+} from 'components/Page/Page.style';
 import { ErrorMessage, Field, FieldProps } from 'formik';
 import React from 'react';
 
@@ -12,13 +18,13 @@ export interface SurveyQuestionProps extends FieldProps {
 
 export const SurveyQuestion = ({ field, question }: SurveyQuestionProps) => {
   return (
-    <fieldset>
-      <legend>
+    <Fieldset>
+      <Legend>
         {getTranslatedString(
           question.description,
           question.description_translation,
         )}
-      </legend>
+      </Legend>
       <QuestionImage path={question.file_url} />
       {(() => {
         switch (question.type) {
@@ -39,12 +45,12 @@ export const SurveyQuestion = ({ field, question }: SurveyQuestionProps) => {
               />
             );
           case SurveyQuestionType.OPEN:
-            return <Field name={field.name} component="textarea" />;
+            return <Textarea name={field.name} component="textarea" />;
           default:
             return null;
         }
       })()}
-      <ErrorMessage component="div" name={field.name} />
-    </fieldset>
+      <ErrorMessage component={FormValidation} name={field.name} />
+    </Fieldset>
   );
 };

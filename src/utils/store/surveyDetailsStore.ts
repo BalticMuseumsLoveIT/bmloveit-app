@@ -1,15 +1,14 @@
 import {
   isAPIError,
-  ItemInterface,
   SurveyDetailsInterface,
-  SurveyInterface,
   SurveyQuestionInterface,
   SurveyQuestionType,
 } from 'utils/interfaces';
 import Api from 'utils/api';
 import { ContentState } from 'components/Content/Content';
+import ItemStore from 'utils/store/itemStore';
 import { getTranslatedString } from 'utils/helpers';
-import { action, autorun, computed, observable } from 'mobx';
+import { action, autorun, computed, observable, when } from 'mobx';
 import { FormikValues } from 'formik';
 import uiStore from './uiStore';
 
@@ -28,9 +27,9 @@ export default class SurveyDetailsStore {
 
   @observable survey: SurveyDetailsInterface | null = null;
 
-  @observable surveyId: number | null = null;
+  @observable itemData = new ItemStore();
 
-  @observable itemData: ItemInterface | null = null;
+  @observable tReady?: boolean;
 
   private readonly _manageContentState: boolean;
 
@@ -63,21 +62,36 @@ export default class SurveyDetailsStore {
     }
   }
 
+  @computed get surveyId(): number | null {
+    return this.survey ? this.survey.id : null;
+  }
+
   @computed get isSubmitting(): boolean {
     return this.state === SurveyDetailsState.SUBMITTING;
   }
 
+  @computed get isSubmitted(): boolean {
+    return this.state === SurveyDetailsState.SUBMITTED;
+  }
+
   @computed get nextItemId(): number {
-    return this.itemData !== null && this.itemData.next_item !== null
-      ? this.itemData.next_item
-      : NaN;
+    return this.itemData.nextItemId;
   }
 
   @computed get title(): string {
-    return this.itemData
+    return this.survey
       ? getTranslatedString(
-          this.itemData.name_full,
-          this.itemData.name_full_translation,
+          this.survey.name_full,
+          this.survey.name_full_translation,
+        )
+      : '';
+  }
+
+  @computed get description(): string {
+    return this.survey
+      ? getTranslatedString(
+          this.survey.description,
+          this.survey.description_translation,
         )
       : '';
   }
@@ -90,31 +104,24 @@ export default class SurveyDetailsStore {
     this.survey = survey;
   }
 
-  @action setSurveyId(surveyId: number) {
-    this.surveyId = surveyId;
-  }
+  @action setTReady = (tReady?: boolean) => {
+    this.tReady = tReady;
+  };
 
-  @action setItemData(itemData: ItemInterface) {
-    this.itemData = itemData;
-  }
-
-  @action loadSurvey = async (id: number) => {
-    this.setState(SurveyDetailsState.LOADING);
+  @action loadData = async (id: number) => {
     try {
-      this.setSurvey(await Api.getSurveyDetails(id));
-      this.setSurveyId(id);
+      this.setState(SurveyDetailsState.LOADING);
 
-      // SurveyDetails has no information about item...
-      const surveyList = await Api.getSurveyList();
-      const survey: SurveyInterface | undefined = surveyList.find(
-        survey => survey.id === this.surveyId!,
-      );
+      const [surveyDetails] = await Promise.all([
+        Api.getSurveyDetails(id),
+        when(() => this.tReady === true),
+      ]);
 
-      if (survey && survey.item !== null) {
-        const item = await Api.getItem(survey.item);
-        if (item.length) this.setItemData(item[0]);
+      if (surveyDetails.item) {
+        await this.itemData.loadItemData(surveyDetails.item);
       }
 
+      this.setSurvey(surveyDetails);
       this.setState(SurveyDetailsState.LOADED);
     } catch (error) {
       if (

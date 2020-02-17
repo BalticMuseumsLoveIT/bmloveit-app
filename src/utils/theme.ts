@@ -41,6 +41,7 @@ const defaultColors = {
   background: {
     app: '#EAEEF6',
     default: '#FFFFFF',
+    negative: '#2A2C3E',
     alternative: '#F85705',
     menu: '#F8FAFD',
     placeholder: desaturate(0.1, darken(0.04, '#EAEEF6')),
