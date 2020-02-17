@@ -2,12 +2,12 @@ import { LinkItem, LinkList } from 'components/MainMenu/Links.syles';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import React from 'react';
-import { TOptionsBase } from 'i18next';
+import { TFunction } from 'i18next';
 import { useTranslation } from 'react-i18next';
 
 export interface StaticLinkInterface {
   to: string;
-  label: { key: string; options: TOptionsBase };
+  label: (t: TFunction) => string;
 }
 
 interface Props {
@@ -26,7 +26,7 @@ export const StaticLinks = observer(({ links, closeMenu }: Props) => {
         return (
           <LinkItem key={index}>
             <Link to={item.to} onClick={closeMenu}>
-              {t(item.label.key, item.label.options)}
+              {item.label(t)}
             </Link>
           </LinkItem>
         );
