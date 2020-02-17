@@ -1,0 +1,10 @@
+{
+  "content": {
+    "description": "",
+    "title": "Lista tras"
+  },
+  "page": {
+    "title": "Trasy"
+  },
+  "routeAttractions": "Liczba atrakcji: {{attractions}}"
+}

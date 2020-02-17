@@ -1,0 +1,19 @@
+{
+  "button": {
+    "changeRoute": {
+      "label": ""
+    },
+    "scanQR": {
+      "label": ""
+    },
+    "viewList": {
+      "label": ""
+    }
+  },
+  "error": {
+    "noMap": ""
+  },
+  "page": {
+    "title": ""
+  }
+}

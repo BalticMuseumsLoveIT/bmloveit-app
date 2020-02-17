@@ -1,0 +1,18 @@
+{
+  "badges": {
+    "header": "Badges"
+  },
+  "button": {
+    "logout": {
+      "label": "Logout"
+    }
+  },
+  "cards": {
+    "header": "Cards"
+  },
+  "page": {
+    "title": "User profile"
+  },
+  "teamMembership": "You are in group:<1>{{teamName}}</1>",
+  "userProgressPoints": "Points: {{ userPoints }}"
+}

@@ -1,0 +1,10 @@
+{
+  "content": {
+    "description": "Short information about what we choose and why. Info about routes",
+    "title": "Routes list"
+  },
+  "page": {
+    "title": "Routes"
+  },
+  "routeAttractions": "Attractions: {{attractions}}"
+}

@@ -1,0 +1,10 @@
+{
+  "content": {
+    "message": {
+      "error": "Ups, something went wrong.<br>Try again!"
+    }
+  },
+  "page": {
+    "title": "Login"
+  }
+}

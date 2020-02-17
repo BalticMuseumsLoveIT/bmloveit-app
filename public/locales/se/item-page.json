@@ -1,0 +1,14 @@
+{
+  "button": {
+    "next": {
+      "label": ""
+    }
+  },
+  "error": {
+    "noAvatarsFound": "",
+    "noImage": ""
+  },
+  "page": {
+    "title": ""
+  }
+}
