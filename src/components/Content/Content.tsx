@@ -4,15 +4,17 @@ import {
   LayoutGridContent,
   LayoutGridContentProps,
 } from 'components/Layout/Layout.style';
+import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
 
 export enum ContentState {
   PROCESSING,
   AVAILABLE,
 }
 
-interface Props extends LayoutGridContentProps {
+interface Props extends LayoutGridContentProps, ThemeProps<DefaultTheme> {
   children: React.ReactNode;
 }
 
@@ -35,7 +37,7 @@ class Content extends React.Component<Props> {
 
     switch (this.uiStore.contentState) {
       case ContentState.PROCESSING:
-        this.node = <h1>Processing</h1>;
+        this.node = <LinearIndicator />;
         break;
       case ContentState.AVAILABLE:
       default:
@@ -54,4 +56,4 @@ class Content extends React.Component<Props> {
   }
 }
 
-export default Content;
+export default withTheme(Content);

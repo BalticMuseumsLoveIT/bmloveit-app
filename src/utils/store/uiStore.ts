@@ -66,12 +66,10 @@ export class UiStore {
     // "TypeError: Cannot read property 'appState' of undefined"
     const userLanguage = this.language.toLowerCase().slice(0, 2);
 
-    const isUserLocaleMatch = this.languages.some(({ key: language }) => {
+    return this.languages.some(({ key: language }) => {
       const uiLanguage = language.toLowerCase().slice(0, 2);
       return uiLanguage === userLanguage;
     });
-
-    return isUserLocaleMatch;
   }
 
   @action setLanguages = (languages: Array<CommonLanguageInterface>) => {

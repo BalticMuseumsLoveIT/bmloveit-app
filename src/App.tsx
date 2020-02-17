@@ -44,7 +44,11 @@ class App extends React.Component {
                 </Router>
               </Provider>
             )}
-            <AppLoader customLoading={uiStore.isAppLoading} />
+            <AppLoader
+              customLoading={uiStore.isAppLoading}
+              background={stores.siteStore.theme.colors.background.default}
+              color={stores.siteStore.theme.colors.background.alternative}
+            />
           </>
         );
       case AppState.ERROR:

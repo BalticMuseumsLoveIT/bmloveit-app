@@ -9,6 +9,7 @@ import {
   ModalImage,
 } from 'components/ItemModal/ItemModal.style';
 import { LayoutGrid, LayoutGridContent } from 'components/Layout/Layout.style';
+import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
 import ReactModal from 'react-modal';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { observer } from 'mobx-react';
@@ -114,6 +115,7 @@ class ItemModal extends React.Component<Props> {
 
   render() {
     if (!this.props.tReady) return null;
+
     return (
       <ReactModal {...this.store.modalProps}>
         <LayoutGrid>
@@ -128,7 +130,7 @@ class ItemModal extends React.Component<Props> {
                 case ModalState.NOT_LOADED:
                   return null;
                 case ModalState.LOADING:
-                  return <h1>Loading...</h1>;
+                  return <LinearIndicator />;
                 case ModalState.NOT_FOUND:
                   return <h1>Not found</h1>;
                 case ModalState.ERROR:

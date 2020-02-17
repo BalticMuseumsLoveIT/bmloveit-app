@@ -1,7 +1,11 @@
 import { SiteInterface, ThemeType } from 'utils/interfaces';
 import { darkPartial, defaultTheme, lightPartial } from 'utils/theme';
 import Api from 'utils/api';
-import { getTranslatedString, isColorValid, RecursivePartial } from 'utils/helpers';
+import {
+  getTranslatedString,
+  isColorValid,
+  RecursivePartial,
+} from 'utils/helpers';
 import { action, computed, observable } from 'mobx';
 import merge from 'deepmerge';
 import { DefaultTheme } from 'styled-components';
@@ -76,7 +80,6 @@ export class SiteStore {
   @computed get themeType(): ThemeType | null {
     if (!this.isDataAvailable() || this.siteData.theme === null) return null;
 
-    // return ThemeType.DARK;
     return this.siteData.theme;
   }
 
