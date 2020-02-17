@@ -11,7 +11,11 @@
     }
   },
   "content": {
+    "description": "",
     "title": "Lista lokalizacji"
+  },
+  "counter": {
+    "attractions": ""
   },
   "page": {
     "title": "Lokalizacja na trasie"

@@ -32,5 +32,9 @@
     "about": "",
     "back": "",
     "login": ""
+  },
+  "step": {
+    "first": "",
+    "second": ""
   }
 }

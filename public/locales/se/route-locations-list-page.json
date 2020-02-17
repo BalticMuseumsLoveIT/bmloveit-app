@@ -11,7 +11,11 @@
     }
   },
   "content": {
+    "description": "",
     "title": ""
+  },
+  "counter": {
+    "attractions": ""
   },
   "page": {
     "title": ""

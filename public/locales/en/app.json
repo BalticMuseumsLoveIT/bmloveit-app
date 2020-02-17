@@ -32,5 +32,9 @@
     "about": "About application",
     "back": "Go back",
     "home": "Home"
+  },
+  "step": {
+    "first": "Select place",
+    "second": "Select tour"
   }
 }

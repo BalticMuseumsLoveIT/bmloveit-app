@@ -32,5 +32,9 @@
     "about": "O aplikacji",
     "back": "Wróć",
     "home": "Strona domowa"
+  },
+  "step": {
+    "first": "",
+    "second": ""
   }
 }
