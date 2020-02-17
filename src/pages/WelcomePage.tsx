@@ -56,13 +56,16 @@ class WelcomePage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Homepage')}</title>
         </Helmet>
         <Content backgroundColor={this.props.theme.colors.background.default}>
-          <WelcomeHeaderImage image={this.siteStore.image}>
+          <WelcomeHeaderImage image={this.siteStore.header}>
             <MuseumLogo type={LogoType.WELCOME_HEADER} />
           </WelcomeHeaderImage>
+
           <TitleWithUnderline>{this.siteStore.title}</TitleWithUnderline>
+
           <Description>
             <ItemHtmlParser html={this.siteStore.description} />
           </Description>
+
           <AppButton as={Link} to="/area">
             {this.props.t('buttonStart.label', 'Start sightseeing')}
           </AppButton>

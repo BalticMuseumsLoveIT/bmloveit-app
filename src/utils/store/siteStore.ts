@@ -65,6 +65,12 @@ export class SiteStore {
     return this.siteData.image;
   }
 
+  @computed get header(): string {
+    if (!this.isDataAvailable() || this.siteData.header === null) return '';
+
+    return this.siteData.header;
+  }
+
   @computed get logo(): string {
     if (!this.isDataAvailable() || this.siteData.logo === null) return '';
 
