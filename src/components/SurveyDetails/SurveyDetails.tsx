@@ -2,7 +2,7 @@ import { SurveyDetailsState } from 'utils/store/surveyDetailsStore';
 import { SurveyDetailsInterface } from 'utils/interfaces';
 import { SurveyForm } from 'components/SurveyForm/SurveyForm';
 import { Emphasize } from 'components/Page/Page.style';
-import { AbstractDuck } from 'components/SurveyDetails/SurveyDetails.style';
+import { Tick } from 'components/SurveyDetails/SurveyDetails.style';
 import { Error404, Error404Context } from 'components/Error404/Error404';
 import { Error500 } from 'components/Error500/Error500';
 import { FormikValues } from 'formik';
@@ -33,7 +33,7 @@ export const SurveyDetails = function({
           <Emphasize>
             {t('submitted.summary', 'You have finished a survey - thank you')}
           </Emphasize>
-          <AbstractDuck src="/images/abstract-duck.svg" />
+          <Tick src="/images/tick.svg" />
         </>
       );
     case SurveyDetailsState.NOT_FOUND:

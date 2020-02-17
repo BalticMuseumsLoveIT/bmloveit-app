@@ -22,3 +22,17 @@ export const AbstractDuck = styled(SVG)`
     fill: ${({ theme }) => theme.colors.background.negative};
   }
 `;
+
+export const Tick = styled(SVG)`
+  display: block;
+  margin: 2em auto;
+  max-width: 50%;
+
+  .circle {
+    fill: ${({ theme }) => theme.colors.background.alternative};
+  }
+
+  .tick {
+    fill: ${({ theme }) => theme.colors.background.default};
+  }
+`;
