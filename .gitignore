@@ -5,7 +5,8 @@
 /build
 
 # public
-public/images/*
+/public/images/*
+/public/locales/*
 
 # misc
 .idea
