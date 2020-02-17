@@ -1,8 +1,15 @@
 import i18n from 'i18n';
+import TextInput, {
+  InputError,
+} from 'components/Form/TextInput/TextInput.style';
+import Form, { InputContainer } from 'components/Form/Form.style';
+import Label from 'components/Form/Label/Label.style';
+import { AppButton } from 'components/Buttons/AppButton.style';
+import { Title } from 'components/Page/Page.style';
 import React from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { ErrorMessage, Formik, FormikHelpers } from 'formik';
 
 export interface TeamCreateFormValues {
   teamName: string;
@@ -69,18 +76,21 @@ export const TeamCreateForm = ({ onSubmit }: TeamCreateProps) => {
     >
       {({ status }) => (
         <Form id="teamCreateForm">
-          <div>
-            <label htmlFor="teamName">
-              {t('form.teamName.label', 'Team name')}
-            </label>
-            <Field name="teamName" type="text" />
-            <ErrorMessage name="teamName" />
-          </div>
+          <Title>{t('content.title.createTeam', 'Create group')}</Title>
+          <InputContainer>
+            <Label htmlFor="teamName">{t('form.teamName.label', 'Name')}</Label>
+            <TextInput
+              name="teamName"
+              type="text"
+              placeholder={t('form.teamName.placeholder', 'Name')}
+            />
+            <ErrorMessage component={InputError} name="teamName" />
+          </InputContainer>
           <div>
             {status && <p>{status()}</p>}
-            <button type="submit">
+            <AppButton type="submit" isThin={true}>
               {t('form.button.create.text', 'Create')}
-            </button>
+            </AppButton>
           </div>
         </Form>
       )}

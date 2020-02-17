@@ -3,12 +3,21 @@ import TeamPageStore from 'utils/store/teamPageStore';
 import { TeamJoinForm } from 'components/TeamJoin/TeamJoin';
 import { TeamCreateForm } from 'components/TeamCreate/TeamCreate';
 import { AppButton } from 'components/Buttons/AppButton.style';
+import { ClipboardButton } from 'components/Buttons/ClipboardButton.style';
 import { UserProfileStore } from 'utils/store/userProfileStore';
+import {
+  Title,
+  CenteredButtonLink,
+  CenterContent,
+} from 'components/Page/Page.style';
+import Label from 'components/Form/Label/Label.style';
+import { InputContainer } from 'components/Form/Form.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
+import Tooltip from 'rc-tooltip';
 
 interface Props extends WithTranslation {
   userProfileStore: UserProfileStore;
@@ -35,6 +44,12 @@ class TeamPage extends React.Component<Props> {
     this.groupPageStore.unmount();
   }
 
+  copyToClipboard = () => {
+    navigator.clipboard.writeText(
+      this.userProfileStore.userTeamStore.teamAccessCode.toString(),
+    );
+  };
+
   render() {
     if (!this.props.tReady) return null;
 
@@ -45,32 +60,47 @@ class TeamPage extends React.Component<Props> {
         </Helmet>
         <Content>
           {this.userProfileStore.userIsTeamMember ? (
-            <>
-              <h2>{this.props.t('content.title.teamDetails', 'Your Team')}</h2>
-              <h3>{this.props.t('content.subtitle.teamName', 'Team name')}</h3>
-              <p>{this.userProfileStore.userTeamStore.teamName}</p>
-              <h3>
-                {this.props.t(
-                  'content.subtitle.teamAccessCode',
-                  'Team access code',
-                )}
-              </h3>
-              <p>{this.userProfileStore.userTeamStore.teamAccessCode}</p>
-              <AppButton
+            <CenterContent>
+              <Title>{this.userProfileStore.userTeamStore.teamName}</Title>
+              <InputContainer>
+                <Label>
+                  {this.props.t(
+                    'form.teamAccessCode.teamAccessCode',
+                    'Team access code',
+                  )}
+                </Label>
+                <Tooltip
+                  overlay={this.props.t(
+                    'form.teamAccessCode.copied',
+                    'Copied!',
+                  )}
+                  overlayClassName="badge-tooltip"
+                  placement="top"
+                  trigger="click"
+                >
+                  <ClipboardButton onClick={this.copyToClipboard}>
+                    <span>
+                      {this.userProfileStore.userTeamStore.teamAccessCode}
+                    </span>
+                    <span>
+                      {this.props.t('form.teamAccessCode.copy', 'copy')}
+                    </span>
+                  </ClipboardButton>
+                </Tooltip>
+              </InputContainer>
+
+              <AppButton as={Link} to="/area" isThin={true}>
+                {this.props.t('footerLink.continue', 'Continue')}
+              </AppButton>
+              <CenteredButtonLink
                 onClick={() => this.userProfileStore.handleLeaveTeam()}
               >
                 {this.props.t('button.leaveTeam', 'Leave team')}
-              </AppButton>
-              <AppButton as={Link} to="/area">
-                {this.props.t('footerLink.continue', 'Continue')}
-              </AppButton>
-            </>
+              </CenteredButtonLink>
+            </CenterContent>
           ) : (
             <>
-              <h2>{this.props.t('content.title.joinTeam', 'Join team')}</h2>
               <TeamJoinForm onSubmit={this.userProfileStore.handleJoinTeam} />
-
-              <h2>{this.props.t('content.title.createTeam', 'Create team')}</h2>
               <TeamCreateForm
                 onSubmit={this.userProfileStore.handleCreateTeam}
               />

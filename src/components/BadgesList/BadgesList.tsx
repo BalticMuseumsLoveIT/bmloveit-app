@@ -5,7 +5,6 @@ import {
   BadgeIcon,
   BadgeList,
   BadgeListItem,
-  TooltipStyle,
 } from 'components/BadgesList/BadgeList.style';
 import Tooltip from 'rc-tooltip';
 import 'rc-tooltip/assets/bootstrap.css';
@@ -50,7 +49,6 @@ const BadgesList = ({ badges }: Props) => {
           );
         })}
       </BadgeList>
-      <TooltipStyle />
     </>
   ) : null;
 };

@@ -1,8 +1,15 @@
 import { QuizQuestionInterface } from 'utils/interfaces';
 import { QuestionImage } from 'components/QuizForm/QuestionImage';
-import StyledFormikRadioButton from 'components/QuizForm/QuizForm.style';
 import { getTranslatedString } from 'utils/helpers';
-import { ErrorMessage, Field, useField } from 'formik';
+import {
+  Fieldset,
+  FormValidation,
+  Legend,
+  RadioInput,
+  RadioLabel,
+  RadioWrapper,
+} from 'components/Page/Page.style';
+import { ErrorMessage, useField } from 'formik';
 import React from 'react';
 
 export interface QuizQuestion {
@@ -19,40 +26,40 @@ export const QuizQuestion = function({
   const [field] = useField(name);
 
   return (
-    <fieldset disabled={isDisabled}>
-      <legend>
+    <Fieldset disabled={isDisabled}>
+      <Legend>
         {getTranslatedString(
           question.description,
           question.description_translation || [],
         )}
-      </legend>
+      </Legend>
       <QuestionImage path={question.file_url} />
       {question.options_data.map(option => {
         const optionName = `option_${option.id}`;
         const isChecked = field.value === optionName;
         return (
-          <StyledFormikRadioButton
+          <RadioWrapper
             key={option.id}
             isChecked={isChecked}
             isCorrect={option.correct}
           >
-            <Field
+            <RadioInput
               type="radio"
               name={name}
               id={optionName}
               value={optionName}
               checked={isChecked}
             />
-            <label htmlFor={name}>
+            <RadioLabel htmlFor={optionName}>
               {getTranslatedString(
                 option.description,
                 option.description_translation || [],
               )}
-            </label>
-          </StyledFormikRadioButton>
+            </RadioLabel>
+          </RadioWrapper>
         );
       })}
-      <ErrorMessage component="div" name={name} />
-    </fieldset>
+      <ErrorMessage component={FormValidation} name={name} />
+    </Fieldset>
   );
 };

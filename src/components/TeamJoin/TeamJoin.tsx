@@ -1,8 +1,15 @@
 import i18n from 'i18n';
+import { AppButton } from 'components/Buttons/AppButton.style';
+import TextInput, {
+  InputError,
+} from 'components/Form/TextInput/TextInput.style';
+import Form, { InputContainer } from 'components/Form/Form.style';
+import Label from 'components/Form/Label/Label.style';
+import { Title } from 'components/Page/Page.style';
 import React from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers, ErrorMessage } from 'formik';
 
 export interface TeamJoinFormValues {
   teamName: string;
@@ -90,24 +97,31 @@ export const TeamJoinForm = ({ onSubmit }: TeamJoinProps) => {
     >
       {({ status }) => (
         <Form id="teamJoinForm">
-          <div>
-            <label htmlFor="teamName">
-              {t('form.teamName.label', 'Team name')}
-            </label>
-            <Field name="teamName" type="text" />
-            <ErrorMessage name="teamName" />
-          </div>
-          <div>
-            <label htmlFor="teamAccessCode">
-              {t('form.teamAccessCode.label', 'Team access code')}
-            </label>
-            <Field name="teamAccessCode" type="password" />
-            <ErrorMessage name="teamAccessCode" />
-          </div>
-          <div>
-            {status && <p>{status()}</p>}
-            <button type="submit">{t('form.button.join.text', 'Join')}</button>
-          </div>
+          <Title>{t('content.title.joinTeam', 'Join a group')}</Title>
+          <InputContainer>
+            <Label htmlFor="teamName">{t('form.teamName.label', 'Name')}</Label>
+            <TextInput
+              name="teamName"
+              type="text"
+              placeholder={t('form.teamName.placeholder', 'Name')}
+            />
+            <ErrorMessage component={InputError} name="teamName" />
+          </InputContainer>
+          <InputContainer>
+            <Label htmlFor="teamAccessCode">
+              {t('form.teamAccessCode.label', 'Password')}
+            </Label>
+            <TextInput
+              name="teamAccessCode"
+              type="password"
+              placeholder={t('form.teamAccessCode.placeholder', 'Password')}
+            />
+            <ErrorMessage component={InputError} name="teamAccessCode" />
+          </InputContainer>
+          {status && <InputError isCentered={true}>{status()}</InputError>}
+          <AppButton type="submit" isThin={true}>
+            {t('form.button.join.text', 'Join')}
+          </AppButton>
         </Form>
       )}
     </Formik>

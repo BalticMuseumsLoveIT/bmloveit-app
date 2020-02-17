@@ -131,12 +131,14 @@ export interface SurveyInterface {
   id: number;
   name: string;
   name_full: string;
+  thanks_text: string;
   description: string;
   location: number | null;
   item: number | null;
   language: number;
   name_translation: Array<CommonApiTranslationInterface>;
   name_full_translation: Array<CommonApiTranslationInterface>;
+  thanks_text_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
 }
 
@@ -145,10 +147,14 @@ export interface SurveyDetailsInterface {
   name: string;
   name_full: string;
   description: string;
-  language: number;
+  thanks_text: string;
+  location: number | null;
+  item: number | null;
+  language: Array<number>;
   name_translation: Array<CommonApiTranslationInterface>;
   name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
+  thanks_text_translation: Array<CommonApiTranslationInterface>;
   questions_data: Array<SurveyQuestionInterface>;
 }
 
@@ -325,11 +331,14 @@ export interface ThemeColorsInterface {
     header: string;
     paragraph: string;
     alternative: string;
+    success: string;
+    error: string;
     anchor: AnchorInterface;
   };
   background: {
     app: string;
     default: string;
+    negative: string;
     alternative: string;
     menu: string;
     placeholder: string;
@@ -350,6 +359,17 @@ export interface ThemeColorsInterface {
     hover: string;
     pressed: string;
     inactive: string;
+  };
+  form: {
+    label: string;
+    background: string;
+    textInput: {
+      default: string;
+      placeholder: string;
+      hover: string;
+      focus: string;
+      error: string;
+    };
   };
 }
 

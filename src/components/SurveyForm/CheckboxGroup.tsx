@@ -1,6 +1,11 @@
 import { SurveyOptionInterface } from 'utils/interfaces';
 import { getTranslatedString } from 'utils/helpers';
-import { Field, FieldProps } from 'formik';
+import {
+  CheckboxInput,
+  CheckboxLabel,
+  CheckboxWrapper,
+} from 'components/Page/Page.style';
+import { FieldProps } from 'formik';
 import React from 'react';
 
 export interface CheckboxGroupProps extends FieldProps {
@@ -13,21 +18,21 @@ export const CheckboxGroup = ({ field, options }: CheckboxGroupProps) => {
       {options.map(option => {
         const optionName = `option_${option.id}`;
         return (
-          <div key={optionName}>
-            <Field
+          <CheckboxWrapper key={optionName}>
+            <CheckboxInput
               type="checkbox"
               name={field.name}
               id={optionName}
               value={optionName}
               multiple
             />
-            <label htmlFor={optionName}>
+            <CheckboxLabel htmlFor={optionName}>
               {getTranslatedString(
                 option.description,
                 option.description_translation,
               )}
-            </label>
-          </div>
+            </CheckboxLabel>
+          </CheckboxWrapper>
         );
       })}
     </>

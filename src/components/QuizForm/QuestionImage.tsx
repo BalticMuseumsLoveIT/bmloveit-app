@@ -1,4 +1,5 @@
 import { getPrivateMediaURL } from 'utils/helpers';
+import { FormImage } from 'components/Page/Page.style';
 import React from 'react';
 
 export const QuestionImage = ({
@@ -9,8 +10,6 @@ export const QuestionImage = ({
   alt?: string;
 }) => {
   return path && path.length ? (
-    <div>
-      <img src={getPrivateMediaURL(path)} alt={alt || ''} />
-    </div>
+    <FormImage src={getPrivateMediaURL(path)} alt={alt || ''} />
   ) : null;
 };

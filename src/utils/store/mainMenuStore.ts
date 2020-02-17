@@ -3,6 +3,7 @@ import Api from 'utils/api';
 import { StaticLinkInterface } from 'components/MainMenu/Links';
 import { action, computed, observable } from 'mobx';
 import React from 'react';
+import { TFunction } from 'i18next';
 
 export enum MainMenuState {
   OPENED,
@@ -15,23 +16,11 @@ export default class MainMenuStore {
   @observable links: Array<StaticLinkInterface> = [
     {
       to: '/welcome',
-      label: {
-        key: 'mainMenu.home',
-        options: {
-          defaultValue: 'Homepage',
-          ns: 'app',
-        },
-      },
+      label: (t: TFunction) => t('mainMenu.home', 'Homepage'),
     },
     {
       to: '/about',
-      label: {
-        key: 'mainMenu.about',
-        options: {
-          defaultValue: 'About application',
-          ns: 'app',
-        },
-      },
+      label: (t: TFunction) => t('mainMenu.about', 'About application'),
     },
   ];
 

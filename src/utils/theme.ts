@@ -29,6 +29,8 @@ const defaultColors = {
     paragraph: '#7A7D92',
     header: '#2A2C3E',
     alternative: '#F8FAFD',
+    error: '#B40000',
+    success: '#71BF48',
     anchor: {
       link: '#2A2C3E',
       hover: '#F85705',
@@ -39,6 +41,7 @@ const defaultColors = {
   background: {
     app: '#EAEEF6',
     default: '#FFFFFF',
+    negative: '#2A2C3E',
     alternative: '#F85705',
     menu: '#F8FAFD',
     placeholder: desaturate(0.1, darken(0.04, '#EAEEF6')),
@@ -136,6 +139,17 @@ const defaultColors = {
     hover: '#ED591D',
     pressed: '#BB4312',
     inactive: '#BBBFCD',
+  },
+  form: {
+    label: '#7A7D92',
+    background: '#FFFFFF',
+    textInput: {
+      default: '#7A7D92',
+      placeholder: '#D6D6D6',
+      hover: '#A9AFBC',
+      focus: '#7A7D92',
+      error: '#B40000',
+    },
   },
 };
 
@@ -289,6 +303,17 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
       hover: '#73BFCA',
       pressed: '#73BFCA',
       inactive: '#7B7D92',
+    },
+    form: {
+      label: '#7A7D92',
+      background: '#454856',
+      textInput: {
+        default: '#EAEEF6',
+        placeholder: '#7A7D92',
+        hover: '#A9AFBC',
+        focus: '#2A2C3E',
+        error: '#F68686',
+      },
     },
   },
 };
