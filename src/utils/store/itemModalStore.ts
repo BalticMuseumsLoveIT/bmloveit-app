@@ -2,6 +2,7 @@ import ItemStore from 'utils/store/itemStore';
 import { action, computed, observable } from 'mobx';
 import queryString from 'query-string';
 import { Props as ReactModalProps } from 'react-modal';
+import * as H from 'history';
 
 export enum ModalState {
   NOT_LOADED,
@@ -13,7 +14,6 @@ export enum ModalState {
 
 export default class ItemModalStore {
   @observable item: ItemStore = new ItemStore();
-  @observable isOpenedDirectly = false;
   @observable modalState: ModalState = ModalState.NOT_LOADED;
   @observable modalProps!: ReactModalProps;
   @observable timeWhenProcessingStarted = NaN;
@@ -50,10 +50,6 @@ export default class ItemModalStore {
     this.modalProps.isOpen = false;
   };
 
-  @action setIsOpenedDirectly = (isOpenedDirectly: boolean) => {
-    this.isOpenedDirectly = isOpenedDirectly;
-  };
-
   @action setModalState = (modalState: ModalState) => {
     this.timeWhenProcessingStarted =
       modalState === ModalState.LOADING ? Date.now() : NaN;
@@ -68,6 +64,16 @@ export default class ItemModalStore {
     const parsedQuery = queryString.parse(search);
     if ('popup' in parsedQuery) delete parsedQuery.popup;
     return queryString.stringify(parsedQuery);
+  };
+
+  removeIdFromLocation = (location: H.Location): H.Location => {
+    const locationWithoutPopupId = Object.assign({}, location);
+
+    locationWithoutPopupId.search = this.removeIdFromQS(
+      locationWithoutPopupId.search,
+    );
+
+    return locationWithoutPopupId;
   };
 
   getIdFromQS = (search: string): number => {

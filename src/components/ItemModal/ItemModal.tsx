@@ -54,12 +54,9 @@ class ItemModal extends React.Component<Props> {
     },
   });
 
-  private _openPopup = async (
-    popupItemId: number,
-    isOpenedDirectly = false,
-  ) => {
+  private _openPopup = async (popupItemId: number) => {
     this.store.setModalState(ModalState.NOT_LOADED);
-    this.store.openModal(isOpenedDirectly);
+    this.store.openModal();
 
     if (
       this.store.item.itemData === null ||
@@ -114,7 +111,21 @@ class ItemModal extends React.Component<Props> {
           const isOpenedDirectly =
             prevProps.location.pathname !== this.props.location.pathname;
 
-          this._openPopup(currentPopupItemId, isOpenedDirectly);
+          if (isOpenedDirectly) {
+            const parentItemLocation = this.store.removeIdFromLocation(
+              this.props.location,
+            );
+
+            /**
+             * When popup is opened directly by external link, add parent item
+             * location as an intermediary location to prevent going back on
+             * history stack when popup is closed
+             */
+            this.props.history.replace(parentItemLocation);
+            this.props.history.push(this.props.location);
+          }
+
+          this._openPopup(currentPopupItemId);
         } else if (!popupIsAvailable && this.store.isOpened) {
           // User pressed back button - close popup manually.
           // Prevent double history update by passing false to _closePopup
