@@ -162,8 +162,7 @@ export default class QuizDetailsStore {
     }
   };
 
-  @action.bound
-  async handleSubmit(question: number, option: number) {
+  @action handleSubmit = async (question: number, option: number) => {
     if (this.quiz === null) {
       this.setState(QuizDetailsState.ERROR);
       return;
@@ -180,5 +179,5 @@ export default class QuizDetailsStore {
     } finally {
       this.setIsSubmitting(false);
     }
-  }
+  };
 }
