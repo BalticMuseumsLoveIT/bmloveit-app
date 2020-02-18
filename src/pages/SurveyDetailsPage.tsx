@@ -25,7 +25,10 @@ class SurveyDetailsPage extends Component<Props> {
   }
 
   async componentDidUpdate(prevProps: Props) {
-    if (prevProps.tReady !== this.props.tReady) {
+    if (
+      prevProps.tReady !== this.props.tReady ||
+      typeof this.surveyDetailsStore.tReady === 'undefined'
+    ) {
       this.surveyDetailsStore.setTReady(this.props.tReady);
     }
 
