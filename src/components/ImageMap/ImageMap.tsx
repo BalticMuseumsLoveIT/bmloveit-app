@@ -15,7 +15,7 @@ import { LocationDescriptorObject } from 'history';
 // eslint-disable-next-line import/no-unresolved
 import { StateProvider } from 'react-zoom-pan-pinch/dist/store/StateContext';
 
-interface ImageMapProps extends Pick<StateProvider, 'setScale'> {
+interface ImageMapProps extends Pick<StateProvider, 'setTransform'> {
   src: string;
   coordinates: Array<ItemMapElementInterface>;
   gridMapRef: RefObject<HTMLDivElement>;
@@ -27,9 +27,13 @@ export const ImageMap = (props: ImageMapProps) => {
 
   const imageStore = useLocalStore(() => ({
     loaded: false,
+    transformed: false,
     dimensions: { width: NaN, height: NaN },
     setLoaded: action((loaded: boolean) => {
       imageStore.loaded = loaded;
+    }),
+    setTransformed: action((transformed: boolean) => {
+      imageStore.transformed = transformed;
     }),
     setWidth: action((width: number) => {
       imageStore.dimensions.width = width;
@@ -58,7 +62,7 @@ export const ImageMap = (props: ImageMapProps) => {
   React.useLayoutEffect(() => {
     if (imageRef.current) {
       imageRef.current.addEventListener('load', () => {
-        if (imageRef.current) {
+        if (imageRef.current && !imageStore.transformed) {
           imageStore.setWidth(imageRef.current.naturalWidth);
           imageStore.setHeight(imageRef.current.naturalHeight);
           imageStore.setLoaded(true);
@@ -69,7 +73,8 @@ export const ImageMap = (props: ImageMapProps) => {
 
             if (gridMapHeight > 0 && imageHeight > 0) {
               const scale = (gridMapHeight * 100) / imageHeight / 100;
-              props.setScale(scale);
+              imageStore.setTransformed(true);
+              props.setTransform(0, 0, scale);
             }
           }
         }

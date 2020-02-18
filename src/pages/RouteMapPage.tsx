@@ -69,10 +69,10 @@ class RouteMapPage extends React.Component<Props> {
             <ZoomGridMap ref={this.gridMapRef}>
               {this.routeMapPageStore.routeMapImageURL ? (
                 <TransformWrapper>
-                  {({ setScale }: StateProvider) => (
+                  {({ setTransform }: StateProvider) => (
                     <TransformComponent>
                       <ImageMap
-                        setScale={setScale}
+                        setTransform={setTransform}
                         gridMapRef={this.gridMapRef}
                         src={getPrivateMediaURL(
                           this.routeMapPageStore.routeMapImageURL,

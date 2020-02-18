@@ -42,10 +42,10 @@ export const ItemPanorama = ({ itemStore }: ItemPanoramaProps) => {
       <ZoomGridMap ref={gridMapRef}>
         {itemStore.itemImage ? (
           <TransformWrapper>
-            {({ setScale }: StateProvider) => (
+            {({ setTransform }: StateProvider) => (
               <TransformComponent>
                 <ImageMap
-                  setScale={setScale}
+                  setTransform={setTransform}
                   gridMapRef={gridMapRef}
                   src={
                     (itemStore.itemImage &&
