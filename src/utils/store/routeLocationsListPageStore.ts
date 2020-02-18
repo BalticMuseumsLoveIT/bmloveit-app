@@ -1,4 +1,4 @@
-import { LocationInterface } from 'utils/interfaces';
+import { LocationInterface, RouteInterface } from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
@@ -17,6 +17,7 @@ export default class RouteLocationsListPageStore {
 
   @observable state: PageState = PageState.NOT_LOADED;
   @observable locationsData: Array<LocationInterface> = [];
+  @observable routeData: RouteInterface | null = null;
   @observable tReady?: boolean;
 
   private _handleContentState = () => {
@@ -44,12 +45,15 @@ export default class RouteLocationsListPageStore {
     try {
       this.setState(PageState.LOADING);
 
-      const [locationsData] = await Promise.all([
+      const [locationsData, routeData] = await Promise.all([
         Api.getLocationsList(routeId),
+        Api.getRoute(routeId),
         when(() => this.tReady === true),
       ]);
 
       this.setLocationsData(locationsData);
+      this.setRouteData(routeData);
+
       this.setState(PageState.LOADED);
     } catch (e) {
       this.setState(PageState.ERROR);
@@ -68,9 +72,13 @@ export default class RouteLocationsListPageStore {
     this.locationsData = locationsData;
   };
 
+  @action setRouteData = (routesData: RouteInterface) => {
+    this.routeData = routesData;
+  };
+
   @computed get areaId(): string {
-    return this.locationsData.length && this.locationsData[0].areas.length
-      ? this.locationsData[0].areas[0].toString() || ''
+    return this.routeData && this.routeData.areas.length
+      ? this.routeData.areas[0].toString()
       : '';
   }
 
@@ -85,11 +93,9 @@ export default class RouteLocationsListPageStore {
       return false;
     }
 
-    const isPassed = this.locationsData.some(locationData => {
+    return this.locationsData.some(locationData => {
       return locationData.resources_data.length > 0;
     });
-
-    return isPassed;
   }
 
   screensAmount = createTransformer((locationId: number) => {
