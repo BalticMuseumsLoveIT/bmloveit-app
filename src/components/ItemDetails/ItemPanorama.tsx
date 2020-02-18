@@ -2,7 +2,7 @@ import ItemStore from 'utils/store/itemStore';
 import { ImageMap } from 'components/ImageMap/ImageMap';
 import { getPrivateMediaURL } from 'utils/helpers';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
-import { Description } from 'components/Page/Page.style';
+import { Description, Emphasize } from 'components/Page/Page.style';
 import {
   ItemTitle,
   ZoomGrid,
@@ -58,7 +58,9 @@ export const ItemPanorama = ({ itemStore }: ItemPanoramaProps) => {
             )}
           </TransformWrapper>
         ) : (
-          <p>{t('error.noImage', 'Image not found')}</p>
+          <Emphasize>
+            <p>{t('error.noImage', 'Image not found')}</p>
+          </Emphasize>
         )}
       </ZoomGridMap>
     </ZoomGrid>

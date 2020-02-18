@@ -13,7 +13,7 @@ import {
   ZoomGridHeader,
   ZoomGridMap,
 } from 'pages/ItemPage.style';
-import { Title } from 'components/Page/Page.style';
+import { Emphasize, Title } from 'components/Page/Page.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -83,7 +83,9 @@ class RouteMapPage extends React.Component<Props> {
                   )}
                 </TransformWrapper>
               ) : (
-                <p>{this.props.t('error.noMap', 'No map was found')}</p>
+                <Emphasize>
+                  <p>{this.props.t('error.noMap', 'No map was found')}</p>
+                </Emphasize>
               )}
             </ZoomGridMap>
             <ZoomGridFooter>
