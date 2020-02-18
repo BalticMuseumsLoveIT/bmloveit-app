@@ -14,15 +14,17 @@ const LoginButton = styled.button<LoginButtonProps>`
   width: 88%;
   max-width: 360px;
   padding: 24px;
+
   background-color: ${({ theme, isDisabled }) =>
     isDisabled
       ? theme.colors.button.secondary.disabled.background
-      : theme.colors.button.secondary.hover.background};
+      : theme.colors.button.secondary.default.background};
+  
   color: ${({ theme, isDisabled }) =>
     isDisabled
       ? theme.colors.button.secondary.disabled.text
-      : theme.colors.button.secondary.hover.text};
-  color: ${({ theme }) => theme.colors.text.paragraph};
+      : theme.colors.button.secondary.default.text};
+
   font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
   font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
   font-size: 1em;
