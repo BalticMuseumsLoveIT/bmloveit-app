@@ -29,7 +29,10 @@ interface Props
 class ItemModal extends React.Component<Props> {
   store = new ItemModalStore({
     isOpen: false,
-    onRequestClose: () => this._closePopup(),
+    onRequestClose: () => {
+      const shouldGoBack = !this.store.isOpenedDirectly;
+      this._closePopup(shouldGoBack);
+    },
     style: {
       overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0.75)',
@@ -51,9 +54,12 @@ class ItemModal extends React.Component<Props> {
     },
   });
 
-  private _openPopup = async (popupItemId: number) => {
+  private _openPopup = async (
+    popupItemId: number,
+    isOpenedDirectly = false,
+  ) => {
     this.store.setModalState(ModalState.NOT_LOADED);
-    this.store.openModal();
+    this.store.openModal(isOpenedDirectly);
 
     if (
       this.store.item.itemData === null ||
@@ -105,7 +111,10 @@ class ItemModal extends React.Component<Props> {
 
       if (currentPopupItemId !== previousPopupItemId) {
         if (popupIsAvailable && this.store.isClosed) {
-          this._openPopup(currentPopupItemId);
+          const isOpenedDirectly =
+            prevProps.location.pathname !== this.props.location.pathname;
+
+          this._openPopup(currentPopupItemId, isOpenedDirectly);
         } else if (!popupIsAvailable && this.store.isOpened) {
           // User pressed back button - close popup manually.
           // Prevent double history update by passing false to _closePopup

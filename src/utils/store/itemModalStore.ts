@@ -13,6 +13,7 @@ export enum ModalState {
 
 export default class ItemModalStore {
   @observable item: ItemStore = new ItemStore();
+  @observable isOpenedDirectly = false;
   @observable modalState: ModalState = ModalState.NOT_LOADED;
   @observable modalProps!: ReactModalProps;
   @observable timeWhenProcessingStarted = NaN;
@@ -26,6 +27,7 @@ export default class ItemModalStore {
   }
 
   @computed get isClosed(): boolean {
+    this.setIsOpenedDirectly(false);
     return !this.modalProps.isOpen;
   }
 
@@ -39,12 +41,17 @@ export default class ItemModalStore {
     return processingTimeSoFar > 200;
   }
 
-  @action openModal = () => {
+  @action openModal = (isOpenedDirectly = false) => {
+    this.setIsOpenedDirectly(isOpenedDirectly);
     this.modalProps.isOpen = true;
   };
 
   @action closeModal = () => {
     this.modalProps.isOpen = false;
+  };
+
+  @action setIsOpenedDirectly = (isOpenedDirectly: boolean) => {
+    this.isOpenedDirectly = isOpenedDirectly;
   };
 
   @action setModalState = (modalState: ModalState) => {
