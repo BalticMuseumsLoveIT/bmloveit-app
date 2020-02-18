@@ -19,7 +19,7 @@ const LoginButton = styled.button<LoginButtonProps>`
     isDisabled
       ? theme.colors.button.secondary.disabled.background
       : theme.colors.button.secondary.default.background};
-  
+
   color: ${({ theme, isDisabled }) =>
     isDisabled
       ? theme.colors.button.secondary.disabled.text
