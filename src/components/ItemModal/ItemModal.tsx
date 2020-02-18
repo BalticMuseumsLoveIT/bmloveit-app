@@ -30,8 +30,7 @@ class ItemModal extends React.Component<Props> {
   store = new ItemModalStore({
     isOpen: false,
     onRequestClose: () => {
-      const shouldGoBack = !this.store.isOpenedDirectly;
-      this._closePopup(shouldGoBack);
+      this._closePopup();
     },
     style: {
       overlay: {

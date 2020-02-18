@@ -27,7 +27,6 @@ export default class ItemModalStore {
   }
 
   @computed get isClosed(): boolean {
-    this.setIsOpenedDirectly(false);
     return !this.modalProps.isOpen;
   }
 
@@ -41,8 +40,7 @@ export default class ItemModalStore {
     return processingTimeSoFar > 200;
   }
 
-  @action openModal = (isOpenedDirectly = false) => {
-    this.setIsOpenedDirectly(isOpenedDirectly);
+  @action openModal = () => {
     this.modalProps.isOpen = true;
   };
 
