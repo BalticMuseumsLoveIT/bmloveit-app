@@ -66,6 +66,10 @@ export default class SurveyDetailsStore {
     return this.survey ? this.survey.id : null;
   }
 
+  @computed get isLoading(): boolean {
+    return this.state === SurveyDetailsState.LOADING;
+  }
+
   @computed get isSubmitting(): boolean {
     return this.state === SurveyDetailsState.SUBMITTING;
   }

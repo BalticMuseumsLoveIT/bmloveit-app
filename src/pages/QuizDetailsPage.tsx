@@ -4,6 +4,7 @@ import { QuizDetails } from 'components/QuizDetails/QuizDetails';
 import { QuizFooter } from 'components/QuizFooter/QuizFooter';
 import { Description, Title } from 'components/Page/Page.style';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
+import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
@@ -51,6 +52,8 @@ class QuizPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Quiz')}</title>
         </Helmet>
         <Content>
+          {this.quizDetailsStore.isLoading && <LinearIndicator />}
+
           {this.quizDetailsStore.title && (
             <Title>{this.quizDetailsStore.title}</Title>
           )}

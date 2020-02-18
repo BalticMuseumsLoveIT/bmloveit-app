@@ -98,6 +98,10 @@ export default class QuizDetailsStore {
     return this.state === QuizDetailsState.LOADED;
   }
 
+  @computed get isLoading(): boolean {
+    return this.state === QuizDetailsState.LOADING;
+  }
+
   @computed get isSubmitted(): boolean {
     return this.state === QuizDetailsState.SUBMITTED;
   }
