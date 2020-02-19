@@ -1,19 +1,26 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import RouteLocationsListPageStore from 'utils/store/routeLocationsListPageStore';
-import { getTranslatedString, getPrivateMediaURL } from 'utils/helpers';
 import {
-  FooterButtonsContainer,
+  getPrivateMediaURL,
+  getResource,
+  getTranslatedString,
+} from 'utils/helpers';
+import {
   FooterButton,
+  FooterButtonsContainer,
 } from 'components/Buttons/FooterButtons/FooterButtons.style';
 import {
   DefaultList,
   DefaultListItemInfo,
+  Thumbnail,
+  ThumbnailPlaceholder,
 } from 'components/DefaultList/DefaultList.style';
 import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
-import { Title, Subtitle } from 'components/Page/Page.style';
+import { Subtitle, Title } from 'components/Page/Page.style';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
-import Footer from 'components/Footer/Footer';
+import { LayoutGridFooter } from 'components/Layout/Layout.style';
+import { ResourceTypeName } from 'utils/interfaces';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -80,18 +87,23 @@ class RouteLocationsListPage extends React.Component<Props> {
                 location.id,
               );
 
-              const imageUrl = doesAnyLocationContainImage
-                ? location.resources_data.length
-                  ? getPrivateMediaURL(location.resources_data[0].file_url)
-                  : '/images/Group-46.svg'
-                : undefined;
+              const iconResource = getResource(location, ResourceTypeName.Icon);
+              const iconURL = iconResource
+                ? getPrivateMediaURL(iconResource.file_url)
+                : '';
 
               return (
                 <DefaultListItem
                   key={location.id}
                   isDisabled={isNaN(firstScreenId)}
-                  imageUrl={imageUrl}
+                  imageUrl={iconURL}
                 >
+                  {doesAnyLocationContainImage && iconURL ? (
+                    <Thumbnail src={iconURL} />
+                  ) : (
+                    <ThumbnailPlaceholder src="/images/default-list-placeholder.svg" />
+                  )}
+
                   <Link
                     to={isNaN(firstScreenId) ? '#' : `/item/${firstScreenId}`}
                   >
@@ -111,26 +123,26 @@ class RouteLocationsListPage extends React.Component<Props> {
               );
             })}
           </DefaultList>
-          <Footer>
-            <FooterButtonsContainer>
-              <FooterButton
-                as={Link}
-                to={`/area/${this.routeLocationsListPageStore.areaId}/routes`}
-              >
-                {this.props.t('button.changeRoute.label', 'Change route')}
-              </FooterButton>
-              <FooterButton
-                as={Link}
-                to={`/route/${this.routeLocationsListPageStore.routeId}/map`}
-              >
-                {this.props.t('button.viewMap.label', 'View map')}
-              </FooterButton>
-              <FooterButton as={Link} to={`/qrcode`}>
-                {this.props.t('button.scanQR.label', 'Scan QR')}
-              </FooterButton>
-            </FooterButtonsContainer>
-          </Footer>
         </Content>
+        <LayoutGridFooter>
+          <FooterButtonsContainer>
+            <FooterButton
+              as={Link}
+              to={`/area/${this.routeLocationsListPageStore.areaId}/routes`}
+            >
+              {this.props.t('button.changeRoute.label', 'Change route')}
+            </FooterButton>
+            <FooterButton
+              as={Link}
+              to={`/route/${this.routeLocationsListPageStore.routeId}/map`}
+            >
+              {this.props.t('button.viewMap.label', 'View map')}
+            </FooterButton>
+            <FooterButton as={Link} to={`/qrcode`}>
+              {this.props.t('button.scanQR.label', 'Scan QR')}
+            </FooterButton>
+          </FooterButtonsContainer>
+        </LayoutGridFooter>
       </>
     );
   }

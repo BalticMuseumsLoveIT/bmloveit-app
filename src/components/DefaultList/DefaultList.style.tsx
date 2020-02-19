@@ -1,5 +1,12 @@
-import { defaultBoxShadow } from 'components/Page/Page.style';
+import {
+  defaultBoxShadow,
+  DefaultFontSize,
+  ParagraphFontStyle,
+  SubtitleFontStyle,
+} from 'components/Page/Page.style';
+import SVG from 'react-inlinesvg';
 import styled, { css } from 'styled-components';
+import { em } from 'polished';
 
 export interface DefaultListItemWrapperProps {
   isHeader?: boolean;
@@ -25,39 +32,37 @@ export const DefaultList = styled.ul`
 `;
 
 export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
+  width: 100%;
+  min-height: 72px;
+
+  ${DefaultFontSize};
+
+  position: relative;
   box-sizing: border-box;
+
   display: ${({ isMenuOpened, isHeader }) =>
-    isMenuOpened !== false || isHeader ? 'flex' : 'none'};
+    isMenuOpened !== false || isHeader ? 'grid' : 'none'};
+
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+
+  list-style: none;
+
+  border-bottom: ${({ theme }) => `1px solid ${theme.colors.background.app}`};
   border-radius: ${({ isMenuOpened, isHeader }) =>
     !isMenuOpened && isHeader && '8px'};
-  align-items: flex-start;
-  justify-content: center;
-  flex-direction: column;
-  list-style: none;
-  padding: ${({ isHeader }) => isHeader === true && '0 16px'};
+
   background-color: ${({ theme, isHeader }) =>
     isHeader
       ? theme.colors.list.header.default.background
       : theme.colors.list.item.default.background};
+
   color: ${({ theme, isHeader }) =>
     isHeader
       ? theme.colors.list.header.default.text
       : theme.colors.list.item.default.text};
-  width: 100%;
-  min-height: 72px;
-  font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
-  font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
-  border-bottom: ${({ theme }) => `1px solid ${theme.colors.background.app}`};
-  position: relative;
-  text-decoration: none;
-  font-size: 16px;
-  cursor: ${({ isDisabled }) => (isDisabled === true ? 'default' : 'pointer')};
 
-  &:hover,
-  &:focus,
-  &:visited {
-    color: inherit;
-  }
+  cursor: ${({ isDisabled }) => (isDisabled === true ? 'default' : 'pointer')};
 
   &:hover {
     background-color: ${({ theme, isHeader }) =>
@@ -68,33 +73,33 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
       isHeader
         ? theme.colors.list.header.hover.text
         : theme.colors.list.item.hover.text};
-
-    svg {
-      path {
-        fill: ${({ theme }) => theme.colors.list.item.hover.text};
-      }
-    }
   }
 
-  svg {
+  & > span {
+    grid-column: 2 / span 1;
     display: block;
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    right: 18px;
-    fill: ${({ theme }) => theme.colors.list.item.default.text};
+    padding: 1em;
+
+    font-size: 1em;
+
+    ${SubtitleFontStyle};
   }
 
   & > a {
-    box-sizing: inherit;
-    z-index: 1;
+    grid-column: 2 / span 1;
+    box-sizing: border-box;
+    padding: 1em;
     width: 100%;
-    padding: 20px 56px 16px 16px;
-    text-decoration: inherit;
-    display: inherit;
-    align-items: inherit;
-    justify-content: inherit;
-    flex-direction: inherit;
+
+    font-size: 1em;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+
+    text-decoration: none;
+    ${SubtitleFontStyle};
     color: ${({ theme, isHeader }) =>
       isHeader
         ? theme.colors.list.header.default.text
@@ -105,32 +110,52 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
     &:visited {
       color: inherit;
     }
-
-    ${({ imageUrl }) => {
-      if (imageUrl) {
-        return css`
-          padding-left: calc(18px + 40px + 5%);
-
-          &:before {
-            content: '';
-            background: url('${imageUrl}') center center no-repeat;
-            background-size: cover;
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            left: 18px;
-            border-radius: 4px;
-          }
-      `;
-      }
-    }}
   }
 `;
 
+export const ActionIcon = styled(SVG)`
+  display: block;
+  grid-column: 3 / span 1;
+
+  font-size: 1em;
+
+  width: ${em(32)};
+  height: ${em(32)};
+  padding: 1em 1em 1em 0;
+
+  fill: ${({ theme }) => theme.colors.icon.normal};
+
+  ${DefaultListItemWrapper}:hover & {
+    fill: ${({ theme }) => theme.colors.icon.hover};
+  }
+`;
+
+const ThumbnailStyle = css`
+  display: block;
+  grid-column: 1 / span 1;
+
+  font-size: 1em;
+
+  width: ${em(64)};
+  height: ${em(64)};
+  margin: 1em 0 1em 1em;
+`;
+
+export const Thumbnail = styled.img`
+  ${ThumbnailStyle}
+`;
+
+export const ThumbnailPlaceholder = styled(SVG)`
+  ${ThumbnailStyle};
+  box-sizing: border-box;
+  padding: 1em;
+  border-radius: 0.25em;
+  background-color: ${({ theme }) => theme.colors.background.placeholder};
+  fill: ${({ theme }) => theme.colors.list.item.default.text};
+`;
+
 export const DefaultListItemInfo = styled.span`
-  padding-top: 6px;
-  font-size: 12px;
+  font-size: 0.875em;
   color: ${({ theme }) => theme.colors.list.info};
-  font-family: ${({ theme }) => theme.fonts.paragraph.fontFamily};
-  font-weight: ${({ theme }) => theme.fonts.paragraph.fontWeight};
+  ${ParagraphFontStyle}
 `;

@@ -26,7 +26,7 @@ export const LanguageSwitch = ({
   }));
 
   const handleClick = async (lang: string) => {
-    if (localStore.isMenuOpened === true) {
+    if (localStore.isMenuOpened) {
       await i18n.changeLanguage(lang);
     }
 
@@ -44,13 +44,12 @@ export const LanguageSwitch = ({
               key={language.id}
               isMenuOpened={localStore.isMenuOpened}
               isHeader={
-                localStore.isMenuOpened === false &&
-                language.key === userLanguage
+                !localStore.isMenuOpened && language.key === userLanguage
               }
               onClick={() => handleClick(language.key)}
               customHeaderImageSrc="/images/unfold_more-24px.svg"
             >
-              {language.value}
+              <span>{language.value}</span>
             </LanguageSwitchItem>
           );
         })}

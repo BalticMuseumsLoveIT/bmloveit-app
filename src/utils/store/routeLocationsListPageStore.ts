@@ -1,7 +1,12 @@
-import { LocationInterface, RouteInterface } from 'utils/interfaces';
+import {
+  LocationInterface,
+  ResourceTypeName,
+  RouteInterface,
+} from 'utils/interfaces';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
+import { getResource } from 'utils/helpers';
 import { action, autorun, computed, observable, when } from 'mobx';
 import { createTransformer } from 'mobx-utils';
 
@@ -89,13 +94,12 @@ export default class RouteLocationsListPageStore {
   }
 
   @computed get doesAnyLocationContainImage(): boolean {
-    if (this.locationsData.length === 0) {
-      return false;
-    }
-
-    return this.locationsData.some(locationData => {
-      return locationData.resources_data.length > 0;
-    });
+    return this.locationsData.length
+      ? this.locationsData.some(
+          locationData =>
+            getResource(locationData, ResourceTypeName.Icon) !== null,
+        )
+      : false;
   }
 
   screensAmount = createTransformer((locationId: number) => {

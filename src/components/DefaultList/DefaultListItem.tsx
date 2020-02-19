@@ -1,9 +1,9 @@
 import {
   DefaultListItemWrapper,
   DefaultListItemWrapperProps,
+  ActionIcon,
 } from 'components/DefaultList/DefaultList.style';
 import React from 'react';
-import SVG from 'react-inlinesvg';
 
 export interface DefaultListItemProps extends DefaultListItemWrapperProps {
   children?: React.ReactNode;
@@ -34,7 +34,7 @@ export const DefaultListItem = ({
       {...rest}
     >
       {children}
-      <SVG src={imageSrc} />
+      <ActionIcon src={imageSrc} />
     </DefaultListItemWrapper>
   );
 };
