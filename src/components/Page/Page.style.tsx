@@ -69,6 +69,19 @@ export const ParagraphFontStyle = css`
   font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
 `;
 
+export const LinkStyle = css`
+  color: ${props => props.theme.colors.text.anchor.link};
+
+  &:hover {
+    text-decoration: none;
+    color: ${props => props.theme.colors.text.anchor.hover};
+  }
+
+  &:active {
+    color: ${props => props.theme.colors.text.anchor.active};
+  }
+`;
+
 export const DefaultGridPaddingRage = {
   fromSize: em(12),
   toSize: em(16),
@@ -158,18 +171,9 @@ export const Description = styled.div`
 
   ${ParagraphFontStyle}
   ${DefaultFontSize}
-`;
-
-export const LinkStyle = css`
-  color: ${props => props.theme.colors.text.anchor.link};
-
-  &:hover {
-    text-decoration: none;
-    color: ${props => props.theme.colors.text.anchor.hover};
-  }
-
-  &:active {
-    color: ${props => props.theme.colors.text.anchor.active};
+  
+  a {
+    ${LinkStyle}
   }
 `;
 
