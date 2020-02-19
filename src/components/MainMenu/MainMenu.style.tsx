@@ -1,4 +1,6 @@
+import { DefaultFontSize } from 'components/Page/Page.style';
 import styled from 'styled-components';
+import { em } from 'polished';
 
 interface StyledWrapperProps {
   isOpened: boolean;
@@ -20,7 +22,13 @@ export const Wrapper = styled.nav<StyledWrapperProps>`
   z-index: 10;
 `;
 
+export const DummyLayoutGridHeader = styled.div`
+  ${DefaultFontSize};
+  padding: ${em(27)} 0;
+`;
+
 export const Content = styled.div`
   width: 100%;
+  padding: 3.5em;
   max-width: 25em;
 `;

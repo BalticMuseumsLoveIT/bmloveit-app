@@ -1,10 +1,18 @@
 import { UiStore } from 'utils/store/uiStore';
 import Api from 'utils/api';
 import { ItemKind, ItemTag } from 'utils/interfaces';
-import { StaticLinks } from 'components/MainMenu/Links';
-import { Wrapper, Content } from 'components/MainMenu/MainMenu.style';
-import { Items } from 'components/MainMenu/Items';
+import {
+  Wrapper,
+  DummyLayoutGridHeader,
+} from 'components/MainMenu/MainMenu.style';
+import {
+  LayoutGrid,
+  LayoutGridContent,
+  LayoutGridFooter,
+} from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
+import { StaticLinks } from 'components/MainMenu/Links';
+import { Items } from 'components/MainMenu/Items';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
@@ -35,22 +43,43 @@ class MainMenu extends React.Component<Props> {
   render() {
     return (
       <Wrapper isOpened={this.ui.nav.isOpened}>
-        <Content>
-          <Items
-            items={this.ui.nav.items}
-            ancestors={this.ui.nav.ancestors}
-            closeMenu={this.ui.nav.close}
-            openParentMenu={this.ui.nav.openParentMenu}
-            openSubMenu={this.ui.nav.openSubMenu}
-          />
-          {!this.ui.nav.isSubmenu && (
-            <StaticLinks
-              links={this.ui.nav.links}
+        <LayoutGrid>
+          <DummyLayoutGridHeader />
+          <LayoutGridContent>
+            <Items
+              items={this.ui.nav.items}
+              ancestors={this.ui.nav.ancestors}
               closeMenu={this.ui.nav.close}
+              openParentMenu={this.ui.nav.openParentMenu}
+              openSubMenu={this.ui.nav.openSubMenu}
             />
-          )}
-          <SponsorLogotype />
-        </Content>
+            {!this.ui.nav.isSubmenu && (
+              <StaticLinks
+                links={this.ui.nav.links}
+                closeMenu={this.ui.nav.close}
+              />
+            )}
+          </LayoutGridContent>
+          <LayoutGridFooter>
+            <SponsorLogotype />
+          </LayoutGridFooter>
+        </LayoutGrid>
+        {/*<Content>*/}
+        {/*  <Items*/}
+        {/*    items={this.ui.nav.items}*/}
+        {/*    ancestors={this.ui.nav.ancestors}*/}
+        {/*    closeMenu={this.ui.nav.close}*/}
+        {/*    openParentMenu={this.ui.nav.openParentMenu}*/}
+        {/*    openSubMenu={this.ui.nav.openSubMenu}*/}
+        {/*  />*/}
+        {/*  {!this.ui.nav.isSubmenu && (*/}
+        {/*    <StaticLinks*/}
+        {/*      links={this.ui.nav.links}*/}
+        {/*      closeMenu={this.ui.nav.close}*/}
+        {/*    />*/}
+        {/*  )}*/}
+        {/*  <SponsorLogotype />*/}
+        {/*</Content>*/}
       </Wrapper>
     );
   }

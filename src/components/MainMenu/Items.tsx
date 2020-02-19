@@ -1,5 +1,10 @@
 import { ItemInterface } from 'utils/interfaces';
-import { List, ListItem } from 'components/MainMenu/Items.style';
+import {
+  BackIcon,
+  List,
+  ListItem,
+  NextIcon,
+} from 'components/MainMenu/Items.style';
 import { Item } from 'components/MainMenu/Item';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -25,6 +30,7 @@ export const Items = observer(
       <List isSubmenu={isSubmenu}>
         {ancestors.length > 1 && (
           <ListItem isSubmenu={isSubmenu}>
+            <BackIcon src="/images/chevron_right-24px.svg" />
             <button onClick={openParentMenu}>
               <span>{t('mainMenu.back', 'Go back')}</span>
             </button>
@@ -33,6 +39,7 @@ export const Items = observer(
         {items.map((item: ItemInterface) => (
           <ListItem isSubmenu={isSubmenu} key={item.id}>
             <Item item={item} openSubMenu={openSubMenu} closeMenu={closeMenu} />
+            {isSubmenu && <NextIcon src="/images/chevron_right-24px.svg" />}
           </ListItem>
         ))}
       </List>

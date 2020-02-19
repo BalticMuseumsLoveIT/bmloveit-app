@@ -1,18 +1,20 @@
-import { defaultBoxShadow } from 'components/Page/Page.style';
+import {
+  defaultBoxShadow,
+  DefaultFontSize,
+  SubtitleFontStyle,
+} from 'components/Page/Page.style';
+import SVG from 'react-inlinesvg';
 import styled, { css } from 'styled-components';
+import { em } from 'polished';
 
 interface ListProps {
   isSubmenu: boolean;
 }
 
 export const List = styled.ul<ListProps>`
-  box-sizing: border-box;
-  font-size: 1em;
-  list-style: none;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
-  display: grid;
-  width: 100%;
+  max-width: ${em(360)};
 
   ${props =>
     props.isSubmenu
@@ -20,9 +22,9 @@ export const List = styled.ul<ListProps>`
           margin-bottom: 2.5em;
         `
       : css`
-          grid-template-columns: 1fr 1fr;
-          grid-auto-rows: 11.5em;
-          grid-gap: 1em;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
         `}
 `;
 
@@ -32,16 +34,34 @@ interface ListItemProps {
 
 export const ListItem = styled.li<ListItemProps>`
   box-sizing: border-box;
-  background: ${props => props.theme.colors.background.default};
+  background: ${props => props.theme.colors.list.item.default.background};
+
+  &:hover {
+    background: ${props => props.theme.colors.list.item.hover.background};
+  }
+
+  list-style: none;
 
   ${props =>
     props.isSubmenu
       ? css`
           position: relative;
-          border: 1px solid ${props => props.theme.colors.background.app};
+          border: 1px solid ${props => props.theme.colors.list.border};
+
+          // Chrome is not supporting button with display grid at the moment
+          display: grid;
+          grid-template-columns: 3.5em 1fr 3.5em;
+          padding: 0;
 
           &:first-child {
-            background: ${props => props.theme.colors.background.app};
+            background: ${props =>
+              props.theme.colors.list.header.default.background};
+
+            &:hover {
+              background: ${props =>
+                props.theme.colors.list.item.hover.background};
+            }
+
             border-top-left-radius: 0.5em;
             border-top-right-radius: 0.5em;
           }
@@ -51,41 +71,37 @@ export const ListItem = styled.li<ListItemProps>`
             border-bottom-right-radius: 0.5em;
           }
 
-          &:not(:first-child):after {
-            position: absolute;
-            right: 1em;
-            top: 50%;
-            content: url('/images/chevron_right-24px.svg');
-            transform: translateY(-50%);
-            display: block;
-            width: 1.5em;
-            height: 1.5em;
-          }
-
-          &:first-child:before {
-            position: absolute;
-            left: 1em;
-            top: 50%;
-            content: url('/images/chevron_right-24px.svg');
-            transform: translateY(-50%) rotate(180deg);
-            display: block;
-            width: 1.5em;
-            height: 1.5em;
+          &:not(:last-child) {
+            border-bottom: none;
           }
         `
       : css`
-          text-align: center;
+          position: relative;
           border-radius: 0.5em;
           box-shadow: ${defaultBoxShadow};
-        `}
+          width: 49%;
+          margin-bottom: 2%;
+
+          &:nth-last-child(-n + 2) {
+            margin-bottom: 0;
+          }
+
+          box-sizing: border-box;
+          min-width: 3em;
+
+          &:after {
+            content: '';
+            display: block;
+            padding-bottom: 100%;
+          }
+        `};
 
   a,
   button {
     box-sizing: border-box;
     border: none;
-    font-size: 1em;
-    font-family: ${props => props.theme.fonts.subheader.fontFamily};
-    font-weight: ${props => props.theme.fonts.subheader.fontWeight};
+    ${DefaultFontSize};
+    ${SubtitleFontStyle};
     color: ${props => props.theme.colors.text.header};
 
     background: none;
@@ -96,12 +112,17 @@ export const ListItem = styled.li<ListItemProps>`
     ${props =>
       props.isSubmenu
         ? css`
-            padding: 1.5em 3.5em;
-            display: block;
-            width: 100%;
+            display: flex;
+            align-items: center;
+            grid-column: 2 / span 1;
             text-align: left;
+            line-height: 1.5;
+            padding: 1em 3.5em;
+            margin: 0 -3.5em;
+            z-index: 1;
           `
         : css`
+            position: absolute;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -112,4 +133,21 @@ export const ListItem = styled.li<ListItemProps>`
             padding: 0.25em;
           `}
   }
+`;
+
+const Icon = styled(SVG)`
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 1em;
+  fill: ${({ theme }) => theme.colors.icon.normal};
+`;
+
+export const NextIcon = styled(Icon)`
+  grid-column: 3 / span 1;
+`;
+
+export const BackIcon = styled(Icon)`
+  transform: rotate(180deg);
+  grid-column: 1 / span 1;
 `;

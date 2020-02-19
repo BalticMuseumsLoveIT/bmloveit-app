@@ -205,9 +205,9 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
     },
     background: {
       app: '#2A2E37',
-      default: '#464856',
-      alternative: '#73BFCA',
-      menu: '#464856',
+      default: '#454856',
+      alternative: '#65BFCB',
+      menu: desaturate(0.0, lighten(0.05, '#454856')),
       placeholder: desaturate(0.0, lighten(0.05, '#2A2E37')),
     },
     button: {
@@ -267,11 +267,11 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
       },
     },
     list: {
-      border: '#2A2C3E',
+      border: darken(0.05, '#454856'),
       header: {
         default: {
           text: '#F8FAFD',
-          background: '#7A7D92',
+          background: darken(0.05, '#454856'),
         },
         hover: {
           text: '#F8FAFD',
