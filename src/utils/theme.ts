@@ -196,6 +196,8 @@ export const darkPartial: RecursivePartial<DefaultTheme> = {
       paragraph: '#F8FAFD',
       header: '#F8FAFD',
       alternative: '#65BFCB',
+      error: '#DC7A7C',
+      success: '#71BF48',
       anchor: {
         link: '#F8FAFD',
         hover: '#65BFCB',

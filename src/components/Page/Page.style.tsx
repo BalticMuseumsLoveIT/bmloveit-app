@@ -288,6 +288,8 @@ export const Legend = styled.p`
   font-size: 1em;
   margin: 1em 0;
 
+  color: ${({ theme }) => theme.colors.text.paragraph};
+
   ${SubtitleFontStyle}
 `;
 
@@ -329,7 +331,8 @@ export const RadioLabel = styled.label`
   padding: 1em 1em 1em 0;
   flex-grow: 1;
 
-  ${SubtitleFontStyle}
+  ${SubtitleFontStyle};
+  color: ${({ theme }) => theme.colors.text.paragraph};
 `;
 
 export const CheckboxWrapper = styled(RadioWrapper)``;
@@ -355,6 +358,7 @@ export const Textarea = styled(Field)`
 
 export const FormValidation = styled.p`
   ${SubtitleFontStyle};
+  color: ${({ theme }) => theme.colors.text.paragraph};
 
   text-align: center;
 `;
