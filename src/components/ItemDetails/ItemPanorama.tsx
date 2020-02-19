@@ -10,12 +10,12 @@ import {
   ZoomGridHeader,
   ZoomGridMap,
 } from 'pages/ItemPage.style';
+import { AppButton } from 'components/Buttons/AppButton.style';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 // eslint-disable-next-line import/no-unresolved
 import { StateProvider } from 'react-zoom-pan-pinch/dist/store/StateContext';
-import { AppButton } from 'components/Buttons/AppButton.style';
 import { Link } from 'react-router-dom';
 
 interface ItemPanoramaProps {
