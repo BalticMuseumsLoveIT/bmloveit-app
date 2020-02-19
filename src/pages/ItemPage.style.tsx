@@ -30,7 +30,10 @@ export const ZoomGridMap = styled.div`
 
 export const ZoomGridFooter = styled.div`
   grid-row: 3 / span 1;
-  padding: 1em 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 export const AvatarChoiceDescription = styled(Description)`

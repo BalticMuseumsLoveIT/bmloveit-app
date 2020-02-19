@@ -6,6 +6,7 @@ import { Description, Emphasize } from 'components/Page/Page.style';
 import {
   ItemTitle,
   ZoomGrid,
+  ZoomGridFooter,
   ZoomGridHeader,
   ZoomGridMap,
 } from 'pages/ItemPage.style';
@@ -14,6 +15,8 @@ import React from 'react';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 // eslint-disable-next-line import/no-unresolved
 import { StateProvider } from 'react-zoom-pan-pinch/dist/store/StateContext';
+import { AppButton } from 'components/Buttons/AppButton.style';
+import { Link } from 'react-router-dom';
 
 interface ItemPanoramaProps {
   itemStore: ItemStore;
@@ -63,6 +66,14 @@ export const ItemPanorama = ({ itemStore }: ItemPanoramaProps) => {
           </Emphasize>
         )}
       </ZoomGridMap>
+
+      {!Number.isNaN(itemStore.nextItemId) && (
+        <ZoomGridFooter>
+          <AppButton as={Link} to={`/item/${itemStore.nextItemId}`}>
+            {t('button.next.label', 'Next')}
+          </AppButton>
+        </ZoomGridFooter>
+      )}
     </ZoomGrid>
   );
 };
