@@ -1,8 +1,6 @@
-import { DefaultFontSize } from 'components/Page/Page.style';
 import CookieBar from 'components/CookieBar/CookieBar';
 import Header from 'components/Header/Header';
 import styled from 'styled-components';
-import { em } from 'polished';
 
 interface StyledWrapperProps {
   isOpened: boolean;

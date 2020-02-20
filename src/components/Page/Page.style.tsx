@@ -10,7 +10,7 @@ interface MessageProps {
 }
 
 export const fluidRangeMinMax = {
-  minScreen: em(320),
+  minScreen: em(360),
   maxScreen: em(640),
 };
 
@@ -20,45 +20,65 @@ export const DefaultBoxShadow = css`
   box-shadow: ${defaultBoxShadow};
 `;
 
+export const DefaultFontSizeRange = {
+  fromSize: 14,
+  toSize: 18,
+};
+
 export const DefaultFontSize = css`
   ${fluidRange(
     {
       prop: 'font-size',
-      fromSize: em(12),
-      toSize: em(16),
+      fromSize: em(DefaultFontSizeRange.fromSize),
+      toSize: em(DefaultFontSizeRange.toSize),
     },
     ...Object.values(fluidRangeMinMax),
   )}
 `;
+
+export const SmallerFontSizeRange = {
+  fromSize: 12,
+  toSize: 16,
+};
 
 export const SmallerFontSize = css`
   ${fluidRange(
     {
       prop: 'font-size',
-      fromSize: em(10),
-      toSize: em(14),
+      fromSize: em(SmallerFontSizeRange.fromSize),
+      toSize: em(SmallerFontSizeRange.toSize),
     },
     ...Object.values(fluidRangeMinMax),
   )}
 `;
+
+export const ExtraSmallFontSizeRange = {
+  fromSize: 10,
+  toSize: 14,
+};
 
 export const ExtraSmallFontSize = css`
   ${fluidRange(
     {
       prop: 'font-size',
-      fromSize: em(8),
-      toSize: em(12),
+      fromSize: em(ExtraSmallFontSizeRange.fromSize),
+      toSize: em(ExtraSmallFontSizeRange.toSize),
     },
     ...Object.values(fluidRangeMinMax),
   )}
 `;
 
+export const HeaderFontSizeRange = {
+  fromSize: 20,
+  toSize: 24,
+};
+
 export const HeaderFontSize = css`
   ${fluidRange(
     {
       prop: 'font-size',
-      fromSize: em(18),
-      toSize: em(24),
+      fromSize: em(HeaderFontSizeRange.fromSize),
+      toSize: em(HeaderFontSizeRange.toSize),
     },
     ...Object.values(fluidRangeMinMax),
   )}

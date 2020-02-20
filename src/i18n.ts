@@ -13,7 +13,7 @@ i18n
   .use(XHR)
   .use(initReactI18next)
   .init({
-    debug: true,
+    debug: false,
 
     ns: ['app'],
     defaultNS: 'app',
