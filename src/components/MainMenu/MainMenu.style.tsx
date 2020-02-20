@@ -1,4 +1,5 @@
 import { DefaultFontSize } from 'components/Page/Page.style';
+import CookieBar from 'components/CookieBar/CookieBar';
 import styled from 'styled-components';
 import { em } from 'polished';
 
@@ -20,6 +21,10 @@ export const Wrapper = styled.nav<StyledWrapperProps>`
   transform: translateX(${({ isOpened }) => (isOpened ? '0' : '-100%')});
   transition: transform 0.25s ease;
   z-index: 10;
+`;
+
+export const DummyLayoutGridCookie = styled(CookieBar)`
+  visibility: hidden;
 `;
 
 export const DummyLayoutGridHeader = styled.div`

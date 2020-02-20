@@ -3,7 +3,7 @@ import Api from 'utils/api';
 import { ItemKind, ItemTag } from 'utils/interfaces';
 import {
   Wrapper,
-  DummyLayoutGridHeader,
+  DummyLayoutGridHeader, DummyLayoutGridCookie,
 } from 'components/MainMenu/MainMenu.style';
 import {
   LayoutGrid,
@@ -44,6 +44,7 @@ class MainMenu extends React.Component<Props> {
     return (
       <Wrapper isOpened={this.ui.nav.isOpened}>
         <LayoutGrid>
+          <DummyLayoutGridCookie />
           <DummyLayoutGridHeader />
           <LayoutGridContent>
             <Items

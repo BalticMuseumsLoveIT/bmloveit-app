@@ -10,7 +10,7 @@
       "label": "Google Sign In"
     }
   },
-  "cookieBar": "We use cookies.<1>Learn more</1>",
+  "cookieBar": "We use cookies. <1>Learn more</1>",
   "error": {
     "404": {
       "global": "Sorry, page with a given address was not found",
