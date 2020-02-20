@@ -96,7 +96,7 @@ class RouteLocationsListPage extends React.Component<Props> {
                 <DefaultListItem
                   key={location.id}
                   isDisabled={isNaN(firstScreenId)}
-                  imageUrl={iconURL}
+                  hasThumbnail={doesAnyLocationContainImage}
                 >
                   {doesAnyLocationContainImage && iconURL ? (
                     <Thumbnail src={iconURL} />

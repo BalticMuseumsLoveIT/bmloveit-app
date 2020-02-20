@@ -17,6 +17,9 @@ export const DefaultListItem = ({
   isDisabled,
   isMenuOpened,
   isHeader,
+  imageUrl,
+  hasIcon,
+  hasThumbnail,
   ...rest
 }: DefaultListItemProps) => {
   const imageSrc = isDisabled
@@ -31,6 +34,16 @@ export const DefaultListItem = ({
     <DefaultListItemWrapper
       isMenuOpened={isMenuOpened}
       isHeader={isHeader}
+      hasThumbnail={
+        (typeof hasThumbnail !== 'undefined' && hasThumbnail) ||
+        (imageUrl && imageUrl.length > 0) ||
+        false
+      }
+      hasIcon={
+        (typeof hasIcon !== 'undefined' && hasIcon) ||
+        (imageSrc && imageSrc.length > 0) ||
+        false
+      }
       {...rest}
     >
       {children}

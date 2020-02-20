@@ -14,6 +14,8 @@ export interface DefaultListItemWrapperProps {
   isActive?: boolean;
   isDisabled?: boolean;
   imageUrl?: string;
+  hasIcon?: boolean;
+  hasThumbnail?: boolean;
 }
 
 export const DefaultList = styled.ul`
@@ -89,7 +91,8 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
     grid-column: 2 / span 1;
     box-sizing: border-box;
     padding: 1em;
-    width: 100%;
+    min-width: 100%;
+    z-index: 1;
 
     font-size: 1em;
 
@@ -105,6 +108,20 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
         ? theme.colors.list.header.default.text
         : theme.colors.list.item.default.text};
 
+    ${({ hasIcon }) =>
+      hasIcon &&
+      css`
+        margin-right: -${em(48)};
+        padding-right: ${em(64)};
+      `}
+
+    ${({ hasThumbnail }) =>
+      hasThumbnail &&
+      css`
+        margin-left: -${em(80)};
+        padding-left: ${em(96)};
+      `}
+    
     &:hover,
     &:focus,
     &:visited {
