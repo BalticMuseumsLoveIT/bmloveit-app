@@ -32,8 +32,9 @@ export const Logo = styled.div<LogoProps>`
         `;
       case LogoType.WELCOME:
         return css`
-          width: 100%;
-          max-width: ${rem(270)};
+          width: 75%;
+          min-width: ${rem(200)};
+          max-width: ${rem(360)};
           box-shadow: ${defaultBoxShadow};
           margin: 2em auto;
         `;
