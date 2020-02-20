@@ -1,37 +1,42 @@
 import { ButtonProps } from 'utils/interfaces';
-import { defaultBoxShadow } from 'components/Page/Page.style';
+import {
+  defaultBoxShadow,
+  SmallerFontSize,
+  SubtitleFontStyle,
+} from 'components/Page/Page.style';
 import styled from 'styled-components';
+import { em, rem } from 'polished';
 
 export const FooterButtonsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 8px;
-  max-width: 480px;
-  padding: 11px 0;
-  margin-left: auto;
-  margin-right: auto;
+  grid-gap: 0.5em;
+  max-width: ${rem(480)};
+  margin: 1em auto;
 `;
 
 export const FooterButton = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 18px 10px;
-  background-color: ${({ theme, isDisabled }) =>
-    isDisabled
-      ? theme.colors.button.secondary.disabled.background
-      : theme.colors.button.secondary.default.background};
+
+  ${SubtitleFontStyle};
+  ${SmallerFontSize};
+  text-align: center;
+  text-decoration: none;
   color: ${({ theme, isDisabled }) =>
     isDisabled
       ? theme.colors.button.secondary.disabled.text
       : theme.colors.button.secondary.default.text};
-  border-radius: 8px;
-  font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
-  font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
-  line-height: 1;
-  font-size: 12px;
-  text-decoration: none;
-  text-align: center;
+
+  padding: ${em(18, 14)};
+
+  background-color: ${({ theme, isDisabled }) =>
+    isDisabled
+      ? theme.colors.button.secondary.disabled.background
+      : theme.colors.button.secondary.default.background};
+
+  border-radius: ${em(8, 14)};
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   box-shadow: ${defaultBoxShadow};
 

@@ -1,32 +1,45 @@
 import { ButtonProps } from 'utils/interfaces';
-import { defaultBoxShadow } from 'components/Page/Page.style';
+import {
+  defaultBoxShadow,
+  DefaultFontSize,
+  SubtitleFontStyle,
+} from 'components/Page/Page.style';
 import styled from 'styled-components';
+import { rem } from 'polished';
 
 export const AppButton = styled.button<ButtonProps>`
   box-sizing: border-box;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 93%;
-  max-width: 360px;
-  padding: ${({ isThin }) => (isThin === true ? '17px' : '26px')};
-  margin: 16px auto;
-  background-color: ${({ theme, isDisabled }) =>
-    isDisabled
-      ? theme.colors.button.primary.disabled.background
-      : theme.colors.button.primary.default.background};
+
+  width: 100%;
+  max-width: ${rem(360)};
+
+  padding: ${({ isThin }) => (isThin === true ? '1em' : '1.25em 1em')};
+  margin: 1em auto;
+
+  ${DefaultFontSize};
+  ${SubtitleFontStyle};
+  line-height: 1.5;
+  text-decoration: none;
   color: ${({ theme, isDisabled }) =>
     isDisabled
       ? theme.colors.button.primary.disabled.text
       : theme.colors.button.primary.default.text};
+
+  background-color: ${({ theme, isDisabled }) =>
+    isDisabled
+      ? theme.colors.button.primary.disabled.background
+      : theme.colors.button.primary.default.background};
+
   border: none;
-  border-radius: 8px;
-  font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
-  font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
-  text-decoration: none;
-  cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
+  border-radius: 0.5em;
+
   box-shadow: ${defaultBoxShadow};
-  font-size: 1em;
+
+  cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   outline: none;
 
   &:hover {
