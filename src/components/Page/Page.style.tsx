@@ -14,7 +14,11 @@ export const fluidRangeMinMax = {
   maxScreen: em(640),
 };
 
-export const defaultBoxShadow = '0 3px 6px #2a2c3e33';
+export const defaultBoxShadow = '1px 1px 5px rgba(0,0,0,0.2)';
+
+export const DefaultBoxShadow = css`
+  box-shadow: ${defaultBoxShadow};
+`;
 
 export const DefaultFontSize = css`
   ${fluidRange(
