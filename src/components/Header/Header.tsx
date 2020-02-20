@@ -1,5 +1,4 @@
 import { Switch as MainMenuToggleSwitch } from 'components/MainMenu/Switch';
-import MainMenu from 'components/MainMenu/MainMenu';
 import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
 import UserAvatar from 'components/Avatar/Avatar';
 import { UserAvatarType } from 'components/Avatar/Avatar.style';
@@ -18,6 +17,7 @@ import AppHeader, {
 
 interface HeaderProps extends RouteComponentProps {
   isVisible?: boolean;
+  className?: string;
 }
 
 class Header extends React.Component<HeaderProps> {
@@ -25,7 +25,7 @@ class Header extends React.Component<HeaderProps> {
     if (!this.props.isVisible) return null;
 
     return (
-      <LayoutGridHeader>
+      <LayoutGridHeader className={this.props.className}>
         <AppHeader>
           <BackButtonCell>
             <BackButton onClick={this.props.history.goBack}>
@@ -42,7 +42,6 @@ class Header extends React.Component<HeaderProps> {
             <MainMenuToggleSwitch />
           </ToggleSwitchCell>
         </AppHeader>
-        <MainMenu />
       </LayoutGridHeader>
     );
   }

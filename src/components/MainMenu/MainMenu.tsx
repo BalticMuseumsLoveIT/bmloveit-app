@@ -3,7 +3,8 @@ import Api from 'utils/api';
 import { ItemKind, ItemTag } from 'utils/interfaces';
 import {
   Wrapper,
-  DummyLayoutGridHeader, DummyLayoutGridCookie,
+  DummyLayoutGridHeader,
+  DummyLayoutGridCookie,
 } from 'components/MainMenu/MainMenu.style';
 import {
   LayoutGrid,
@@ -45,7 +46,7 @@ class MainMenu extends React.Component<Props> {
       <Wrapper isOpened={this.ui.nav.isOpened}>
         <LayoutGrid>
           <DummyLayoutGridCookie />
-          <DummyLayoutGridHeader />
+          <DummyLayoutGridHeader isVisible={true} />
           <LayoutGridContent>
             <Items
               items={this.ui.nav.items}
@@ -65,22 +66,6 @@ class MainMenu extends React.Component<Props> {
             <SponsorLogotype />
           </LayoutGridFooter>
         </LayoutGrid>
-        {/*<Content>*/}
-        {/*  <Items*/}
-        {/*    items={this.ui.nav.items}*/}
-        {/*    ancestors={this.ui.nav.ancestors}*/}
-        {/*    closeMenu={this.ui.nav.close}*/}
-        {/*    openParentMenu={this.ui.nav.openParentMenu}*/}
-        {/*    openSubMenu={this.ui.nav.openSubMenu}*/}
-        {/*  />*/}
-        {/*  {!this.ui.nav.isSubmenu && (*/}
-        {/*    <StaticLinks*/}
-        {/*      links={this.ui.nav.links}*/}
-        {/*      closeMenu={this.ui.nav.close}*/}
-        {/*    />*/}
-        {/*  )}*/}
-        {/*  <SponsorLogotype />*/}
-        {/*</Content>*/}
       </Wrapper>
     );
   }

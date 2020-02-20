@@ -2,6 +2,7 @@ import Header from 'components/Header/Header';
 import CookieBar from 'components/CookieBar/CookieBar';
 import { SiteStore } from 'utils/store/siteStore';
 import { GlobalStyle, LayoutGrid } from 'components/Layout/Layout.style';
+import MainMenu from 'components/MainMenu/MainMenu';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { observer, inject } from 'mobx-react';
@@ -32,6 +33,7 @@ export default class Layout extends React.Component<Props> {
         <GlobalStyle />
         <LayoutGrid>
           <CookieBar />
+          <MainMenu />
           <Header isVisible={displayHeader} />
           {children}
         </LayoutGrid>

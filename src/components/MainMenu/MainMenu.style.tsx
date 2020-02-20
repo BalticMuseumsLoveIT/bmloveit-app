@@ -1,5 +1,6 @@
 import { DefaultFontSize } from 'components/Page/Page.style';
 import CookieBar from 'components/CookieBar/CookieBar';
+import Header from 'components/Header/Header';
 import styled from 'styled-components';
 import { em } from 'polished';
 
@@ -27,9 +28,8 @@ export const DummyLayoutGridCookie = styled(CookieBar)`
   visibility: hidden;
 `;
 
-export const DummyLayoutGridHeader = styled.div`
-  ${DefaultFontSize};
-  padding: ${em(27)} 0;
+export const DummyLayoutGridHeader = styled(Header)`
+  visibility: hidden;
 `;
 
 export const Content = styled.div`
