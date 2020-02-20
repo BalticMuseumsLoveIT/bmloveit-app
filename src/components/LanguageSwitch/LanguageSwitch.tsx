@@ -1,10 +1,9 @@
 import { CommonLanguageInterface } from 'utils/interfaces';
-import { DefaultList } from 'components/DefaultList/DefaultList.style';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocalStore, useObserver } from 'mobx-react';
 import { action } from 'mobx';
-import { LanguageSwitchItem } from './LanguageSwitch.style';
+import { LanguageSwitchItem, LanguageSwitchList } from './LanguageSwitch.style';
 
 interface LanguageSwitchProps {
   uiLanguages: Array<CommonLanguageInterface>;
@@ -37,7 +36,7 @@ export const LanguageSwitch = ({
     if (!ready) return null;
 
     return (
-      <DefaultList>
+      <LanguageSwitchList>
         {uiLanguages.map(language => {
           return (
             <LanguageSwitchItem
@@ -53,7 +52,7 @@ export const LanguageSwitch = ({
             </LanguageSwitchItem>
           );
         })}
-      </DefaultList>
+      </LanguageSwitchList>
     );
   });
 };

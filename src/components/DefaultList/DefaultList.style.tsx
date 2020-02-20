@@ -25,17 +25,15 @@ export const DefaultList = styled.ul`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 25px auto;
-  width: 93%;
-  max-width: 360px;
+  margin: 1em auto;
+  width: 100%;
   box-shadow: ${defaultBoxShadow};
-  border-radius: 8px;
+  border-radius: 0.5em;
   overflow: hidden;
 `;
 
 export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
   width: 100%;
-  min-height: 72px;
 
   ${DefaultFontSize};
 
@@ -50,9 +48,14 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
 
   list-style: none;
 
-  border-bottom: ${({ theme }) => `1px solid ${theme.colors.background.app}`};
+  &:not(:last-child) {
+    border-bottom: ${({ theme, isMenuOpened }) =>
+      (typeof isMenuOpened === 'undefined' || isMenuOpened) &&
+      `1px solid ${theme.colors.background.app}`};
+  }
+
   border-radius: ${({ isMenuOpened, isHeader }) =>
-    !isMenuOpened && isHeader && '8px'};
+    !isMenuOpened && isHeader && '0.5em'};
 
   background-color: ${({ theme, isHeader }) =>
     isHeader
@@ -83,6 +86,7 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
     padding: 1em;
 
     font-size: 1em;
+    line-height: 1.5;
 
     ${SubtitleFontStyle};
   }
@@ -95,6 +99,7 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
     z-index: 1;
 
     font-size: 1em;
+    line-height: 1.5;
 
     display: flex;
     align-items: flex-start;
