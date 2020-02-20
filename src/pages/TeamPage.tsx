@@ -5,11 +5,7 @@ import { TeamCreateForm } from 'components/TeamCreate/TeamCreate';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import { ClipboardButton } from 'components/Buttons/ClipboardButton.style';
 import { UserProfileStore } from 'utils/store/userProfileStore';
-import {
-  Title,
-  CenteredButtonLink,
-  CenterContent,
-} from 'components/Page/Page.style';
+import { Title, CenteredButtonLink } from 'components/Page/Page.style';
 import Label from 'components/Form/Label/Label.style';
 import { InputContainer } from 'components/Form/Form.style';
 import React from 'react';
@@ -60,7 +56,7 @@ class TeamPage extends React.Component<Props> {
         </Helmet>
         <Content>
           {this.userProfileStore.userIsTeamMember ? (
-            <CenterContent>
+            <>
               <Title>{this.userProfileStore.userTeamStore.teamName}</Title>
               <InputContainer>
                 <Label>
@@ -97,7 +93,7 @@ class TeamPage extends React.Component<Props> {
               >
                 {this.props.t('button.leaveTeam', 'Leave team')}
               </CenteredButtonLink>
-            </CenterContent>
+            </>
           ) : (
             <>
               <TeamJoinForm onSubmit={this.userProfileStore.handleJoinTeam} />

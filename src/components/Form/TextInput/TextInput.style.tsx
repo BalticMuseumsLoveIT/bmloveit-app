@@ -1,6 +1,12 @@
-import { defaultBoxShadow } from 'components/Page/Page.style';
+import {
+  AlternativeFontStyle,
+  defaultBoxShadow,
+  ExtraSmallFontSize,
+  SmallerFontSize,
+} from 'components/Page/Page.style';
 import styled from 'styled-components';
 import { Field } from 'formik';
+import { em } from 'polished';
 
 interface InputErrorProps {
   isCentered?: boolean;
@@ -9,37 +15,44 @@ interface InputErrorProps {
 const TextInput = styled(Field)`
   box-sizing: border-box;
   width: 100%;
-  min-height: 52px;
-  padding: 17px;
+
+  ${SmallerFontSize};
+  ${AlternativeFontStyle};
+  line-height: ${20 / 14};
+
+  padding: ${em(16, 14)};
+
   border: none;
-  border-radius: 8px;
+  border-radius: ${em(8, 14)};
+
   box-shadow: ${defaultBoxShadow};
   color: ${({ theme }) => theme.colors.form.textInput.default};
   outline: none;
-  font-size: 14px;
-  font-family: ${({ theme }) => theme.fonts.alternative.fontFamily};
-  font-weight: ${({ theme }) => theme.fonts.alternative.fontWeight};
-  border: ${({ theme }) => `2px solid ${theme.colors.form.background}`};
+
+  border: ${({ theme }) =>
+    `${em(2, 14)} solid ${theme.colors.form.background}`};
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.form.textInput.placeholder};
   }
 
   &:hover {
-    border: ${({ theme }) => `2px solid ${theme.colors.form.textInput.hover}`};
+    border: ${({ theme }) =>
+      `${em(2, 14)} solid ${theme.colors.form.textInput.hover}`};
   }
 
   &:focus {
-    border: ${({ theme }) => `2px solid ${theme.colors.form.textInput.focus}`};
+    border: ${({ theme }) =>
+      `${em(2, 14)} solid ${theme.colors.form.textInput.focus}`};
   }
 `;
 
 export const InputError = styled.div<InputErrorProps>`
+  ${ExtraSmallFontSize};
+  ${AlternativeFontStyle};
+
   color: ${({ theme }) => theme.colors.form.textInput.error};
-  font-size: 10px;
-  font-family: ${({ theme }) => theme.fonts.alternative.fontFamily};
-  font-weight: ${({ theme }) => theme.fonts.alternative.fontWeight};
-  margin-top: 10px;
+  margin-top: ${em(8, 12)};
   text-align: ${({ isCentered }) => isCentered && 'center'};
 `;
 

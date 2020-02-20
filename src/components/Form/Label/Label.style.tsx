@@ -1,12 +1,16 @@
+import {
+  AlternativeFontStyle,
+  SmallerFontSize,
+} from 'components/Page/Page.style';
 import styled from 'styled-components';
+import { em } from 'polished';
 
 const Label = styled.label`
-  font-size: 14px;
-  font-family: ${({ theme }) => theme.fonts.alternative.fontFamily};
-  font-weight: ${({ theme }) => theme.fonts.alternative.fontWeight};
+  ${SmallerFontSize};
+  ${AlternativeFontStyle};
   color: ${({ theme }) => theme.colors.form.label};
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: ${em(8, 14)};
 `;
 
 export default Label;

@@ -42,6 +42,17 @@ export const SmallerFontSize = css`
   )}
 `;
 
+export const ExtraSmallFontSize = css`
+  ${fluidRange(
+    {
+      prop: 'font-size',
+      fromSize: em(8),
+      toSize: em(12),
+    },
+    ...Object.values(fluidRangeMinMax),
+  )}
+`;
+
 export const HeaderFontSize = css`
   ${fluidRange(
     {

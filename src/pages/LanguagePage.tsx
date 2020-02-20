@@ -8,7 +8,6 @@ import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
 import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import { LayoutGridFooter } from 'components/Layout/Layout.style';
-import { CenterContent } from 'components/Page/Page.style';
 import { WithTranslation, withTranslation } from 'react-i18next';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { inject, observer } from 'mobx-react';
@@ -46,10 +45,7 @@ class LanguagePage extends React.Component<Props> {
   render() {
     if (!this.props.tReady) return null;
 
-    if (
-      this.uiStore.languages.length > 0 &&
-      this.uiStore.isUserLocaleMatch === false
-    ) {
+    if (this.uiStore.languages.length > 0 && !this.uiStore.isUserLocaleMatch) {
       this.uiStore.setLanguage(this.uiStore.languages[0].key);
     }
 
@@ -59,16 +55,14 @@ class LanguagePage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Language')}</title>
         </Helmet>
         <Content backgroundImage={this.siteStore.image || undefined}>
-          <CenterContent>
-            <MuseumLogo type={LogoType.WELCOME} />
-            <LanguageSwitch
-              uiLanguages={this.uiStore.languages}
-              userLanguage={this.uiStore.language}
-            />
-            <AppButton as={Link} to="/login">
-              {this.props.t('form.button.submit.label', 'Next')}
-            </AppButton>
-          </CenterContent>
+          <MuseumLogo type={LogoType.WELCOME} />
+          <LanguageSwitch
+            uiLanguages={this.uiStore.languages}
+            userLanguage={this.uiStore.language}
+          />
+          <AppButton as={Link} to="/login">
+            {this.props.t('form.button.submit.label', 'Next')}
+          </AppButton>
         </Content>
         <LayoutGridFooter>
           <SponsorLogotype />
