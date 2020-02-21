@@ -8,6 +8,8 @@ export const Indicator = styled(LinearProgress)`
   --mdc-theme-primary: ${({ theme }) => theme.colors.background.default};
 
   height: ${em(2)} !important;
+  width: unset !important;
+  min-width: 100%;
   ${NegativeGridPadding};
 
   .mdc-linear-progress__buffer {
