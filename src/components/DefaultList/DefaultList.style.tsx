@@ -25,7 +25,7 @@ export const DefaultList = styled.ul`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: 2em auto;
+  margin: 1em auto;
   width: 100%;
   box-shadow: ${defaultBoxShadow};
   border-radius: 0.5em;
