@@ -74,6 +74,11 @@ export const LayoutGridContent = styled.div<LayoutGridContentProps>`
     `}
 `;
 
-export const LayoutGridFooter = styled.div`
+interface LayoutGridFooterProps {
+  useDefaultPadding?: boolean;
+}
+
+export const LayoutGridFooter = styled.div<LayoutGridFooterProps>`
   grid-row: 4 / span 1;
+  ${props => props.useDefaultPadding && css`${DefaultGridPadding}`}
 `;

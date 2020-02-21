@@ -124,7 +124,7 @@ class RouteLocationsListPage extends React.Component<Props> {
             })}
           </DefaultList>
         </Content>
-        <LayoutGridFooter>
+        <LayoutGridFooter useDefaultPadding={true}>
           <FooterButtonsContainer>
             <FooterButton
               as={Link}

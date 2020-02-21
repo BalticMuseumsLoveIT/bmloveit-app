@@ -21,7 +21,7 @@ interface SwitchInnerProps {
   isOpened: boolean;
 }
 
-const base = DefaultFontSizeRange.fromSize;
+const base = DefaultFontSizeRange.toSize;
 
 export const Hamburger = styled.div<SwitchInnerProps>`
   margin: 0 auto;
