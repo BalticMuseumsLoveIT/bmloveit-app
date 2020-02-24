@@ -66,7 +66,7 @@ export const ItemAvatarChoice = inject(
     // Call createEvent on avatar actions
     const avatar = new ItemStore();
     await avatar.loadItemData(localStore.selectedAvatarId);
-    eventStore && (await eventStore.dispatchAvatarChoiceEvent(avatar.itemId));
+    eventStore && (await eventStore.dispatchAvatarChoice(avatar.itemId));
 
     // Reload global user profile
     userProfileStore && (await userProfileStore.loadUserProfile());

@@ -2,7 +2,14 @@ import { ActionType, EventParams } from 'utils/interfaces';
 import Api from 'utils/api';
 
 export class EventStore {
-  dispatchAvatarChoiceEvent = async (item: EventParams['item']) => {
+  dispatchLanguageChange = async (language: EventParams['language']) => {
+    await Api.createEvent({
+      action_type: ActionType.LANGUAGE,
+      language: language,
+    });
+  };
+
+  dispatchAvatarChoice = async (item: EventParams['item']) => {
     await Api.createEvent({
       action_type: ActionType.AVATAR_SET,
       item: item,
