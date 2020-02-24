@@ -2,9 +2,10 @@ import Content from 'components/Content/Content';
 import ItemPageStore from 'utils/store/itemPageStore';
 import { ItemDetails } from 'components/ItemDetails/ItemDetails';
 import ItemModal from 'components/ItemModal/ItemModal';
+import { EventStore } from 'utils/store/eventStore';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
@@ -12,10 +13,14 @@ import { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
 export interface Props
   extends WithTranslation,
     ThemeProps<DefaultTheme>,
-    RouteComponentProps<{ id: string }> {}
+    RouteComponentProps<{ id: string }> {
+  eventStore: EventStore;
+}
 
+@inject('eventStore')
 @observer
 class ItemPage extends React.Component<Props> {
+  eventStore = this.props.eventStore;
   itemPageStore = new ItemPageStore(true);
 
   async componentDidMount(): Promise<void> {
@@ -26,6 +31,7 @@ class ItemPage extends React.Component<Props> {
     this.itemPageStore.setTReady(this.props.tReady);
 
     await this.itemPageStore.loadData(Number.parseInt(id));
+    await this.eventStore.dispatchViewItem(Number.parseInt(id));
   }
 
   async componentDidUpdate(prevProps: Props) {
