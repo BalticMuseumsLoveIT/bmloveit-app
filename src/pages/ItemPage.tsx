@@ -3,6 +3,7 @@ import ItemPageStore from 'utils/store/itemPageStore';
 import { ItemDetails } from 'components/ItemDetails/ItemDetails';
 import ItemModal from 'components/ItemModal/ItemModal';
 import { EventStore } from 'utils/store/eventStore';
+import { ItemType } from 'utils/interfaces';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
@@ -31,7 +32,16 @@ class ItemPage extends React.Component<Props> {
     this.itemPageStore.setTReady(this.props.tReady);
 
     await this.itemPageStore.loadData(Number.parseInt(id));
-    await this.eventStore.dispatchViewItem(Number.parseInt(id));
+
+    // On redirected items (quiz, survey) dispatch event separately
+    const redirects = [ItemType.QUIZ, ItemType.SURVEY];
+
+    if (
+      this.itemPageStore.itemData.itemType !== null &&
+      !redirects.includes(this.itemPageStore.itemData.itemType)
+    ) {
+      await this.eventStore.dispatchViewItem(Number.parseInt(id));
+    }
   }
 
   async componentDidUpdate(prevProps: Props) {
