@@ -14,7 +14,7 @@ import {
   getTranslatedString,
 } from 'utils/helpers';
 import { UserProfileStore } from 'utils/store/userProfileStore';
-import { ItemInterface, ResourceTypeName } from 'utils/interfaces';
+import { ActionType, ItemInterface, ResourceTypeName } from 'utils/interfaces';
 import Api from 'utils/api';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { AvatarChoiceDescription } from 'pages/ItemPage.style';
@@ -63,9 +63,10 @@ export const ItemAvatarChoice = inject('userProfileStore')(
       // Call createEvent on avatar actions
       const avatar = new ItemStore();
       await avatar.loadItemData(localStore.selectedAvatarId);
-      await Promise.all(
-        avatar.itemActions.map(action => Api.createEvent(action.id)),
-      );
+      await Api.createEvent({
+        action_type: ActionType.AVATAR_SET,
+        item: avatar.itemId,
+      });
 
       // Reload global user profile
       userProfileStore && (await userProfileStore.loadUserProfile());

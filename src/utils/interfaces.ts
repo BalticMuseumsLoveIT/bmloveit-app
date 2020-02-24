@@ -269,7 +269,6 @@ export interface ItemInterface {
   name_translation: Array<CommonApiTranslationInterface>;
   name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
-  actions_list: Array<CommonActionInterface>;
   routes: Array<number>;
   x: number | null;
   y: number | null;
@@ -487,6 +486,28 @@ export interface TeamInterface {
   users: Array<TeamUserInterface>;
   avatar: ItemInterface | null;
   access_code: number;
+}
+
+// Events ----------------------------------------------------------------------
+
+export enum ActionType {
+  VIEW = 1,
+  PLAY_AUDIO = 2,
+  PLAY_VIDEO = 3,
+  ROUTE_SELECT = 4,
+  AVATAR_SET = 5,
+  LANGUAGE = 6,
+  SCAN = 7,
+  PHOTO = 8,
+}
+
+export interface EventParams {
+  action_type: number;
+  description?: string;
+  item?: number;
+  route?: number;
+  item_resource?: number;
+  language?: number;
 }
 
 // Generic ---------------------------------------------------------------------
