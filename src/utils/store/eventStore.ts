@@ -21,6 +21,28 @@ export class EventStore {
     });
   };
 
+  dispatchPlayVideo = async (
+    item_resource: Required<EventParams>['item_resource'],
+  ) => {
+    if (Number.isNaN(item_resource)) return;
+
+    await Api.createEvent({
+      action_type: ActionType.PLAY_VIDEO,
+      item_resource: item_resource,
+    });
+  };
+
+  dispatchPlayAudio = async (
+    item_resource: Required<EventParams>['item_resource'],
+  ) => {
+    if (Number.isNaN(item_resource)) return;
+
+    await Api.createEvent({
+      action_type: ActionType.PLAY_AUDIO,
+      item_resource: item_resource,
+    });
+  };
+
   dispatchLanguageChange = async (
     language: Required<EventParams>['language'],
   ) => {
