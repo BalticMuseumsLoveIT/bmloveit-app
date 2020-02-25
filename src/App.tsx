@@ -1,12 +1,12 @@
 import Routes from 'utils/Routes';
 import stores from 'utils/store/stores';
 import { AppState } from 'utils/store/uiStore';
+import ErrorPage from 'pages/ErrorPage';
 import { Circle as AppLoader } from 'react-preloaders';
 import { Router } from 'react-router-dom';
 import { observer, Provider } from 'mobx-react';
 import { createBrowserHistory } from 'history';
 import React from 'react';
-import ErrorPage from 'pages/ErrorPage';
 
 export const history = createBrowserHistory();
 

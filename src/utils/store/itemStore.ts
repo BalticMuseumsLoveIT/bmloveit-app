@@ -1,5 +1,4 @@
 import {
-  CommonActionInterface,
   CommonApiTranslationInterface,
   ItemInterface,
   ItemKind,
@@ -164,10 +163,6 @@ export default class ItemStore {
     return this.itemData.child_items_data.filter(
       item => item.type_data !== null && item.type_data.name === childItemType,
     );
-  }
-
-  @computed get itemActions(): Array<CommonActionInterface> {
-    return this.itemData ? this.itemData.actions_list : [];
   }
 
   @computed get panoramaMapItems(): Array<ItemMapElementInterface> {

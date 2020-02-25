@@ -82,6 +82,10 @@ export default class SurveyDetailsStore {
     return this.itemData.nextItemId;
   }
 
+  @computed get parentItemId(): number {
+    return this.itemData.itemId;
+  }
+
   @computed get title(): string {
     return this.survey
       ? getTranslatedString(

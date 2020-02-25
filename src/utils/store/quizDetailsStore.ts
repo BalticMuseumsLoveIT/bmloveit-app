@@ -110,6 +110,10 @@ export default class QuizDetailsStore {
     return this.itemData.nextItemId;
   }
 
+  @computed get parentItemId(): number {
+    return this.itemData.itemId;
+  }
+
   @action setState = (state: QuizDetailsState) => {
     this.state = state;
   };

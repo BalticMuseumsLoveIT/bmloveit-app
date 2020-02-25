@@ -17,6 +17,7 @@ import {
   TeamInterface,
   UserProfileCreateInterface,
   RouteTypeInterface,
+  EventParams,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -359,15 +360,14 @@ abstract class Api {
     return response.data;
   };
 
-  public static createEvent = async (actionId: number) => {
-    const formData = {
-      action: actionId,
-    };
+  public static createEvent = async (eventParams: EventParams) => {
+    const params = JSON.stringify(eventParams);
 
-    const response = await authStore.axiosInstance.post(
-      'api/events/',
-      formData,
-    );
+    const endpoint = 'api/events/';
+
+    const response = await authStore.axiosInstance.post(endpoint, params);
+
+    // debugger;
 
     return response.data;
   };
