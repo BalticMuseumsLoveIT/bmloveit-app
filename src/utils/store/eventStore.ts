@@ -43,6 +43,15 @@ export class EventStore {
     });
   };
 
+  dispatchScanQR = async (
+    description: Required<EventParams>['description'],
+  ) => {
+    await Api.createEvent({
+      action_type: ActionType.SCAN,
+      description: description,
+    });
+  };
+
   dispatchLanguageChange = async (
     language: Required<EventParams>['language'],
   ) => {
