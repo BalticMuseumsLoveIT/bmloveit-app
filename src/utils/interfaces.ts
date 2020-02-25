@@ -200,6 +200,7 @@ export interface SurveyAnswerResponse {
 
 export enum ItemType {
   DEFAULT = 'default',
+  BRANCH = 'path_option',
   AVATAR_CHOICE = 'avatar_choice',
   AVATAR = 'avatar',
   SURVEY = 'survey',
