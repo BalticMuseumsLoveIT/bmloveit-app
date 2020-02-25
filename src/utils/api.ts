@@ -367,8 +367,6 @@ abstract class Api {
 
     const response = await authStore.axiosInstance.post(endpoint, params);
 
-    // debugger;
-
     return response.data;
   };
 
