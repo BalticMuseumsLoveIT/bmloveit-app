@@ -365,6 +365,7 @@ abstract class Api {
 
     const endpoint = 'api/events/';
 
+    // debugger;
     const response = await authStore.axiosInstance.post(endpoint, params);
 
     return response.data;

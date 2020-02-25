@@ -11,6 +11,16 @@ export class EventStore {
     });
   };
 
+  // TODO: Not working due to unspecified parameters
+  dispatchSelectRoute = async (route: Required<EventParams>['route']) => {
+    if (Number.isNaN(route)) return;
+
+    await Api.createEvent({
+      action_type: ActionType.ROUTE_SELECT,
+      route: route,
+    });
+  };
+
   dispatchLanguageChange = async (
     language: Required<EventParams>['language'],
   ) => {
