@@ -1,5 +1,6 @@
 import {
   DefaultFontSize,
+  Description,
   LinkStyle,
   PlaceholderBackground,
   SubtitleFontStyle,
@@ -8,7 +9,11 @@ import SVG from 'react-inlinesvg';
 import styled, { css } from 'styled-components';
 import { em } from 'polished';
 
-export const AvatarList = styled.div`
+export const BranchChoiceDescription = styled(Description)`
+  text-align: center;
+`;
+
+export const BranchList = styled.div`
   margin: 1em 0;
   display: flex;
   justify-content: center;
@@ -16,7 +21,7 @@ export const AvatarList = styled.div`
   ${DefaultFontSize}
 `;
 
-export const AvatarButtonPlaceholder = styled.div`
+export const BranchButtonPlaceholder = styled.div`
   ${PlaceholderBackground};
 
   width: 100%;
@@ -24,7 +29,7 @@ export const AvatarButtonPlaceholder = styled.div`
   cursor: pointer;
 `;
 
-export const AvatarButtonPlaceholderImage = styled(SVG)`
+export const BranchButtonPlaceholderImage = styled(SVG)`
   display: block;
   position: relative;
   width: 40%;
@@ -35,14 +40,14 @@ export const AvatarButtonPlaceholderImage = styled(SVG)`
   }
 `;
 
-export const AvatarButtonImage = styled.img`
+export const BranchButtonImage = styled.img`
   display: block;
   width: 100%;
   border-radius: 50%;
   cursor: pointer;
 `;
 
-export const AvatarButtonLabel = styled.span`
+export const BranchButtonLabel = styled.span`
   ${SubtitleFontStyle};
   ${LinkStyle};
 
@@ -51,11 +56,11 @@ export const AvatarButtonLabel = styled.span`
   cursor: pointer;
 `;
 
-export interface AvatarButtonProps {
+export interface BranchButtonProps {
   isSelected?: boolean;
 }
 
-export const AvatarButton = styled.button<AvatarButtonProps>`
+export const BranchButton = styled.button<BranchButtonProps>`
   font-size: 1em;
   outline: none;
   border: none;
@@ -78,12 +83,12 @@ export const AvatarButton = styled.button<AvatarButtonProps>`
   ${props =>
     props.isSelected &&
     css`
-      ${AvatarButtonPlaceholder}, ${AvatarButtonImage} {
+      ${BranchButtonPlaceholder}, ${BranchButtonImage} {
         box-shadow: 0 0 ${em(4)} ${em(1)}
           ${({ theme }) => theme.colors.background.alternative};
       }
 
-      ${AvatarButtonLabel} {
+      ${BranchButtonLabel} {
         color: ${({ theme }) => theme.colors.text.anchor.active};
       }
     `}

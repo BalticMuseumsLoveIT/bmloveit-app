@@ -145,6 +145,26 @@ export default class ItemStore {
     );
   }
 
+  @computed get itemBranches(): Array<ItemInterface> {
+    if (
+      !this.itemData ||
+      !this.itemData.child_items_data.length ||
+      this.itemType === null ||
+      ![ItemType.AVATAR_CHOICE, ItemType.BRANCH].includes(this.itemType)
+    ) {
+      return [];
+    }
+
+    const childItemType =
+      this.itemType === ItemType.AVATAR_CHOICE
+        ? ItemType.AVATAR
+        : ItemType.DEFAULT;
+
+    return this.itemData.child_items_data.filter(
+      item => item.type_data !== null && item.type_data.name === childItemType,
+    );
+  }
+
   @computed get panoramaMapItems(): Array<ItemMapElementInterface> {
     return (
       (this.itemData &&
