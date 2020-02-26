@@ -6,6 +6,7 @@ import { Router } from 'react-router-dom';
 import { observer, Provider } from 'mobx-react';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import ErrorPage from 'pages/ErrorPage';
 
 export const history = createBrowserHistory();
 
@@ -52,7 +53,7 @@ class App extends React.Component {
           </>
         );
       case AppState.ERROR:
-        return <p>Error</p>;
+        return <ErrorPage />;
     }
   }
 }

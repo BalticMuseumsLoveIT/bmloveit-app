@@ -1,6 +1,9 @@
-import { DefaultGridPadding } from 'components/Page/Page.style';
+import {
+  DefaultGridPadding,
+  ParagraphFontStyle,
+  SmallerFontSize,
+} from 'components/Page/Page.style';
 import styled, { createGlobalStyle, css } from 'styled-components';
-import { em } from 'polished';
 
 export const GlobalStyle = createGlobalStyle`
   html, body, #root {
@@ -22,9 +25,8 @@ export const GlobalStyle = createGlobalStyle`
     }
 
     .rc-tooltip-inner {
-      font-size: ${em(15)};
-      font-family: ${props => props.theme.fonts.paragraph.fontFamily};
-      font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
+      ${SmallerFontSize};
+      ${ParagraphFontStyle};
       color: ${({ theme }) => theme.colors.text.alternative};
       background-color: ${({ theme }) => theme.colors.background.alternative};
       min-height: unset;
@@ -72,6 +74,11 @@ export const LayoutGridContent = styled.div<LayoutGridContentProps>`
     `}
 `;
 
-export const LayoutGridFooter = styled.div`
+interface LayoutGridFooterProps {
+  useDefaultPadding?: boolean;
+}
+
+export const LayoutGridFooter = styled.div<LayoutGridFooterProps>`
   grid-row: 4 / span 1;
+  ${props => props.useDefaultPadding && css`${DefaultGridPadding}`}
 `;

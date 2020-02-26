@@ -6,11 +6,11 @@ import {
   BadgeList,
   BadgeListItem,
 } from 'components/BadgesList/BadgeList.style';
+import { getPrivateMediaURL, getResource } from 'utils/helpers';
 import Tooltip from 'rc-tooltip';
 import 'rc-tooltip/assets/bootstrap.css';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
-import { getPrivateMediaURL, getResource } from 'utils/helpers';
 
 export interface Props {
   badges: Array<BadgeInterface>;

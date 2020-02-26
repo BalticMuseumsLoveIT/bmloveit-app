@@ -1,8 +1,10 @@
-import { TitleFontStyle } from 'components/Page/Page.style';
+import { DefaultBoxShadow, TitleFontStyle } from 'components/Page/Page.style';
 import styled, { css } from 'styled-components';
 
 export const StyledWrapper = styled.div`
   position: relative;
+  width: 100%;
+  height: 100%;
 `;
 
 export const StyledImage = styled.img`
@@ -41,9 +43,23 @@ export const StyledButton = styled.button<StyledButtonProps>`
           border: none;
         `
       : css`
-          background-color: white;
+          background-color: ${({ theme }) =>
+            theme.colors.button.secondary.default.background};
+
+          &:hover {
+            background-color: ${({ theme }) =>
+              theme.colors.button.secondary.hover.background};
+          }
+
+          &:focus {
+            background-color: ${({ theme }) =>
+              theme.colors.button.secondary.focus.background};
+          }
+
           border-radius: 50%;
-          box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.2);
+
+          ${DefaultBoxShadow};
+
           box-sizing: border-box;
           border: 1px solid
             ${({ theme }) => theme.colors.background.alternative};
@@ -59,7 +75,15 @@ export const StyledNumber = styled.svg`
   margin: 0 auto;
   width: 100%;
   height: 40%;
-  fill: ${({ theme }) => theme.colors.text.paragraph};
+  fill: ${({ theme }) => theme.colors.button.secondary.default.text};
+  
+  ${StyledButton}:hover & {
+    fill: ${({ theme }) => theme.colors.button.secondary.hover.text};
+  }
+  
+  ${StyledButton}:focus & {
+    fill: ${({ theme }) => theme.colors.button.secondary.focus.text};
+  }
 };
 
   text {

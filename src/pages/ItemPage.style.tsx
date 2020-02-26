@@ -13,6 +13,7 @@ export const ZoomGrid = styled.div`
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100%;
+  position: relative;
 `;
 
 export const ZoomGridHeader = styled.div`
@@ -30,7 +31,10 @@ export const ZoomGridMap = styled.div`
 
 export const ZoomGridFooter = styled.div`
   grid-row: 3 / span 1;
-  padding: 1em 0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 `;
 
 export const AvatarChoiceDescription = styled(Description)`

@@ -98,6 +98,10 @@ export default class QuizDetailsStore {
     return this.state === QuizDetailsState.LOADED;
   }
 
+  @computed get isLoading(): boolean {
+    return this.state === QuizDetailsState.LOADING;
+  }
+
   @computed get isSubmitted(): boolean {
     return this.state === QuizDetailsState.SUBMITTED;
   }
@@ -158,8 +162,7 @@ export default class QuizDetailsStore {
     }
   };
 
-  @action.bound
-  async handleSubmit(question: number, option: number) {
+  @action handleSubmit = async (question: number, option: number) => {
     if (this.quiz === null) {
       this.setState(QuizDetailsState.ERROR);
       return;
@@ -176,5 +179,5 @@ export default class QuizDetailsStore {
     } finally {
       this.setIsSubmitting(false);
     }
-  }
+  };
 }

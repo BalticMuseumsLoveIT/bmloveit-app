@@ -1,21 +1,23 @@
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { getPrivateMediaURL } from 'utils/helpers';
 import ItemModalStore, { ModalState } from 'utils/store/itemModalStore';
-import { Description, CloseButtonIcon } from 'components/Page/Page.style';
+import { CloseButtonIcon, Description } from 'components/Page/Page.style';
 import { AudioPlayer, ItemTitle, VideoPlayer } from 'pages/ItemPage.style';
 import {
   ModalCloseButton,
-  ModalLayoutGridHeader,
   ModalImage,
+  ModalLayoutGridHeader,
 } from 'components/ItemModal/ItemModal.style';
 import { LayoutGrid, LayoutGridContent } from 'components/Layout/Layout.style';
 import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
+import { Error404, Error404Context } from 'components/Error404/Error404';
+import { Error500 } from 'components/Error500/Error500';
 import ReactModal from 'react-modal';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import React from 'react';
-import { withTheme, ThemeProps, DefaultTheme } from 'styled-components';
+import { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
 import { em } from 'polished';
 
 interface Props
@@ -27,7 +29,9 @@ interface Props
 class ItemModal extends React.Component<Props> {
   store = new ItemModalStore({
     isOpen: false,
-    onRequestClose: () => this._closePopup(),
+    onRequestClose: () => {
+      this._closePopup();
+    },
     style: {
       overlay: {
         backgroundColor: 'rgba(0, 0, 0, 0.75)',
@@ -103,6 +107,23 @@ class ItemModal extends React.Component<Props> {
 
       if (currentPopupItemId !== previousPopupItemId) {
         if (popupIsAvailable && this.store.isClosed) {
+          const isOpenedDirectly =
+            prevProps.location.pathname !== this.props.location.pathname;
+
+          if (isOpenedDirectly) {
+            const parentItemLocation = this.store.removeIdFromLocation(
+              this.props.location,
+            );
+
+            /**
+             * When popup is opened directly by external link, add parent item
+             * location as an intermediary location to prevent going back on
+             * history stack when popup is closed
+             */
+            this.props.history.replace(parentItemLocation);
+            this.props.history.push(this.props.location);
+          }
+
           this._openPopup(currentPopupItemId);
         } else if (!popupIsAvailable && this.store.isOpened) {
           // User pressed back button - close popup manually.
@@ -132,9 +153,9 @@ class ItemModal extends React.Component<Props> {
                 case ModalState.LOADING:
                   return <LinearIndicator />;
                 case ModalState.NOT_FOUND:
-                  return <h1>Not found</h1>;
+                  return <Error404 context={Error404Context.MODAL} />;
                 case ModalState.ERROR:
-                  return <h1>Error</h1>;
+                  return <Error500 />;
                 case ModalState.LOADED:
                 default:
                   return (

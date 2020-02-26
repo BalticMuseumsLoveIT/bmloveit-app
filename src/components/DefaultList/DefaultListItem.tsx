@@ -1,9 +1,9 @@
 import {
   DefaultListItemWrapper,
   DefaultListItemWrapperProps,
+  ActionIcon,
 } from 'components/DefaultList/DefaultList.style';
 import React from 'react';
-import SVG from 'react-inlinesvg';
 
 export interface DefaultListItemProps extends DefaultListItemWrapperProps {
   children?: React.ReactNode;
@@ -17,6 +17,9 @@ export const DefaultListItem = ({
   isDisabled,
   isMenuOpened,
   isHeader,
+  imageUrl,
+  hasIcon,
+  hasThumbnail,
   ...rest
 }: DefaultListItemProps) => {
   const imageSrc = isDisabled
@@ -31,10 +34,20 @@ export const DefaultListItem = ({
     <DefaultListItemWrapper
       isMenuOpened={isMenuOpened}
       isHeader={isHeader}
+      hasThumbnail={
+        (typeof hasThumbnail !== 'undefined' && hasThumbnail) ||
+        (imageUrl && imageUrl.length > 0) ||
+        false
+      }
+      hasIcon={
+        (typeof hasIcon !== 'undefined' && hasIcon) ||
+        (imageSrc && imageSrc.length > 0) ||
+        false
+      }
       {...rest}
     >
       {children}
-      <SVG src={imageSrc} />
+      <ActionIcon src={imageSrc} />
     </DefaultListItemWrapper>
   );
 };

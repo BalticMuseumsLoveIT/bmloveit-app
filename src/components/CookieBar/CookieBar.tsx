@@ -10,7 +10,9 @@ import React from 'react';
 import { Trans, WithTranslation, withTranslation } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
 
-interface Props extends WithTranslation {}
+interface Props extends WithTranslation {
+  className?: string;
+}
 
 interface InjectedProps extends Props {
   cookieBarStore: CookieBarStore;
@@ -33,7 +35,7 @@ class CookieBar extends React.Component<Props> {
     if (this.cookieBarStore.isAccepted) return null;
 
     return (
-      <LayoutGridCookie>
+      <LayoutGridCookie className={this.props.className}>
         <StyledWrapper>
           <InfoMessage>
             <Trans i18nKey="cookieBar">

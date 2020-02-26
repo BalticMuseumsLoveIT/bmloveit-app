@@ -1,3 +1,5 @@
+import CookieBar from 'components/CookieBar/CookieBar';
+import Header from 'components/Header/Header';
 import styled from 'styled-components';
 
 interface StyledWrapperProps {
@@ -20,7 +22,16 @@ export const Wrapper = styled.nav<StyledWrapperProps>`
   z-index: 10;
 `;
 
+export const DummyLayoutGridCookie = styled(CookieBar)`
+  visibility: hidden;
+`;
+
+export const DummyLayoutGridHeader = styled(Header)`
+  visibility: hidden;
+`;
+
 export const Content = styled.div`
   width: 100%;
+  padding: 3.5em;
   max-width: 25em;
 `;

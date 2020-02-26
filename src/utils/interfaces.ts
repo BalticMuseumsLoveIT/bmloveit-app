@@ -382,6 +382,7 @@ export interface SiteInterface {
   terms_url: string;
   logo: string | null;
   image: string | null;
+  header: string | null; // Lost 200ml of Soplica cherry...
   theme: ThemeType | null;
   background_color: string | null;
   primary_color: string | null;

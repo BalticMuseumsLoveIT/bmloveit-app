@@ -1,3 +1,4 @@
+import { DefaultFontSizeRange } from 'components/Page/Page.style';
 import styled from 'styled-components';
 import { em } from 'polished';
 
@@ -20,11 +21,13 @@ interface SwitchInnerProps {
   isOpened: boolean;
 }
 
+const base = DefaultFontSizeRange.toSize;
+
 export const Hamburger = styled.div<SwitchInnerProps>`
   margin: 0 auto;
   position: relative;
-  width: ${em(20)};
-  height: ${em(2)};
+  width: ${em(20, base)};
+  height: ${em(2, base)};
   background-color: ${({ theme, isOpened }) =>
     isOpened ? 'transparent' : theme.colors.icon.normal};
   transition: background-color 0.25s ease;
@@ -41,14 +44,14 @@ export const Hamburger = styled.div<SwitchInnerProps>`
   }
 
   ::before {
-    top: ${em(-6)};
-    transform: translateY(${({ isOpened }) => (isOpened ? em(6) : '0')})
+    top: ${em(-6, base)};
+    transform: translateY(${({ isOpened }) => (isOpened ? em(6, base) : '0')})
       rotate(${({ isOpened }) => (isOpened ? '45deg' : '0')});
   }
 
   ::after {
-    top: ${em(6)};
-    transform: translateY(${({ isOpened }) => (isOpened ? em(-6) : '0')})
+    top: ${em(6, base)};
+    transform: translateY(${({ isOpened }) => (isOpened ? em(-6, base) : '0')})
       rotate(${({ isOpened }) => (isOpened ? '-45deg' : '0')});
   }
 

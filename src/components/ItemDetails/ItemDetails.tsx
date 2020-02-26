@@ -1,9 +1,9 @@
 import { ItemType } from 'utils/interfaces';
-import { ItemNotFound } from 'components/ItemDetails/ItemNotFound';
 import { ItemDefault } from 'components/ItemDetails/ItemDefault';
 import { ItemAvatarChoice } from 'components/ItemDetails/ItemAvatarChoice';
 import { ItemPanorama } from 'components/ItemDetails/ItemPanorama';
 import ItemStore from 'utils/store/itemStore';
+import { Error404, Error404Context } from 'components/Error404/Error404';
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
@@ -24,6 +24,6 @@ export const ItemDetails = ({ itemStore }: ItemDetailsProps) => {
     case ItemType.QUIZ:
       return <Redirect to={`/quiz/${itemStore.quizId}`} />;
     default:
-      return <ItemNotFound />;
+      return <Error404 context={Error404Context.ITEM} />;
   }
 };

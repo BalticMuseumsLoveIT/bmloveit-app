@@ -4,6 +4,7 @@ import { SurveyDetails } from 'components/SurveyDetails/SurveyDetails';
 import { SurveyFooter } from 'components/SurveyFooter/SurveyFooter';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { Description, Title } from 'components/Page/Page.style';
+import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
@@ -25,7 +26,10 @@ class SurveyDetailsPage extends Component<Props> {
   }
 
   async componentDidUpdate(prevProps: Props) {
-    if (prevProps.tReady !== this.props.tReady) {
+    if (
+      prevProps.tReady !== this.props.tReady ||
+      typeof this.surveyDetailsStore.tReady === 'undefined'
+    ) {
       this.surveyDetailsStore.setTReady(this.props.tReady);
     }
 
@@ -49,6 +53,9 @@ class SurveyDetailsPage extends Component<Props> {
           <title>{this.props.t('page.title', 'Survey details')}</title>
         </Helmet>
         <Content>
+          {(this.surveyDetailsStore.isSubmitting ||
+            this.surveyDetailsStore.isLoading) && <LinearIndicator />}
+
           {this.surveyDetailsStore.title && (
             <Title>{this.surveyDetailsStore.title}</Title>
           )}

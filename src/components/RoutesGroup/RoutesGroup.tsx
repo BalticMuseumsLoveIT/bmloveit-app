@@ -40,10 +40,12 @@ export const RoutesGroup = ({
           isHeader={true}
           onClick={localStore.toggleMenu}
         >
-          {getTranslatedString(
-            type.description,
-            type.description_translation || [],
-          )}
+          <span>
+            {getTranslatedString(
+              type.description,
+              type.description_translation || [],
+            )}
+          </span>
         </DefaultListItem>
         {routes.map(route => (
           <DefaultListItem

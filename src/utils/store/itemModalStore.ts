@@ -2,6 +2,7 @@ import ItemStore from 'utils/store/itemStore';
 import { action, computed, observable } from 'mobx';
 import queryString from 'query-string';
 import { Props as ReactModalProps } from 'react-modal';
+import * as H from 'history';
 
 export enum ModalState {
   NOT_LOADED,
@@ -61,6 +62,16 @@ export default class ItemModalStore {
     const parsedQuery = queryString.parse(search);
     if ('popup' in parsedQuery) delete parsedQuery.popup;
     return queryString.stringify(parsedQuery);
+  };
+
+  removeIdFromLocation = (location: H.Location): H.Location => {
+    const locationWithoutPopupId = Object.assign({}, location);
+
+    locationWithoutPopupId.search = this.removeIdFromQS(
+      locationWithoutPopupId.search,
+    );
+
+    return locationWithoutPopupId;
   };
 
   getIdFromQS = (search: string): number => {

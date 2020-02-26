@@ -1,0 +1,33 @@
+{
+  "button": {
+    "next": {
+      "label": ""
+    }
+  },
+  "error": {
+    "generic": "",
+    "notFound": ""
+  },
+  "form": {
+    "button": {
+      "submit": {
+        "label": ""
+      }
+    }
+  },
+  "itemNotFound": "",
+  "page": {
+    "title": ""
+  },
+  "submitted": {
+    "summary": ""
+  },
+  "validationSchema": {
+    "multiselect": {
+      "required": ""
+    },
+    "single": {
+      "required": ""
+    }
+  }
+}

@@ -1,3 +1,8 @@
+import {
+  LinkStyle,
+  ParagraphFontStyle,
+  SmallerFontSize,
+} from 'components/Page/Page.style';
 import styled from 'styled-components';
 
 export const LinkList = styled.ul`
@@ -12,13 +17,8 @@ export const LinkItem = styled.li`
   line-height: 150%;
 
   a {
-    font-size: 0.875em;
-    font-family: ${props => props.theme.fonts.paragraph.fontFamily};
-    font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
-    color: ${props => props.theme.colors.text.header};
-
-    &:hover {
-      text-decoration: none;
-    }
+    ${SmallerFontSize};
+    ${ParagraphFontStyle};
+    ${LinkStyle};
   }
 `;

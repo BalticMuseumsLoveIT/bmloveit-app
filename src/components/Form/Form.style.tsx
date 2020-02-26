@@ -1,14 +1,11 @@
 import styled from 'styled-components';
 import { Form as FormikForm } from 'formik';
 
-const Form = styled(FormikForm)`
-  padding: 10px 0;
-`;
+const Form = styled(FormikForm)``;
 
 export const InputContainer = styled.div`
-  width: 93%;
-  max-width: 360px;
-  margin: 10px auto;
+  width: 100%;
+  margin: 1.5em auto;
 `;
 
 export default Form;

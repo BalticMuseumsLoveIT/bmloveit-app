@@ -145,6 +145,10 @@ export const ItemAvatarChoice = inject('userProfileStore')(
               localStore.isSubmitting ||
               Number.isNaN(localStore.selectedAvatarId)
             }
+            isDisabled={
+              localStore.isSubmitting ||
+              Number.isNaN(localStore.selectedAvatarId)
+            }
             onClick={handleFormSubmit}
           >
             {t('button.next.label', 'Next')}

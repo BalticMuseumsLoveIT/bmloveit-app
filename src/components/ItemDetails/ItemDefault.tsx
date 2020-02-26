@@ -50,9 +50,11 @@ export const ItemDefault = ({ itemStore }: ItemDefaultProps) => {
         </Description>
       )}
 
-      <AppButton as={Link} to={`/item/${itemStore.nextItemId}`}>
-        {t('button.next.label', 'Next')}
-      </AppButton>
+      {!Number.isNaN(itemStore.nextItemId) && (
+        <AppButton as={Link} to={`/item/${itemStore.nextItemId}`}>
+          {t('button.next.label', 'Next')}
+        </AppButton>
+      )}
     </>
   );
 };

@@ -10,40 +10,75 @@ interface MessageProps {
 }
 
 export const fluidRangeMinMax = {
-  minScreen: em(320),
+  minScreen: em(360),
   maxScreen: em(640),
 };
 
-export const defaultBoxShadow = '0 3px 6px #2a2c3e33';
+export const defaultBoxShadow = '1px 1px 5px rgba(0,0,0,0.2)';
+
+export const DefaultBoxShadow = css`
+  box-shadow: ${defaultBoxShadow};
+`;
+
+export const DefaultFontSizeRange = {
+  fromSize: 14,
+  toSize: 18,
+};
 
 export const DefaultFontSize = css`
   ${fluidRange(
     {
       prop: 'font-size',
-      fromSize: em(12),
-      toSize: em(16),
+      fromSize: em(DefaultFontSizeRange.fromSize),
+      toSize: em(DefaultFontSizeRange.toSize),
     },
     ...Object.values(fluidRangeMinMax),
   )}
 `;
+
+export const SmallerFontSizeRange = {
+  fromSize: 12,
+  toSize: 16,
+};
 
 export const SmallerFontSize = css`
   ${fluidRange(
     {
       prop: 'font-size',
-      fromSize: em(10),
-      toSize: em(14),
+      fromSize: em(SmallerFontSizeRange.fromSize),
+      toSize: em(SmallerFontSizeRange.toSize),
     },
     ...Object.values(fluidRangeMinMax),
   )}
 `;
 
+export const ExtraSmallFontSizeRange = {
+  fromSize: 10,
+  toSize: 14,
+};
+
+export const ExtraSmallFontSize = css`
+  ${fluidRange(
+    {
+      prop: 'font-size',
+      fromSize: em(ExtraSmallFontSizeRange.fromSize),
+      toSize: em(ExtraSmallFontSizeRange.toSize),
+    },
+    ...Object.values(fluidRangeMinMax),
+  )}
+`;
+
+export const HeaderFontSizeRange = {
+  fromSize: 20,
+  toSize: 24,
+};
+
 export const HeaderFontSize = css`
   ${fluidRange(
     {
       prop: 'font-size',
-      fromSize: em(18),
-      toSize: em(24),
+      fromSize: em(HeaderFontSizeRange.fromSize),
+      toSize: em(HeaderFontSizeRange.toSize),
     },
     ...Object.values(fluidRangeMinMax),
   )}
@@ -67,6 +102,19 @@ export const AlternativeFontStyle = css`
 export const ParagraphFontStyle = css`
   font-family: ${props => props.theme.fonts.paragraph.fontFamily};
   font-weight: ${props => props.theme.fonts.paragraph.fontWeight};
+`;
+
+export const LinkStyle = css`
+  color: ${props => props.theme.colors.text.anchor.link};
+
+  &:hover {
+    text-decoration: none;
+    color: ${props => props.theme.colors.text.anchor.hover};
+  }
+
+  &:active {
+    color: ${props => props.theme.colors.text.anchor.active};
+  }
 `;
 
 export const DefaultGridPaddingRage = {
@@ -158,18 +206,9 @@ export const Description = styled.div`
 
   ${ParagraphFontStyle}
   ${DefaultFontSize}
-`;
-
-export const LinkStyle = css`
-  color: ${props => props.theme.colors.text.anchor.link};
-
-  &:hover {
-    text-decoration: none;
-    color: ${props => props.theme.colors.text.anchor.hover};
-  }
-
-  &:active {
-    color: ${props => props.theme.colors.text.anchor.active};
+  
+  a {
+    ${LinkStyle}
   }
 `;
 
@@ -288,6 +327,8 @@ export const Legend = styled.p`
   font-size: 1em;
   margin: 1em 0;
 
+  color: ${({ theme }) => theme.colors.text.paragraph};
+
   ${SubtitleFontStyle}
 `;
 
@@ -329,7 +370,8 @@ export const RadioLabel = styled.label`
   padding: 1em 1em 1em 0;
   flex-grow: 1;
 
-  ${SubtitleFontStyle}
+  ${SubtitleFontStyle};
+  color: ${({ theme }) => theme.colors.text.paragraph};
 `;
 
 export const CheckboxWrapper = styled(RadioWrapper)``;
@@ -355,6 +397,7 @@ export const Textarea = styled(Field)`
 
 export const FormValidation = styled.p`
   ${SubtitleFontStyle};
+  color: ${({ theme }) => theme.colors.text.paragraph};
 
   text-align: center;
 `;

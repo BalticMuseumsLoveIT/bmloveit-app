@@ -3,7 +3,7 @@ import {
   fluidRangeMinMax,
   defaultBoxShadow,
 } from 'components/Page/Page.style';
-import { em } from 'polished';
+import { em, rem } from 'polished';
 import styled, { css } from 'styled-components';
 import fluidRange from 'polished/lib/mixins/fluidRange';
 
@@ -33,6 +33,8 @@ export const Logo = styled.div<LogoProps>`
       case LogoType.WELCOME:
         return css`
           width: 35%;
+          min-width: ${rem(160)};
+          max-width: ${rem(320)};
           box-shadow: ${defaultBoxShadow};
           margin: 2em auto;
         `;
