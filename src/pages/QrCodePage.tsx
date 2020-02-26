@@ -6,15 +6,20 @@ import {
   QRCodeModulePlaceholder,
   QRCodeScanButton,
 } from 'components/QRCodeModule/QRCodeModule.style';
+import { EventStore } from 'utils/store/eventStore';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useObserver, useLocalStore } from 'mobx-react';
+import { useObserver, useLocalStore, inject } from 'mobx-react';
 import { action } from 'mobx';
 import SVG from 'react-inlinesvg';
 
-const QrCodePage = () => {
+interface Props {
+  eventStore?: EventStore;
+}
+
+const QrCodePage = inject('eventStore')(({ eventStore }: Props) => {
   const { t, ready } = useTranslation('qr-code-page');
   const history = useHistory();
 
@@ -33,12 +38,13 @@ const QrCodePage = () => {
     }),
   }));
 
-  const handleScan = (data: string | null): void => {
+  const handleScan = async (data: string | null) => {
     if (data !== null) {
       try {
         const url = new URL(data);
 
         if (url.host === window.location.host) {
+          eventStore && (await eventStore.dispatchScanQR(data));
           history.push(url.pathname + url.search);
         } else {
           localStore.stopScanning(true);
@@ -60,7 +66,7 @@ const QrCodePage = () => {
         <Content>
           <Title>{t('content.title', 'Scan QR')}</Title>
 
-          {localStore.isScanning === true ? (
+          {localStore.isScanning ? (
             <QRCodeModule
               delay={300}
               onError={() => localStore.stopScanning(true)}
@@ -73,12 +79,12 @@ const QrCodePage = () => {
             />
           )}
           <Message isError={localStore.isFailed}>
-            {localStore.isFailed === true
+            {localStore.isFailed
               ? t('content.message.error', 'Invalid code!')
               : t(
-                  'content.message.initial',
-                  'Click on the button and scan the code',
-                )}
+                'content.message.initial',
+                'Click on the button and scan the code',
+              )}
           </Message>
           <QRCodeScanButton
             isThin={true}
@@ -87,8 +93,8 @@ const QrCodePage = () => {
             disabled={localStore.isScanning}
           >
             <SVG src="/images/camera-24px.svg" />
-            {localStore.isFailed !== true
-              ? localStore.isScanning === true
+            {!localStore.isFailed
+              ? localStore.isScanning
                 ? t('button.scan.scanning', 'Scanning')
                 : t('button.scan.initial', 'Start scanning')
               : t('button.scan.error', 'Try again')}
@@ -100,6 +106,6 @@ const QrCodePage = () => {
       </>
     );
   });
-};
+});
 
 export default QrCodePage;

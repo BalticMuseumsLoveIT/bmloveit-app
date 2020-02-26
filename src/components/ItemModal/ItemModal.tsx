@@ -12,9 +12,10 @@ import { LayoutGrid, LayoutGridContent } from 'components/Layout/Layout.style';
 import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
 import { Error404, Error404Context } from 'components/Error404/Error404';
 import { Error500 } from 'components/Error500/Error500';
+import { EventStore } from 'utils/store/eventStore';
 import ReactModal from 'react-modal';
 import { withTranslation, WithTranslation } from 'react-i18next';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import React from 'react';
 import { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
@@ -23,10 +24,15 @@ import { em } from 'polished';
 interface Props
   extends WithTranslation,
     ThemeProps<DefaultTheme>,
-    RouteComponentProps {}
+    RouteComponentProps {
+  eventStore?: EventStore;
+}
 
+@inject('eventStore')
 @observer
 class ItemModal extends React.Component<Props> {
+  eventStore = this.props.eventStore!;
+
   store = new ItemModalStore({
     isOpen: false,
     onRequestClose: () => {
@@ -174,7 +180,17 @@ class ItemModal extends React.Component<Props> {
                         )}
 
                       {this.store.item.itemAudio && (
-                        <AudioPlayer controls id="audio_player">
+                        <AudioPlayer
+                          controls
+                          onEnded={async () =>
+                            this.eventStore &&
+                            (await this.eventStore.dispatchPlayAudio(
+                              this.store.item.itemId,
+                              this.store.item.itemAudio!.id,
+                            ))
+                          }
+                          id="audio_player"
+                        >
                           <source
                             src={getPrivateMediaURL(
                               this.store.item.itemAudio.file_url,
@@ -187,6 +203,13 @@ class ItemModal extends React.Component<Props> {
                       {this.store.item.itemVideo && (
                         <VideoPlayer
                           controls
+                          onEnded={async () =>
+                            this.eventStore &&
+                            (await this.eventStore.dispatchPlayVideo(
+                              this.store.item.itemId,
+                              this.store.item.itemVideo!.id,
+                            ))
+                          }
                           id="video_player"
                           src={getPrivateMediaURL(
                             this.store.item.itemVideo.file_url,

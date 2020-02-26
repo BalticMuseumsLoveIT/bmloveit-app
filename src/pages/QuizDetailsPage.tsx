@@ -5,16 +5,21 @@ import { QuizFooter } from 'components/QuizFooter/QuizFooter';
 import { Description, Title } from 'components/Page/Page.style';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
+import { EventStore } from 'utils/store/eventStore';
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface Props extends WithTranslation, RouteComponentProps<any> {}
+interface Props extends WithTranslation, RouteComponentProps<any> {
+  eventStore: EventStore;
+}
 
+@inject('eventStore')
 @observer
 class QuizPage extends React.Component<Props> {
+  eventStore = this.props.eventStore;
   quizDetailsStore = new QuizDetailsStore(true);
 
   async componentDidMount() {
@@ -25,6 +30,7 @@ class QuizPage extends React.Component<Props> {
     this.quizDetailsStore.setTReady(this.props.tReady);
 
     await this.quizDetailsStore.loadData(id);
+    await this.eventStore.dispatchViewItem(this.quizDetailsStore.parentItemId);
   }
 
   async componentDidUpdate(prevProps: Props) {

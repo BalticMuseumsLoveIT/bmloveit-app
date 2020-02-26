@@ -228,6 +228,7 @@ export enum ResourceTypeName {
 }
 
 export interface ResourceDataInterface {
+  id: number;
   name: string;
   type: string;
   type_name: ResourceTypeName;
@@ -269,7 +270,6 @@ export interface ItemInterface {
   name_translation: Array<CommonApiTranslationInterface>;
   name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
-  actions_list: Array<CommonActionInterface>;
   routes: Array<number>;
   x: number | null;
   y: number | null;
@@ -487,6 +487,27 @@ export interface TeamInterface {
   users: Array<TeamUserInterface>;
   avatar: ItemInterface | null;
   access_code: number;
+}
+
+// Events ----------------------------------------------------------------------
+
+export enum ActionType {
+  VIEW = 'view',
+  PLAY_AUDIO = 'play_audio',
+  PLAY_VIDEO = 'play_video',
+  ROUTE_SELECT = 'route_select',
+  AVATAR_SET = 'avatar_set',
+  LANGUAGE = 'language',
+  SCAN = 'scan',
+}
+
+export interface EventParams {
+  action_type: string;
+  description?: string;
+  item?: number;
+  route?: number;
+  item_resource?: number;
+  language?: number;
 }
 
 // Generic ---------------------------------------------------------------------

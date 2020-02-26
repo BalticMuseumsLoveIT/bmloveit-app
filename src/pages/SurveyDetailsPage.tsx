@@ -5,16 +5,21 @@ import { SurveyFooter } from 'components/SurveyFooter/SurveyFooter';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { Description, Title } from 'components/Page/Page.style';
 import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
+import { EventStore } from 'utils/store/eventStore';
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface Props extends WithTranslation, RouteComponentProps<any> {}
+interface Props extends WithTranslation, RouteComponentProps<any> {
+  eventStore: EventStore;
+}
 
+@inject('eventStore')
 @observer
 class SurveyDetailsPage extends Component<Props> {
+  eventStore = this.props.eventStore;
   surveyDetailsStore = new SurveyDetailsStore(true);
 
   async componentDidMount() {
@@ -23,6 +28,9 @@ class SurveyDetailsPage extends Component<Props> {
     } = this.props.match;
 
     await this.surveyDetailsStore.loadData(parseInt(id));
+    await this.eventStore.dispatchViewItem(
+      this.surveyDetailsStore.parentItemId,
+    );
   }
 
   async componentDidUpdate(prevProps: Props) {
