@@ -182,7 +182,13 @@ class ItemModal extends React.Component<Props> {
                       {this.store.item.itemAudio && (
                         <AudioPlayer
                           controls
-                          onEnded={() => this.eventStore.dispatchPlayAudio(1)}
+                          onEnded={async () =>
+                            this.eventStore &&
+                            (await this.eventStore.dispatchPlayAudio(
+                              this.store.item.itemId,
+                              this.store.item.itemAudio!.id,
+                            ))
+                          }
                           id="audio_player"
                         >
                           <source
@@ -197,7 +203,13 @@ class ItemModal extends React.Component<Props> {
                       {this.store.item.itemVideo && (
                         <VideoPlayer
                           controls
-                          onEnded={() => this.eventStore.dispatchPlayVideo(1)}
+                          onEnded={async () =>
+                            this.eventStore &&
+                            (await this.eventStore.dispatchPlayVideo(
+                              this.store.item.itemId,
+                              this.store.item.itemVideo!.id,
+                            ))
+                          }
                           id="video_player"
                           src={getPrivateMediaURL(
                             this.store.item.itemVideo.file_url,

@@ -228,6 +228,7 @@ export enum ResourceTypeName {
 }
 
 export interface ResourceDataInterface {
+  id: number;
   name: string;
   type: string;
   type_name: ResourceTypeName;
@@ -491,18 +492,17 @@ export interface TeamInterface {
 // Events ----------------------------------------------------------------------
 
 export enum ActionType {
-  VIEW = 1,
-  PLAY_AUDIO = 2,
-  PLAY_VIDEO = 3,
-  ROUTE_SELECT = 4,
-  AVATAR_SET = 5,
-  LANGUAGE = 6,
-  SCAN = 7,
-  PHOTO = 8,
+  VIEW = 'view',
+  PLAY_AUDIO = 'play_audio',
+  PLAY_VIDEO = 'play_video',
+  ROUTE_SELECT = 'route_select',
+  AVATAR_SET = 'avatar_set',
+  LANGUAGE = 'language',
+  SCAN = 'scan',
 }
 
 export interface EventParams {
-  action_type: number;
+  action_type: string;
   description?: string;
   item?: number;
   route?: number;

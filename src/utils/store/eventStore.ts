@@ -11,7 +11,6 @@ export class EventStore {
     });
   };
 
-  // TODO: Not working due to unspecified parameters
   dispatchSelectRoute = async (route: Required<EventParams>['route']) => {
     if (Number.isNaN(route)) return;
 
@@ -22,23 +21,27 @@ export class EventStore {
   };
 
   dispatchPlayVideo = async (
+    item: Required<EventParams>['item'],
     item_resource: Required<EventParams>['item_resource'],
   ) => {
     if (Number.isNaN(item_resource)) return;
 
     await Api.createEvent({
       action_type: ActionType.PLAY_VIDEO,
+      item: item,
       item_resource: item_resource,
     });
   };
 
   dispatchPlayAudio = async (
+    item: Required<EventParams>['item'],
     item_resource: Required<EventParams>['item_resource'],
   ) => {
     if (Number.isNaN(item_resource)) return;
 
     await Api.createEvent({
       action_type: ActionType.PLAY_AUDIO,
+      item: item,
       item_resource: item_resource,
     });
   };
