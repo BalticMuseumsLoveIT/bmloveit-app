@@ -110,6 +110,11 @@ export const ItemBranch = inject(
 
                 const imageResource = getResource(branch, resourceType);
 
+                const placeholder =
+                  itemStore.itemType === ItemType.AVATAR_CHOICE
+                    ? '/images/avatar-image-placeholder.svg'
+                    : '/images/branch-image-placeholder.svg';
+
                 const image =
                   imageResource && imageResource.file_url
                     ? getPrivateMediaURL(imageResource.file_url)
@@ -132,7 +137,7 @@ export const ItemBranch = inject(
                       <BranchButtonImage src={image} alt={name} />
                     ) : (
                       <BranchButtonPlaceholder>
-                        <BranchButtonPlaceholderImage src="/images/avatar-image-placeholder.svg" />
+                        <BranchButtonPlaceholderImage src={placeholder} />
                       </BranchButtonPlaceholder>
                     )}
                     <BranchButtonLabel>{name}</BranchButtonLabel>
@@ -143,10 +148,20 @@ export const ItemBranch = inject(
           ) : (
             <BranchChoiceDescription>
               <p>
-                {t(
-                  'error.noAvatarsFound',
-                  'No avatars was found for an item with a given ID',
-                )}
+                {(() => {
+                  switch (itemStore.itemType) {
+                    case ItemType.AVATAR_CHOICE:
+                      return t(
+                        'error.noAvatarsFound',
+                        'No avatars were found for an item with a given ID',
+                      );
+                    case ItemType.BRANCH:
+                      return t(
+                        'error.noBranchesFound',
+                        'No branch items were found',
+                      );
+                  }
+                })()}
               </p>
             </BranchChoiceDescription>
           )}
