@@ -1,8 +1,10 @@
 import { RouteInterface, RouteTypeInterface } from 'utils/interfaces';
-import { getTranslatedString } from 'utils/helpers';
+import { getPrivateMediaURL, getTranslatedString } from 'utils/helpers';
 import {
   DefaultList,
   DefaultListItemInfo,
+  Thumbnail,
+  ThumbnailPlaceholder,
 } from 'components/DefaultList/DefaultList.style';
 import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
 import { EventStore } from 'utils/store/eventStore';
@@ -16,11 +18,18 @@ interface RoutesGroupProps {
   type: RouteTypeInterface;
   routes: Array<RouteInterface>;
   attractions: (routeId: number) => number;
+  doesAnyRouteContainImage: boolean;
   eventStore?: EventStore;
 }
 
 export const RoutesGroup = inject('eventStore')(
-  ({ type, routes, attractions, eventStore }: RoutesGroupProps) => {
+  ({
+    type,
+    routes,
+    attractions,
+    eventStore,
+    doesAnyRouteContainImage,
+  }: RoutesGroupProps) => {
     const { t, ready } = useTranslation('area-routes-page');
 
     const localStore = useLocalStore(() => ({
@@ -51,6 +60,14 @@ export const RoutesGroup = inject('eventStore')(
               key={route.id}
               isMenuOpened={localStore.isMenuOpened}
             >
+              {doesAnyRouteContainImage &&
+                (route.logo_url.length > 0 ? (
+                  <Thumbnail src={getPrivateMediaURL(route.logo_url)} />
+                ) : (
+                  <ThumbnailPlaceholder
+                    src={'/images/default-list-placeholder.svg'}
+                  />
+                ))}
               <Link
                 to={`/route/${route.id}/map`}
                 onClick={async () =>
