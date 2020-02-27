@@ -18,6 +18,10 @@ export const ClipboardButton = styled.button`
     theme.colors.button.secondary.default.background};
   cursor: pointer;
   outline: none;
+  
+  &::-moz-focus-inner {
+    border: 0;
+  }
 
   &:hover {
     color: ${({ theme }) => theme.colors.button.secondary.hover.text};

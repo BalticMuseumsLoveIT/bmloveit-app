@@ -14,6 +14,10 @@ export const OutlineButton = styled(AppButton)`
     `1px solid ${theme.colors.button.outline.default.text}`};
   box-shadow: unset;
   outline: none;
+  
+  &::-moz-focus-inner {
+    border: 0;
+  }
 
   &:hover {
     background-color: ${({ theme, isDisabled }) =>
