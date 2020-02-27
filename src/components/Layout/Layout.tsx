@@ -33,8 +33,8 @@ export default class Layout extends React.Component<Props> {
         <GlobalStyle />
         <LayoutGrid>
           <CookieBar />
-          <MainMenu />
-          <Header isVisible={displayHeader} />
+          {displayHeader && <MainMenu />}
+          {displayHeader && <Header />}
           {children}
         </LayoutGrid>
       </ThemeProvider>
