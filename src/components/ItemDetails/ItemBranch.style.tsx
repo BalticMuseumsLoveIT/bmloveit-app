@@ -76,6 +76,10 @@ export const BranchButton = styled.button<BranchButtonProps>`
     outline: none;
   }
 
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
   &:last-child {
     margin-right: 0;
   }
