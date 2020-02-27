@@ -8,7 +8,7 @@ import React from 'react';
 export interface DefaultListItemProps extends DefaultListItemWrapperProps {
   children?: React.ReactNode;
   customHeaderImageSrc?: string;
-  onClick?: any;
+  onClick?: () => void;
 }
 
 export const DefaultListItem = ({
