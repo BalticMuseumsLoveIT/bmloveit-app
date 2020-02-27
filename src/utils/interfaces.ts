@@ -403,7 +403,7 @@ export interface AreaInterface {
   type_data: RouteTypeInterface;
   country: number;
   adress: string;
-  logo: string | null;
+  logo_url: string;
   name_translation: Array<CommonApiTranslationInterface>;
   name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
