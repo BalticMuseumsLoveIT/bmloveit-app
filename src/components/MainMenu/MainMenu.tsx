@@ -46,7 +46,7 @@ class MainMenu extends React.Component<Props> {
       <Wrapper isOpened={this.ui.nav.isOpened}>
         <LayoutGrid>
           <DummyLayoutGridCookie />
-          <DummyLayoutGridHeader isVisible={true} />
+          <DummyLayoutGridHeader />
           <LayoutGridContent>
             <Items
               items={this.ui.nav.items}
