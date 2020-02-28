@@ -1,5 +1,9 @@
 import { LoginButtonPropsInterface } from 'utils/interfaces';
-import LoginButton from 'components/Buttons/LoginButtons/LoginButton.style';
+import LoginButton, {
+  Icon,
+  Label,
+  Wrapper,
+} from 'components/Buttons/LoginButtons/LoginButton.style';
 import React from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { useTranslation } from 'react-i18next';
@@ -27,11 +31,15 @@ const FacebookButton = ({ onSuccess, onFailed }: LoginButtonPropsInterface) => {
       onFailure={handleErrorResponse}
       render={(renderProps: any) => (
         <LoginButton
-          iconUrl={'/images/F_icon.svg'}
           onClick={renderProps.onClick}
           isDisabled={renderProps.isDisabled}
         >
-          {t('button.signInWithFacebook.label', 'Facebook Sign In')}
+          <Wrapper>
+            <Icon src={'/images/F_icon.svg'} />
+            <Label>
+              {t('button.signInWithFacebook.label', 'Facebook Sign In')}
+            </Label>
+          </Wrapper>
         </LoginButton>
       )}
     />

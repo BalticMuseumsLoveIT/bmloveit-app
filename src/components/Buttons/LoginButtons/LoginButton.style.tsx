@@ -1,51 +1,76 @@
 import { ButtonProps } from 'utils/interfaces';
-import { defaultBoxShadow } from 'components/Page/Page.style';
+import {
+  defaultBoxShadow,
+  DefaultFontSize,
+  SubtitleFontStyle,
+} from 'components/Page/Page.style';
 import styled from 'styled-components';
+import SVG from 'react-inlinesvg';
+import { rem } from 'polished';
+
+export const Icon = styled(SVG)`
+  display: block;
+  width: 1.5em;
+  height: 1.5em;
+  margin: 1em;
+
+  path.person {
+    fill: ${({ theme: { colors } }) => colors.icon.normal};
+  }
+`;
+
+export const Label = styled.span`
+  display: block;
+
+  ${SubtitleFontStyle};
+  margin: 1.25em 1em 1.25em 0;
+
+  text-align: left;
+  line-height: 1.5;
+`;
+
+export const Wrapper = styled.span`
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+`;
 
 interface LoginButtonProps extends ButtonProps {
-  iconUrl: string;
+  iconUrl?: string;
 }
 
 const LoginButton = styled.button<LoginButtonProps>`
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  width: 88%;
-  max-width: 360px;
-  padding: 24px;
 
-  background-color: ${({ theme, isDisabled }) =>
-    isDisabled
-      ? theme.colors.button.secondary.disabled.background
-      : theme.colors.button.secondary.default.background};
+  ${DefaultFontSize};
+
+  width: 100%;
+  max-width: ${rem(360)};
+
+  display: block;
+  margin: 1em auto;
+  padding: 0;
 
   color: ${({ theme, isDisabled }) =>
     isDisabled
       ? theme.colors.button.secondary.disabled.text
       : theme.colors.button.secondary.default.text};
 
-  font-family: ${({ theme }) => theme.fonts.subheader.fontFamily};
-  font-weight: ${({ theme }) => theme.fonts.subheader.fontWeight};
-  font-size: 1em;
+  background-color: ${({ theme, isDisabled }) =>
+    isDisabled
+      ? theme.colors.button.secondary.disabled.background
+      : theme.colors.button.secondary.default.background};
+
   border: none;
-  border-radius: 8px;
-  margin-left: auto;
-  margin-right: auto;
-  cursor: ${({ isDisabled }) => (isDisabled ? `default` : 'pointer')};
+  border-radius: 0.5em;
+
   box-shadow: ${defaultBoxShadow};
-  margin-top: 16px;
+
+  cursor: ${({ isDisabled }) => (isDisabled ? `default` : 'pointer')};
   outline: none;
 
-  &:before {
-    content: ${({ iconUrl }) => (iconUrl ? `url(${iconUrl})` : '')};
-    width: 24px;
-    height: 24px;
-    margin-right: 24px;
-  }
-
-  &:last-of-type {
-    margin-bottom: 16px;
+  &::-moz-focus-inner {
+    border: 0;
   }
 
   &:hover {

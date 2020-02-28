@@ -1,5 +1,7 @@
 import { LoginButtonPropsInterface } from 'utils/interfaces';
-import LoginButton from 'components/Buttons/LoginButtons/LoginButton.style';
+import LoginButton, {
+  Icon, Label, Wrapper,
+} from 'components/Buttons/LoginButtons/LoginButton.style';
 import GoogleLogin from 'react-google-login';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,11 +29,13 @@ const GoogleButton = ({ onSuccess, onFailed }: LoginButtonPropsInterface) => {
       autoLoad={false}
       render={renderProps => (
         <LoginButton
-          iconUrl={'/images/Google__G__Logo.svg'}
           onClick={renderProps.onClick}
           isDisabled={renderProps.disabled}
         >
-          {t('button.signInWithGoogle.label', 'Google Sign In')}
+          <Wrapper>
+            <Icon src={'/images/Google__G__Logo.svg'} />
+            <Label>{t('button.signInWithGoogle.label', 'Google Sign In')}</Label>
+          </Wrapper>
         </LoginButton>
       )}
     />
