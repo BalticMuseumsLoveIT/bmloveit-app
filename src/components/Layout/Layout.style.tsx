@@ -12,7 +12,15 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     margin: 0;
-    background: ${props => props.theme.colors.background.app};
+    transition: background-color 100ms linear;
+    ${({ theme: { isMenuOpened, colors } }) =>
+      isMenuOpened
+        ? css`
+            background-color: ${colors.background.menu};
+          `
+        : css`
+            background-color: ${colors.background.app};
+          `}
   }
 
   .badge-tooltip {
@@ -34,15 +42,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 `;
 
-export const LayoutGrid = styled.div`
-  width: 100%;
-  max-width: 45em;
-  min-height: 100%;
-  margin: auto;
-  display: grid;
-  grid-template-rows: auto auto 1fr auto;
-`;
-
 export const LayoutGridCookie = styled.div`
   grid-row: 1 / span 1;
 `;
@@ -51,13 +50,21 @@ export const LayoutGridHeader = styled.div`
   grid-row: 2 / span 1;
 `;
 
+export const LayoutMainMenu = styled.div`
+  display: grid;
+  grid-template-rows: 1fr auto;
+
+  grid-row: 3 / span 1;
+  ${DefaultGridPadding}
+`;
+
 export interface LayoutGridContentProps {
   backgroundImage?: string;
   backgroundColor?: string;
 }
 
 export const LayoutGridContent = styled.div<LayoutGridContentProps>`
-  grid-row: 3 / span 1;
+  grid-row: 4 / span 1;
   ${DefaultGridPadding}
 
   ${props =>
@@ -79,6 +86,39 @@ interface LayoutGridFooterProps {
 }
 
 export const LayoutGridFooter = styled.div<LayoutGridFooterProps>`
-  grid-row: 4 / span 1;
-  ${props => props.useDefaultPadding && css`${DefaultGridPadding}`}
+  grid-row: 5 / span 1;
+  ${props =>
+    props.useDefaultPadding &&
+    css`
+      ${DefaultGridPadding}
+    `}
+`;
+
+export interface LayoutGridProps {
+  isMenuOpened?: boolean;
+}
+
+export const LayoutGrid = styled.div<LayoutGridProps>`
+  width: 100%;
+  max-width: 45em;
+  min-height: 100%;
+  margin: auto;
+  display: grid;
+
+  ${({ isMenuOpened }: LayoutGridProps) =>
+    isMenuOpened
+      ? css`
+          grid-template-rows: auto auto 1fr auto auto;
+
+          ${LayoutGridContent}, ${LayoutGridFooter} {
+            display: none;
+          }
+        `
+      : css`
+          grid-template-rows: auto auto auto 1fr auto;
+
+          ${LayoutMainMenu} {
+            display: none;
+          }
+        `}
 `;

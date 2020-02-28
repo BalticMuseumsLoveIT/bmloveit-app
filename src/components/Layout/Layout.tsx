@@ -1,10 +1,11 @@
 import Header from 'components/Header/Header';
 import CookieBar from 'components/CookieBar/CookieBar';
 import { SiteStore } from 'utils/store/siteStore';
+import { UiStore } from 'utils/store/uiStore';
 import { GlobalStyle, LayoutGrid } from 'components/Layout/Layout.style';
 import MainMenu from 'components/MainMenu/MainMenu';
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import { DefaultTheme, ThemeProvider } from 'styled-components';
 import { observer, inject } from 'mobx-react';
 
 interface Props {
@@ -14,9 +15,10 @@ interface Props {
 
 interface InjectedProps extends Props {
   siteStore: SiteStore;
+  uiStore: UiStore;
 }
 
-@inject('siteStore')
+@inject('siteStore', 'uiStore')
 @observer
 export default class Layout extends React.Component<Props> {
   get injected() {
@@ -24,17 +26,24 @@ export default class Layout extends React.Component<Props> {
   }
 
   siteStore = this.injected.siteStore;
+  uiStore = this.injected.uiStore;
+
+  theme = (): DefaultTheme => {
+    const theme = this.siteStore.theme;
+    theme.isMenuOpened = this.uiStore.nav.isOpened;
+    return theme;
+  };
 
   render() {
     const { displayHeader, children } = this.props;
 
     return (
-      <ThemeProvider theme={this.siteStore.theme}>
+      <ThemeProvider theme={() => this.theme()}>
         <GlobalStyle />
         <LayoutGrid>
           <CookieBar />
-          {displayHeader && <MainMenu />}
           {displayHeader && <Header />}
+          {displayHeader && <MainMenu />}
           {children}
         </LayoutGrid>
       </ThemeProvider>

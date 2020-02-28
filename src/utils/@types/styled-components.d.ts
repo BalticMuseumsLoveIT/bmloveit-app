@@ -11,6 +11,8 @@ declare module 'styled-components' {
     fonts: ThemeFontsInterface;
     colors: ThemeColorsInterface;
 
+    isMenuOpened: boolean;
+
     // Old properties
 
     color?: any;

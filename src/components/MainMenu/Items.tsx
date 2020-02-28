@@ -42,6 +42,12 @@ export const Items = observer(
             {isSubmenu && <NextIcon src="/images/chevron_right-24px.svg" />}
           </ListItem>
         ))}
+        {items.map((item: ItemInterface) => (
+          <ListItem isSubmenu={isSubmenu} key={item.id}>
+            <Item item={item} openSubMenu={openSubMenu} closeMenu={closeMenu} />
+            {isSubmenu && <NextIcon src="/images/chevron_right-24px.svg" />}
+          </ListItem>
+        ))}
       </List>
     );
   },

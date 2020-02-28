@@ -158,6 +158,8 @@ export const defaultTheme: DefaultTheme = {
   fonts: defaultFonts,
   colors: defaultColors,
 
+  isMenuOpened: false,
+
   // Old properties left for backward compatibility
 
   color: {
