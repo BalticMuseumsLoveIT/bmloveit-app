@@ -3,7 +3,7 @@ import {
   ParagraphFontStyle,
   SmallerFontSize,
 } from 'components/Page/Page.style';
-import styled, { createGlobalStyle, css } from 'styled-components';
+import styled, { createGlobalStyle, css, keyframes } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   html, body, #root {
@@ -50,9 +50,19 @@ export const LayoutGridHeader = styled.div`
   grid-row: 2 / span 1;
 `;
 
+const fadeIn = keyframes`
+  0% {
+    opacity:0;
+}
+  100% {
+    opacity:1;
+}
+`;
+
 export const LayoutMainMenu = styled.div`
   display: grid;
   grid-template-rows: 1fr auto;
+  animation: ${fadeIn} 500ms;
 
   grid-row: 3 / span 1;
   ${DefaultGridPadding}
@@ -65,21 +75,20 @@ export interface LayoutGridContentProps {
 
 export const LayoutGridContent = styled.div<LayoutGridContentProps>`
   grid-row: 4 / span 1;
+  ${DefaultGridPadding}
 
-  ${props =>
-  props.backgroundImage &&
-  css`
-      background: transparent url(${props.backgroundImage}) 50% 50% no-repeat;
+  ${({ backgroundImage }) =>
+    backgroundImage &&
+    css`
+      background: transparent url(${backgroundImage}) 50% 50% no-repeat;
       background-size: cover;
     `}
 
-  ${props =>
-  props.backgroundColor &&
-  css`
-      background-color: ${props.backgroundColor};
+  ${({ backgroundColor }) =>
+    backgroundColor &&
+    css`
+      background-color: ${backgroundColor};
     `}
-  
-  ${DefaultGridPadding};
 `;
 
 interface LayoutGridFooterProps {
