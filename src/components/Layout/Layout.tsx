@@ -29,9 +29,9 @@ export default class Layout extends React.Component<Props> {
   uiStore = this.injected.uiStore;
 
   theme = (): DefaultTheme => {
-    const theme = this.siteStore.theme;
-    theme.isMenuOpened = this.uiStore.nav.isOpened;
-    return theme;
+    return Object.assign(this.siteStore.theme, {
+      isMenuOpened: this.uiStore.nav.isOpened,
+    });
   };
 
   render() {
@@ -40,7 +40,7 @@ export default class Layout extends React.Component<Props> {
     return (
       <ThemeProvider theme={() => this.theme()}>
         <GlobalStyle />
-        <LayoutGrid>
+        <LayoutGrid isMenuOpened={this.uiStore.nav.isOpened}>
           <CookieBar />
           {displayHeader && <Header />}
           {displayHeader && <MainMenu />}

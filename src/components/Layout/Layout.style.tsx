@@ -65,20 +65,21 @@ export interface LayoutGridContentProps {
 
 export const LayoutGridContent = styled.div<LayoutGridContentProps>`
   grid-row: 4 / span 1;
-  ${DefaultGridPadding}
 
   ${props =>
-    props.backgroundImage &&
-    css`
+  props.backgroundImage &&
+  css`
       background: transparent url(${props.backgroundImage}) 50% 50% no-repeat;
       background-size: cover;
     `}
 
   ${props =>
-    props.backgroundColor &&
-    css`
+  props.backgroundColor &&
+  css`
       background-color: ${props.backgroundColor};
     `}
+  
+  ${DefaultGridPadding};
 `;
 
 interface LayoutGridFooterProps {
@@ -104,8 +105,7 @@ export const LayoutGrid = styled.div<LayoutGridProps>`
   min-height: 100%;
   margin: auto;
   display: grid;
-
-  ${({ isMenuOpened }: LayoutGridProps) =>
+  ${({ theme: { isMenuOpened } }) =>
     isMenuOpened
       ? css`
           grid-template-rows: auto auto 1fr auto auto;
