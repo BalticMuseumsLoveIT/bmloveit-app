@@ -33,6 +33,7 @@ export const DefaultListItem = ({
   return (
     <DefaultListItemWrapper
       isMenuOpened={isMenuOpened}
+      isDisabled={isDisabled}
       isHeader={isHeader}
       hasThumbnail={
         (typeof hasThumbnail !== 'undefined' && hasThumbnail) ||
@@ -47,7 +48,7 @@ export const DefaultListItem = ({
       {...rest}
     >
       {children}
-      <ActionIcon src={imageSrc} />
+      {imageSrc && <ActionIcon src={imageSrc} />}
     </DefaultListItemWrapper>
   );
 };

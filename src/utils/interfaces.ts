@@ -1,3 +1,8 @@
+export enum RouteStart {
+  MAP = 'M',
+  ITEM = 'F',
+}
+
 export interface RouteInterface {
   id: number;
   name: string;
@@ -10,6 +15,9 @@ export interface RouteInterface {
   areas_data: Array<AreaInterface>;
   locations_data: Array<LocationInterface>;
   items_data: Array<ItemInterface>;
+  route_start: RouteStart;
+  map_item: number | null;
+  first_item: number | null;
   name_translation: Array<CommonApiTranslationInterface>;
   name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
