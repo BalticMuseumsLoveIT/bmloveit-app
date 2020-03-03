@@ -67,18 +67,19 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
       ? theme.colors.list.header.default.text
       : theme.colors.list.item.default.text};
 
-  cursor: ${({ isDisabled }) => (isDisabled === true ? 'default' : 'pointer')};
-
-  &:hover {
-    background-color: ${({ theme, isHeader }) =>
-      isHeader
-        ? theme.colors.list.header.hover.background
-        : theme.colors.list.item.hover.background};
-    color: ${({ theme, isHeader }) =>
-      isHeader
-        ? theme.colors.list.header.hover.text
-        : theme.colors.list.item.hover.text};
-  }
+  ${({ isDisabled, isHeader, theme }) =>
+    !isDisabled &&
+    css`
+      cursor: pointer;
+      &:hover {
+        background-color: ${isHeader
+          ? theme.colors.list.header.hover.background
+          : theme.colors.list.item.hover.background};
+        color: ${isHeader
+          ? theme.colors.list.header.hover.text
+          : theme.colors.list.item.hover.text};
+      }
+    `}
 
   & > span {
     grid-column: 2 / span 1;
@@ -97,6 +98,15 @@ export const DefaultListItemWrapper = styled.li<DefaultListItemWrapperProps>`
     padding: 1em;
     min-width: 100%;
     z-index: 1;
+
+    ${({ isDisabled }) => {
+      return (
+        isDisabled &&
+        css`
+          cursor: default;
+        `
+      );
+    }};
 
     font-size: 1em;
     line-height: 1.5;
