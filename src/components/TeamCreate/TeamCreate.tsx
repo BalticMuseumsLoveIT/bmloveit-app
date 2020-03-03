@@ -87,7 +87,7 @@ export const TeamCreateForm = ({ onSubmit }: TeamCreateProps) => {
             <ErrorMessage component={InputError} name="teamName" />
           </InputContainer>
           <div>
-            {status && <p>{status()}</p>}
+            {status && <InputError isCentered={true}>{status()}</InputError>}
             <AppButton type="submit" isThin={true}>
               {t('form.button.create.text', 'Create')}
             </AppButton>

@@ -42,6 +42,10 @@ export const AppButton = styled.button<ButtonProps>`
   cursor: ${({ isDisabled }) => (isDisabled ? 'default' : 'pointer')};
   outline: none;
 
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
   &:hover {
     background-color: ${({ theme, isDisabled }) =>
       isDisabled

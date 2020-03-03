@@ -39,6 +39,10 @@ export const BackButton = styled.button`
   background: transparent;
   display: block;
 
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
   font-size: 1em;
   padding: 1em;
 `;

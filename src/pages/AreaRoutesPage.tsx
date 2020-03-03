@@ -68,6 +68,9 @@ class AreaRoutesPage extends React.Component<Props> {
                 type={type}
                 routes={routes}
                 attractions={this.areaRoutesPageStore.attractionsByRoute}
+                doesAnyRouteContainImage={
+                  this.areaRoutesPageStore.doesAnyRouteContainImage
+                }
               />
             ) : null;
           })}

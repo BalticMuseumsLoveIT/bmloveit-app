@@ -10,7 +10,7 @@ import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import { SiteStore } from 'utils/store/siteStore';
 import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
 import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
-import { CenterContent, Message } from 'components/Page/Page.style';
+import { Message } from 'components/Page/Page.style';
 import LoginPageStore from 'utils/store/LoginPageStore';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import React from 'react';
@@ -45,36 +45,34 @@ class LoginPage extends React.Component<Props> {
           <title>{this.props.t('page.title', 'Login')}</title>
         </Helmet>
         <Content backgroundImage={this.siteStore.image || undefined}>
-          <CenterContent>
-            <MuseumLogo type={LogoType.WELCOME} />
-            {this.loginPageStore.isOAuthFailed === true && (
-              <Message isError={this.loginPageStore.isOAuthFailed}>
-                {
-                  <ItemHtmlParser
-                    html={this.props.t(
-                      'content.message.error',
-                      'Ups, something went wrong.<br>Try again!',
-                    )}
-                  />
-                }
-              </Message>
-            )}
-            {!this.authStore.isLoggedIn ? (
-              <>
-                <GoogleButton
-                  onSuccess={this.login}
-                  onFailed={this._handleError}
+          <MuseumLogo type={LogoType.WELCOME} />
+          {this.loginPageStore.isOAuthFailed && (
+            <Message isError={this.loginPageStore.isOAuthFailed}>
+              {
+                <ItemHtmlParser
+                  html={this.props.t(
+                    'content.message.error',
+                    'Ups, something went wrong.<br>Try again!',
+                  )}
                 />
-                <FacebookButton
-                  onSuccess={this.login}
-                  onFailed={this._handleError}
-                />
-                <GuestButton loginAsGuest={this.login} />
-              </>
-            ) : (
-              <Redirect to={this.WELCOME_PAGE} />
-            )}
-          </CenterContent>
+              }
+            </Message>
+          )}
+          {!this.authStore.isLoggedIn ? (
+            <>
+              <GoogleButton
+                onSuccess={this.login}
+                onFailed={this._handleError}
+              />
+              <FacebookButton
+                onSuccess={this.login}
+                onFailed={this._handleError}
+              />
+              <GuestButton loginAsGuest={this.login} />
+            </>
+          ) : (
+            <Redirect to={this.WELCOME_PAGE} />
+          )}
         </Content>
         <LayoutGridFooter>
           <SponsorLogotype />

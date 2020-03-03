@@ -15,6 +15,10 @@ export const Button = styled.button`
   width: ${em(24)};
   height: ${em(24)};
   z-index: 11;
+
+  &::-moz-focus-inner {
+    border: 0;
+  }
 `;
 
 interface SwitchInnerProps {

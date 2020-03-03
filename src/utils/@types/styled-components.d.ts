@@ -11,9 +11,6 @@ declare module 'styled-components' {
     fonts: ThemeFontsInterface;
     colors: ThemeColorsInterface;
 
-    // Old properties
-
-    color?: any;
-    media?: any;
+    isMenuOpened: boolean;
   }
 }

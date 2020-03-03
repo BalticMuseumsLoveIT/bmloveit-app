@@ -2,15 +2,10 @@ import { UiStore } from 'utils/store/uiStore';
 import Api from 'utils/api';
 import { ItemKind, ItemTag } from 'utils/interfaces';
 import {
-  Wrapper,
-  DummyLayoutGridHeader,
-  DummyLayoutGridCookie,
+  MainMenuContent,
+  MainMenuFooter,
 } from 'components/MainMenu/MainMenu.style';
-import {
-  LayoutGrid,
-  LayoutGridContent,
-  LayoutGridFooter,
-} from 'components/Layout/Layout.style';
+import { LayoutMainMenu } from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import { StaticLinks } from 'components/MainMenu/Links';
 import { Items } from 'components/MainMenu/Items';
@@ -43,30 +38,26 @@ class MainMenu extends React.Component<Props> {
 
   render() {
     return (
-      <Wrapper isOpened={this.ui.nav.isOpened}>
-        <LayoutGrid>
-          <DummyLayoutGridCookie />
-          <DummyLayoutGridHeader isVisible={true} />
-          <LayoutGridContent>
-            <Items
-              items={this.ui.nav.items}
-              ancestors={this.ui.nav.ancestors}
+      <LayoutMainMenu>
+        <MainMenuContent>
+          <Items
+            items={this.ui.nav.items}
+            ancestors={this.ui.nav.ancestors}
+            closeMenu={this.ui.nav.close}
+            openParentMenu={this.ui.nav.openParentMenu}
+            openSubMenu={this.ui.nav.openSubMenu}
+          />
+          {!this.ui.nav.isSubmenu && (
+            <StaticLinks
+              links={this.ui.nav.links}
               closeMenu={this.ui.nav.close}
-              openParentMenu={this.ui.nav.openParentMenu}
-              openSubMenu={this.ui.nav.openSubMenu}
             />
-            {!this.ui.nav.isSubmenu && (
-              <StaticLinks
-                links={this.ui.nav.links}
-                closeMenu={this.ui.nav.close}
-              />
-            )}
-          </LayoutGridContent>
-          <LayoutGridFooter>
-            <SponsorLogotype />
-          </LayoutGridFooter>
-        </LayoutGrid>
-      </Wrapper>
+          )}
+        </MainMenuContent>
+        <MainMenuFooter>
+          <SponsorLogotype />
+        </MainMenuFooter>
+      </LayoutMainMenu>
     );
   }
 }

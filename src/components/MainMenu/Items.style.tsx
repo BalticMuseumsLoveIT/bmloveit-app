@@ -80,10 +80,10 @@ export const ListItem = styled.li<ListItemProps>`
           border-radius: 0.5em;
           box-shadow: ${defaultBoxShadow};
           width: 49%;
-          margin-bottom: 2%;
+          margin-top: 2%;
 
-          &:nth-last-child(-n + 2) {
-            margin-bottom: 0;
+          &:nth-child(-n + 2) {
+            margin-top: 0;
           }
 
           box-sizing: border-box;

@@ -19,18 +19,25 @@ export const LanguageSwitch = inject('eventStore')(
     const localStore = useLocalStore(() => ({
       isMenuOpened: false,
 
-      toggleMenu: action(() => {
-        localStore.isMenuOpened = !localStore.isMenuOpened;
+      closeMenu: action(() => {
+        localStore.isMenuOpened = false;
+      }),
+
+      openMenu: action(() => {
+        localStore.isMenuOpened = true;
       }),
     }));
 
     const handleClick = async (lang: string, id: number) => {
       if (localStore.isMenuOpened) {
-        await i18n.changeLanguage(lang);
-        eventStore && (await eventStore.dispatchLanguageChange(id));
+        try {
+          await i18n.changeLanguage(lang);
+          localStore.closeMenu();
+          await eventStore!.dispatchLanguageChange(id);
+        } catch (e) {}
+      } else {
+        localStore.openMenu();
       }
-
-      localStore.toggleMenu();
     };
 
     return useObserver(() => {

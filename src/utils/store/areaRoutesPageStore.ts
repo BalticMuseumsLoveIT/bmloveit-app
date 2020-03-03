@@ -7,7 +7,7 @@ import {
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
-import { action, autorun, observable, when } from 'mobx';
+import { action, autorun, computed, observable, when } from 'mobx';
 import { createTransformer } from 'mobx-utils';
 
 export enum PageState {
@@ -46,6 +46,12 @@ export default class AreaRoutesPageStore {
     if (manageContentState) {
       autorun(this._handleContentState);
     }
+  }
+
+  @computed get doesAnyRouteContainImage(): boolean {
+    return this.routesData.length
+      ? this.routesData.some(routeData => routeData.logo_url.length > 0)
+      : false;
   }
 
   @action loadData = async (areaId: number) => {

@@ -1,10 +1,12 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
 import AreaPageStore from 'utils/store/areaListPageStore';
-import { getTranslatedString } from 'utils/helpers';
+import { getPrivateMediaURL, getTranslatedString } from 'utils/helpers';
 import {
   DefaultList,
   DefaultListItemInfo,
+  Thumbnail,
+  ThumbnailPlaceholder,
 } from 'components/DefaultList/DefaultList.style';
 import Steps from 'components/Steps/Steps';
 import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
@@ -72,6 +74,14 @@ class AreaListPage extends React.Component<Props> {
           <DefaultList>
             {this.areaListPageStore.areaData.map(area => (
               <DefaultListItem key={area.id}>
+                {this.areaListPageStore.doesAnyAreaContainImage &&
+                  (area.logo_url.length > 0 ? (
+                    <Thumbnail src={getPrivateMediaURL(area.logo_url)} />
+                  ) : (
+                    <ThumbnailPlaceholder
+                      src={'/images/default-list-placeholder.svg'}
+                    />
+                  ))}
                 <Link to={`/area/${area.id}/routes`}>
                   {getTranslatedString(
                     area.name_full,

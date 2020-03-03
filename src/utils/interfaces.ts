@@ -5,9 +5,9 @@ export interface RouteInterface {
   description: string;
   type: number;
   type_data: RouteTypeInterface;
+  logo_url: string;
   areas: Array<number>;
   areas_data: Array<AreaInterface>;
-  locations: Array<number>;
   locations_data: Array<LocationInterface>;
   items_data: Array<ItemInterface>;
   name_translation: Array<CommonApiTranslationInterface>;
@@ -403,7 +403,7 @@ export interface AreaInterface {
   type_data: RouteTypeInterface;
   country: number;
   adress: string;
-  logo: string | null;
+  logo_url: string;
   name_translation: Array<CommonApiTranslationInterface>;
   name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;

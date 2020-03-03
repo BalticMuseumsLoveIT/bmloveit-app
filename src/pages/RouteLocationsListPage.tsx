@@ -98,12 +98,12 @@ class RouteLocationsListPage extends React.Component<Props> {
                   isDisabled={isNaN(firstScreenId)}
                   hasThumbnail={doesAnyLocationContainImage}
                 >
-                  {doesAnyLocationContainImage && iconURL ? (
-                    <Thumbnail src={iconURL} />
-                  ) : (
-                    <ThumbnailPlaceholder src="/images/default-list-placeholder.svg" />
-                  )}
-
+                  {doesAnyLocationContainImage &&
+                    (iconURL ? (
+                      <Thumbnail src={iconURL} />
+                    ) : (
+                      <ThumbnailPlaceholder src="/images/default-list-placeholder.svg" />
+                    ))}
                   <Link
                     to={isNaN(firstScreenId) ? '#' : `/item/${firstScreenId}`}
                   >

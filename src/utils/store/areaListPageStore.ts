@@ -67,6 +67,12 @@ export default class AreaListPageStore {
     return this.areaData.length ? this.areaData[0].id : NaN;
   }
 
+  @computed get doesAnyAreaContainImage(): boolean {
+    return this.areaData.length
+      ? this.areaData.some(areaData => areaData.logo_url.length > 0)
+      : false;
+  }
+
   routesAmount = createTransformer((areaId: number) => {
     return this.routesData.reduce(
       (amount, route) =>

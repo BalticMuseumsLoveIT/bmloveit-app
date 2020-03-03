@@ -16,14 +16,11 @@ import AppHeader, {
 } from './Header.style';
 
 interface HeaderProps extends RouteComponentProps {
-  isVisible?: boolean;
   className?: string;
 }
 
 class Header extends React.Component<HeaderProps> {
   render() {
-    if (!this.props.isVisible) return null;
-
     return (
       <LayoutGridHeader className={this.props.className}>
         <AppHeader>

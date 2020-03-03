@@ -20,6 +20,11 @@ export const FooterButton = styled.button<ButtonProps>`
   align-items: center;
   justify-content: center;
 
+  outline: none;
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
   ${SubtitleFontStyle};
   ${SmallerFontSize};
   text-align: center;
