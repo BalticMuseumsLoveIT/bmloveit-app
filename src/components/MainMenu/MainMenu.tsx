@@ -1,6 +1,5 @@
 import { UiStore } from 'utils/store/uiStore';
 import Api from 'utils/api';
-import { ItemKind, ItemTag } from 'utils/interfaces';
 import {
   MainMenuContent,
   MainMenuFooter,
@@ -9,6 +8,7 @@ import { LayoutMainMenu } from 'components/Layout/Layout.style';
 import { SponsorLogotype } from 'components/SponsorLogotype/SponsorLogotype';
 import { StaticLinks } from 'components/MainMenu/Links';
 import { Items } from 'components/MainMenu/Items';
+import { patch } from 'utils/helpers';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 
@@ -28,12 +28,11 @@ class MainMenu extends React.Component<Props> {
   ui = this.injected.uiStore;
 
   componentDidMount = async () => {
-    const menuItems = await Api.getItem({
-      kind__name: ItemKind.MENU,
-      item_tags__tag__name: ItemTag.MAIN,
-    });
+    const menuItems = await Api.getAppMenu();
 
-    if (menuItems.length > 0) this.ui.nav.initMenu(menuItems[0]);
+    if (menuItems.length > 0) {
+      this.ui.nav.initMenu(patch({ items: menuItems, id: 0 }).items);
+    }
   };
 
   render() {

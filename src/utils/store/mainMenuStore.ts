@@ -1,5 +1,4 @@
-import { ItemInterface, ItemKind, ItemType } from 'utils/interfaces';
-import Api from 'utils/api';
+import { MainMenuPatchedInterface } from 'utils/interfaces';
 import { StaticLinkInterface } from 'components/MainMenu/Links';
 import { action, computed, observable } from 'mobx';
 import React from 'react';
@@ -11,7 +10,22 @@ export enum MainMenuState {
 }
 
 export default class MainMenuStore {
-  private _defaultMenu: ItemInterface | null = null;
+  private _defaultMenu: Array<MainMenuPatchedInterface> = [];
+
+  private _getSubmenu = (
+    items: Array<MainMenuPatchedInterface>,
+    id: number,
+  ): Array<MainMenuPatchedInterface> => {
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].id === id) {
+        return items[i].child_menus_data;
+      } else if (items[i].child_menus_data.length > 0) {
+        return this._getSubmenu(items[i].child_menus_data, id);
+      }
+    }
+
+    return [];
+  };
 
   @observable links: Array<StaticLinkInterface> = [
     {
@@ -26,28 +40,23 @@ export default class MainMenuStore {
 
   @observable state: MainMenuState = MainMenuState.CLOSED;
 
-  @observable menu: ItemInterface | null = null;
+  @observable menu: Array<MainMenuPatchedInterface> = [];
 
   @observable ancestors: Array<number> = [];
 
-  @action initMenu = (menu: ItemInterface) => {
+  @action initMenu = (menu: Array<MainMenuPatchedInterface>) => {
     const success = this.setMenu(menu);
 
     if (success) {
       this._defaultMenu = menu;
 
       this.clearAncestors();
-      this.pushAncestor(menu.id);
+      this.pushAncestor(-1);
     }
   };
 
-  @action setMenu = (menu: ItemInterface): boolean => {
-    if (
-      menu.kind_data &&
-      menu.kind_data.name === ItemKind.MENU &&
-      menu.type_data &&
-      menu.type_data.name === ItemType.DEFAULT
-    ) {
+  @action setMenu = (menu: Array<MainMenuPatchedInterface>): boolean => {
+    if (menu.length > 0) {
       this.menu = menu;
       return true;
     } else {
@@ -55,14 +64,13 @@ export default class MainMenuStore {
     }
   };
 
-  @action loadMenu = async (id: number): Promise<boolean> => {
-    const menuItems = await Api.getItem({
-      id: id,
-      kind__name: ItemKind.MENU,
-      type__name: ItemType.DEFAULT,
-    });
+  @action loadMenu = (id: number): boolean => {
+    if (Number.isNaN(id)) return false;
 
-    return menuItems.length > 0 ? this.setMenu(menuItems[0]) : false;
+    const menuItems: Array<MainMenuPatchedInterface> =
+      id >= 0 ? this._getSubmenu(this._defaultMenu, id) : this._defaultMenu;
+
+    return menuItems.length > 0 ? this.setMenu(menuItems) : false;
   };
 
   @action setState = (state: MainMenuState) => {
@@ -103,35 +111,29 @@ export default class MainMenuStore {
    * @param { React.SyntheticEvent } e - Event
    * @param { number } id - Id of a sub menu
    */
-  @action openSubMenu = async (e: React.SyntheticEvent, id: number) => {
-    const isMenuLoaded = await this.loadMenu(id);
-    if (isMenuLoaded) this.pushAncestor(this.menu!.id);
+  @action openSubMenu = (e: React.SyntheticEvent, id: number) => {
+    const isMenuLoaded = this.loadMenu(id);
+    if (isMenuLoaded) this.pushAncestor(id);
   };
 
   /**
    * Open parent menu
    */
-  @action openParentMenu = async () => {
+  @action openParentMenu = () => {
     if (!this.isSubmenu) return;
 
-    const isMenuLoaded = await this.loadMenu(this.parentId);
+    const isMenuLoaded = this.loadMenu(this.parentId);
     if (isMenuLoaded) this.popAncestor();
   };
 
   @computed get parentId(): number {
     return this.ancestors.length > 1
       ? this.ancestors[this.ancestors.length - 2]
-      : -1;
+      : NaN;
   }
 
-  @computed get items(): Array<ItemInterface> {
-    return (
-      (this.menu &&
-        this.menu.child_items_data.filter((item: ItemInterface) => {
-          return item.kind_data && item.kind_data.name === ItemKind.MENU;
-        })) ||
-      []
-    );
+  @computed get items(): Array<MainMenuPatchedInterface> {
+    return this.menu;
   }
 
   @computed get isSubmenu(): boolean {

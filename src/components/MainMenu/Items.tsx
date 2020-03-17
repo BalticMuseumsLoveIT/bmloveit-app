@@ -1,4 +1,4 @@
-import { ItemInterface } from 'utils/interfaces';
+import { MainMenuPatchedInterface } from 'utils/interfaces';
 import {
   BackIcon,
   List,
@@ -11,7 +11,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
-  items: Array<ItemInterface>;
+  items: Array<MainMenuPatchedInterface>;
   ancestors: Array<number>;
   closeMenu: () => void;
   openParentMenu: () => void;
@@ -36,7 +36,7 @@ export const Items = observer(
             </button>
           </ListItem>
         )}
-        {items.map((item: ItemInterface) => (
+        {items.map((item: MainMenuPatchedInterface) => (
           <ListItem isSubmenu={isSubmenu} key={item.id}>
             <Item item={item} openSubMenu={openSubMenu} closeMenu={closeMenu} />
             {isSubmenu && <NextIcon src="/images/chevron_right-24px.svg" />}
