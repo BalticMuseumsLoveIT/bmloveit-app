@@ -13,6 +13,7 @@
 .vscode
 .DS_Store
 .env
+styleguide
 
 # other
 npm-debug.log*
