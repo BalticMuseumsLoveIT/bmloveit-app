@@ -1,8 +1,6 @@
 import HomePage from 'pages/WelcomePage';
 import NotFoundPage from 'pages/NotFoundPage';
-import QuizListPage from 'pages/QuizListPage';
 import QuizDetailsPage from 'pages/QuizDetailsPage';
-import SurveyListPage from 'pages/SurveyListPage';
 import SurveyDetailsPage from 'pages/SurveyDetailsPage';
 import LanguagePage from 'pages/LanguagePage';
 import LoginPage from 'pages/LoginPage';
@@ -59,9 +57,7 @@ const Routes = () => {
       />
       <PageRoute exact path="/item/:id" component={ItemPage} />
       <PageRoute exact path="/team" component={TeamPage} />
-      <PageRoute exact path="/quiz" component={QuizListPage} />
       <PageRoute exact path="/quiz/:id" component={QuizDetailsPage} />
-      <PageRoute exact path="/survey" component={SurveyListPage} />
       <PageRoute exact path="/survey/:id" component={SurveyDetailsPage} />
       <PageRoute exact path="/qrcode" component={QrCodePage} />
       <PageRoute exact path="/profile" component={ProfilePage} />
