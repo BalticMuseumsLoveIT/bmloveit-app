@@ -13,6 +13,8 @@
 .vscode
 .DS_Store
 .env
+styleguide
+.naverc
 
 # other
 npm-debug.log*
