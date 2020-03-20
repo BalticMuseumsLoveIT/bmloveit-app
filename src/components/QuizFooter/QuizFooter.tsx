@@ -27,6 +27,7 @@ export const QuizFooter = function({
         </AppButton>
       );
     case QuizDetailsState.SUBMITTED:
+    case QuizDetailsState.ANSWERED:
       return (
         <AppButton as={Link} to={`/item/${nextItemId}`}>
           {t('button.next.label', 'Next')}

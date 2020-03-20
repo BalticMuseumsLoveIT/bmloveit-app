@@ -24,8 +24,16 @@ class QuizForm extends React.Component<QuizFormProps> {
 
     const radioGroupName = `question_${question.id}`;
 
+    const initialValue =
+      store.isAnswered &&
+      store.fulfillment &&
+      store.fulfillment.answers_data.length > 0 &&
+      store.fulfillment.answers_data[0].options_selected_data.length > 0
+        ? `option_${store.fulfillment.answers_data[0].options_selected_data[0].id}`
+        : '';
+
     const formik = {
-      initialValues: { [radioGroupName]: '' },
+      initialValues: { [radioGroupName]: initialValue },
       validationSchema: Yup.object({
         [radioGroupName]: Yup.string().required(
           this.props.t(
@@ -46,7 +54,9 @@ class QuizForm extends React.Component<QuizFormProps> {
       <>
         <Formik {...formik}>
           {({ isSubmitting }) => {
-            const isDisabled = isSubmitting || store.isSubmitted;
+            const isDisabled =
+              isSubmitting || store.isSubmitted || store.isAnswered;
+
             return (
               <Form id="quizForm">
                 <QuizQuestion
@@ -58,7 +68,7 @@ class QuizForm extends React.Component<QuizFormProps> {
             );
           }}
         </Formik>
-        <QuizSummary answer={store.answer} />
+        <QuizSummary answer={store.answer} isAnswered={store.isAnswered} />
       </>
     );
   }
