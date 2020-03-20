@@ -1,5 +1,7 @@
 import {
   CommonApiTranslationInterface,
+  MainMenuInterface,
+  MainMenuPatchedInterface,
   ResourceDataInterface,
   ResourceTypeName,
 } from 'utils/interfaces';
@@ -103,4 +105,36 @@ export const isColorValid = (colorCode: string): boolean => {
 
 export type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
+};
+
+/**
+ * Add id's to all menu items
+ *
+ * @param data.items Api response
+ * @param data.id Start id
+ */
+export const patch = (data: {
+  items: Array<MainMenuInterface>;
+  id: number;
+}): { items: Array<MainMenuPatchedInterface>; id: number } => {
+  const patchedItems: Array<MainMenuPatchedInterface> = data.items.map(item => {
+    const patchedItem = Object.assign({}, item) as MainMenuPatchedInterface;
+
+    patchedItem.id = data.id;
+    data.id = data.id + 1;
+
+    if (patchedItem.child_menus_data.length > 0) {
+      const patchedChildren = patch({
+        items: item.child_menus_data,
+        id: data.id,
+      });
+
+      patchedItem.child_menus_data = patchedChildren.items;
+      data.id = patchedChildren.id;
+    }
+
+    return patchedItem;
+  });
+
+  return { items: patchedItems, id: data.id };
 };

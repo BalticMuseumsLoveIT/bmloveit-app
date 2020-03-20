@@ -521,6 +521,21 @@ export interface EventParams {
   language?: number;
 }
 
+// Main menu -------------------------------------------------------------------
+
+export interface MainMenuInterface {
+  title: string;
+  item: number | null;
+  url: string;
+  title_translation: Array<CommonApiTranslationInterface>;
+  child_menus_data: Array<MainMenuInterface>;
+}
+
+export interface MainMenuPatchedInterface extends MainMenuInterface{
+  id: number;
+  child_menus_data: Array<MainMenuPatchedInterface>;
+}
+
 // Generic ---------------------------------------------------------------------
 
 export interface APIErrorInterface {

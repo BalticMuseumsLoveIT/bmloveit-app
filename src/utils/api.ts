@@ -18,6 +18,7 @@ import {
   UserProfileCreateInterface,
   RouteTypeInterface,
   EventParams,
+  MainMenuInterface,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -427,6 +428,14 @@ abstract class Api {
     return await authStore.axiosInstance.delete(`api/team-membership/`, {
       data: formData,
     });
+  };
+
+  public static getAppMenu = async (): Promise<Array<MainMenuInterface>> => {
+    const endpoint = `api/app_menu/`;
+
+    const response = await authStore.axiosInstance.get(endpoint);
+
+    return response.data;
   };
 }
 
