@@ -3,6 +3,7 @@ import {
   ItemInterface,
   QuizAnswerResponse,
   QuizDetailsInterface,
+  QuizFulfillmentResponse,
   QuizQuestionInterface,
 } from 'utils/interfaces';
 import Api from 'utils/api';
@@ -17,12 +18,17 @@ export enum QuizDetailsState {
   LOADING,
   LOADED,
   SUBMITTED,
+  ANSWERED,
   NOT_FOUND,
   ERROR,
 }
 
 export default class QuizDetailsStore {
   @observable state: QuizDetailsState = QuizDetailsState.NOT_LOADED;
+
+  @observable fulfillments: Array<QuizFulfillmentResponse> = [];
+
+  @observable fulfillment: QuizFulfillmentResponse | null = null;
 
   @observable quiz: QuizDetailsInterface | null = null;
 
@@ -89,6 +95,8 @@ export default class QuizDetailsStore {
         return this.quiz!.questions_data[0];
       case QuizDetailsState.SUBMITTED:
         return this.answer!.question_data;
+      case QuizDetailsState.ANSWERED:
+        return this.fulfillment!.answers_data[0].question_data;
       default:
         return null;
     }
@@ -106,6 +114,10 @@ export default class QuizDetailsStore {
     return this.state === QuizDetailsState.SUBMITTED;
   }
 
+  @computed get isAnswered(): boolean {
+    return this.state === QuizDetailsState.ANSWERED;
+  }
+
   @computed get nextItemId(): number {
     return this.itemData.nextItemId;
   }
@@ -120,6 +132,14 @@ export default class QuizDetailsStore {
 
   @action setQuiz = (quiz: QuizDetailsInterface) => {
     this.quiz = quiz;
+  };
+
+  @action setFulfillments = (fulfillments: Array<QuizFulfillmentResponse>) => {
+    this.fulfillments = fulfillments;
+  };
+
+  @action setFulfillment = (fulfillment: QuizFulfillmentResponse | null) => {
+    this.fulfillment = fulfillment;
   };
 
   @action setAnswer = (answer: QuizAnswerResponse) => {
@@ -144,15 +164,36 @@ export default class QuizDetailsStore {
 
       await Promise.all([
         this.setQuiz(await Api.getQuiz(id)),
+        this.setFulfillments(await Api.getQuizFulfillmentList()),
         when(() => this.tReady === true),
       ]);
+
+      if (this.quiz && this.fulfillments.length > 0) {
+        const prevFulfillment = this.fulfillments.find(fulfillment => {
+          return fulfillment.quiz === this.quiz!.id;
+        });
+
+        if (prevFulfillment) {
+          this.setFulfillment(prevFulfillment);
+        } else {
+          this.setFulfillment(await Api.getQuizFulfillment(this.quiz.id));
+        }
+      }
+
+      if (this.fulfillment && this.fulfillment.all_answers_sent) {
+        this.setAnswer(this.fulfillment.answers_data[0]);
+      }
 
       if (this.quiz && this.quiz.item !== null) {
         const item = await Api.getItem(this.quiz.item);
         this.setItemData(item);
       }
 
-      this.setState(QuizDetailsState.LOADED);
+      this.setState(
+        this.fulfillment && this.fulfillment.all_answers_sent
+          ? QuizDetailsState.ANSWERED
+          : QuizDetailsState.LOADED,
+      );
     } catch (e) {
       if (
         e.response &&
@@ -167,15 +208,18 @@ export default class QuizDetailsStore {
   };
 
   @action handleSubmit = async (question: number, option: number) => {
-    if (this.quiz === null) {
+    if (this.quiz === null || this.fulfillment === null) {
       this.setState(QuizDetailsState.ERROR);
       return;
     }
 
     try {
       this.setIsSubmitting(true);
-      const fulfillment = await Api.getQuizFulfillment(this.quiz.id);
-      const answer = await Api.getQuizAnswer(fulfillment.id, question, option);
+      const answer = await Api.getQuizAnswer(
+        this.fulfillment.id,
+        question,
+        option,
+      );
       this.setAnswer(answer);
       this.setState(QuizDetailsState.SUBMITTED);
     } catch (e) {

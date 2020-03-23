@@ -15,6 +15,7 @@ export const QuizDetails = ({ state, store }: QuizDetailsProps) => {
   switch (state) {
     case QuizDetailsState.LOADED:
     case QuizDetailsState.SUBMITTED:
+    case QuizDetailsState.ANSWERED:
       return <QuizForm store={store} />;
     case QuizDetailsState.NOT_FOUND:
       return <Error404 context={Error404Context.QUIZ} />;

@@ -12,5 +12,9 @@ export const Summary = styled.p<SummaryProps>`
   text-align: center;
 
   color: ${({ isCorrect, theme }) =>
-    isCorrect ? theme.colors.text.success : theme.colors.text.error};
+    isCorrect === true
+      ? theme.colors.text.success
+      : isCorrect === false
+      ? theme.colors.text.error
+      : theme.colors.text.paragraph};
 `;

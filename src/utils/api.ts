@@ -124,6 +124,8 @@ abstract class Api {
   /**
    * Get a fulfillment for a quiz with a given id
    *
+   * If user has answered this quiz server will respond with error
+   *
    * @param {number} id - Quiz ID
    * @throws Axios error
    */
@@ -137,6 +139,16 @@ abstract class Api {
       'api/quiz-fulfillment/',
       formData,
     );
+    return response.data;
+  }
+
+  public static async getQuizFulfillmentList(): Promise<
+    Array<QuizFulfillmentResponse>
+  > {
+    const endpoint = 'api/quiz-fulfillment/';
+
+    const response = await authStore.axiosInstance.get(endpoint);
+
     return response.data;
   }
 

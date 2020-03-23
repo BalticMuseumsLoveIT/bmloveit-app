@@ -121,6 +121,8 @@ export interface QuizFulfillmentResponse {
   quiz: number;
   user: number;
   date_add: string;
+  all_answers_sent: boolean;
+  answers_data: Array<QuizAnswerResponse>;
 }
 
 export interface QuizAnswerResponse {
