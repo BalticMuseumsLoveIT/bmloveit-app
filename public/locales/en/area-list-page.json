@@ -1,0 +1,12 @@
+{
+  "content": {
+    "description": "Short information about what we choose and why. Info about places",
+    "title": "Area list"
+  },
+  "counter": {
+    "routes": "Routes: {{routes}}"
+  },
+  "page": {
+    "title": "Area"
+  }
+}

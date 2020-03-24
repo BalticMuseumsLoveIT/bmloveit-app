@@ -1,0 +1,13 @@
+<svg viewBox="0 0 233 204.825">
+  <g transform="translate(-89)">
+    <path class="default" d="M229.833 62.248c-37.06-100.64-87.86-80.39-95.483 69.082-2.006 39.328 40.342 72.252 92.158 73.461s94.566-29.72 95.484-69.082-78.146-35.408-92.159-73.461z"/>
+    <rect class="app" width="135.065" height="55.442" transform="translate(150.045 70.6)"/>
+    <path class="app" d="M321.973 126.337H149.75V59.098h172.223zm-171.633-.59h171.043V59.689H150.34z"/>
+    <path class="negative" d="M183.074 44.943a3.834 3.834 0 113.834-3.834 3.834 3.834 0 01-3.834 3.834zm0-7.078a3.244 3.244 0 103.244 3.244 3.244 3.244 0 00-3.244-3.244z"/>
+    <circle class="negative" cx="2.359" cy="2.359" r="2.359" transform="translate(254.44 139.902)"/>
+    <circle class="negative" cx="2.359" cy="2.359" r="2.359" transform="translate(89 70.6)"/>
+    <circle class="alternative" cx="40.991" cy="40.991" r="40.991" transform="translate(171.573 80.037)" fill="#f85705"/>
+    <path class="default" d="M205.493 139.372l-17.632-17.632 4.945-4.946 12.7 12.7 26.812-26.812 4.945 4.946z"/>
+    <circle class="alternative" cx="8.281" cy="8.281" r="8.281" transform="translate(105.638 85.092)" fill="#ed4200"/>
+  </g>
+</svg>

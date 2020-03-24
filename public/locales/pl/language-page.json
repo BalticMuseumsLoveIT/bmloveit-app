@@ -1,0 +1,12 @@
+{
+  "form": {
+    "button": {
+      "submit": {
+        "label": "Dalej"
+      }
+    }
+  },
+  "page": {
+    "title": "Język"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "button": {
+    "signInAsGuest": {
+      "label": ""
+    },
+    "signInWithFacebook": {
+      "label": ""
+    },
+    "signInWithGoogle": {
+      "label": ""
+    }
+  },
+  "cookieBar": "",
+  "error": {
+    "404": {
+      "global": "",
+      "item": "",
+      "modal": "",
+      "quiz": "",
+      "survey": ""
+    },
+    "500": {
+      "generic": "",
+      "global": ""
+    }
+  },
+  "image": {
+    "404": {
+      "alt": ""
+    },
+    "500": {
+      "alt": ""
+    },
+    "logoBaltic": {
+      "alt": ""
+    },
+    "logoCircle": {
+      "alt": ""
+    },
+    "logoInterreg": {
+      "alt": ""
+    },
+    "museumLogotype": {
+      "alt": ""
+    }
+  },
+  "mainMenu": {
+    "about": "",
+    "back": "",
+    "home": ""
+  },
+  "step": {
+    "first": "",
+    "second": ""
+  }
+}
