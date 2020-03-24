@@ -1,0 +1,56 @@
+{
+  "button": {
+    "signInAsGuest": {
+      "label": "Zaloguj się jako gość"
+    },
+    "signInWithFacebook": {
+      "label": "Zaloguj się przez Facebook"
+    },
+    "signInWithGoogle": {
+      "label": "Zaloguj się przez Google"
+    }
+  },
+  "cookieBar": "Używamy plików cookie. <1>Dowiedz się więcej</1>",
+  "error": {
+    "404": {
+      "global": "Przepraszamy, strona o podanym adresie nie została odnaleziona",
+      "item": "Przepraszamy, o element podanym id nie został odnaleziony",
+      "modal": "Przepraszamy, zawartość tego okna nie została odnaleziona",
+      "quiz": "Przeprzaszamy, quiz o podanym id nie został odnaleziony",
+      "survey": "Przepraszamy, ankieta o podanym id nie została odnaleziona"
+    },
+    "500": {
+      "generic": "Przepraszamy, wystąpił błąd podczas ładowania treści",
+      "global": "Przepraszamy, wystąpił błąd podczas ładowania aplikacji"
+    }
+  },
+  "image": {
+    "404": {
+      "alt": "Nie odnaleziono"
+    },
+    "500": {
+      "alt": ""
+    },
+    "logoBaltic": {
+      "alt": "Baltic"
+    },
+    "logoCircle": {
+      "alt": "Circle"
+    },
+    "logoInterreg": {
+      "alt": "Interreg"
+    },
+    "museumLogotype": {
+      "alt": "Logotyp muzeum"
+    }
+  },
+  "mainMenu": {
+    "about": "O aplikacji",
+    "back": "Wróć",
+    "home": "Strona domowa"
+  },
+  "step": {
+    "first": "",
+    "second": ""
+  }
+}

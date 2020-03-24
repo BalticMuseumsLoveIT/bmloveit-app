@@ -1,0 +1,19 @@
+{
+  "button": {
+    "changeRoute": {
+      "label": "Zmień trasę"
+    },
+    "scanQR": {
+      "label": "Skanuj QR"
+    },
+    "viewList": {
+      "label": "Zobacz listę"
+    }
+  },
+  "error": {
+    "noMap": "Mapa nie została odnaleziona"
+  },
+  "page": {
+    "title": "Mapa trasy"
+  }
+}

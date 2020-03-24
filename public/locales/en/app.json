@@ -1,0 +1,56 @@
+{
+  "button": {
+    "signInAsGuest": {
+      "label": "Sign in as Guest"
+    },
+    "signInWithFacebook": {
+      "label": "Facebook Sign In"
+    },
+    "signInWithGoogle": {
+      "label": "Google Sign In"
+    }
+  },
+  "cookieBar": "We use cookies. <1>Learn more</1>",
+  "error": {
+    "404": {
+      "global": "Sorry, page with a given address was not found",
+      "item": "Sorry, item with a given id was not found",
+      "modal": "Sorry, content of this modal was not found",
+      "quiz": "Sorry, quiz with a given id was not found",
+      "survey": "Sorry, survey with a given id was not found"
+    },
+    "500": {
+      "generic": "Sorry, there was an error while loading the content",
+      "global": "Sorry, there was an error while loading the app"
+    }
+  },
+  "image": {
+    "404": {
+      "alt": "Not found"
+    },
+    "500": {
+      "alt": "General error"
+    },
+    "logoBaltic": {
+      "alt": "Baltic"
+    },
+    "logoCircle": {
+      "alt": "Circle"
+    },
+    "logoInterreg": {
+      "alt": "Interreg"
+    },
+    "museumLogotype": {
+      "alt": "Museum logotype"
+    }
+  },
+  "mainMenu": {
+    "about": "About application",
+    "back": "Go back",
+    "home": "Homepage"
+  },
+  "step": {
+    "first": "Select place",
+    "second": "Select tour"
+  }
+}

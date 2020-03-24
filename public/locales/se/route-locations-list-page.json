@@ -1,0 +1,23 @@
+{
+  "button": {
+    "changeRoute": {
+      "label": ""
+    },
+    "scanQR": {
+      "label": ""
+    },
+    "viewMap": {
+      "label": ""
+    }
+  },
+  "content": {
+    "description": "",
+    "title": ""
+  },
+  "counter": {
+    "attractions": ""
+  },
+  "page": {
+    "title": ""
+  }
+}

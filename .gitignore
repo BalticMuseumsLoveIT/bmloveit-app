@@ -4,10 +4,6 @@
 # production
 /build
 
-# public
-/public/images/**/*
-/public/locales/**/*
-
 # misc
 .idea
 .vscode
