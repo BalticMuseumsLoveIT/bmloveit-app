@@ -1,0 +1,13 @@
+{
+  "presets": ["react-app"],
+  "plugins": [
+    ["i18next-extract", {
+      "defaultNS": "app",
+      "locales": [
+        "en", "pl", "se"
+      ],
+      "outputPath": "public/locales/{{locale}}/{{ns}}.json"
+    }],
+    "babel-plugin-styled-components"
+  ]
+}

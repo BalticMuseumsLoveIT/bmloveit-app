@@ -1,0 +1,21 @@
+{
+  "button": {
+    "cancel": "",
+    "scan": {
+      "error": "",
+      "initial": "",
+      "scanning": ""
+    }
+  },
+  "content": {
+    "image": "",
+    "message": {
+      "error": "",
+      "initial": ""
+    },
+    "title": ""
+  },
+  "page": {
+    "title": "Kod QR"
+  }
+}

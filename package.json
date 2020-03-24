@@ -2,19 +2,77 @@
   "name": "e-guide",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "^12.0.0",
+    "npm": "^6.0.0"
+  },
   "dependencies": {
+    "@material/react-linear-progress": "^0.15.0",
+    "@types/jest": "24.0.20",
+    "@types/node": "12.11.7",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "@types/react-helmet": "^5.0.13",
+    "@types/react-html-parser": "^2.0.1",
+    "@types/react-modal": "^3.10.1",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/styled-components": "^4.1.20",
+    "@types/styled-theming": "^2.2.2",
+    "@types/yup": "^0.26.24",
+    "axios": "^0.19.0",
+    "deepmerge": "^4.2.2",
+    "formik": "^2.1.2",
+    "i18next": "^19.0.2",
+    "i18next-browser-languagedetector": "^4.0.1",
+    "i18next-xhr-backend": "^3.2.2",
+    "iso-639-1": "^2.1.0",
+    "mobx": "^5.15.0",
+    "mobx-localstorage": "^2.0.0-alpha.1",
+    "mobx-react": "^6.1.4",
+    "mobx-utils": "^5.5.2",
+    "polished": "^3.4.4",
+    "query-string": "^6.9.0",
+    "rc-progress": "^2.5.2",
+    "rc-tooltip": "^4.0.0-alpha.3",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-scripts": "3.2.0"
+    "react-facebook-login": "^4.1.1",
+    "react-google-login": "^5.0.7",
+    "react-helmet": "^5.2.1",
+    "react-html-parser": "^2.0.2",
+    "react-i18next": "^11.2.7",
+    "react-inlinesvg": "^1.2.0",
+    "react-modal": "^3.11.1",
+    "react-preloaders": "^3.0.3",
+    "react-qr-reader": "^2.2.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "react-zoom-pan-pinch": "^1.6.1",
+    "styled-components": "^4.4.0",
+    "styled-theming": "^2.2.0",
+    "typescript": "^3.7.4",
+    "yup": "^0.27.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "i18n-extract": "NODE_ENV=development babel -f .babelrc 'src/**/*.{js,jsx,ts,tsx}'"
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "lint-staged": {
+    "**/*.+(ts|tsx)": [
+      "prettier --config .prettierrc --write",
+      "eslint --fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsc -p . && lint-staged"
+    }
   },
   "browserslist": {
     "production": [
@@ -27,5 +85,21 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "babel-plugin-i18next-extract": "^0.4.2",
+    "babel-plugin-styled-components": "^1.10.6",
+    "eslint": "^6.1.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "husky": "^3.0.9",
+    "lint-staged": "^9.4.2",
+    "mobx-react-devtools": "^6.1.1",
+    "prettier": "^1.18.2"
   }
 }

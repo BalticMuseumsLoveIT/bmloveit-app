@@ -1,0 +1,17 @@
+{
+  "button": {
+    "changeRoute": {
+      "label": ""
+    },
+    "startAgain": {
+      "label": ""
+    }
+  },
+  "content": {
+    "subtitle": "",
+    "title": ""
+  },
+  "page": {
+    "title": ""
+  }
+}
