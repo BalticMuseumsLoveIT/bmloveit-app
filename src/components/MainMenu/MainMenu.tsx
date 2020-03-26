@@ -11,8 +11,9 @@ import { Items } from 'components/MainMenu/Items';
 import { patch } from 'utils/helpers';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-interface Props {}
+interface Props extends RouteComponentProps {}
 
 interface InjectedProps extends Props {
   uiStore: UiStore;
@@ -61,4 +62,4 @@ class MainMenu extends React.Component<Props> {
   }
 }
 
-export default MainMenu;
+export default withRouter(MainMenu);

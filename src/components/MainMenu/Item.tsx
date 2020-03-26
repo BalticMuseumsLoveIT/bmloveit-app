@@ -15,7 +15,7 @@ export const Item = observer(({ item, closeMenu, openSubMenu }: Props) => {
 
   if (item.item !== null) {
     return (
-      <Link to={`/item/${item.item}`} onClick={closeMenu}>
+      <Link to={`/item/${item.item}`} onClick={closeMenu} replace>
         <span>{label}</span>
       </Link>
     );
@@ -26,7 +26,7 @@ export const Item = observer(({ item, closeMenu, openSubMenu }: Props) => {
     const urlOrigin = new URL(item.url, document.baseURI).origin;
 
     return appOrigin === urlOrigin ? (
-      <Link to={item.url} onClick={closeMenu}>
+      <Link to={item.url} onClick={closeMenu} replace>
         <span>{label}</span>
       </Link>
     ) : (
