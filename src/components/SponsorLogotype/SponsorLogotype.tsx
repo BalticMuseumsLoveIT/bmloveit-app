@@ -1,4 +1,5 @@
 import {
+  Anchor,
   Image,
   Wrapper,
 } from 'components/SponsorLogotype/SponsorLogotype.style';
@@ -14,9 +15,19 @@ export const SponsorLogotype = () => {
 
   return ready ? (
     <Wrapper>
-      <Image src="/images/logo-baltic.png" alt={baltic} title={baltic} />
-      <Image src="/images/logo-circle.png" alt={circle} title={circle} />
-      <Image src="/images/logo-interreg.png" alt={interreg} title={interreg} />
+      <Anchor href="http://www.balticmuseums.info/">
+        <Image src="/images/logo-baltic.png" alt={baltic} title={baltic} />
+      </Anchor>
+      <Anchor href="http://emused.eu/">
+        <Image src="/images/logo-circle.png" alt={circle} title={circle} />
+      </Anchor>
+      <Anchor href="https://southbaltic.eu/">
+        <Image
+          src="/images/logo-interreg.png"
+          alt={interreg}
+          title={interreg}
+        />
+      </Anchor>
     </Wrapper>
   ) : null;
 };
