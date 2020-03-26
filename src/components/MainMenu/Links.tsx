@@ -25,7 +25,7 @@ export const StaticLinks = observer(({ links, closeMenu }: Props) => {
       {links.map((item, index) => {
         return (
           <LinkItem key={index}>
-            <Link to={item.to} onClick={closeMenu}>
+            <Link to={item.to} onClick={closeMenu} replace>
               {item.label(t)}
             </Link>
           </LinkItem>
