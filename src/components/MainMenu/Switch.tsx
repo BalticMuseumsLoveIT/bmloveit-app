@@ -4,7 +4,7 @@ import { inject, observer } from 'mobx-react';
 import queryString from 'query-string';
 import * as H from 'history';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Props extends RouteComponentProps {}
 
@@ -16,7 +16,11 @@ const Switch = inject('uiStore')(
   observer((props: Props) => {
     const injected = props as InjectedProps;
 
-    const { isOpened, close: closeMenu, open: openMenu } = injected.uiStore.nav;
+    const {
+      isOpened: menuIsOpened,
+      close: closeMenu,
+      open: openMenu,
+    } = injected.uiStore.nav;
 
     const addMenuToQS = (search: string): string => {
       const parsedQuery = queryString.parse(search);
@@ -32,29 +36,53 @@ const Switch = inject('uiStore')(
       return currentLocation;
     };
 
+    const [mounted, setMounted] = useState(false);
+
     useEffect(() => {
-      const parsedQuery = queryString.parse(props.location.search);
+      if (mounted) return;
 
-      if (isOpened && !('menu' in parsedQuery)) {
-        closeMenu();
+      const menuInQS = 'menu' in queryString.parse(props.location.search);
+
+      if (menuInQS) {
+        const removeMenuFromQS = (search: string): string => {
+          const parsedQuery = queryString.parse(search);
+          if ('menu' in parsedQuery) delete parsedQuery.menu;
+          return queryString.stringify(parsedQuery);
+        };
+
+        const removeMenuFromLocation = (location: H.Location): H.Location => {
+          const currentLocation = Object.assign({}, location);
+
+          currentLocation.search = removeMenuFromQS(currentLocation.search);
+
+          return currentLocation;
+        };
+
+        props.history.replace(removeMenuFromLocation(props.location));
       }
 
-      if (!isOpened && 'menu' in parsedQuery) {
-        openMenu();
-      }
-    }, [props.location]);
+      setMounted(true);
+    }, [mounted, props.history, props.location]);
+
+    useEffect(() => {
+      if (!mounted) return;
+
+      const menuInQS = 'menu' in queryString.parse(props.location.search);
+
+      if (menuIsOpened && !menuInQS) closeMenu();
+      else if (!menuIsOpened && menuInQS) openMenu();
+    }, [mounted, props.location.search, openMenu, closeMenu, menuIsOpened]);
 
     const toggle = () => {
-      if (isOpened) {
-        props.history.goBack();
-      } else {
-        props.history.push(addMenuToLocation(props.location));
-      }
+      const { history, location } = props;
+
+      if (menuIsOpened) history.goBack();
+      else history.push(addMenuToLocation(location));
     };
 
     return (
       <Button onClick={toggle}>
-        <Hamburger isOpened={isOpened} />
+        <Hamburger isOpened={menuIsOpened} />
       </Button>
     );
   }),
