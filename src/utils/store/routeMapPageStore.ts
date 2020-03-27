@@ -140,14 +140,13 @@ export default class RouteMapPageStore {
             const icon = getResource(location, ResourceTypeName.Icon);
 
             const visited = trackerStore.items.has(location.screens[0]);
-            console.log(location.screens[0], visited);
 
             return {
               x: location.x!,
               y: location.y!,
               link: `/item/${location.screens[0]}`,
               icon: icon ? getPrivateMediaURL(icon.file_url) : '',
-              visited: visited,
+              visited,
             };
           })) ||
       []

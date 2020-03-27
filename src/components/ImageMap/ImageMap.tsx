@@ -87,7 +87,6 @@ export const ImageMap = (props: ImageMapProps) => {
       <StyledImage alt="" ref={imageRef} src={props.src} />
       {imageStore.loaded &&
         props.coordinates.map((point, index) => {
-          console.log(point.link, point.visited);
           return (
             <StyledButton
               x={point.x}
