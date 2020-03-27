@@ -96,6 +96,7 @@ export const ImageMap = (props: ImageMapProps) => {
               widthSF={imageStore.widthScaleFactor}
               heightSF={imageStore.heightScaleFactor}
               isCustom={point.icon.length > 0}
+              visited={point.visited}
               key={`${point.x}${point.y}`}
               onClick={() => {
                 /**

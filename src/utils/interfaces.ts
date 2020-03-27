@@ -291,6 +291,7 @@ export interface ItemMapElementInterface {
   y: number;
   link: string;
   icon: string;
+  visited?: boolean;
 }
 
 // Site ------------------------------------------------------------------------
@@ -531,7 +532,7 @@ export interface MainMenuInterface {
   child_menus_data: Array<MainMenuInterface>;
 }
 
-export interface MainMenuPatchedInterface extends MainMenuInterface{
+export interface MainMenuPatchedInterface extends MainMenuInterface {
   id: number;
   child_menus_data: Array<MainMenuPatchedInterface>;
 }
