@@ -4,6 +4,7 @@ import userProfileStore from 'utils/store/userProfileStore';
 import uiStore from 'utils/store/uiStore';
 import cookieBarStore from 'utils/store/cookieBarStore';
 import eventStore from 'utils/store/eventStore';
+import trackerStore from 'utils/store/trackerStore';
 
 const stores = {
   authStore,
@@ -12,6 +13,7 @@ const stores = {
   cookieBarStore,
   siteStore,
   eventStore,
+  trackerStore,
 };
 
 export default stores;
