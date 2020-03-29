@@ -522,6 +522,21 @@ export interface EventParams {
   language?: number;
 }
 
+export interface EventResponse {
+  id: number;
+  action_type: ActionType;
+  user: number;
+  date: string;
+  description: string | null;
+  achievements_data: {
+    [k: string]: any;
+  };
+  item: number | null;
+  route: number | null;
+  item_resource: number | null;
+  language: number | null;
+}
+
 // Main menu -------------------------------------------------------------------
 
 export interface MainMenuInterface {
