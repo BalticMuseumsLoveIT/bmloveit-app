@@ -16,6 +16,7 @@ import ProfilePage from 'pages/ProfilePage';
 import TeamPage from 'pages/TeamPage';
 import AboutPage from 'pages/AboutPage';
 import Layout from 'components/Layout/Layout';
+import LocationPage from 'pages/LocationPage';
 import { Route, Switch, Redirect, RouteProps } from 'react-router-dom';
 import React from 'react';
 
@@ -55,6 +56,7 @@ const Routes = () => {
         path="/route/:id/locations"
         component={RouteLocationsListPage}
       />
+      <PageRoute exact path="/location/:id" component={LocationPage} />
       <PageRoute exact path="/item/:id" component={ItemPage} />
       <PageRoute exact path="/team" component={TeamPage} />
       <PageRoute exact path="/quiz/:id" component={QuizDetailsPage} />
