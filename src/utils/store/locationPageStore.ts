@@ -87,16 +87,21 @@ export default class LocationPageStore {
             .route;
 
         if (routeId !== null) {
-          const item = await Api.getItem({
+          const items = await Api.getItem({
             item_locations__location__id: locations[0].id,
             item_routes__route__id: routeId,
           });
 
-          /**
-           * There is no guarantee that first item in this list is "default" one
-           */
-          if (item.length > 0) {
-            return this.setItem(item[0].id);
+          if (items.length > 0) {
+            const defaultItem = items.find(
+              item => item.id === locations[0].screen_default,
+            );
+
+            /**
+             * If location's default screen do not belong to the root,
+             * there is no guarantee that first item in this list is "default" one
+             */
+            return this.setItem(defaultItem ? defaultItem.id : items[0].id);
           }
         }
       }
