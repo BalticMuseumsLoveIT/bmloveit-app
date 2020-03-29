@@ -19,6 +19,20 @@ class LocationPage extends React.Component<Props> {
     this.locationPageStore.setTReady(this.props.tReady);
   };
 
-class LocationPage extends React.Component<Props> {}
+  render = () => {
+    if (!this.props.tReady) return null;
+
+    return (
+      <>
+        <Helmet>
+          <title>{this.props.t('page.title', 'Location')}</title>
+        </Helmet>
+        <Content>
+          <Title>{this.props.t('content.title', 'Location')}</Title>
+        </Content>
+      </>
+    );
+  };
+}
 
 export default withTranslation('location-page')(LocationPage);
