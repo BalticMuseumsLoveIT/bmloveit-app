@@ -19,6 +19,7 @@ import {
   RouteTypeInterface,
   EventParams,
   MainMenuInterface,
+  EventResponse,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -367,6 +368,14 @@ abstract class Api {
     Array<UserProfileInterface>
   > => {
     const endpoint = 'api/user_profile/';
+
+    const response = await authStore.axiosInstance.get(endpoint);
+
+    return response.data;
+  };
+
+  public static getEventsList = async (): Promise<Array<EventResponse>> => {
+    const endpoint = 'api/events/';
 
     const response = await authStore.axiosInstance.get(endpoint);
 
