@@ -336,9 +336,11 @@ abstract class Api {
 
   public static getLocationsList = async (
     routeId = NaN,
+    locationId = NaN,
   ): Promise<Array<LocationInterface>> => {
     const params = {
       location_routes__route__id: isNaN(routeId) ? '' : routeId,
+      id: isNaN(locationId) ? '' : locationId,
     };
 
     const endpoint = 'api/locations/';
