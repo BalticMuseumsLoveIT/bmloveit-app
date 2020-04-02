@@ -168,10 +168,13 @@ export default class QuizDetailsStore {
         when(() => this.tReady === true),
       ]);
 
-      if (this.quiz && this.fulfillments.length > 0) {
-        const prevFulfillment = this.fulfillments.find(fulfillment => {
-          return fulfillment.quiz === this.quiz!.id;
-        });
+      if (this.quiz) {
+        const prevFulfillment =
+          this.fulfillments.length > 0
+            ? this.fulfillments.find(fulfillment => {
+                return fulfillment.quiz === this.quiz!.id;
+              })
+            : undefined;
 
         if (prevFulfillment) {
           this.setFulfillment(prevFulfillment);
@@ -208,6 +211,7 @@ export default class QuizDetailsStore {
   };
 
   @action handleSubmit = async (question: number, option: number) => {
+    debugger;
     if (this.quiz === null || this.fulfillment === null) {
       this.setState(QuizDetailsState.ERROR);
       return;
