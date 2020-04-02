@@ -1,0 +1,14 @@
+{
+  "content": {
+    "title": "Location"
+  },
+  "error": {
+    "location": {
+      "generic": "Sorry, item id could not be determined",
+      "invalidId": "Sorry, location with a given ID has no default item"
+    }
+  },
+  "page": {
+    "title": "Location"
+  }
+}

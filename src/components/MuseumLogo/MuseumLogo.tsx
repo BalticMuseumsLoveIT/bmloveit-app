@@ -3,6 +3,7 @@ import { Logo, LogoProps } from 'components/MuseumLogo/MuseumLogo.style';
 import React from 'react';
 import { inject, observer } from 'mobx-react';
 import { withTranslation, WithTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 interface Props extends LogoProps, WithTranslation {}
 
@@ -28,10 +29,12 @@ class MuseumLogo extends React.Component<Props> {
 
     return this.props.tReady && this.siteStore.isDataAvailable() ? (
       <Logo type={this.props.type} usePlaceholder={shouldUsePlaceholder}>
-        <img
-          src={avatarImageSrc}
-          alt={this.props.t('image.museumLogotype.alt', 'Museum logotype')}
-        />
+        <Link to="/area">
+          <img
+            src={avatarImageSrc}
+            alt={this.props.t('image.museumLogotype.alt', 'Museum logotype')}
+          />
+        </Link>
       </Logo>
     ) : null;
   }

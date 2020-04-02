@@ -9,16 +9,22 @@ export const Wrapper = styled.div`
   padding: 0.5em 0;
 `;
 
-export const Image = styled.img`
+export const Anchor = styled.a`
   display: inline-block;
-  object-fit: scale-down;
-  margin-right: 1em;
+  position: relative;
 
-  max-height: 100%;
-  max-width: 100%;
-  min-width: 0;
+  margin-right: 1em;
 
   &:first-child {
     margin-left: 1em;
   }
+`;
+
+export const Image = styled.img`
+  display: block;
+  object-fit: scale-down;
+
+  max-height: 4em;
+  max-width: 100%;
+  min-width: 0;
 `;

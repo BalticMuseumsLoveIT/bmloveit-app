@@ -19,6 +19,7 @@ import {
   RouteTypeInterface,
   EventParams,
   MainMenuInterface,
+  EventResponse,
 } from 'utils/interfaces';
 
 abstract class Api {
@@ -335,9 +336,11 @@ abstract class Api {
 
   public static getLocationsList = async (
     routeId = NaN,
+    locationId = NaN,
   ): Promise<Array<LocationInterface>> => {
     const params = {
       location_routes__route__id: isNaN(routeId) ? '' : routeId,
+      id: isNaN(locationId) ? '' : locationId,
     };
 
     const endpoint = 'api/locations/';
@@ -367,6 +370,14 @@ abstract class Api {
     Array<UserProfileInterface>
   > => {
     const endpoint = 'api/user_profile/';
+
+    const response = await authStore.axiosInstance.get(endpoint);
+
+    return response.data;
+  };
+
+  public static getEventsList = async (): Promise<Array<EventResponse>> => {
+    const endpoint = 'api/events/';
 
     const response = await authStore.axiosInstance.get(endpoint);
 
