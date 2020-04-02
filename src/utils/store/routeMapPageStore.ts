@@ -5,6 +5,7 @@ import {
   ResourceTypeName,
   RouteInterface,
 } from 'utils/interfaces';
+import trackerStore from 'utils/store/trackerStore';
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
@@ -138,11 +139,14 @@ export default class RouteMapPageStore {
           .map(location => {
             const icon = getResource(location, ResourceTypeName.Icon);
 
+            const visited = trackerStore.items.has(location.screens[0]);
+
             return {
               x: location.x!,
               y: location.y!,
               link: `/item/${location.screens[0]}`,
               icon: icon ? getPrivateMediaURL(icon.file_url) : '',
+              visited,
             };
           })) ||
       []

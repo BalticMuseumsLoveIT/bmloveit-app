@@ -1,5 +1,6 @@
 import { DefaultBoxShadow, TitleFontStyle } from 'components/Page/Page.style';
 import styled, { css } from 'styled-components';
+import { lighten } from 'polished';
 
 export const StyledWrapper = styled.div`
   position: relative;
@@ -20,10 +21,12 @@ interface StyledButtonProps {
   widthSF: number;
   heightSF: number;
   isCustom: boolean;
+  visited?: boolean;
 }
 
 export const StyledButton = styled.button<StyledButtonProps>`
   display: block;
+
   font-size: 1em;
   line-height: 1;
   padding: 0;
@@ -36,7 +39,7 @@ export const StyledButton = styled.button<StyledButtonProps>`
   outline: none;
   cursor: pointer;
 
-  ${({ isCustom }) =>
+  ${({ isCustom, visited }) =>
     isCustom
       ? css`
           background: none;
@@ -44,7 +47,9 @@ export const StyledButton = styled.button<StyledButtonProps>`
         `
       : css`
           background-color: ${({ theme }) =>
-            theme.colors.button.secondary.default.background};
+            visited
+              ? lighten(0.1, theme.colors.background.alternative)
+              : theme.colors.button.secondary.default.background};
 
           &:hover {
             background-color: ${({ theme }) =>

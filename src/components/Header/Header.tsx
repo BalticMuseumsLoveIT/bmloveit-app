@@ -1,4 +1,4 @@
-import { Switch as MainMenuToggleSwitch } from 'components/MainMenu/Switch';
+import MainMenuToggleSwitch from 'components/MainMenu/Switch';
 import MuseumLogo from 'components/MuseumLogo/MuseumLogo';
 import UserAvatar from 'components/Avatar/Avatar';
 import { UserAvatarType } from 'components/Avatar/Avatar.style';

@@ -171,10 +171,11 @@ export default class ItemStore {
         this.itemData.child_items_data
           .filter(
             item =>
-              item.kind_data &&
-              item.kind_data.name === ItemKind.POPUP &&
               item.x !== null &&
-              item.y !== null,
+              item.y !== null &&
+              (item.kind_data?.name === ItemKind.POPUP ||
+                (item.type_data?.name === ItemType.LINK &&
+                  item.next_item !== null)),
           )
           .map(item => {
             const icon = getResource(item, ResourceTypeName.Icon);
@@ -182,7 +183,10 @@ export default class ItemStore {
             return {
               x: item.x!,
               y: item.y!,
-              link: `?popup=${item.id}`,
+              link:
+                item.kind_data?.name === ItemKind.POPUP
+                  ? `?popup=${item.id}`
+                  : `/item/${item.next_item}`,
               icon: icon ? getPrivateMediaURL(icon.file_url) : '',
             };
           })) ||

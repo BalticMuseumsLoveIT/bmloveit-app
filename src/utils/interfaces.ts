@@ -291,6 +291,7 @@ export interface ItemMapElementInterface {
   y: number;
   link: string;
   icon: string;
+  visited?: boolean;
 }
 
 // Site ------------------------------------------------------------------------
@@ -521,6 +522,21 @@ export interface EventParams {
   language?: number;
 }
 
+export interface EventResponse {
+  id: number;
+  action_type: ActionType;
+  user: number;
+  date: string;
+  description: string | null;
+  achievements_data: {
+    [k: string]: any;
+  };
+  item: number | null;
+  route: number | null;
+  item_resource: number | null;
+  language: number | null;
+}
+
 // Main menu -------------------------------------------------------------------
 
 export interface MainMenuInterface {
@@ -531,7 +547,7 @@ export interface MainMenuInterface {
   child_menus_data: Array<MainMenuInterface>;
 }
 
-export interface MainMenuPatchedInterface extends MainMenuInterface{
+export interface MainMenuPatchedInterface extends MainMenuInterface {
   id: number;
   child_menus_data: Array<MainMenuPatchedInterface>;
 }

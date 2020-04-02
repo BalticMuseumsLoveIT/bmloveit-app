@@ -13,7 +13,13 @@ export const history = createBrowserHistory();
 @observer
 class App extends React.Component {
   componentDidMount = async () => {
-    const { uiStore, userProfileStore, authStore, siteStore } = stores;
+    const {
+      uiStore,
+      userProfileStore,
+      authStore,
+      siteStore,
+      trackerStore,
+    } = stores;
 
     try {
       await Promise.all([
@@ -23,6 +29,14 @@ class App extends React.Component {
         (authStore.isLoggedIn && userProfileStore.loadUserProfile()) ||
           undefined,
       ]);
+
+      // Add initial location
+      trackerStore.addLocation(history.location);
+
+      // Track location changes
+      history.listen(location => {
+        trackerStore.addLocation(location);
+      });
 
       uiStore.setAppState(AppState.READY);
     } catch (e) {
