@@ -59,6 +59,11 @@ class LocationPage extends React.Component<Props> {
                         'error.location.invalidId',
                         'Sorry, location with a given ID was not found',
                       );
+                    case ErrorType.LOCATION_HAS_NO_ROUTE_ITEM:
+                      return this.props.t(
+                        'error.location.locationHasNoRouteItem',
+                        'Sorry, current location has no item that belongs to selected route',
+                      );
                     case ErrorType.LOCATION_HAS_NO_DEFAULT_ITEM:
                       return this.props.t(
                         'error.location.invalidId',
