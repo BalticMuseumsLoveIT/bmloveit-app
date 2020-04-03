@@ -211,7 +211,6 @@ export default class QuizDetailsStore {
   };
 
   @action handleSubmit = async (question: number, option: number) => {
-    debugger;
     if (this.quiz === null || this.fulfillment === null) {
       this.setState(QuizDetailsState.ERROR);
       return;
