@@ -56,7 +56,7 @@ class LocationPage extends React.Component<Props> {
                       );
                     case ErrorType.LOCATION_NOT_FOUND:
                       return this.props.t(
-                        'error.location.invalidId',
+                        'error.location.locationNotFound',
                         'Sorry, location with a given ID was not found',
                       );
                     case ErrorType.LOCATION_HAS_NO_ROUTE_ITEM:
@@ -66,13 +66,13 @@ class LocationPage extends React.Component<Props> {
                       );
                     case ErrorType.LOCATION_HAS_NO_DEFAULT_ITEM:
                       return this.props.t(
-                        'error.location.invalidId',
-                        'Sorry, location with a given ID has no default item',
+                        'error.location.locationHasNoDefaultItem',
+                        'Sorry, current location has no default item',
                       );
                     case ErrorType.GENERIC:
                       return this.props.t(
                         'error.location.generic',
-                        'Sorry, item id could not be determined',
+                        'Sorry, item ID could not be determined',
                       );
                     default:
                       return null;

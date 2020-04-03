@@ -5,7 +5,10 @@
   "error": {
     "location": {
       "generic": "",
-      "invalidId": ""
+      "invalidId": "",
+      "locationHasNoDefaultItem": "",
+      "locationHasNoRouteItem": "",
+      "locationNotFound": ""
     }
   },
   "page": {
