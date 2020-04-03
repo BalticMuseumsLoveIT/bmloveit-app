@@ -15,6 +15,7 @@ export enum ErrorType {
   NO_ERROR,
   INVALID_ID,
   LOCATION_NOT_FOUND,
+  LOCATION_HAS_NO_ROUTE_ITEM,
   LOCATION_HAS_NO_DEFAULT_ITEM,
   GENERIC,
 }
@@ -87,22 +88,32 @@ export default class LocationPageStore {
             .route;
 
         if (routeId !== null) {
-          const items = await Api.getItem({
-            item_locations__location__id: locations[0].id,
-            item_routes__route__id: routeId,
-          });
+          const [
+            routeLocationItems,
+            routeLocationDefaultItems,
+          ] = await Promise.all([
+            Api.getItem({
+              item_locations__location__id: locations[0].id,
+              item_routes__route__id: routeId,
+            }),
+            Api.getItem({
+              item_locations__location__id: locations[0].id,
+              item_routes__route__id: routeId,
+              item_locations__default: true,
+            }),
+          ]);
 
-          if (items.length > 0) {
-            const defaultItem = items.find(
-              item => item.id === locations[0].screen_default,
-            );
-
-            /**
-             * If location's default screen do not belong to the root,
-             * there is no guarantee that first item in this list is "default" one
-             */
-            return this.setItem(defaultItem ? defaultItem.id : items[0].id);
+          // Prevent unwanted route change
+          if (routeLocationItems.length === 0) {
+            return this.setError(ErrorType.LOCATION_HAS_NO_ROUTE_ITEM);
           }
+
+          // Redirect to default or first item matching filter parameters
+          const defaultItem = routeLocationDefaultItems.length
+            ? routeLocationDefaultItems[0]
+            : routeLocationItems[0];
+
+          return this.setItem(defaultItem.id);
         }
       }
 

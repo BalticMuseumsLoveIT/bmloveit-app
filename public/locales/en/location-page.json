@@ -5,7 +5,10 @@
   "error": {
     "location": {
       "generic": "Sorry, item id could not be determined",
-      "invalidId": "Sorry, location with a given ID has no default item"
+      "invalidId": "Sorry, location with a given ID has no default item",
+      "locationHasNoDefaultItem": "Sorry, current location has no default item",
+      "locationHasNoRouteItem": "Sorry, current location has no item that belongs to selected route",
+      "locationNotFound": "Sorry, location with a given ID was not found"
     }
   },
   "page": {

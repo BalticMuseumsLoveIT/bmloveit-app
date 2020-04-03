@@ -324,6 +324,7 @@ abstract class Api {
           parent_item__item__id?: number;
           item_routes__route__id?: number;
           item_routes__route__name?: string;
+          item_locations__default?: boolean;
         },
   ): Promise<Array<ItemInterface>> => {
     const endpoint = 'api/item/';
