@@ -101,10 +101,8 @@ export default class AreaRoutesPageStore {
     const route = this.routesData.find(route => route.id === routeId);
     let attractions = 0;
 
-    if (route && route.locations_data.length) {
-      route.locations_data.forEach(location => {
-        attractions += location.screens.length;
-      });
+    if (route && Array.isArray(route.items_data)) {
+      attractions = route.items_data.length;
     }
 
     return attractions;
