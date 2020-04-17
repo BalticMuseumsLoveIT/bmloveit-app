@@ -41,6 +41,7 @@ class ProfilePage extends React.Component<Props> {
     this.profilePageStore.setTReady(this.props.tReady);
 
     await this.profilePageStore.loadData();
+    await this.userProfileStore.loadUserProfile();
   }
 
   componentDidUpdate(prevProps: Props) {
