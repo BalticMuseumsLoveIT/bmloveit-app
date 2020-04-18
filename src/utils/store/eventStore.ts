@@ -9,6 +9,7 @@ export class EventStore {
     await Api.createEvent({
       action_type: ActionType.VIEW,
       item: item,
+      route: trackerStore.currentRoute || undefined,
     });
   };
 
@@ -33,6 +34,7 @@ export class EventStore {
       action_type: ActionType.PLAY_VIDEO,
       item: item,
       item_resource: item_resource,
+      route: trackerStore.currentRoute || undefined,
     });
   };
 
@@ -46,6 +48,7 @@ export class EventStore {
       action_type: ActionType.PLAY_AUDIO,
       item: item,
       item_resource: item_resource,
+      route: trackerStore.currentRoute || undefined,
     });
   };
 
