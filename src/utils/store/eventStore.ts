@@ -1,4 +1,5 @@
 import { ActionType, EventParams } from 'utils/interfaces';
+import trackerStore from 'utils/store/trackerStore';
 import Api from 'utils/api';
 
 export class EventStore {
@@ -18,6 +19,8 @@ export class EventStore {
       action_type: ActionType.ROUTE_SELECT,
       route: route,
     });
+
+    trackerStore.setCurrentRoute(route);
   };
 
   dispatchPlayVideo = async (
