@@ -24,6 +24,8 @@ export const ItemDetails = ({ itemStore }: ItemDetailsProps) => {
       return <Redirect to={`/survey/${itemStore.surveyId}`} />;
     case ItemType.QUIZ:
       return <Redirect to={`/quiz/${itemStore.quizId}`} />;
+    case ItemType.LINK:
+      return <Redirect to={itemStore.itemDescription} />;
     default:
       return <Error404 context={Error404Context.ITEM} />;
   }
