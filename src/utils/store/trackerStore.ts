@@ -67,11 +67,6 @@ export class TrackerStore {
 
   constructor() {
     reaction(
-      () => this.currentRoute,
-      () => console.log('Route changed', this.currentRoute),
-    );
-
-    reaction(
       () => this.locations.size,
       () => {
         if (typeof this.currentLocation === 'undefined') return;
