@@ -1,6 +1,7 @@
 import Api from 'utils/api';
 import { AuthTokenInterface } from 'utils/interfaces';
 import { history } from 'App';
+import trackerStore from 'utils/store/trackerStore';
 import localStorage from 'mobx-localstorage';
 import { action, computed } from 'mobx';
 import axios, { AxiosRequestConfig } from 'axios';
@@ -137,6 +138,7 @@ export class AuthStore {
   signIn = async (provider: string, accessToken: string): Promise<void> => {
     const authToken = await Api.signIn(provider, accessToken);
     this.setAuthToken(authToken);
+    await trackerStore.initializeCurrentRoute();
   };
 
   @action
@@ -147,7 +149,10 @@ export class AuthStore {
   };
 
   @action
-  signOut = (): boolean => localStorage.delete(this.AUTH_TOKEN_KEY);
+  signOut = (): boolean => {
+    trackerStore.resetCurrentRoute();
+    return localStorage.delete(this.AUTH_TOKEN_KEY);
+  };
 
   @action
   resolvePendingRequests = (accessToken: string) => {

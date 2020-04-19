@@ -26,6 +26,8 @@ class App extends React.Component {
         uiStore.loadLanguages(),
         siteStore.loadSiteData(),
         // Only if user is logged in
+        (authStore.isLoggedIn && trackerStore.initializeCurrentRoute()) ||
+          undefined,
         (authStore.isLoggedIn && userProfileStore.loadUserProfile()) ||
           undefined,
       ]);

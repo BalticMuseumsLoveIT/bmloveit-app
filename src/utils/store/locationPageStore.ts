@@ -1,7 +1,7 @@
 import uiStore from 'utils/store/uiStore';
 import { ContentState } from 'components/Content/Content';
 import Api from 'utils/api';
-import { ActionType } from 'utils/interfaces';
+import trackerStore from 'utils/store/trackerStore';
 import { action, autorun, computed, observable } from 'mobx';
 
 export enum PageState {
@@ -69,52 +69,33 @@ export default class LocationPageStore {
         return this.setError(ErrorType.LOCATION_NOT_FOUND);
       }
 
-      const events = await Api.getEventsList();
+      if (trackerStore.currentRoute !== null) {
+        const [
+          routeLocationItems,
+          routeLocationDefaultItems,
+        ] = await Promise.all([
+          Api.getItem({
+            item_locations__location__id: locations[0].id,
+            item_routes__route__id: trackerStore.currentRoute,
+          }),
+          Api.getItem({
+            item_locations__location__id: locations[0].id,
+            item_routes__route__id: trackerStore.currentRoute,
+            item_locations__default: true,
+          }),
+        ]);
 
-      const routeSelectEvents = events.filter(
-        event => event.action_type === ActionType.ROUTE_SELECT,
-      );
-
-      const today = new Date();
-
-      const routeSelectEventsFromToday = routeSelectEvents.filter(event => {
-        const eventDate = new Date(event.date);
-        return today.setHours(0, 0, 0, 0) === eventDate.setHours(0, 0, 0, 0);
-      });
-
-      if (routeSelectEventsFromToday.length > 0) {
-        const routeId =
-          routeSelectEventsFromToday[routeSelectEventsFromToday.length - 1]
-            .route;
-
-        if (routeId !== null) {
-          const [
-            routeLocationItems,
-            routeLocationDefaultItems,
-          ] = await Promise.all([
-            Api.getItem({
-              item_locations__location__id: locations[0].id,
-              item_routes__route__id: routeId,
-            }),
-            Api.getItem({
-              item_locations__location__id: locations[0].id,
-              item_routes__route__id: routeId,
-              item_locations__default: true,
-            }),
-          ]);
-
-          // Prevent unwanted route change
-          if (routeLocationItems.length === 0) {
-            return this.setError(ErrorType.LOCATION_HAS_NO_ROUTE_ITEM);
-          }
-
-          // Redirect to default or first item matching filter parameters
-          const defaultItem = routeLocationDefaultItems.length
-            ? routeLocationDefaultItems[0]
-            : routeLocationItems[0];
-
-          return this.setItem(defaultItem.id);
+        // Prevent unwanted route change
+        if (routeLocationItems.length === 0) {
+          return this.setError(ErrorType.LOCATION_HAS_NO_ROUTE_ITEM);
         }
+
+        // Redirect to default or first item matching filter parameters
+        const defaultItem = routeLocationDefaultItems.length
+          ? routeLocationDefaultItems[0]
+          : routeLocationItems[0];
+
+        return this.setItem(defaultItem.id);
       }
 
       if (locations[0].screen_default === null) {
