@@ -264,19 +264,16 @@ export interface HeaderImageProps {
 }
 
 export const HeaderImage = styled.div<HeaderImageProps>`
-  min-height: ${em(240)};
-
   ${NegativeGridPadding};
 
-  ${({ image, theme }) =>
-    image
-      ? css`
-          background-image: url(${image});
-          background-size: cover;
-        `
-      : css`
-          background-color: ${theme.colors.background.placeholder};
-        `}
+  background-color: ${({ theme }) => theme.colors.background.placeholder};
+  min-height: ${({ image }) => (image ? 'auto' : em(240))};
+`;
+
+export const HeaderImg = styled.img`
+  display: block;
+  width: 100%;
+  max-width: 100%;
 `;
 
 export const CloseButton = styled.button<ButtonProps>`

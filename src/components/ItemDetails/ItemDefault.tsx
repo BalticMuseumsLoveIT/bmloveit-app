@@ -2,7 +2,11 @@ import { getPrivateMediaURL } from 'utils/helpers';
 import ItemStore from 'utils/store/itemStore';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import { AudioPlayer, ItemTitle, VideoPlayer } from 'pages/ItemPage.style';
-import { Description, HeaderImage } from 'components/Page/Page.style';
+import {
+  Description,
+  HeaderImage,
+  HeaderImg,
+} from 'components/Page/Page.style';
 import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import { EventStore } from 'utils/store/eventStore';
 import React from 'react';
@@ -24,9 +28,12 @@ export const ItemDefault = inject('eventStore')(
     return (
       <>
         {itemStore.itemImage && itemStore.itemImage.file_url && (
-          <HeaderImage
-            image={getPrivateMediaURL(itemStore.itemImage.file_url)}
-          />
+          <HeaderImage image={getPrivateMediaURL(itemStore.itemImage.file_url)}>
+            <HeaderImg
+              src={getPrivateMediaURL(itemStore.itemImage.file_url)}
+              alt=""
+            />
+          </HeaderImage>
         )}
 
         {itemStore.itemNameFull && (
