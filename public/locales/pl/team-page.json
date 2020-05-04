@@ -21,15 +21,15 @@
       }
     },
     "teamAccessCode": {
-      "copied": "",
-      "copy": "",
+      "copied": "Skopiowano",
+      "copy": "kopiuj",
       "label": "Kod dostępu",
-      "placeholder": "",
-      "teamAccessCode": ""
+      "placeholder": "Kod dostępu",
+      "teamAccessCode": "Kod dostępu"
     },
     "teamName": {
       "label": "Nazwa drużyny",
-      "placeholder": ""
+      "placeholder": "Nazwa drużyny"
     }
   },
   "page": {

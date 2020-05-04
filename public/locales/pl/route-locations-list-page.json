@@ -11,11 +11,11 @@
     }
   },
   "content": {
-    "description": "",
+    "description": "Imformacja o wyborze lokacji",
     "title": "Lista lokalizacji"
   },
   "counter": {
-    "attractions": ""
+    "attractions": "Atrakcje: {{attractions}}"
   },
   "page": {
     "title": "Lokalizacja na trasie"

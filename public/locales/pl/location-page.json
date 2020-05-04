@@ -1,17 +1,17 @@
 {
   "content": {
-    "title": ""
+    "title": "Lokacja"
   },
   "error": {
     "location": {
-      "generic": "",
-      "invalidId": "",
-      "locationHasNoDefaultItem": "",
-      "locationHasNoRouteItem": "",
-      "locationNotFound": ""
+      "generic": "Niestety ID elementu nie może zostać ustalone",
+      "invalidId": "Niestety, lokacja o wybranym ID nie ma przypisanego domyślnego elementu",
+      "locationHasNoDefaultItem": "Niestety, obecna lokacja nie ma przypisanego domyślnego elementu",
+      "locationHasNoRouteItem": "Niestety, obecna lokacja nie zawiera elementu należącego do wybranej trasy",
+      "locationNotFound": "Niestetym lokacja o wybranym ID nie została odnaleziona"
     }
   },
   "page": {
-    "title": ""
+    "title": "Lokacja"
   }
 }
