@@ -1,7 +1,7 @@
 {
   "button": {
     "next": {
-      "label": ""
+      "label": "Dalej"
     }
   },
   "error": {
@@ -15,7 +15,7 @@
       }
     }
   },
-  "itemNotFound": "",
+  "itemNotFound": "Element o wybranym ID nie został odnaleziony",
   "page": {
     "title": "Ankieta"
   },

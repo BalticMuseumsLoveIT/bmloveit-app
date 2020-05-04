@@ -1,21 +1,21 @@
 {
   "button": {
-    "cancel": "",
+    "cancel": "Anuluj",
     "scan": {
-      "error": "",
-      "initial": "",
-      "scanning": ""
+      "error": "Proszę spróbować ponownie",
+      "initial": "Rozpocznij skanowanie",
+      "scanning": "Skanowanie"
     }
   },
   "content": {
-    "image": "",
+    "image": "Kod QR",
     "message": {
-      "error": "",
-      "initial": ""
+      "error": "Niepoprawny kod QR",
+      "initial": "Kliknij w przycisk żeby rozpocząć skanowanie"
     },
-    "title": ""
+    "title": "Skanowanie kodu QR"
   },
   "page": {
-    "title": "Kod QR"
+    "title": "Skanowanie kodu QR"
   }
 }
