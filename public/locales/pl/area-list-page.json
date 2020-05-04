@@ -1,12 +1,12 @@
 {
   "content": {
-    "description": "",
-    "title": ""
+    "description": "Informacja o wyborze obszaru",
+    "title": "Lista obszarów"
   },
   "counter": {
-    "routes": ""
+    "routes": "Trasy: {{routes}}"
   },
   "page": {
-    "title": ""
+    "title": "Obszar"
   }
 }

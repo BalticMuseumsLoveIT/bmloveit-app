@@ -29,7 +29,7 @@
       "alt": "Nie odnaleziono"
     },
     "500": {
-      "alt": ""
+      "alt": "Ogólny błąd"
     },
     "logoBaltic": {
       "alt": "Baltic"
@@ -50,7 +50,7 @@
     "home": "Strona domowa"
   },
   "step": {
-    "first": "",
-    "second": ""
+    "first": "Wybierz obszar",
+    "second": "Wybierz trasę"
   }
 }

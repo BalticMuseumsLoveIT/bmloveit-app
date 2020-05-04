@@ -5,9 +5,9 @@
     }
   },
   "error": {
-    "noAvatarsFound": "",
-    "noBranchesFound": "",
-    "noImage": ""
+    "noAvatarsFound": "Nie znaleziono awatarów",
+    "noBranchesFound": "Nie znaleniono obiektów do wyświetlenia",
+    "noImage": "Brak obrazka"
   },
   "page": {
     "title": "Przedmiot"
