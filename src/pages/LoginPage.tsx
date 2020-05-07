@@ -16,10 +16,17 @@ import { ItemHtmlParser } from 'components/ItemHtmlParser/ItemHtmlParser';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
-import { RouteComponentProps, Redirect } from 'react-router-dom';
+import { Redirect, RouteComponentProps } from 'react-router-dom';
+import { StaticContext } from 'react-router';
 import { withTranslation, WithTranslation } from 'react-i18next';
 
-interface Props extends WithTranslation, RouteComponentProps {
+type RCP = RouteComponentProps<
+  {},
+  StaticContext,
+  { from: { pathname: string } }
+>;
+
+interface Props extends WithTranslation, RCP {
   authStore: AuthStore;
   userProfileStore: UserProfileStore;
   siteStore: SiteStore;
