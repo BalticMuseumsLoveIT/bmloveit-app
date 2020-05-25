@@ -19,11 +19,14 @@ interface ImageMapProps extends Pick<StateProvider, 'setTransform'> {
   src: string;
   coordinates: Array<ItemMapElementInterface>;
   gridMapRef: RefObject<HTMLDivElement>;
+  scale: number;
 }
 
 export const ImageMap = (props: ImageMapProps) => {
   const history = useHistory();
   const location = useLocation();
+
+  const imageRef = React.useRef<HTMLImageElement>(null);
 
   const imageStore = useLocalStore(() => ({
     loaded: false,
@@ -57,8 +60,6 @@ export const ImageMap = (props: ImageMapProps) => {
     },
   }));
 
-  const imageRef = React.useRef<HTMLImageElement>(null);
-
   React.useLayoutEffect(() => {
     if (imageRef.current) {
       imageRef.current.addEventListener('load', () => {
@@ -91,6 +92,7 @@ export const ImageMap = (props: ImageMapProps) => {
             <StyledButton
               x={point.x}
               y={point.y}
+              scale={props.scale}
               width={imageStore.dimensions.width}
               height={imageStore.dimensions.height}
               widthSF={imageStore.widthScaleFactor}

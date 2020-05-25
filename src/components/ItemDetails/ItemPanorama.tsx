@@ -17,6 +17,8 @@ import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 // eslint-disable-next-line import/no-unresolved
 import { StateProvider } from 'react-zoom-pan-pinch/dist/store/StateContext';
 import { Link } from 'react-router-dom';
+import { useLocalStore } from 'mobx-react';
+import { action } from 'mobx';
 
 interface ItemPanoramaProps {
   itemStore: ItemStore;
@@ -25,6 +27,17 @@ interface ItemPanoramaProps {
 export const ItemPanorama = ({ itemStore }: ItemPanoramaProps) => {
   const { t, ready } = useTranslation('item-page');
   const gridMapRef = React.useRef<HTMLDivElement>(null);
+
+  const transformStore = useLocalStore(() => ({
+    scale: 1,
+    setScale: action((scale: number) => {
+      transformStore.scale = scale;
+    }),
+  }));
+
+  const onZoomChange = (data: { scale: number }) => {
+    transformStore.setScale(data.scale);
+  };
 
   if (!ready) return null;
 
@@ -44,12 +57,13 @@ export const ItemPanorama = ({ itemStore }: ItemPanoramaProps) => {
 
       <ZoomGridMap ref={gridMapRef}>
         {itemStore.itemImage ? (
-          <TransformWrapper>
+          <TransformWrapper onZoomChange={onZoomChange}>
             {({ setTransform }: StateProvider) => (
               <TransformComponent>
                 <ImageMap
                   setTransform={setTransform}
                   gridMapRef={gridMapRef}
+                  scale={transformStore.scale}
                   src={
                     (itemStore.itemImage &&
                       getPrivateMediaURL(itemStore.itemImage.file_url)) ||
