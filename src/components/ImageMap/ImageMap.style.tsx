@@ -33,8 +33,8 @@ export const StyledButton = styled.button<StyledButtonProps>`
   padding: 0;
   // width: ${props => 10 * props.widthSF}%;
   // height: ${props => 10 * props.heightSF}%;
-  width: ${em(64)};
-  height: ${em(64)};
+  width: ${em(36)};
+  height: ${em(36)};
   transform: translate(-50%, -50%) scale(${props => 1 / (props.scale || 1)});
   position: absolute;
   left: ${props => (props.x * 100) / props.width}%;
