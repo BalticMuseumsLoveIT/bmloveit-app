@@ -12,19 +12,36 @@ export enum MainMenuState {
 export default class MainMenuStore {
   private _defaultMenu: Array<MainMenuPatchedInterface> = [];
 
+  private _searchTree = (
+    tree: Array<MainMenuPatchedInterface>,
+    compare: (node: MainMenuPatchedInterface) => boolean,
+  ) => {
+    const innerTree = [...tree];
+
+    let node: MainMenuPatchedInterface;
+
+    while (innerTree.length > 0) {
+      node = innerTree.pop() as MainMenuPatchedInterface;
+
+      if (compare(node)) {
+        return node;
+      } else {
+        if (node.child_menus_data.length > 0) {
+          node.child_menus_data.forEach(child => innerTree.push(child));
+        }
+      }
+    }
+
+    return null;
+  };
+
   private _getSubmenu = (
     items: Array<MainMenuPatchedInterface>,
     id: number,
   ): Array<MainMenuPatchedInterface> => {
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].id === id) {
-        return items[i].child_menus_data;
-      } else if (items[i].child_menus_data.length > 0) {
-        return this._getSubmenu(items[i].child_menus_data, id);
-      }
-    }
+    const item = this._searchTree(items, node => node.id === id);
 
-    return [];
+    return (item && item.child_menus_data) || [];
   };
 
   @observable links: Array<StaticLinkInterface> = [
