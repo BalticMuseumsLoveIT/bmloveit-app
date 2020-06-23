@@ -31,6 +31,7 @@ export default class RouteMapPageStore {
   @observable routeData: RouteInterface | null = null;
   @observable routeMapData: ItemStore = new ItemStore(null);
   @observable tReady?: boolean;
+  @observable scale = 1;
 
   private _handleContentState = () => {
     switch (this.state) {
@@ -88,6 +89,10 @@ export default class RouteMapPageStore {
 
   @action setRouteData = (routesData: RouteInterface) => {
     this.routeData = routesData;
+  };
+
+  @action setScale = (scale: number) => {
+    this.scale = scale;
   };
 
   @computed get routeId(): string {

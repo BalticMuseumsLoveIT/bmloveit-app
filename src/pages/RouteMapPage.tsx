@@ -16,13 +16,12 @@ import {
 import { Emphasize, Title } from 'components/Page/Page.style';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { inject, observer, useLocalStore } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 // eslint-disable-next-line import/no-unresolved
 import { StateProvider } from 'react-zoom-pan-pinch/dist/store/StateContext';
-import { action } from 'mobx';
 
 interface Props extends WithTranslation, RouteComponentProps<any> {
   uiStore: UiStore;
@@ -54,15 +53,8 @@ class RouteMapPage extends React.Component<Props> {
     this.routeMapPageStore.unmount();
   }
 
-  transformStore = useLocalStore(() => ({
-    scale: 1,
-    setScale: action((scale: number) => {
-      this.transformStore.scale = scale;
-    }),
-  }));
-
   onZoomChange = (data: { scale: number }) => {
-    this.transformStore.setScale(data.scale);
+    this.routeMapPageStore.setScale(data.scale);
   };
 
   render() {
@@ -86,7 +78,7 @@ class RouteMapPage extends React.Component<Props> {
                       <ImageMap
                         setTransform={setTransform}
                         gridMapRef={this.gridMapRef}
-                        scale={this.transformStore.scale}
+                        scale={this.routeMapPageStore.scale}
                         src={getPrivateMediaURL(
                           this.routeMapPageStore.routeMapImageURL,
                         )}
