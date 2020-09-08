@@ -67,14 +67,18 @@ class LoginPage extends React.Component<Props> {
           )}
           {!this.authStore.isLoggedIn ? (
             <>
-              <GoogleButton
-                onSuccess={this.login}
-                onFailed={this._handleError}
-              />
-              <FacebookButton
-                onSuccess={this.login}
-                onFailed={this._handleError}
-              />
+              {process.env.REACT_APP_GOOGLE_CLIENT_ID && (
+                <GoogleButton
+                  onSuccess={this.login}
+                  onFailed={this._handleError}
+                />
+              )}
+              {process.env.REACT_APP_FACEBOOK_APP_ID && (
+                <FacebookButton
+                  onSuccess={this.login}
+                  onFailed={this._handleError}
+                />
+              )}
               <GuestButton loginAsGuest={this.login} />
             </>
           ) : (
