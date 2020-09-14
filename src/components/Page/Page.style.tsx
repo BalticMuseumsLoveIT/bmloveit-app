@@ -348,6 +348,12 @@ export const RadioWrapper = styled.div<RadioWrapperProps>`
   border-radius: 2em;
   box-sizing: border-box;
   background-color: ${({ theme }) => theme.colors.background.default};
+  border: ${({ isChecked, isCorrect, theme }) =>
+    isCorrect === true
+      ? `2px solid ${theme.colors.text.success}`
+      : isChecked === true && isCorrect === false
+      ? `2px solid ${theme.colors.text.error}`
+      : 'none'};
   box-shadow: ${({ isChecked, isCorrect, theme }) =>
     isCorrect === true
       ? `0 0 3px 1px ${theme.colors.text.success}`
