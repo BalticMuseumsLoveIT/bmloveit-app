@@ -35,7 +35,6 @@ export const RoutesGroup = inject('eventStore')(
     doesAnyRouteContainImage,
   }: RoutesGroupProps) => {
     const { t, ready } = useTranslation('area-routes-page');
-
     const localStore = useLocalStore(() => ({
       isMenuOpened: true,
 
@@ -99,9 +98,11 @@ export const RoutesGroup = inject('eventStore')(
                     route.name_full_translation,
                   )}
                   <DefaultListItemInfo>
-                    {t('routeAttractions', 'Attractions: {{attractions}}', {
-                      attractions: attractions(route.id),
-                    })}
+                    {route.description && route.description !== ''
+                      ? route.description
+                      : t('routeAttractions', 'Attractions: {{attractions}}', {
+                          attractions: attractions(route.id),
+                        })}
                   </DefaultListItemInfo>
                 </Link>
               </DefaultListItem>
