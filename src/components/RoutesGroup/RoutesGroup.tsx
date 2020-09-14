@@ -99,7 +99,10 @@ export const RoutesGroup = inject('eventStore')(
                   )}
                   <DefaultListItemInfo>
                     {route.description && route.description !== ''
-                      ? route.description
+                      ? getTranslatedString(
+                          route.description,
+                          route.description_translation,
+                        )
                       : t('routeAttractions', 'Attractions: {{attractions}}', {
                           attractions: attractions(route.id),
                         })}

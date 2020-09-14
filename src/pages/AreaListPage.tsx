@@ -80,7 +80,10 @@ class AreaListPage extends React.Component<Props> {
                   )}
                   <DefaultListItemInfo>
                     {area.description && area.description !== ''
-                      ? area.description
+                      ? getTranslatedString(
+                          area.description,
+                          area.description_translation,
+                        )
                       : this.props.t('counter.routes', 'Routes: {{routes}}', {
                           routes: this.areaListPageStore.routesAmount(area.id),
                         })}
