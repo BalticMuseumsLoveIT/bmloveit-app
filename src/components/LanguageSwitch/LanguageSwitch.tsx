@@ -45,21 +45,26 @@ export const LanguageSwitch = inject('eventStore')(
 
       return (
         <LanguageSwitchList>
-          {uiLanguages.map(language => {
-            return (
-              <LanguageSwitchItem
-                key={language.id}
-                isMenuOpened={localStore.isMenuOpened}
-                isHeader={
-                  !localStore.isMenuOpened && language.key === userLanguage
-                }
-                onClick={() => handleClick(language.key, language.id)}
-                customHeaderImageSrc="/images/unfold_more-24px.svg"
-              >
-                <span>{language.value}</span>
-              </LanguageSwitchItem>
-            );
-          })}
+          {uiLanguages
+            .slice()
+            .sort((a, b) => {
+              return a.value.localeCompare(b.value);
+            })
+            .map(language => {
+              return (
+                <LanguageSwitchItem
+                  key={language.id}
+                  isMenuOpened={localStore.isMenuOpened}
+                  isHeader={
+                    !localStore.isMenuOpened && language.key === userLanguage
+                  }
+                  onClick={() => handleClick(language.key, language.id)}
+                  customHeaderImageSrc="/images/unfold_more-24px.svg"
+                >
+                  <span>{language.value}</span>
+                </LanguageSwitchItem>
+              );
+            })}
         </LanguageSwitchList>
       );
     });
