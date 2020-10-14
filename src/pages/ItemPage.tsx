@@ -24,6 +24,23 @@ class ItemPage extends React.Component<Props> {
   eventStore = this.props.eventStore;
   itemPageStore = new ItemPageStore(true);
 
+  async handleEvents(): Promise<void> {
+    const id = this.itemPageStore.itemData.itemId;
+
+    // Return if item data is not loaded
+    if (Number.isNaN(id)) return;
+
+    // On redirected items (quiz, survey) dispatch event separately
+    const redirects = [ItemType.QUIZ, ItemType.SURVEY];
+
+    if (
+      this.itemPageStore.itemData.itemType !== null &&
+      !redirects.includes(this.itemPageStore.itemData.itemType)
+    ) {
+      await this.eventStore.dispatchViewItem(id);
+    }
+  }
+
   async componentDidMount(): Promise<void> {
     const {
       params: { id },
@@ -33,15 +50,7 @@ class ItemPage extends React.Component<Props> {
 
     await this.itemPageStore.loadData(Number.parseInt(id));
 
-    // On redirected items (quiz, survey) dispatch event separately
-    const redirects = [ItemType.QUIZ, ItemType.SURVEY];
-
-    if (
-      this.itemPageStore.itemData.itemType !== null &&
-      !redirects.includes(this.itemPageStore.itemData.itemType)
-    ) {
-      await this.eventStore.dispatchViewItem(Number.parseInt(id));
-    }
+    await this.handleEvents();
   }
 
   async componentDidUpdate(prevProps: Props) {
@@ -53,6 +62,9 @@ class ItemPage extends React.Component<Props> {
       await this.itemPageStore.loadData(
         Number.parseInt(this.props.match.params.id),
       );
+
+      // Handle events when user jump between items without ItemPage unmounting
+      await this.handleEvents();
     }
   }
 

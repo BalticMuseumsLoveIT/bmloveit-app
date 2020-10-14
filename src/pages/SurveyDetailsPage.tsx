@@ -45,6 +45,10 @@ class SurveyDetailsPage extends Component<Props> {
       await this.surveyDetailsStore.loadData(
         Number.parseInt(this.props.match.params.id),
       );
+
+      await this.eventStore.dispatchViewItem(
+        this.surveyDetailsStore.parentItemId,
+      );
     }
   }
 

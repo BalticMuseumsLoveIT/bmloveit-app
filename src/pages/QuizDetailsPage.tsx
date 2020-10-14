@@ -42,6 +42,10 @@ class QuizPage extends React.Component<Props> {
       await this.quizDetailsStore.loadData(
         Number.parseInt(this.props.match.params.id),
       );
+
+      await this.eventStore.dispatchViewItem(
+        this.quizDetailsStore.parentItemId,
+      );
     }
   }
 
