@@ -31,6 +31,10 @@ export default class ItemStore {
     this.setItemData((itemData.length && itemData[0]) || null);
   };
 
+  @computed get fullscreen(): boolean {
+    return this.itemData ? this.itemData.fullscreen : false;
+  }
+
   @computed get itemId(): number {
     return this.itemData ? this.itemData.id : NaN;
   }

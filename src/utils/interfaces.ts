@@ -282,6 +282,7 @@ export interface ItemInterface {
   name_full_translation: Array<CommonApiTranslationInterface>;
   description_translation: Array<CommonApiTranslationInterface>;
   routes: Array<number>;
+  fullscreen: boolean;
   x: number | null;
   y: number | null;
 }

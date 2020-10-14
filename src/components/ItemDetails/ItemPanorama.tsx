@@ -44,11 +44,11 @@ export const ItemPanorama = ({ itemStore }: ItemPanoramaProps) => {
   return (
     <ZoomGrid>
       <ZoomGridHeader>
-        {itemStore.itemNameFull && (
+        {!itemStore.fullscreen && itemStore.itemNameFull && (
           <ItemTitle>{itemStore.itemNameFull}</ItemTitle>
         )}
 
-        {itemStore.itemDescription && (
+        {!itemStore.fullscreen && itemStore.itemDescription && (
           <Description>
             <ItemHtmlParser html={itemStore.itemDescription} />
           </Description>
