@@ -35,6 +35,10 @@ export default class ItemStore {
     return this.itemData ? this.itemData.fullscreen : false;
   }
 
+  @computed get zoomout(): boolean {
+    return this.itemData ? this.itemData.zoomout : false;
+  }
+
   @computed get itemId(): number {
     return this.itemData ? this.itemData.id : NaN;
   }

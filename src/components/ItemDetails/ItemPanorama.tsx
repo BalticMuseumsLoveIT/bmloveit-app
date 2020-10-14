@@ -63,6 +63,7 @@ export const ItemPanorama = ({ itemStore }: ItemPanoramaProps) => {
                 <ImageMap
                   setTransform={setTransform}
                   gridMapRef={gridMapRef}
+                  zoomout={itemStore.zoomout}
                   scale={transformStore.scale}
                   src={
                     (itemStore.itemImage &&

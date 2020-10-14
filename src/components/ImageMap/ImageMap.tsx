@@ -20,6 +20,8 @@ interface ImageMapProps extends Pick<StateProvider, 'setTransform'> {
   coordinates: Array<ItemMapElementInterface>;
   gridMapRef: RefObject<HTMLDivElement>;
   scale: number;
+  /** Optional parameter, if true zooms out the image in a way that it is shown entirely.  */
+  zoomout?: boolean;
 }
 
 export const ImageMap = (props: ImageMapProps) => {
@@ -73,9 +75,14 @@ export const ImageMap = (props: ImageMapProps) => {
             const imageHeight = imageRef.current.offsetHeight;
 
             if (gridMapHeight > 0 && imageHeight > 0) {
-              const scale = (gridMapHeight * 100) / imageHeight / 100;
-              imageStore.setTransformed(true);
-              props.setTransform(0, 0, scale);
+              if (props.zoomout) {
+                imageStore.setTransformed(true);
+                props.setTransform(0, 0, 1);
+              } else {
+                const scale = (gridMapHeight * 100) / imageHeight / 100;
+                imageStore.setTransformed(true);
+                props.setTransform(0, 0, scale);
+              }
             }
           }
         }
