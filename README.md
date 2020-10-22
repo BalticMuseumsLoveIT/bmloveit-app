@@ -1,6 +1,6 @@
 The app was developed in the project BalticMuseums: LoveIT! which was part-financed by the European Regional Development Fund within the Interreg South Baltic Programme 2014-2020.
 
-You can find gamified tours using this app at the [emused.eu](https://emused.eu/#tours) website.
+You can find e-guides based on this app at the [emused.eu](https://emused.eu/#tours) website.
 
 
 --------
