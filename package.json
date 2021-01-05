@@ -19,7 +19,7 @@
     "@types/styled-components": "^4.4.3",
     "@types/styled-theming": "^2.2.2",
     "@types/yup": "^0.26.37",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "deepmerge": "^4.2.2",
     "formik": "^2.1.4",
     "i18next": "^19.4.4",
