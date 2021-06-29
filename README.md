@@ -1,3 +1,10 @@
+The app was developed in the project BalticMuseums: LoveIT! which was part-financed by the European Regional Development Fund within the Interreg South Baltic Programme 2014-2020.
+
+You can find e-guides based on this app at the [emused.eu](https://emused.eu/#tours) website.
+
+
+--------
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
