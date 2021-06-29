@@ -7,18 +7,13 @@ import { ItemType, EventResponse } from 'utils/interfaces';
 import { UserProfileStore } from 'utils/store/userProfileStore';
 import { RouteMapPageStore } from 'utils/store/routeMapPageStore';
 import { AppButton } from 'components/Buttons/AppButton.style';
-import { Description, defaultBoxShadow } from 'components/Page/Page.style';
+import { defaultBoxShadow } from 'components/Page/Page.style';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { inject, observer } from 'mobx-react';
 import { RouteComponentProps } from 'react-router-dom';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import styled, { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
-import {
-  DefaultListItemInfo,
-  DefaultListItemWrapper,
-} from 'components/DefaultList/DefaultList.style';
-import { DefaultListItem } from 'components/DefaultList/DefaultListItem';
 
 export interface Props
   extends WithTranslation,
