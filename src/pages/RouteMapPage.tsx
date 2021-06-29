@@ -1,6 +1,6 @@
 import Content from 'components/Content/Content';
 import { UiStore } from 'utils/store/uiStore';
-import RouteMapPageStore from 'utils/store/routeMapPageStore';
+import { RouteMapPageStore } from 'utils/store/routeMapPageStore';
 import { ImageMap } from 'components/ImageMap/ImageMap';
 import { getPrivateMediaURL } from 'utils/helpers';
 import {
@@ -25,12 +25,14 @@ import { StateProvider } from 'react-zoom-pan-pinch/dist/store/StateContext';
 
 interface Props extends WithTranslation, RouteComponentProps<any> {
   uiStore: UiStore;
+  routeMapPageStore: RouteMapPageStore;
 }
 
-@inject('uiStore')
+@inject('uiStore', 'routeMapPageStore')
 @observer
 class RouteMapPage extends React.Component<Props> {
-  routeMapPageStore = new RouteMapPageStore(true);
+  // routeMapPageStore = new RouteMapPageStore(true);
+  routeMapPageStore = this.props.routeMapPageStore;
   gridMapRef = React.createRef<HTMLDivElement>();
 
   async componentDidMount(): Promise<void> {

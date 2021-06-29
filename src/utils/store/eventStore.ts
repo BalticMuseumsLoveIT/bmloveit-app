@@ -6,7 +6,7 @@ export class EventStore {
   dispatchViewItem = async (item: Required<EventParams>['item']) => {
     if (Number.isNaN(item)) return;
 
-    await Api.createEvent({
+    return await Api.createEvent({
       action_type: ActionType.VIEW,
       item: item,
       route: trackerStore.currentRoute || undefined,

@@ -5,6 +5,7 @@ import uiStore from 'utils/store/uiStore';
 import cookieBarStore from 'utils/store/cookieBarStore';
 import eventStore from 'utils/store/eventStore';
 import trackerStore from 'utils/store/trackerStore';
+import routeMapPageStore from 'utils/store/routeMapPageStore';
 
 const stores = {
   authStore,
@@ -14,6 +15,7 @@ const stores = {
   siteStore,
   eventStore,
   trackerStore,
+  routeMapPageStore,
 };
 
 export default stores;

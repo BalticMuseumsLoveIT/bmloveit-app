@@ -24,7 +24,7 @@ export enum PageState {
   ERROR,
 }
 
-export default class RouteMapPageStore {
+export class RouteMapPageStore {
   private readonly _manageContentState: boolean;
 
   @observable state: PageState = PageState.NOT_LOADED;
@@ -164,3 +164,6 @@ export default class RouteMapPageStore {
     }
   };
 }
+
+const routeMapPageStore = new RouteMapPageStore(true);
+export default routeMapPageStore;
