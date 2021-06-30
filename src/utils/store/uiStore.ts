@@ -11,6 +11,9 @@ export enum AppState {
 }
 
 export class UiStore {
+  @observable showTextsData: boolean;
+  @observable textsData: string[] | null;
+
   @observable appState: AppState;
 
   @observable contentState: ContentState;
@@ -35,6 +38,8 @@ export class UiStore {
   constructor() {
     this.contentState = ContentState.AVAILABLE;
     this.appState = AppState.LOADING;
+    this.showTextsData = false;
+    this.textsData = null;
   }
 
   @computed get languageId(): number {
@@ -91,6 +96,14 @@ export class UiStore {
 
   @action setAppState = (appState: AppState) => {
     this.appState = appState;
+  };
+
+  @action setShowTextsData = (show: boolean) => {
+    this.showTextsData = show;
+  };
+
+  @action setTextsData = (textsData: string[]) => {
+    this.textsData = textsData;
   };
 }
 

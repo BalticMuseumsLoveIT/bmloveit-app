@@ -14,22 +14,39 @@ import AppHeader, {
   ToggleSwitchCell,
   UserAvatarCell,
 } from './Header.style';
+import { UiStore } from 'utils/store/uiStore';
+import { inject, observer } from 'mobx-react';
 
 interface HeaderProps extends RouteComponentProps {
   className?: string;
 }
 
+interface InjectedProps extends HeaderProps {
+  uiStore: UiStore;
+}
+
+@inject('uiStore')
+@observer
 class Header extends React.Component<HeaderProps> {
+  get injected() {
+    return this.props as InjectedProps;
+  }
+  uiStore = this.injected.uiStore;
+
   render() {
     return (
       <LayoutGridHeader className={this.props.className}>
         <AppHeader>
-          <BackButtonCell>
+          <BackButtonCell
+            onClick={() => this.injected.uiStore.setShowTextsData(false)}
+          >
             <BackButton onClick={this.props.history.goBack}>
               <BackButtonIcon src="/images/arrow_back-24px.svg" />
             </BackButton>
           </BackButtonCell>
-          <MuseumLogoCell>
+          <MuseumLogoCell
+            onClick={() => this.injected.uiStore.setShowTextsData(false)}
+          >
             <MuseumLogo type={LogoType.HEADER} />
           </MuseumLogoCell>
           <UserAvatarCell>

@@ -39,40 +39,8 @@ class ItemPage extends React.Component<
   }
 
   eventStore = this.props.eventStore;
-  routeMapPageStore = this.props.routeMapPageStore;
 
   itemPageStore = new ItemPageStore(true);
-  userProfileStore = this.props.userProfileStore;
-
-  //** Updates user profile if event, adding points, updating routes */
-  updateUserProfileAndItemsData(eventData: EventResponse) {
-    if (eventData) {
-      const achievementsData = eventData.achievements_data;
-      const userProfileData = this.userProfileStore.userProfileData;
-
-      if (userProfileData && achievementsData) {
-        this.userProfileStore.setUserProfile({
-          ...userProfileData,
-          points:
-            userProfileData.points + (parseInt(achievementsData.points) || 0),
-          badges_data: [
-            ...userProfileData.badges_data,
-            ...achievementsData.badges_data,
-          ],
-        });
-
-        if (this.routeMapPageStore.routeData && achievementsData.items_data) {
-          this.routeMapPageStore.setRouteData({
-            ...this.routeMapPageStore.routeData,
-            items_data: [
-              ...this.routeMapPageStore.routeData.items_data,
-              ...achievementsData.items_data,
-            ],
-          });
-        }
-      }
-    }
-  }
 
   async handleEvents(): Promise<void> {
     const id = this.itemPageStore.itemData.itemId;
@@ -87,22 +55,7 @@ class ItemPage extends React.Component<
       this.itemPageStore.itemData.itemType !== null &&
       !redirects.includes(this.itemPageStore.itemData.itemType)
     ) {
-      const response = (await this.eventStore.dispatchViewItem(
-        id,
-      )) as EventResponse;
-
-      this.updateUserProfileAndItemsData(response);
-
-      if (response.achievements_data) {
-        if (response.achievements_data.texts_data) {
-          if (response.achievements_data.texts_data.length > 0) {
-            this.setState({
-              textsData: response.achievements_data.texts_data,
-            });
-            // alert(response.achievements_data.texts_data[0]);
-          }
-        }
-      }
+      await this.eventStore.dispatchViewItem(id);
     }
   }
 
@@ -145,33 +98,10 @@ class ItemPage extends React.Component<
         <Helmet>
           <title>{this.props.t('page.title', 'Item')}</title>
         </Helmet>
-        {this.state.textsData && !this.state.closeTextsData ? (
-          <Content>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column',
-                marginTop: '20px',
-              }}
-            >
-              {this.state.textsData.map((text, i) => (
-                <TextData key={i}>{text}</TextData>
-              ))}
 
-              <AppButton
-                onClick={() => this.setState({ closeTextsData: true })}
-              >
-                {this.props.t('button.next.label', 'Next')}
-              </AppButton>
-            </div>
-          </Content>
-        ) : (
-          <Content backgroundColor={this.props.theme.colors.background.default}>
-            <ItemDetails itemStore={this.itemPageStore.itemData} />
-          </Content>
-        )}
+        <Content backgroundColor={this.props.theme.colors.background.default}>
+          <ItemDetails itemStore={this.itemPageStore.itemData} />
+        </Content>
 
         <ItemModal />
       </>
