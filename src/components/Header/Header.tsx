@@ -4,8 +4,10 @@ import UserAvatar from 'components/Avatar/Avatar';
 import { UserAvatarType } from 'components/Avatar/Avatar.style';
 import { LayoutGridHeader } from 'components/Layout/Layout.style';
 import { LogoType } from 'components/MuseumLogo/MuseumLogo.style';
+import { UiStore } from 'utils/store/uiStore';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import React from 'react';
+import { inject, observer } from 'mobx-react';
 import AppHeader, {
   BackButton,
   BackButtonCell,
@@ -14,8 +16,6 @@ import AppHeader, {
   ToggleSwitchCell,
   UserAvatarCell,
 } from './Header.style';
-import { UiStore } from 'utils/store/uiStore';
-import { inject, observer } from 'mobx-react';
 
 interface HeaderProps extends RouteComponentProps {
   className?: string;

@@ -4,12 +4,12 @@ import { SiteStore } from 'utils/store/siteStore';
 import { UiStore } from 'utils/store/uiStore';
 import { GlobalStyle, LayoutGrid } from 'components/Layout/Layout.style';
 import MainMenu from 'components/MainMenu/MainMenu';
-import React from 'react';
-import styled, { DefaultTheme, ThemeProvider } from 'styled-components';
-import { observer, inject } from 'mobx-react';
 import Content from 'components/Content/Content';
 import { AppButton } from 'components/Buttons/AppButton.style';
 import { defaultBoxShadow } from 'components/Page/Page.style';
+import React from 'react';
+import styled, { DefaultTheme, ThemeProvider } from 'styled-components';
+import { observer, inject } from 'mobx-react';
 import { useTranslation } from 'react-i18next';
 
 interface Props {
