@@ -13,6 +13,7 @@ import { LinearIndicator } from 'components/LinearIndicator/LinearIndicator';
 import { Error404, Error404Context } from 'components/Error404/Error404';
 import { Error500 } from 'components/Error500/Error500';
 import { EventStore } from 'utils/store/eventStore';
+import { UiStore } from 'utils/store/uiStore';
 import ReactModal from 'react-modal';
 import { withTranslation, WithTranslation } from 'react-i18next';
 import { inject, observer } from 'mobx-react';
@@ -20,7 +21,6 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import React from 'react';
 import { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
 import { em } from 'polished';
-import { UiStore } from 'utils/store/uiStore';
 import { reaction } from 'mobx';
 
 interface Props
