@@ -3,7 +3,6 @@ import { CommonLanguageInterface, ItemInterface } from 'utils/interfaces';
 import MainMenuStore from 'utils/store/mainMenuStore';
 import Api from 'utils/api';
 import { action, computed, observable } from 'mobx';
-import ItemStore from './itemStore';
 
 export enum AppState {
   LOADING,
