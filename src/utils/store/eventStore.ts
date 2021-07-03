@@ -15,20 +15,46 @@ export class EventStore {
 
       if (achievementsData) {
         if (achievementsData.texts_data) {
-          if (achievementsData.texts_data.length > 0) {
-            uiStore.setShowTextsData(true);
-            uiStore.setTextsData(achievementsData.texts_data);
+          if (achievementsData.congratulation_items_data?.length > 0) {
+            const itemToPopup = achievementsData.congratulation_items_data[0];
+            uiStore.setPopupItemFromEvent({
+              id: itemToPopup.id || null,
+              name: itemToPopup.name || null,
+              name_full: itemToPopup.name_full || null,
+              description: itemToPopup.description || null,
+              type: itemToPopup.type || null,
+              type_data: itemToPopup.type_data || null,
+              kind: itemToPopup.kind || null,
+              kind_data: itemToPopup.kind_data || null,
+              locations: itemToPopup.locations || null,
+              resources_data: itemToPopup.resources_data || null,
+              quizz: itemToPopup.quizz || null,
+              survey: itemToPopup.survey || null,
+              child_items_data: itemToPopup.child_items_data || null,
+              child_items: itemToPopup.child_items || undefined,
+              next_item: itemToPopup.next_item || null,
+              qr_code: itemToPopup.qr_code || null,
+              latitude: itemToPopup.latitude || null,
+              longitude: itemToPopup.longitude || null,
+              name_translation: itemToPopup.name_translation,
+              name_full_translation: itemToPopup.name_full_translation,
+              description_translation: itemToPopup.description_translation,
+              routes: itemToPopup.routes,
+              fullscreen: itemToPopup.fullscreen,
+              zoomout: itemToPopup.zoomout,
+              x: itemToPopup.x || null,
+              y: itemToPopup.y || null,
+            });
+          } else {
+            if (achievementsData.texts_data.length > 0) {
+              uiStore.setShowTextsData(true);
+              uiStore.setTextsData(achievementsData.texts_data);
+            }
           }
         }
       }
 
       if (userProfileData && achievementsData) {
-        // achievementsData.avatar_data &&
-        //   // userProfileStore.setUserProfile({
-        //   //   ...userProfileData,
-        //   //   avatar: achievementsData.avatar_data,
-        //   // });
-
         userProfileStore.setUserProfile({
           ...userProfileData,
           points:

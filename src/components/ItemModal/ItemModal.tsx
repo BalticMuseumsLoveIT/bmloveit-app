@@ -20,18 +20,27 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import React from 'react';
 import { DefaultTheme, ThemeProps, withTheme } from 'styled-components';
 import { em } from 'polished';
+import { UiStore } from 'utils/store/uiStore';
+import { reaction } from 'mobx';
 
 interface Props
   extends WithTranslation,
     ThemeProps<DefaultTheme>,
     RouteComponentProps {
   eventStore?: EventStore;
+  uiStore?: UiStore;
 }
 
-@inject('eventStore')
+@inject('eventStore', 'uiStore')
 @observer
-class ItemModal extends React.Component<Props> {
+class ItemModal extends React.Component<
+  Props,
+  { shouldShowEventPopup: boolean; eventPopupDisplayed: boolean }
+> {
+  disposer: any;
+
   eventStore = this.props.eventStore!;
+  uiStore = this.props.uiStore!;
 
   store = new ItemModalStore({
     isOpen: false,
@@ -58,6 +67,30 @@ class ItemModal extends React.Component<Props> {
       },
     },
   });
+
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      shouldShowEventPopup: !!this.uiStore.popupItemFromEvent,
+      eventPopupDisplayed: false,
+    };
+  }
+
+  private _tryToOpenPopupFromEvent = async () => {
+    this.setState({
+      eventPopupDisplayed: true,
+    });
+    this.store.setModalState(ModalState.NOT_LOADED);
+
+    if (this.uiStore.popupItemFromEvent) {
+      this.store.openModal();
+      this.store.item.setItemData(this.uiStore.popupItemFromEvent);
+      this.store.setModalState(ModalState.LOADED);
+    } else {
+      this.store.setModalState(ModalState.NOT_FOUND);
+    }
+  };
 
   private _openPopup = async (popupItemId: number) => {
     this.store.setModalState(ModalState.NOT_LOADED);
@@ -96,10 +129,25 @@ class ItemModal extends React.Component<Props> {
   async componentDidMount() {
     const popupItemId = this.store.getIdFromQS(this.props.location.search);
 
-    if (!isNaN(popupItemId)) this._openPopup(popupItemId);
+    this.disposer = reaction(
+      () => this.uiStore.popupItemFromEvent,
+      () => {
+        this.setState({
+          shouldShowEventPopup: !!this.uiStore.popupItemFromEvent,
+        });
+      },
+    );
+
+    if (!isNaN(popupItemId)) {
+      this._openPopup(popupItemId);
+    }
   }
 
   async componentDidUpdate(prevProps: Props) {
+    !this.state.eventPopupDisplayed &&
+      this.state.shouldShowEventPopup &&
+      this._tryToOpenPopupFromEvent();
+
     if (prevProps.location.search !== this.props.location.search) {
       const previousPopupItemId = this.store.getIdFromQS(
         prevProps.location.search,
@@ -142,7 +190,6 @@ class ItemModal extends React.Component<Props> {
 
   render() {
     if (!this.props.tReady) return null;
-
     return (
       <ReactModal {...this.store.modalProps}>
         <LayoutGrid>

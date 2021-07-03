@@ -74,6 +74,11 @@ export default class ItemModalStore {
     return locationWithoutPopupId;
   };
 
+  isEventStringInQS = (search: string): boolean => {
+    const { popup } = queryString.parse(search);
+    return popup === 'event';
+  };
+
   getIdFromQS = (search: string): number => {
     const { popup } = queryString.parse(search);
 

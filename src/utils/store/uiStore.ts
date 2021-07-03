@@ -1,8 +1,9 @@
 import { ContentState } from 'components/Content/Content';
-import { CommonLanguageInterface } from 'utils/interfaces';
+import { CommonLanguageInterface, ItemInterface } from 'utils/interfaces';
 import MainMenuStore from 'utils/store/mainMenuStore';
 import Api from 'utils/api';
 import { action, computed, observable } from 'mobx';
+import ItemStore from './itemStore';
 
 export enum AppState {
   LOADING,
@@ -13,6 +14,9 @@ export enum AppState {
 export class UiStore {
   @observable showTextsData: boolean;
   @observable textsData: string[] | null;
+
+  @observable loadingPopupData: boolean;
+  @observable popupItemFromEvent: ItemInterface | null;
 
   @observable appState: AppState;
 
@@ -40,6 +44,8 @@ export class UiStore {
     this.appState = AppState.LOADING;
     this.showTextsData = false;
     this.textsData = null;
+    this.popupItemFromEvent = null;
+    this.loadingPopupData = false;
   }
 
   @computed get languageId(): number {
@@ -104,6 +110,14 @@ export class UiStore {
 
   @action setTextsData = (textsData: string[]) => {
     this.textsData = textsData;
+  };
+
+  @action setPopupItemFromEvent = (popupItem: ItemInterface) => {
+    this.popupItemFromEvent = popupItem;
+  };
+
+  @action setLoadingPopupData = (isLoading: boolean) => {
+    this.loadingPopupData = isLoading;
   };
 }
 
