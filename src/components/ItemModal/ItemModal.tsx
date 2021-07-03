@@ -122,8 +122,9 @@ class ItemModal extends React.Component<
    */
   private _closePopup = (shouldGoBack = true) => {
     this.store.closeModal();
-
-    shouldGoBack && this.props.history.goBack();
+    !this.state.eventPopupDisplayed &&
+      shouldGoBack &&
+      this.props.history.goBack();
   };
 
   async componentDidMount() {
@@ -174,6 +175,7 @@ class ItemModal extends React.Component<
              * location as an intermediary location to prevent going back on
              * history stack when popup is closed
              */
+
             this.props.history.replace(parentItemLocation);
             this.props.history.push(this.props.location);
           }
